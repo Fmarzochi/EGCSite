@@ -1,0 +1,77 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+
+const base = import.meta.env.BASE_URL;
+---
+
+<DocsLayout title="FAQ" description="Frequently asked questions about EGC - Extended Global Context." current="faq">
+
+  <div class="pb-2 mb-8 border-b border-gray-200 dark:border-gray-800">
+    <p class="text-xs font-semibold uppercase tracking-widest text-egc-600 dark:text-egc-400 mb-2">Reference</p>
+    <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">FAQ</h1>
+    <p class="text-gray-600 dark:text-gray-400">Frequently asked questions about EGC.</p>
+  </div>
+
+  <section class="mb-10">
+    <div class="space-y-4" id="faq-list">
+      {[
+        {
+          q: 'Does EGC send my project data anywhere?',
+          a: 'No. All state is stored locally at ~/.egc/. Nothing is sent to external servers. The MCP servers communicate over stdio with your local AI tool only.',
+        },
+        {
+          q: 'Which tools are supported?',
+          a: 'Claude Code, Cursor, Codex CLI, Gemini CLI, Antigravity CLI, OpenCode, Kiro, Trae, and CodeBuddy. The installer auto-detects which ones are installed.',
+        },
+        {
+          q: 'Does the AI need to call get_state manually?',
+          a: 'No. The cognitive bootstrap injected by install.sh writes the protocol into each tool\'s global instruction file. The AI is instructed to call get_state at the start of each session automatically. For tools where the AI instruction file isn\'t read automatically (varies by tool version), you may need to add the project\'s CLAUDE.md or equivalent to the session context manually.',
+        },
+        {
+          q: 'Can I use EGC with multiple projects?',
+          a: 'Yes. State is stored per-project, derived from the absolute path of the project directory. Open different projects in different sessions and each gets its own memory.',
+        },
+        {
+          q: 'What happens if the state file gets corrupted?',
+          a: 'Run egc repair to restore managed files. State files are plain Markdown — you can also edit or delete them manually. The SQLite database is separate from the Markdown files.',
+        },
+        {
+          q: 'Is the prompt library required?',
+          a: 'No. It\'s optional and asked during installation. The MCP servers (memory and guardian) work independently of the prompt library.',
+        },
+        {
+          q: 'How is state different from a CLAUDE.md or .cursorrules file?',
+          a: 'Those files are static and committed to the repo. EGC\'s state is dynamic and project-local: the AI writes to it every session, accumulating decisions and preferences over time. They complement each other — static rules for repo conventions, EGC state for session continuity.',
+        },
+        {
+          q: 'Can I contribute?',
+          a: 'Yes. Read CONTRIBUTING.md on GitHub. PRs are welcome for bug fixes, new tool integrations, and prompt library additions.',
+        },
+      ].map((item, i) => (
+        <details class="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 group" open={i === 0}>
+          <summary class="px-5 py-4 cursor-pointer flex items-center justify-between list-none">
+            <span class="text-sm font-semibold text-gray-900 dark:text-white">{item.q}</span>
+            <svg class="w-4 h-4 text-gray-400 shrink-0 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </summary>
+          <div class="px-5 pb-4">
+            <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">{item.a}</p>
+          </div>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 p-6">
+    <p class="text-sm font-semibold text-gray-900 dark:text-white mb-2">Still have questions?</p>
+    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Open an issue on GitHub or check the source — everything is open.</p>
+    <a href="https://github.com/Fmarzochi/EGC/issues" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-sm font-semibold text-egc-600 dark:text-egc-400 hover:underline">
+      Open an issue
+      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+      </svg>
+    </a>
+  </section>
+
+</DocsLayout>

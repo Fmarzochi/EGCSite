@@ -1,0 +1,134 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+
+const base = import.meta.env.BASE_URL;
+---
+
+<DocsLayout title="egc-memory" description="The egc-memory MCP server provides persistent cross-session memory for AI coding tools." current="memory">
+
+  <div class="pb-2 mb-8 border-b border-gray-200 dark:border-gray-800">
+    <p class="text-xs font-semibold uppercase tracking-widest text-egc-600 dark:text-egc-400 mb-2">MCP Servers</p>
+    <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-3 font-mono">egc-memory</h1>
+    <p class="text-gray-600 dark:text-gray-400">Persistent cross-session memory for AI coding tools. The one you'll use every session.</p>
+  </div>
+
+  <!-- Overview -->
+  <section class="mb-10">
+    <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Overview</h2>
+    <p class="text-gray-600 dark:text-gray-400 mb-4">egc-memory is a local MCP server that stores project state in a SQLite database at <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">~/.egc/state/</code>. The AI reads it at the start of each session and writes to it at the end.</p>
+    <p class="text-gray-600 dark:text-gray-400">State is stored per-project as plain Markdown files. Human-readable, version-control friendly, never leaves your machine.</p>
+  </section>
+
+  <!-- Tools reference -->
+  <section class="mb-10">
+    <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Tools</h2>
+    <div class="space-y-4">
+      {[
+        {
+          name: 'get_state',
+          signature: 'get_state({ project_path?: string })',
+          description: 'Reads the state file for the current project. Call this at the start of every session to restore context. If project_path is omitted, uses the current working directory.',
+          returns: 'Markdown string with project context, active decisions, preferences, and next steps.',
+        },
+        {
+          name: 'update_state',
+          signature: 'update_state({ project_path?: string, context?: string, decisions?: Decision[], avoid?: Avoid[], preferences?: string[], next?: string[] })',
+          description: 'Saves this session\'s decisions and preferences. Merges with existing state — does not erase previous memory. Only include fields that changed this session.',
+          returns: 'Confirmation string with the updated state file path.',
+        },
+        {
+          name: 'store_decision',
+          signature: 'store_decision({ project_path?: string, what: string, why: string, tags?: string[] })',
+          description: 'Persists a single decision to SQLite with a timestamp. Useful for decisions you want to query by date or tag later.',
+          returns: 'Confirmation with the stored decision ID.',
+        },
+        {
+          name: 'query_history',
+          signature: 'query_history({ project_path?: string, limit?: number, since?: string, tag?: string })',
+          description: 'Returns past decisions filtered by timestamp and/or tag. Useful for auditing architectural decisions over time.',
+          returns: 'Array of decision records with timestamps and tags.',
+        },
+      ].map(tool => (
+        <div class="rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden">
+          <div class="flex items-center gap-3 px-5 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+            <code class="text-sm font-mono font-bold text-egc-700 dark:text-egc-400">{tool.name}</code>
+          </div>
+          <div class="p-5">
+            <pre class="bg-gray-900 text-gray-300 text-xs font-mono p-3 rounded-lg overflow-x-auto mb-4"><code>{tool.signature}</code></pre>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">{tool.description}</p>
+            <p class="text-xs text-gray-500 dark:text-gray-500"><span class="font-semibold text-gray-700 dark:text-gray-300">Returns:</span> {tool.returns}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- State file format -->
+  <section class="mb-10">
+    <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">State file format</h2>
+    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">State files live at <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">~/.egc/state/&lt;project-slug&gt;.md</code>. The slug is derived from the absolute path of the project directory.</p>
+    <div class="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-800">
+      <div class="px-4 py-2.5 bg-gray-900 border-b border-gray-700">
+        <span class="text-xs text-gray-400 font-mono">~/.egc/state/Projetos--my-app.md</span>
+      </div>
+      <pre class="bg-gray-900 p-5 text-sm font-mono text-gray-300 overflow-x-auto m-0 rounded-none"><code><span class="text-gray-400"># Project State</span>
+<span class="text-egc-400">project:</span> /home/user/Projetos/my-app
+<span class="text-egc-400">updated:</span> 2026-06-05T01:00:00.000Z
+
+<span class="text-gray-400">## Context</span>
+Next.js 15 app with PostgreSQL and row-level security.
+Auth uses sessions via iron-session, not JWT.
+
+<span class="text-gray-400">## Active Decisions</span>
+- Drizzle ORM over Prisma: better TypeScript inference, lighter
+- No client components unless strictly needed
+
+<span class="text-gray-400">## Avoid</span>
+- Prisma: tried it, generated types were too verbose
+- JWT: dropped after audit flagged refresh token storage
+
+<span class="text-gray-400">## Preferences</span>
+- Terse responses, no summaries
+- Functional components only
+
+<span class="text-gray-400">## Next</span>
+- Add RLS policies to the projects table
+- Wire up the invite flow</code></pre>
+    </div>
+  </section>
+
+  <!-- Session protocol -->
+  <section class="mb-10">
+    <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Session protocol</h2>
+    <p class="text-sm text-gray-600 dark:text-gray-400 mb-6">The cognitive bootstrap injected by the installer writes this protocol into every tool's global instruction file. The AI is instructed to run it automatically.</p>
+    <div class="grid sm:grid-cols-2 gap-4">
+      <div class="rounded-xl border border-egc-200 dark:border-egc-900 bg-egc-50 dark:bg-egc-950/20 p-5">
+        <div class="flex items-center gap-2 mb-3">
+          <svg class="w-4 h-4 text-egc-600 dark:text-egc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          <span class="text-sm font-semibold text-egc-700 dark:text-egc-400">Session start</span>
+        </div>
+        <pre class="bg-egc-900/10 dark:bg-egc-900/30 text-xs font-mono text-gray-700 dark:text-gray-300 p-3 rounded-lg overflow-x-auto"><code>get_state(&#123;&#125;)</code></pre>
+        <p class="text-xs text-gray-600 dark:text-gray-400 mt-2">AI reads project state and picks up where the last session ended.</p>
+      </div>
+      <div class="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5">
+        <div class="flex items-center gap-2 mb-3">
+          <svg class="w-4 h-4 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 10a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z"/>
+          </svg>
+          <span class="text-sm font-semibold text-gray-700 dark:text-gray-300">Session end</span>
+        </div>
+        <pre class="bg-gray-100 dark:bg-gray-800 text-xs font-mono text-gray-700 dark:text-gray-300 p-3 rounded-lg overflow-x-auto"><code>update_state(&#123;
+  context: "...",
+  decisions: [...],
+  next: [...]
+&#125;)</code></pre>
+        <p class="text-xs text-gray-600 dark:text-gray-400 mt-2">AI saves decisions, what to avoid, preferences, and next steps.</p>
+      </div>
+    </div>
+  </section>
+
+</DocsLayout>

@@ -4,17 +4,17 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 
 <DocsLayout title="Architecture" description="How EGC works internally: two MCP servers, local SQLite, plain Markdown state files, one install command." current="architecture">
 
-  <div class="pb-2 mb-8 border-b border-gray-200 dark:border-gray-800">
-    <p class="text-xs font-semibold uppercase tracking-widest text-egc-600 dark:text-egc-400 mb-2">Reference</p>
-    <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">Architecture</h1>
-    <p class="text-gray-600 dark:text-gray-400">Two MCP servers, local SQLite, plain Markdown state files, one install command. No cloud, no daemon, no config server.</p>
+  <div class="pb-2 mb-8 border-b border-gray-200">
+    <p class="text-xs font-semibold uppercase tracking-widest text-egc-600 mb-2">Reference</p>
+    <h1 class="text-3xl font-bold text-gray-900 mb-3">Architecture</h1>
+    <p class="text-gray-600">Two MCP servers, local SQLite, plain Markdown state files, one install command. No cloud, no daemon, no config server.</p>
   </div>
 
   <!-- Diagram -->
   <section class="mb-10">
-    <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Overview</h2>
-    <div class="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 font-mono text-sm overflow-x-auto">
-      <pre class="text-gray-700 dark:text-gray-300 text-xs leading-relaxed"><code>
+    <h2 class="text-xl font-bold text-gray-900 mb-4">Overview</h2>
+    <div class="rounded-xl border border-gray-200 bg-white p-6 font-mono text-sm overflow-x-auto">
+      <pre class="text-gray-700 text-xs leading-relaxed"><code>
   ┌─────────────────────────────────────────────────────┐
   │                  AI Tool (Claude, Cursor…)           │
   │                                                     │
@@ -45,7 +45,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 
   <!-- Layers -->
   <section class="mb-10">
-    <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Layers</h2>
+    <h2 class="text-xl font-bold text-gray-900 mb-4">Layers</h2>
     <div class="space-y-4">
       {[
         {
@@ -74,11 +74,11 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
           desc: 'State files are plain Markdown, one per project. SQLite database stores structured decision history for querying. Everything is local, human-readable, and version-control friendly.',
         },
       ].map(step => (
-        <div class="flex gap-4 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5">
-          <div class="shrink-0 w-7 h-7 rounded-full bg-egc-100 dark:bg-egc-900/30 text-egc-700 dark:text-egc-400 flex items-center justify-center text-sm font-bold">{step.n}</div>
+        <div class="flex gap-4 rounded-xl border border-gray-200 bg-white p-5">
+          <div class="shrink-0 w-7 h-7 rounded-full bg-egc-100 text-egc-700 flex items-center justify-center text-sm font-bold">{step.n}</div>
           <div>
-            <p class="font-semibold text-gray-900 dark:text-white text-sm mb-1">{step.title}</p>
-            <p class="text-sm text-gray-600 dark:text-gray-400">{step.desc}</p>
+            <p class="font-semibold text-gray-900 text-sm mb-1">{step.title}</p>
+            <p class="text-sm text-gray-600">{step.desc}</p>
           </div>
         </div>
       ))}
@@ -87,11 +87,11 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 
   <!-- Design notes -->
   <section class="mb-10">
-    <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Design notes</h2>
-    <div class="rounded-xl border border-amber-200 dark:border-amber-900/50 bg-amber-50 dark:bg-amber-950/20 p-6">
-      <h3 class="font-semibold text-amber-900 dark:text-amber-400 mb-2">Architectural consolidation</h3>
-      <p class="text-sm text-amber-800 dark:text-amber-300 leading-relaxed">Earlier versions of EGC explored distributed runtime concepts: FederationManager, ReplayEngine, cognitive orchestration layers, multi-provider dispatching. Those experiments were real explorations, not deception. They helped define what the project actually needed to be.</p>
-      <p class="text-sm text-amber-800 dark:text-amber-300 leading-relaxed mt-3">The current runtime reflects that consolidation. Two MCP servers, local SQLite, plain Markdown state files, one install command. The branch <code class="text-xs bg-amber-100 dark:bg-amber-900/30 px-1.5 py-0.5 rounded font-mono">legacy-runtime</code> preserves the full historical architecture for anyone who wants to study the evolution.</p>
+    <h2 class="text-xl font-bold text-gray-900 mb-4">Design notes</h2>
+    <div class="rounded-xl border border-amber-200 bg-amber-50 p-6">
+      <h3 class="font-semibold text-amber-900 mb-2">Architectural consolidation</h3>
+      <p class="text-sm text-amber-800 leading-relaxed">Earlier versions of EGC explored distributed runtime concepts: FederationManager, ReplayEngine, cognitive orchestration layers, multi-provider dispatching. Those experiments were real explorations, not deception. They helped define what the project actually needed to be.</p>
+      <p class="text-sm text-amber-800 leading-relaxed mt-3">The current runtime reflects that consolidation. Two MCP servers, local SQLite, plain Markdown state files, one install command. The branch <code class="text-xs bg-amber-100 px-1.5 py-0.5 rounded font-mono">legacy-runtime</code> preserves the full historical architecture for anyone who wants to study the evolution.</p>
     </div>
   </section>
 

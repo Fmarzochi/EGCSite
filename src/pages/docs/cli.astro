@@ -1,0 +1,89 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+---
+
+<DocsLayout title="CLI Reference" description="All egc CLI commands explained." current="cli">
+
+  <div class="pb-2 mb-8 border-b border-gray-200 dark:border-gray-800">
+    <p class="text-xs font-semibold uppercase tracking-widest text-egc-600 dark:text-egc-400 mb-2">Reference</p>
+    <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">CLI Reference</h1>
+    <p class="text-gray-600 dark:text-gray-400">All commands available after running <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">sh install.sh</code>.</p>
+  </div>
+
+  <section class="mb-10">
+    <div class="space-y-4">
+      {[
+        {
+          cmd: 'egc doctor',
+          desc: 'Verify both servers are built, the database is accessible, and all detected tools have EGC registered. The first command to run after installation.',
+          example: `$ egc doctor
+
+egc-guardian  running
+egc-memory    running
+database      ok
+claude code   registered
+cursor        registered`,
+        },
+        {
+          cmd: 'egc status',
+          desc: 'Show the last 5 decisions saved to memory for the current project.',
+          example: `$ egc status
+
+[2026-06-05] Moved from Prisma to Drizzle ORM
+[2026-06-04] Dropped JWT in favor of iron-session
+[2026-06-03] Settled on functional-only components
+[2026-06-02] PostgreSQL with row-level security
+[2026-06-01] Next.js 15 App Router`,
+        },
+        {
+          cmd: 'egc install',
+          desc: 'Install or reinstall the prompt library to a target harness. Useful when you add a new tool after the initial install.',
+          example: `$ egc install --target cursor`,
+        },
+        {
+          cmd: 'egc catalog',
+          desc: 'List available profiles and components in the prompt library.',
+          example: `$ egc catalog
+
+agents    62
+skills   228
+commands  74
+rules    111`,
+        },
+        {
+          cmd: 'egc repair',
+          desc: 'Restore drifted or missing managed files. Re-injects the cognitive bootstrap if it was overwritten.',
+          example: `$ egc repair
+
+✓ ~/.claude/CLAUDE.md restored
+✓ ~/.gemini/GEMINI.md restored`,
+        },
+        {
+          cmd: 'egc auto-update',
+          desc: 'Pull the latest changes from GitHub and reinstall managed targets.',
+          example: `$ egc auto-update
+
+Pulling latest from origin/main...
+Building egc-guardian... done
+Building egc-memory...  done
+Reinstalling targets...
+✓ claude code updated
+✓ cursor updated`,
+        },
+      ].map(item => (
+        <div class="rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden">
+          <div class="px-5 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+            <code class="text-sm font-mono font-bold text-egc-700 dark:text-egc-400">{item.cmd}</code>
+          </div>
+          <div class="p-5">
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">{item.desc}</p>
+            <div class="rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700">
+              <pre class="bg-gray-900 p-4 text-xs font-mono text-gray-300 overflow-x-auto m-0"><code>{item.example}</code></pre>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+</DocsLayout>

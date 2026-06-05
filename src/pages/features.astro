@@ -1,0 +1,110 @@
+---
+import DocsLayout from '../layouts/DocsLayout.astro';
+
+const base = import.meta.env.BASE_URL;
+---
+
+<DocsLayout title="Features" description="Full feature overview: persistent memory, prompt library, multi-tool support, security, and more." current="features">
+
+  <div class="pb-2 mb-8 border-b border-gray-200 dark:border-gray-800">
+    <p class="text-xs font-semibold uppercase tracking-widest text-egc-600 dark:text-egc-400 mb-2">Getting Started</p>
+    <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">Features</h1>
+    <p class="text-gray-600 dark:text-gray-400">Everything EGC provides out of the box.</p>
+  </div>
+
+  <!-- Core features -->
+  <section class="mb-10">
+    <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Core</h2>
+    <div class="grid sm:grid-cols-2 gap-4">
+      {[
+        { title: 'Persistent memory', desc: 'State is saved at the end of each session and restored at the start. Decisions, preferences, and next steps survive window closes and tool switches.', icon: '🧠' },
+        { title: 'Multi-tool', desc: 'Works with 9 AI coding tools. Install once and EGC registers itself in every tool you have installed.', icon: '🔌' },
+        { title: 'Local-first', desc: 'All state stays on your machine at ~/.egc/. Nothing is sent externally. Human-readable plain Markdown.', icon: '🔒' },
+        { title: 'Zero config', desc: 'sh install.sh handles everything. Detects your tools, builds the servers, bootstraps the protocol.', icon: '⚡' },
+        { title: 'Guardian layer', desc: 'egc-guardian blocks shell injection, unsafe writes, and dangerous commands before they execute.', icon: '🛡️' },
+        { title: 'Decision history', desc: 'Every architectural decision is stored in SQLite with a timestamp. Query by date or tag.', icon: '📋' },
+      ].map(card => (
+        <div class="flex gap-4 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5">
+          <div class="text-2xl shrink-0">{card.icon}</div>
+          <div>
+            <h3 class="font-semibold text-gray-900 dark:text-white text-sm mb-1">{card.title}</h3>
+            <p class="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">{card.desc}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Prompt library -->
+  <section class="mb-10">
+    <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Prompt library</h2>
+    <p class="text-sm text-gray-600 dark:text-gray-400 mb-5">Optional. Asked during installation. Written from real experience, not generated.</p>
+    <div class="rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden mb-5">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+            <th class="px-5 py-3 text-left font-semibold text-gray-700 dark:text-gray-300">Type</th>
+            <th class="px-5 py-3 text-center font-semibold text-gray-700 dark:text-gray-300">Count</th>
+            <th class="px-5 py-3 text-left font-semibold text-gray-700 dark:text-gray-300">What it is</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
+          {[
+            { type: 'Agents', count: '62', desc: 'Persona and behavior definitions' },
+            { type: 'Skills', count: '228+', desc: 'Domain-specific workflow runbooks' },
+            { type: 'Commands', count: '74', desc: 'Command definitions and lifecycle hooks' },
+            { type: 'Rules', count: '111', desc: 'Constraints and governance directives' },
+          ].map(row => (
+            <tr class="bg-white dark:bg-gray-950">
+              <td class="px-5 py-3 font-mono text-xs text-egc-700 dark:text-egc-400">{row.type}</td>
+              <td class="px-5 py-3 text-center font-bold text-gray-900 dark:text-white">{row.count}</td>
+              <td class="px-5 py-3 text-gray-600 dark:text-gray-400">{row.desc}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="text-sm text-gray-600 dark:text-gray-400">Organized per harness: works in <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">.cursor/</code>, <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">.claude/</code>, <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">.gemini/</code>, and more. Switch tools and the same workflows follow you.</p>
+  </section>
+
+  <!-- Supported tools -->
+  <section class="mb-10">
+    <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Supported tools</h2>
+    <div class="rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+            <th class="px-5 py-3 text-left font-semibold text-gray-700 dark:text-gray-300">Tool</th>
+            <th class="px-5 py-3 text-center font-semibold text-gray-700 dark:text-gray-300">MCP</th>
+            <th class="px-5 py-3 text-left font-semibold text-gray-700 dark:text-gray-300">Bootstrap</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
+          {[
+            { tool: 'Claude Code', mcp: true, bootstrap: '~/.claude/CLAUDE.md' },
+            { tool: 'Antigravity CLI', mcp: true, bootstrap: '~/.gemini/GEMINI.md' },
+            { tool: 'Gemini CLI', mcp: true, bootstrap: '~/.gemini/GEMINI.md' },
+            { tool: 'Cursor', mcp: true, bootstrap: 'global cursor.rules' },
+            { tool: 'Codex CLI', mcp: true, bootstrap: '~/.codex/config.toml' },
+            { tool: 'OpenCode', mcp: true, bootstrap: '~/.opencode/instructions/EGC_MEMORY.md' },
+            { tool: 'Kiro', mcp: true, bootstrap: '~/.kiro/hooks/' },
+            { tool: 'Trae', mcp: false, bootstrap: '~/.trae/MEMORY.md' },
+            { tool: 'CodeBuddy', mcp: false, bootstrap: '~/.codebuddy/MEMORY.md' },
+          ].map(row => (
+            <tr class="bg-white dark:bg-gray-950">
+              <td class="px-5 py-3 font-medium text-gray-900 dark:text-white">{row.tool}</td>
+              <td class="px-5 py-3 text-center">
+                {row.mcp
+                  ? <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-egc-100 dark:bg-egc-900/30"><svg class="w-3 h-3 text-egc-600 dark:text-egc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></span>
+                  : <span class="text-xs text-gray-400">context</span>
+                }
+              </td>
+              <td class="px-5 py-3 font-mono text-xs text-gray-500 dark:text-gray-400">{row.bootstrap}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</DocsLayout>

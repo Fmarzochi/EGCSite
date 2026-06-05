@@ -1,0 +1,22 @@
+{
+  "name": "egcsite",
+  "version": "1.0.0",
+  "description": "Official website for EGC - Extended Global Context",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fmarzochi/EGCSite.git"
+  },
+  "license": "MIT",
+  "type": "module",
+  "devDependencies": {
+    "@astrojs/tailwind": "^6.0.2",
+    "astro": "^6.4.4",
+    "tailwindcss": "^3.4.19"
+  }
+}

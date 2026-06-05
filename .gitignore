@@ -231,3 +231,72 @@ journals/
 # LEGACY RUNTIME — uncompiled, not imported
 # =========================================================
 mcp/servers/egc-guardian/src/cognitive-orchestrator/
+
+# =========================================================
+# RAW ASSETS — originals are served from public/
+# =========================================================
+assets/
+
+# =========================================================
+# ASTRO FRAMEWORK — cache and SSR artifacts
+# =========================================================
+.astro/
+.vercel/
+.netlify/
+
+# =========================================================
+# GITHUB PAGES — Jekyll and static site artifacts
+# =========================================================
+_site/
+.jekyll-cache/
+.jekyll-metadata
+.nojekyll
+
+# =========================================================
+# EXTRA PACKAGE MANAGER ARTIFACTS
+# =========================================================
+.pnpm-store/
+.bun/
+bun.lockb
+.yarn/
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+.npm/
+
+# =========================================================
+# MERGE & PATCH ARTIFACTS — conflict resolution leftovers
+# =========================================================
+*.orig
+*.rej
+*.BACKUP.*
+*.BASE.*
+*.LOCAL.*
+*.REMOTE.*
+*_BACKUP_*.txt
+*_BASE_*.txt
+*_LOCAL_*.txt
+*_REMOTE_*.txt
+
+# =========================================================
+# STORYBOOK & VISUAL TESTING — compiled output
+# =========================================================
+storybook-static/
+chromatic-archives/
+
+# =========================================================
+# PLAYWRIGHT & E2E — test artifacts
+# =========================================================
+test-results/
+playwright-report/
+playwright/.cache/
+blob-report/
+
+# =========================================================
+# IMAGE OPTIMIZATION — generated caches
+# =========================================================
+.image-cache/
+.astro-image/
+public/_image/

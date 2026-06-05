@@ -19,7 +19,7 @@ const canonicalURL = canonical ?? Astro.url.href;
 ---
 
 <!doctype html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -39,9 +39,8 @@ const canonicalURL = canonical ?? Astro.url.href;
 
     <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
     <title>{title}</title>
-
   </head>
-  <body class="bg-white text-gray-900 antialiased">
+  <body class="bg-gray-950 text-gray-100 antialiased">
     <slot />
   </body>
 </html>

@@ -4,10 +4,10 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 
 <DocsLayout title="CLI Reference" description="All egc CLI commands explained." current="cli">
 
-  <div class="pb-2 mb-8 border-b border-gray-200">
-    <p class="text-xs font-semibold uppercase tracking-widest text-egc-600 mb-2">Reference</p>
-    <h1 class="text-3xl font-bold text-gray-900 mb-3">CLI Reference</h1>
-    <p class="text-gray-600">All commands available after running <code class="text-xs bg-gray-100 px-1.5 py-0.5 rounded font-mono">sh install.sh</code>.</p>
+  <div class="pb-2 mb-8 border-b border-gray-200 dark:border-gray-800">
+    <p class="text-xs font-semibold uppercase tracking-widest text-egc-600 dark:text-egc-400 mb-2">Reference</p>
+    <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">CLI Reference</h1>
+    <p class="text-gray-600 dark:text-gray-400">All commands available after running <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">sh install.sh</code>.</p>
   </div>
 
   <section class="mb-10">
@@ -71,13 +71,13 @@ Reinstalling targets...
 ✓ cursor updated`,
         },
       ].map(item => (
-        <div class="rounded-xl border border-gray-200 overflow-hidden">
-          <div class="px-5 py-3 bg-gray-50 border-b border-gray-200">
-            <code class="text-sm font-mono font-bold text-egc-700">{item.cmd}</code>
+        <div class="rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden">
+          <div class="px-5 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+            <code class="text-sm font-mono font-bold text-egc-700 dark:text-egc-400">{item.cmd}</code>
           </div>
           <div class="p-5">
-            <p class="text-sm text-gray-600 mb-4">{item.desc}</p>
-            <div class="rounded-lg overflow-hidden border border-gray-200">
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">{item.desc}</p>
+            <div class="rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700">
               <pre class="bg-gray-900 p-4 text-xs font-mono text-gray-300 overflow-x-auto m-0"><code>{item.example}</code></pre>
             </div>
           </div>

@@ -1,0 +1,233 @@
+# =========================================================
+# EGC — ULTIMATE .GITIGNORE (MCP ERA)
+# Everything Gemini Core - Cognitive Infrastructure
+# =========================================================
+
+# =========================================================
+# DEPENDENCIES
+# =========================================================
+node_modules/
+bower_components/
+vendor/
+.yarn/cache/
+.pnp.*
+
+# =========================================================
+# BUILD / DIST
+# =========================================================
+dist/
+build/
+out/
+target/
+tmp/
+temp/
+.next/
+.turbo/
+*.tsbuildinfo
+
+# =========================================================
+# LOGS & TELEMETRY
+# =========================================================
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+test_full_output.log
+
+# =========================================================
+# ENVIRONMENT / SECRETS / TOKENS
+# =========================================================
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+secrets/
+credentials/
+tokens/
+
+# =========================================================
+# DATABASES & RUNTIME PERSISTENCE
+# Protects egc-memory operational state and concurrency files
+# =========================================================
+*.sqlite
+*.sqlite3
+*.db
+*.db-wal
+*.db-shm
+
+# =========================================================
+# HOST RUNTIME ARTIFACTS (AGY, Cursor, Claude, Codex)
+# Prevents host-specific caches and indices from leaking
+# =========================================================
+.ai/
+.claude/
+.gemini/
+.openai/
+.anthropic/
+.mcp/
+.cursor/cache/
+.cursor/index/
+.codex/cache/
+.claude-cache/
+.gemini-cache/
+.ai-history/
+
+# =========================================================
+# LOCAL ARCHIVES & DEPRECATED STATE
+# =========================================================
+artifacts/
+archive/
+traces/
+backups/
+snapshots/
+*.tar
+*.tar.gz
+*.zip
+
+# =========================================================
+# PRIVATE INTERNAL AUDITS & FORENSICS
+# =========================================================
+.reports/
+.forensics/
+.internal/
+.runtime-audits/
+.audit/
+docs/private-audits/
+docs/runtime/*.log
+docs/runtime/*.json
+*_REPORT.md
+*_FORENSICS.md
+
+# =========================================================
+# OS & IDE JUNK
+# =========================================================
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# =========================================================
+# PYTHON LEGACY & TESTS JUNK
+# =========================================================
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+coverage/
+.nyc_output/
+
+# =========================================================
+# KEEP: CORE INFRASTRUCTURE (MCP-FIRST)
+# Defines the real operational infrastructure layer
+# =========================================================
+!mcp/
+!mcp/**
+!installer/
+!installer/**
+!tests/
+!tests/**
+!docs/
+!docs/**
+
+# =========================================================
+# KEEP: OPERATIONAL TAXONOMY & COGNITIVE ASSETS
+# The semantic payload and execution archetypes of EGC
+# =========================================================
+!skills/
+!skills/**
+!agents/
+!agents/**
+!commands/
+!commands/**
+!hooks/
+!hooks/**
+!overlays/
+!overlays/**
+!routing/
+!routing/**
+!rules/
+!rules/**
+!examples/
+!examples/**
+!manifests/
+!manifests/**
+!schemas/
+!schemas/**
+
+# =========================================================
+# MEMORY GOVERNANCE: PUBLIC TEMPLATES VS PRIVATE STATE
+# Blocks personal cognition while tracking structural assets
+# =========================================================
+memory/**
+!memory/
+!memory/**/*.template.md
+!memory/**/*.template.json
+
+# =========================================================
+# KEEP: ROOT CONFIGURATION & MANIFESTS
+# =========================================================
+!package.json
+!package-lock.json
+!tsconfig.json
+!README.md
+!SECURITY.md
+!CONTRIBUTING.md
+!RULES.md
+!.gitignore
+!.prettierrc
+!eslint.config.js
+!agent.yaml
+!VERSION
+
+# =========================================================
+# RE-BLOCK ARTIFACTS INSIDE WHITELISTED PATHS
+# Prevents accidental inclusion of compiled/cached data
+# =========================================================
+**/node_modules/
+**/dist/
+**/build/
+**/*.log
+**/*.tmp
+**/*.bak
+**/*.sqlite
+**/*.db
+**/*.db-wal
+**/*.db-shm
+**/.DS_Store
+
+# =========================================================
+# GENERATED LOCAL CONFIGS — contain absolute paths
+# =========================================================
+.mcp.egc.json
+
+# =========================================================
+# SYNTHETIC ARTIFACTS — not real data
+# =========================================================
+benchmark_results.json
+mcp/cognitive_*.mjs
+mcp/cognitive_*.json
+mcp/dump_task.mjs
+mcp/governance_baseline.json
+mcp/heuristic_registry.json
+mcp/provider_usage.json
+
+# =========================================================
+# PERSONAL EXPLORATION — never publish
+# =========================================================
+archaeology/
+journals/
+
+# =========================================================
+# LEGACY RUNTIME — uncompiled, not imported
+# =========================================================
+mcp/servers/egc-guardian/src/cognitive-orchestrator/

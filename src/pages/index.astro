@@ -18,10 +18,18 @@ const base = b.endsWith('/') ? b : b + '/';
         <div class="absolute left-1/2 top-0 -translate-x-1/2 w-[900px] h-[500px] rounded-full bg-egc-500/5 blur-3xl dark:bg-egc-500/10"></div>
       </div>
       <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-egc-50 dark:bg-egc-950/50 border border-egc-200 dark:border-egc-900 text-egc-700 dark:text-egc-300 text-xs font-medium mb-6">
-          <span class="w-1.5 h-1.5 rounded-full bg-egc-500 animate-pulse"></span>
-          v1.0.0 now available
-          <a href="https://github.com/Fmarzochi/EGC/releases" target="_blank" rel="noopener noreferrer" class="underline underline-offset-2">See release</a>
+        <div class="flex flex-wrap items-center justify-center gap-2 mb-6">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-egc-50 dark:bg-egc-950/50 border border-egc-200 dark:border-egc-900 text-egc-700 dark:text-egc-300 text-xs font-medium">
+            <span class="w-1.5 h-1.5 rounded-full bg-egc-500 animate-pulse"></span>
+            v1.0.0 now available
+            <a href="https://github.com/Fmarzochi/EGC/releases" target="_blank" rel="noopener noreferrer" class="underline underline-offset-2">See release</a>
+          </div>
+          <a href="https://github.com/Fmarzochi/EGC" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gray-900 dark:bg-gray-800 border border-gray-700 text-gray-100 text-xs font-medium hover:bg-gray-700 transition-colors">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+            </svg>
+            Fmarzochi/EGC
+          </a>
         </div>
 
         <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-gray-900 dark:text-white mb-6 leading-tight">
@@ -183,22 +191,19 @@ const base = b.endsWith('/') ? b : b + '/';
       </div>
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
         {[
-          { name: 'Claude Code',  badge: 'MCP + Bootstrap', icon: 'https://cdn.simpleicons.org/anthropic',     bg: 'bg-[#CC785C]/10 dark:bg-[#CC785C]/20' },
-          { name: 'Cursor',       badge: 'MCP + Bootstrap', icon: 'https://cdn.simpleicons.org/cursor',        bg: 'bg-gray-100 dark:bg-gray-800' },
-          { name: 'Codex CLI',    badge: 'MCP + Bootstrap', icon: 'https://cdn.simpleicons.org/openai',        bg: 'bg-gray-100 dark:bg-gray-800' },
-          { name: 'Gemini CLI',   badge: 'MCP + Bootstrap', icon: 'https://cdn.simpleicons.org/googlegemini',  bg: 'bg-blue-50 dark:bg-blue-950/30' },
-          { name: 'OpenCode',     badge: 'MCP + Bootstrap', icon: null,                                        bg: 'bg-gray-100 dark:bg-gray-800' },
-          { name: 'Kiro',         badge: 'MCP + Bootstrap', icon: null,                                        bg: 'bg-orange-50 dark:bg-orange-950/30' },
-          { name: 'Trae',         badge: 'Context + Bootstrap', icon: null,                                    bg: 'bg-gray-100 dark:bg-gray-800' },
-          { name: 'CodeBuddy',    badge: 'Context + Bootstrap', icon: null,                                    bg: 'bg-gray-100 dark:bg-gray-800' },
-          { name: 'Antigravity',  badge: 'MCP + Bootstrap', icon: 'https://cdn.simpleicons.org/google',        bg: 'bg-gray-100 dark:bg-gray-800' },
+          { name: 'Claude Code',  badge: 'MCP + Bootstrap', icon: `${base}tools/anthropic.svg`,    color: 'text-[#CC785C]', bg: 'bg-[#CC785C]/10 dark:bg-[#CC785C]/20' },
+          { name: 'Cursor',       badge: 'MCP + Bootstrap', icon: `${base}tools/cursor.svg`,       color: 'text-gray-900 dark:text-white', bg: 'bg-gray-100 dark:bg-gray-800' },
+          { name: 'Codex CLI',    badge: 'MCP + Bootstrap', icon: `${base}tools/openai.svg`,       color: 'text-gray-900 dark:text-white', bg: 'bg-gray-100 dark:bg-gray-800' },
+          { name: 'Gemini CLI',   badge: 'MCP + Bootstrap', icon: `${base}tools/googlegemini.svg`, color: 'text-blue-500', bg: 'bg-blue-50 dark:bg-blue-950/30' },
+          { name: 'OpenCode',     badge: 'MCP + Bootstrap', icon: `${base}tools/opencode.svg`,     color: 'text-egc-600 dark:text-egc-400', bg: 'bg-egc-50 dark:bg-egc-950/30' },
+          { name: 'Kiro',         badge: 'MCP + Bootstrap', icon: `${base}tools/kiro.svg`,         color: 'text-orange-500', bg: 'bg-orange-50 dark:bg-orange-950/30' },
+          { name: 'Trae',         badge: 'Context + Bootstrap', icon: `${base}tools/trae.svg`,     color: 'text-blue-600 dark:text-blue-400', bg: 'bg-blue-50 dark:bg-blue-950/30' },
+          { name: 'CodeBuddy',    badge: 'Context + Bootstrap', icon: `${base}tools/codebuddy.svg`,color: 'text-purple-500', bg: 'bg-purple-50 dark:bg-purple-950/30' },
+          { name: 'Antigravity',  badge: 'MCP + Bootstrap', icon: `${base}tools/bytedance.svg`,    color: 'text-gray-900 dark:text-white', bg: 'bg-gray-100 dark:bg-gray-800' },
         ].map(tool => (
           <div class="flex flex-col items-center gap-2 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 text-center hover:border-egc-300 dark:hover:border-egc-800 transition-colors">
             <div class={`w-10 h-10 rounded-lg flex items-center justify-center ${tool.bg}`}>
-              {tool.icon
-                ? <img src={tool.icon} alt={tool.name} class="w-6 h-6 object-contain dark:invert" loading="lazy" />
-                : <span class="text-lg font-bold text-gray-500 dark:text-gray-400">{tool.name[0]}</span>
-              }
+              <img src={tool.icon} alt={tool.name} class={`w-6 h-6 object-contain ${tool.color}`} loading="lazy" style="fill:currentColor" />
             </div>
             <div class="text-xs font-semibold text-gray-900 dark:text-gray-100">{tool.name}</div>
             <div class="text-xs text-egc-600 dark:text-egc-400">{tool.badge}</div>

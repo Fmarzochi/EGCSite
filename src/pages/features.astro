@@ -1,7 +1,8 @@
 ---
 import DocsLayout from '../layouts/DocsLayout.astro';
 
-const base = import.meta.env.BASE_URL;
+const b = import.meta.env.BASE_URL;
+const base = b.endsWith('/') ? b : b + '/';
 ---
 
 <DocsLayout title="Features" description="Full feature overview: persistent memory, prompt library, multi-tool support, security, and more." current="features">

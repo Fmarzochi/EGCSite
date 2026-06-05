@@ -1,5 +1,6 @@
 ---
-const base = import.meta.env.BASE_URL;
+const b = import.meta.env.BASE_URL;
+const base = b.endsWith('/') ? b : b + '/';
 const currentPath = Astro.url.pathname;
 
 const navLinks = [
@@ -17,7 +18,9 @@ const navLinks = [
 
       <div class="flex items-center gap-6">
         <a href={base} class="flex items-center gap-2">
-          <img src={`${base}egc-logo.png`} alt="EGC logo" class="h-7 w-7 object-contain" />
+          <div class="h-7 w-7 rounded-lg bg-white border border-gray-200 dark:border-gray-700 p-0.5 shrink-0 overflow-hidden">
+            <img src={`${base}egc-logo.png`} alt="EGC logo" class="w-full h-full object-contain" />
+          </div>
           <span class="font-bold text-sm tracking-tight text-gray-900 dark:text-white">EGC</span>
         </a>
 

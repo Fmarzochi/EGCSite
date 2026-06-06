@@ -9,9 +9,7 @@ const base = b.endsWith('/') ? b : b + '/';
 
       <div class="col-span-2 md:col-span-1">
         <a href={base} class="flex items-center gap-2 mb-3">
-          <div class="h-6 w-6 rounded-full shrink-0 overflow-hidden bg-white ring-1 ring-black/5 dark:ring-white/10">
-            <img src={`${base}egc-logo.png`} alt="EGC logo" class="w-full h-full object-contain" />
-          </div>
+          <img src={`${base}egc-logo.png`} alt="EGC logo" class="h-6 w-6 object-contain shrink-0" />
           <span class="font-bold text-sm text-gray-900 dark:text-white">EGC</span>
         </a>
         <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Extended Global Context.<br/>Persistent AI memory across sessions and tools.</p>

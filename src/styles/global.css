@@ -117,3 +117,292 @@ pre {
 .dark .badge-gray {
   @apply bg-gray-800 text-gray-400;
 }
+
+/* ==========================================================================
+   ANIMATIONS & EFFECTS — EGCSite Premium Visual Layer
+   All motion is gated behind prefers-reduced-motion for accessibility.
+   ========================================================================== */
+
+/* --- Keyframes ---------------------------------------------------------- */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 8px rgba(34, 197, 94, 0.3), 0 0 24px rgba(34, 197, 94, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 16px rgba(34, 197, 94, 0.5), 0 0 48px rgba(34, 197, 94, 0.2);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes typing {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes heartbeat {
+  0%, 100% {
+    transform: scale(1);
+  }
+  14% {
+    transform: scale(1.15);
+  }
+  28% {
+    transform: scale(1);
+  }
+  42% {
+    transform: scale(1.15);
+  }
+  70% {
+    transform: scale(1);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    max-height: 0;
+    opacity: 0;
+  }
+  to {
+    max-height: 500px;
+    opacity: 1;
+  }
+}
+
+/* --- Animation utility classes ------------------------------------------ */
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out both;
+}
+
+.animate-fade-in-up-delay-1 {
+  animation: fadeInUp 0.6s ease-out 0.2s both;
+}
+
+.animate-fade-in-up-delay-2 {
+  animation: fadeInUp 0.6s ease-out 0.4s both;
+}
+
+.animate-fade-in-up-delay-3 {
+  animation: fadeInUp 0.6s ease-out 0.6s both;
+}
+
+.animate-fade-in-up-delay-4 {
+  animation: fadeInUp 0.6s ease-out 0.8s both;
+}
+
+.animate-fade-in-up-delay-5 {
+  animation: fadeInUp 0.6s ease-out 1.0s both;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(34, 197, 94, 0.08) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s linear infinite;
+}
+
+.animate-heartbeat {
+  animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+.slide-down-enter {
+  animation: slideDown 0.3s ease-out both;
+  overflow: hidden;
+}
+
+/* --- Gradient text ------------------------------------------------------- */
+
+.gradient-text {
+  background: linear-gradient(135deg, #4ade80, #16a34a, #4ade80);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShift 3s ease infinite;
+}
+
+/* --- Hover effects ------------------------------------------------------- */
+
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}
+
+.dark .hover-lift:hover {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+}
+
+.hover-glow {
+  transition: box-shadow 0.3s ease;
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
+}
+
+/* --- Glassmorphism ------------------------------------------------------- */
+
+.glass {
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  background: rgba(17, 24, 39, 0.5);
+  border: 1px solid rgba(55, 65, 81, 0.5);
+}
+
+/* --- Glow border --------------------------------------------------------- */
+
+.glow-border {
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.15), inset 0 0 8px rgba(34, 197, 94, 0.05);
+}
+
+/* --- Typing cursor ------------------------------------------------------- */
+
+.typing-cursor::after {
+  content: '▋';
+  display: inline-block;
+  color: #22c55e;
+  animation: typing 1s step-end infinite;
+  margin-left: 2px;
+}
+
+/* --- Stagger children ---------------------------------------------------- */
+
+.stagger-children > *:nth-child(1) { animation-delay: 0.1s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.2s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.3s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.4s; }
+.stagger-children > *:nth-child(5) { animation-delay: 0.5s; }
+.stagger-children > *:nth-child(6) { animation-delay: 0.6s; }
+.stagger-children > *:nth-child(7) { animation-delay: 0.7s; }
+.stagger-children > *:nth-child(8) { animation-delay: 0.8s; }
+.stagger-children > *:nth-child(9) { animation-delay: 0.9s; }
+.stagger-children > *:nth-child(10) { animation-delay: 1.0s; }
+
+/* Ensure stagger children start invisible and fill forward */
+.stagger-children > * {
+  animation-fill-mode: both;
+}
+
+/* --- Body dot grid background (dark mode) -------------------------------- */
+
+.dark body {
+  background-image: radial-gradient(
+    rgba(34, 197, 94, 0.06) 1px,
+    transparent 1px
+  );
+  background-size: 24px 24px;
+}
+
+/* ==========================================================================
+   ACCESSIBILITY — Reduced Motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in-up,
+  .animate-fade-in-up-delay-1,
+  .animate-fade-in-up-delay-2,
+  .animate-fade-in-up-delay-3,
+  .animate-fade-in-up-delay-4,
+  .animate-fade-in-up-delay-5,
+  .animate-float,
+  .animate-glow,
+  .animate-shimmer,
+  .animate-heartbeat,
+  .slide-down-enter {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .gradient-text {
+    animation: none !important;
+  }
+
+  .hover-lift:hover {
+    transform: none !important;
+  }
+
+  .typing-cursor::after {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+
+  .stagger-children > * {
+    animation-delay: 0s !important;
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* Remove floating/scroll-driven motion */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

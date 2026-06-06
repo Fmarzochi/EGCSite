@@ -46,35 +46,138 @@ const base = b.endsWith('/') ? b : b + '/';
     </div>
   </section>
 
-  <!-- Linux / macOS -->
+  <!-- Install methods -->
   <section class="mb-10">
-    <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Linux / macOS</h2>
-    <div class="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-800 mb-4">
-      <div class="flex items-center gap-1.5 px-4 py-2.5 bg-gray-900 border-b border-gray-700">
-        <span class="w-2.5 h-2.5 rounded-full bg-red-500"></span>
-        <span class="w-2.5 h-2.5 rounded-full bg-yellow-500"></span>
-        <span class="w-2.5 h-2.5 rounded-full bg-green-500"></span>
-        <span class="ml-2 text-xs text-gray-400 font-mono">bash</span>
-      </div>
-      <pre class="bg-gray-900 p-5 text-gray-100 text-sm font-mono overflow-x-auto m-0 rounded-none"><code>git clone https://github.com/Fmarzochi/EGC.git
-cd EGC
-sh install.sh</code></pre>
-    </div>
-  </section>
+    <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Choose your method</h2>
 
-  <!-- Windows -->
-  <section class="mb-10">
-    <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Windows</h2>
-    <div class="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-800 mb-4">
-      <div class="flex items-center gap-1.5 px-4 py-2.5 bg-gray-900 border-b border-gray-700">
-        <span class="w-2.5 h-2.5 rounded-full bg-red-500"></span>
-        <span class="w-2.5 h-2.5 rounded-full bg-yellow-500"></span>
-        <span class="w-2.5 h-2.5 rounded-full bg-green-500"></span>
-        <span class="ml-2 text-xs text-gray-400 font-mono">powershell</span>
+    <!-- Method tabs -->
+    <div class="rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden">
+
+      <!-- Tab bar -->
+      <div class="flex border-b border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900">
+        <button
+          id="tab-npm"
+          class="install-tab active relative flex items-center gap-2 px-5 py-3 text-sm font-semibold transition-colors duration-150"
+          data-tab="npm"
+          type="button"
+        >
+          <!-- npm icon -->
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M1.763 0C.786 0 0 .786 0 1.763v20.474C0 23.214.786 24 1.763 24h20.474c.977 0 1.763-.786 1.763-1.763V1.763C24 .786 23.214 0 22.237 0zM5.13 5.323h13.837v13.629h-3.502V8.69h-3.377v10.262H5.13z"/>
+          </svg>
+          <span>npm</span>
+          <span class="ml-1 text-[10px] font-bold uppercase px-1.5 py-0.5 rounded-full bg-egc-100 dark:bg-egc-900/50 text-egc-700 dark:text-egc-400">recommended</span>
+        </button>
+
+        <button
+          id="tab-linux"
+          class="install-tab relative flex items-center gap-2 px-5 py-3 text-sm font-semibold transition-colors duration-150"
+          data-tab="linux"
+          type="button"
+        >
+          <!-- Linux (Tux) icon -->
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489a.424.424 0 00-.11.135c-.26.268-.45.6-.663.839-.199.199-.485.267-.797.4-.313.136-.658.269-.864.68-.09.189-.136.394-.132.602 0 .199.027.4.055.536.058.399.116.728.04.97-.249.68-.28 1.145-.106 1.484.174.334.535.47.94.601.81.2 1.91.135 2.774.6.926.466 1.866.67 2.616.47.526-.116.97-.464 1.208-.946.587-.003 1.23-.269 2.26-.334.699-.058 1.574.267 2.577.2.025.134.063.198.114.333l.003.003c.391.778 1.113 1.022 1.903 1.395.81.401 1.726.57 2.34.467.307-.065.56-.26.713-.552.512-.882.064-1.547-.12-1.792l-.053-.07a2.551 2.551 0 01-.172-.573c-.015-.131.017-.322.076-.451.336-.717.09-1.384-.272-1.845-.298-.378-.667-.6-.91-.727l-.108-.044a1.95 1.95 0 01-.368-.353c-.267-.359-.465-.799-.725-1.159-.122-.169-.376-.479-.553-.652-.4-.398-.646-.654-.646-1.072 0-.412.163-.855.283-1.267.127-.42.243-.805.217-1.133-.063-.79-.512-1.47-.855-2.012l-.07-.106c-.39-.6-.66-.994-.917-1.78-.264-.812-.363-1.725-.31-2.596.035-.475.095-.787.176-1.134l.01-.042c.03-.122.06-.238.07-.36.01-.12.004-.233-.01-.337C14.078 1.147 13.318 0 12.504 0z"/>
+          </svg>
+          <span>Linux</span>
+        </button>
+
+        <button
+          id="tab-macos"
+          class="install-tab relative flex items-center gap-2 px-5 py-3 text-sm font-semibold transition-colors duration-150"
+          data-tab="macos"
+          type="button"
+        >
+          <!-- Apple icon -->
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/>
+          </svg>
+          <span>macOS</span>
+        </button>
+
+        <button
+          id="tab-windows"
+          class="install-tab relative flex items-center gap-2 px-5 py-3 text-sm font-semibold transition-colors duration-150"
+          data-tab="windows"
+          type="button"
+        >
+          <!-- Windows icon -->
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/>
+          </svg>
+          <span>Windows</span>
+        </button>
       </div>
-      <pre class="bg-gray-900 p-5 text-gray-100 text-sm font-mono overflow-x-auto m-0 rounded-none"><code>git clone https://github.com/Fmarzochi/EGC.git
-cd EGC
-.\install.ps1</code></pre>
+
+      <!-- npm panel (recommended) -->
+      <div id="panel-npm" class="install-panel">
+        <div class="p-5 bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase bg-egc-100 dark:bg-egc-900/30 text-egc-700 dark:text-egc-400">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              Fastest
+            </span>
+          </div>
+          <p class="text-sm text-gray-600 dark:text-gray-400">Works on <strong class="text-gray-900 dark:text-white">Linux, macOS, and Windows</strong>. No git clone needed.</p>
+        </div>
+        <div class="flex items-center gap-1.5 px-4 py-2.5 bg-gray-900 border-b border-gray-700">
+          <span class="w-2.5 h-2.5 rounded-full bg-red-500"></span>
+          <span class="w-2.5 h-2.5 rounded-full bg-yellow-500"></span>
+          <span class="w-2.5 h-2.5 rounded-full bg-green-500"></span>
+          <span class="ml-2 text-xs text-gray-400 font-mono">terminal</span>
+        </div>
+        <pre class="bg-gray-900 p-5 text-gray-100 text-sm font-mono overflow-x-auto m-0 rounded-none"><code><span class="text-egc-400">$</span> npm install -g @fmarzochi/egc
+<span class="text-egc-400">$</span> egc install</code></pre>
+      </div>
+
+      <!-- Linux panel -->
+      <div id="panel-linux" class="install-panel hidden">
+        <div class="p-5 bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800">
+          <p class="text-sm text-gray-600 dark:text-gray-400">You need <a href="https://nodejs.org/en/download" target="_blank" rel="noopener noreferrer" class="text-egc-600 dark:text-egc-400 underline underline-offset-2">Node.js 18+</a>. Not sure? Run <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">node --version</code>.</p>
+        </div>
+        <div class="flex items-center gap-1.5 px-4 py-2.5 bg-gray-900 border-b border-gray-700">
+          <span class="w-2.5 h-2.5 rounded-full bg-red-500"></span>
+          <span class="w-2.5 h-2.5 rounded-full bg-yellow-500"></span>
+          <span class="w-2.5 h-2.5 rounded-full bg-green-500"></span>
+          <span class="ml-2 text-xs text-gray-400 font-mono">bash</span>
+        </div>
+        <pre class="bg-gray-900 p-5 text-gray-100 text-sm font-mono overflow-x-auto m-0 rounded-none"><code><span class="text-egc-400">$</span> git clone https://github.com/Fmarzochi/EGC.git
+<span class="text-egc-400">$</span> cd EGC
+<span class="text-egc-400">$</span> sh install.sh</code></pre>
+      </div>
+
+      <!-- macOS panel -->
+      <div id="panel-macos" class="install-panel hidden">
+        <div class="p-5 bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800">
+          <p class="text-sm text-gray-600 dark:text-gray-400">You need <a href="https://nodejs.org/en/download" target="_blank" rel="noopener noreferrer" class="text-egc-600 dark:text-egc-400 underline underline-offset-2">Node.js 18+</a>. Not sure? Run <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">node --version</code>.</p>
+        </div>
+        <div class="flex items-center gap-1.5 px-4 py-2.5 bg-gray-900 border-b border-gray-700">
+          <span class="w-2.5 h-2.5 rounded-full bg-red-500"></span>
+          <span class="w-2.5 h-2.5 rounded-full bg-yellow-500"></span>
+          <span class="w-2.5 h-2.5 rounded-full bg-green-500"></span>
+          <span class="ml-2 text-xs text-gray-400 font-mono">zsh</span>
+        </div>
+        <pre class="bg-gray-900 p-5 text-gray-100 text-sm font-mono overflow-x-auto m-0 rounded-none"><code><span class="text-egc-400">$</span> git clone https://github.com/Fmarzochi/EGC.git
+<span class="text-egc-400">$</span> cd EGC
+<span class="text-egc-400">$</span> sh install.sh</code></pre>
+      </div>
+
+      <!-- Windows panel -->
+      <div id="panel-windows" class="install-panel hidden">
+        <div class="p-5 bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800">
+          <p class="text-sm text-gray-600 dark:text-gray-400">You need <a href="https://nodejs.org/en/download" target="_blank" rel="noopener noreferrer" class="text-egc-600 dark:text-egc-400 underline underline-offset-2">Node.js 18+</a> and PowerShell. Run as Administrator if prompted.</p>
+        </div>
+        <div class="flex items-center gap-1.5 px-4 py-2.5 bg-gray-900 border-b border-gray-700">
+          <span class="w-2.5 h-2.5 rounded-full bg-red-500"></span>
+          <span class="w-2.5 h-2.5 rounded-full bg-yellow-500"></span>
+          <span class="w-2.5 h-2.5 rounded-full bg-green-500"></span>
+          <span class="ml-2 text-xs text-gray-400 font-mono">powershell</span>
+        </div>
+        <pre class="bg-gray-900 p-5 text-gray-100 text-sm font-mono overflow-x-auto m-0 rounded-none"><code><span class="text-egc-400">PS&gt;</span> git clone https://github.com/Fmarzochi/EGC.git
+<span class="text-egc-400">PS&gt;</span> cd EGC
+<span class="text-egc-400">PS&gt;</span> .\install.ps1</code></pre>
+      </div>
+
     </div>
   </section>
 
@@ -166,3 +269,58 @@ cursor        <span class="text-green-400">registered</span></code></pre>
   </section>
 
 </DocsLayout>
+
+<style>
+  .install-tab {
+    color: theme('colors.gray.500');
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    background: none;
+    margin-bottom: -1px;
+  }
+
+  .install-tab:hover {
+    color: theme('colors.gray.700');
+  }
+
+  :global(.dark) .install-tab:hover {
+    color: theme('colors.gray.300');
+  }
+
+  .install-tab.active {
+    color: theme('colors.green.600');
+    border-bottom-color: theme('colors.green.600');
+  }
+
+  :global(.dark) .install-tab.active {
+    color: theme('colors.green.400');
+    border-bottom-color: theme('colors.green.400');
+  }
+</style>
+
+<script>
+  document.addEventListener('astro:page-load', initTabs);
+  document.addEventListener('DOMContentLoaded', initTabs);
+
+  function initTabs() {
+    const tabs = document.querySelectorAll('.install-tab');
+    const panels = document.querySelectorAll('.install-panel');
+
+    if (!tabs.length) return;
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const target = (tab as HTMLElement).dataset.tab;
+
+        // Deactivate all
+        tabs.forEach(t => t.classList.remove('active'));
+        panels.forEach(p => p.classList.add('hidden'));
+
+        // Activate selected
+        tab.classList.add('active');
+        const panel = document.getElementById(`panel-${target}`);
+        if (panel) panel.classList.remove('hidden');
+      });
+    });
+  }
+</script>

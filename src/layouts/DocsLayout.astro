@@ -54,15 +54,15 @@ const sections = [
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <div class="flex flex-col lg:flex-row gap-8 py-8 min-h-screen">
 
-      {/* Mobile Sidebar Toggle Button */}
+      <!-- Mobile Sidebar Toggle Button -->
       <div class="lg:hidden flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 -mx-4 sm:-mx-6 lg:-mx-8">
         <button
           id="docs-sidebar-toggle"
           type="button"
           class="flex items-center gap-2 px-3 py-2 min-h-[44px] min-w-[44px] text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 active:scale-95 active:bg-gray-100 dark:active:bg-gray-700 transition-all duration-100"
         >
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          <svg id="docs-sidebar-chevron" class="w-4 h-4 transition-transform duration-200 ease-in-out" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
           </svg>
           <span>Menu de Documentação</span>
         </button>
@@ -115,6 +115,7 @@ const sections = [
   function setupDocsSidebar() {
     const toggle = document.getElementById('docs-sidebar-toggle');
     const sidebar = document.getElementById('docs-sidebar');
+    const chevron = document.getElementById('docs-sidebar-chevron');
 
     if (toggle && sidebar) {
       toggle.addEventListener('click', () => {
@@ -122,9 +123,11 @@ const sections = [
         if (isCollapsed) {
           sidebar.classList.remove('max-h-0', 'opacity-0');
           sidebar.classList.add('max-h-[1000px]', 'opacity-100');
+          chevron?.classList.add('rotate-180');
         } else {
           sidebar.classList.add('max-h-0', 'opacity-0');
           sidebar.classList.remove('max-h-[1000px]', 'opacity-100');
+          chevron?.classList.remove('rotate-180');
         }
       });
     }

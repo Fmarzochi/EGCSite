@@ -63,7 +63,9 @@ const navLinks = [
           class="md:hidden p-3 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-egc-500 active:scale-95 active:bg-gray-200 dark:active:bg-gray-800 transition-all duration-100"
         >
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            <path class="line-1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16"/>
+            <path class="line-2" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 12h16"/>
+            <path class="line-3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 18h16"/>
           </svg>
         </button>
       </div>
@@ -146,3 +148,19 @@ const navLinks = [
     }, { passive: true });
   }
 </script>
+
+<style>
+  .line-1, .line-2, .line-3 {
+    transform-origin: center;
+    transition: transform 0.2s ease-in-out, opacity 0.15s ease-in-out;
+  }
+  #mobile-menu-btn[aria-expanded="true"] .line-1 {
+    transform: translateY(6px) rotate(45deg);
+  }
+  #mobile-menu-btn[aria-expanded="true"] .line-2 {
+    opacity: 0;
+  }
+  #mobile-menu-btn[aria-expanded="true"] .line-3 {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+</style>

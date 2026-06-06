@@ -15,35 +15,35 @@ const base = b.endsWith('/') ? b : b + '/';
 
   <!-- Requirements -->
   <section class="mb-10">
-    <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Requirements</h2>
-    <div class="rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden">
-      <table class="w-full text-sm">
-        <thead>
-          <tr class="bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
-            <th class="px-4 py-3 text-left font-semibold text-gray-700 dark:text-gray-300">Requirement</th>
-            <th class="px-4 py-3 text-left font-semibold text-gray-700 dark:text-gray-300">Version</th>
-            <th class="px-4 py-3 text-left font-semibold text-gray-700 dark:text-gray-300">Check</th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
-          <tr class="bg-white dark:bg-gray-950">
-            <td class="px-4 py-3 text-gray-700 dark:text-gray-300">Node.js</td>
-            <td class="px-4 py-3"><code class="text-xs bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded font-mono">18+</code></td>
-            <td class="px-4 py-3 font-mono text-xs text-gray-500 dark:text-gray-400">node --version</td>
-          </tr>
-          <tr class="bg-gray-50/50 dark:bg-gray-900/30">
-            <td class="px-4 py-3 text-gray-700 dark:text-gray-300">Git</td>
-            <td class="px-4 py-3"><code class="text-xs bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded font-mono">any</code></td>
-            <td class="px-4 py-3 font-mono text-xs text-gray-500 dark:text-gray-400">git --version</td>
-          </tr>
-          <tr class="bg-white dark:bg-gray-950">
-            <td class="px-4 py-3 text-gray-700 dark:text-gray-300">OS</td>
-            <td class="px-4 py-3"><span class="text-xs text-gray-600 dark:text-gray-400">Linux, macOS, Windows</span></td>
-            <td class="px-4 py-3 text-xs text-gray-500 dark:text-gray-400"></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+     <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Requirements</h2>
+     <div class="rounded-xl border border-gray-200 dark:border-gray-800 overflow-x-auto w-full">
+       <table class="w-full text-sm min-w-[480px]">
+         <thead>
+           <tr class="bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+             <th class="px-4 py-3 text-left font-semibold text-gray-700 dark:text-gray-300">Requirement</th>
+             <th class="px-4 py-3 text-left font-semibold text-gray-700 dark:text-gray-300">Version</th>
+             <th class="px-4 py-3 text-left font-semibold text-gray-700 dark:text-gray-300">Check</th>
+           </tr>
+         </thead>
+         <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
+           <tr class="bg-white dark:bg-gray-950">
+             <td class="px-4 py-3 text-gray-700 dark:text-gray-300">Node.js</td>
+             <td class="px-4 py-3"><code class="text-xs bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded font-mono">18+</code></td>
+             <td class="px-4 py-3 font-mono text-xs text-gray-500 dark:text-gray-400">node --version</td>
+           </tr>
+           <tr class="bg-gray-50/50 dark:bg-gray-900/30">
+             <td class="px-4 py-3 text-gray-700 dark:text-gray-300">Git</td>
+             <td class="px-4 py-3"><code class="text-xs bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded font-mono">any</code></td>
+             <td class="px-4 py-3 font-mono text-xs text-gray-500 dark:text-gray-400">git --version</td>
+           </tr>
+           <tr class="bg-white dark:bg-gray-950">
+             <td class="px-4 py-3 text-gray-700 dark:text-gray-300">OS</td>
+             <td class="px-4 py-3"><span class="text-xs text-gray-600 dark:text-gray-400">Linux, macOS, Windows</span></td>
+             <td class="px-4 py-3 text-xs text-gray-500 dark:text-gray-400"></td>
+           </tr>
+         </tbody>
+       </table>
+     </div>
   </section>
 
   <!-- Install methods -->
@@ -54,7 +54,7 @@ const base = b.endsWith('/') ? b : b + '/';
     <div class="rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden">
 
       <!-- Tab bar -->
-      <div class="flex border-b border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900">
+      <div class="flex flex-wrap border-b border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 overflow-x-auto">
         <button
           id="tab-npm"
           class="install-tab active relative flex items-center gap-2 px-5 py-3 text-sm font-semibold transition-colors duration-150"
@@ -249,19 +249,19 @@ cursor        <span class="text-green-400">registered</span></code></pre>
   <section class="mb-4">
     <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Next steps</h2>
     <div class="grid sm:grid-cols-2 gap-4">
-      <a href={`${base}docs/memory`} class="block rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5 hover:border-egc-300 dark:hover:border-egc-800 transition-colors">
+      <a href={`${base}docs/memory`} class="block rounded-xl p-5 hover-lift hover-glow transition-all duration-300 glass">
         <p class="font-semibold text-gray-900 dark:text-white mb-1">egc-memory</p>
         <p class="text-sm text-gray-600 dark:text-gray-400">Learn how get_state and update_state work.</p>
       </a>
-      <a href={`${base}docs/guardian`} class="block rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5 hover:border-egc-300 dark:hover:border-egc-800 transition-colors">
+      <a href={`${base}docs/guardian`} class="block rounded-xl p-5 hover-lift hover-glow transition-all duration-300 glass">
         <p class="font-semibold text-gray-900 dark:text-white mb-1">egc-guardian</p>
         <p class="text-sm text-gray-600 dark:text-gray-400">Understand the validation and safety layer.</p>
       </a>
-      <a href={`${base}features`} class="block rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5 hover:border-egc-300 dark:hover:border-egc-800 transition-colors">
+      <a href={`${base}features`} class="block rounded-xl p-5 hover-lift hover-glow transition-all duration-300 glass">
         <p class="font-semibold text-gray-900 dark:text-white mb-1">Features</p>
         <p class="text-sm text-gray-600 dark:text-gray-400">Full feature overview and prompt library details.</p>
       </a>
-      <a href={`${base}docs/cli`} class="block rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5 hover:border-egc-300 dark:hover:border-egc-800 transition-colors">
+      <a href={`${base}docs/cli`} class="block rounded-xl p-5 hover-lift hover-glow transition-all duration-300 glass">
         <p class="font-semibold text-gray-900 dark:text-white mb-1">CLI Reference</p>
         <p class="text-sm text-gray-600 dark:text-gray-400">All egc commands explained.</p>
       </a>

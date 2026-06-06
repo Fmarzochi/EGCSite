@@ -12,9 +12,9 @@ const navLinks = [
 ];
 ---
 
-<header class="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-gray-800 bg-white/90 dark:bg-gray-950/90 backdrop-blur-md">
+<header id="site-header" class="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-gray-800 bg-white/90 dark:bg-gray-950/90 backdrop-blur-md transition-transform duration-300 transform translate-y-0">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="flex h-14 items-center justify-between">
+    <div class="flex h-16 items-center justify-between">
 
       <div class="flex items-center gap-6">
         <a href={base} class="flex items-center gap-2">
@@ -58,9 +58,9 @@ const navLinks = [
           id="mobile-menu-btn"
           type="button"
           aria-label="Open menu"
-          class="md:hidden p-2 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-150"
+          class="md:hidden p-3 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-150"
         >
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
           </svg>
         </button>
@@ -68,16 +68,21 @@ const navLinks = [
     </div>
   </div>
 
-  <div id="mobile-menu" class="hidden md:hidden border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 px-4 py-3">
-    <nav class="flex flex-col gap-1">
+  <div id="mobile-menu" class="hidden md:hidden border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 px-4 py-3 shadow-lg">
+    <nav class="flex flex-col gap-1.5">
       {navLinks.map(link => (
         <a
           href={link.href}
           target={link.external ? '_blank' : undefined}
           rel={link.external ? 'noopener noreferrer' : undefined}
-          class="px-3 py-2 rounded-md text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-egc-600 dark:hover:text-egc-400 hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors duration-150"
+          class="flex items-center min-h-[44px] px-3 py-2 rounded-md text-base font-medium text-gray-600 dark:text-gray-400 hover:text-egc-600 dark:hover:text-egc-400 hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors duration-150"
         >
           {link.label}
+          {link.external && (
+            <svg class="inline-block ml-1.5 w-4 h-4 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+          )}
         </a>
       ))}
     </nav>
@@ -91,4 +96,42 @@ const navLinks = [
   mobileMenuBtn?.addEventListener('click', () => {
     mobileMenu?.classList.toggle('hidden');
   });
+
+  // Scroll dynamics
+  let lastScrollY = window.scrollY;
+  let scrollTimeout: NodeJS.Timeout | undefined;
+  const header = document.getElementById('site-header');
+
+  if (header) {
+    window.addEventListener('scroll', () => {
+      const currentScrollY = window.scrollY;
+      
+      // Clear timeout for detecting scroll stop
+      if (scrollTimeout) clearTimeout(scrollTimeout);
+      
+      if (currentScrollY > 64) {
+        if (currentScrollY > lastScrollY) {
+          // Scrolling down -> hide header
+          header.classList.add('-translate-y-full');
+          header.classList.remove('translate-y-0');
+        } else {
+          // Scrolling up -> show header
+          header.classList.add('translate-y-0');
+          header.classList.remove('-translate-y-full');
+        }
+      } else {
+        // At the top -> always show
+        header.classList.add('translate-y-0');
+        header.classList.remove('-translate-y-full');
+      }
+      
+      lastScrollY = currentScrollY;
+      
+      // Scroll stop detection: reveal header after 250ms of inactivity
+      scrollTimeout = setTimeout(() => {
+        header.classList.add('translate-y-0');
+        header.classList.remove('-translate-y-full');
+      }, 250);
+    }, { passive: true });
+  }
 </script>

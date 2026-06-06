@@ -25,7 +25,7 @@ const base = b.endsWith('/') ? b : b + '/';
         { title: 'Guardian layer', desc: 'egc-guardian blocks shell injection, unsafe writes, and dangerous commands before they execute.', icon: '🛡️' },
         { title: 'Decision history', desc: 'Every architectural decision is stored in SQLite with a timestamp. Query by date or tag.', icon: '📋' },
       ].map(card => (
-        <div class="flex gap-4 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5">
+        <div class="flex gap-4 rounded-xl p-5 glass hover-lift transition-all duration-300">
           <div class="text-2xl shrink-0">{card.icon}</div>
           <div>
             <h3 class="font-semibold text-gray-900 dark:text-white text-sm mb-1">{card.title}</h3>
@@ -40,8 +40,8 @@ const base = b.endsWith('/') ? b : b + '/';
   <section class="mb-10">
     <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Prompt library</h2>
     <p class="text-sm text-gray-600 dark:text-gray-400 mb-5">Optional. Asked during installation. Written from real experience, not generated.</p>
-    <div class="rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden mb-5">
-      <table class="w-full text-sm">
+    <div class="rounded-xl border border-gray-200 dark:border-gray-800 overflow-x-auto w-full mb-5">
+      <table class="w-full text-sm min-w-[500px]">
         <thead>
           <tr class="bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
             <th class="px-5 py-3 text-left font-semibold text-gray-700 dark:text-gray-300">Type</th>
@@ -71,8 +71,8 @@ const base = b.endsWith('/') ? b : b + '/';
   <!-- Supported tools -->
   <section class="mb-10">
     <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Supported tools</h2>
-    <div class="rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden">
-      <table class="w-full text-sm">
+    <div class="rounded-xl border border-gray-200 dark:border-gray-800 overflow-x-auto w-full">
+      <table class="w-full text-sm min-w-[500px]">
         <thead>
           <tr class="bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
             <th class="px-5 py-3 text-left font-semibold text-gray-700 dark:text-gray-300">Tool</th>

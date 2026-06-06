@@ -52,14 +52,14 @@ const sections = [
 <Base title={`${title} - EGC Docs`} description={description}>
   <Navbar />
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="flex gap-8 py-8 min-h-screen">
+    <div class="flex flex-col lg:flex-row gap-8 py-8 min-h-screen">
 
       {/* Mobile Sidebar Toggle Button */}
       <div class="lg:hidden flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 -mx-4 sm:-mx-6 lg:-mx-8">
         <button
           id="docs-sidebar-toggle"
           type="button"
-          class="flex items-center gap-2 px-3 py-2 min-h-[44px] min-w-[44px] text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+          class="flex items-center gap-2 px-3 py-2 min-h-[44px] min-w-[44px] text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 active:scale-95 active:bg-gray-100 dark:active:bg-gray-700 transition-all duration-100"
         >
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -71,7 +71,7 @@ const sections = [
         </span>
       </div>
 
-      <aside id="docs-sidebar" class="hidden lg:block w-full lg:w-56 shrink-0 border-b lg:border-b-0 border-gray-200 dark:border-gray-800 pb-6 lg:pb-0">
+      <aside id="docs-sidebar" class="w-full lg:w-56 shrink-0 border-b lg:border-b-0 border-gray-200 dark:border-gray-800 pb-6 lg:pb-0 transition-[max-height,opacity] duration-300 ease-in-out overflow-hidden max-h-0 opacity-0 lg:block lg:max-h-none lg:opacity-100 lg:overflow-visible">
         <div class="sticky top-20 mt-4 lg:mt-0">
           {sections.map(section => (
             <div class="mb-6">
@@ -83,17 +83,15 @@ const sections = [
                       href={link.href}
                       target={link.external ? '_blank' : undefined}
                       rel={link.external ? 'noopener noreferrer' : undefined}
-                      class={`flex items-center justify-between px-3 py-2.5 min-h-[44px] rounded-lg text-sm transition-colors duration-150 ${
+                      class={`flex items-center justify-between px-3 py-2.5 min-h-[44px] rounded-lg text-sm transition-all duration-100 ${
                         current === link.id
-                          ? 'text-egc-700 dark:text-egc-400 bg-egc-50 dark:bg-egc-950/50 font-semibold'
-                          : 'text-gray-600 dark:text-gray-400 hover:text-egc-600 dark:hover:text-egc-400 hover:bg-gray-100 dark:hover:bg-gray-800'
+                          ? 'text-egc-700 dark:text-egc-400 bg-egc-50 dark:bg-egc-950/50 font-semibold active:scale-[0.98]'
+                          : 'text-gray-600 dark:text-gray-400 hover:text-egc-600 dark:hover:text-egc-400 hover:bg-gray-100 dark:hover:bg-gray-800 active:scale-[0.98] active:bg-gray-200 dark:active:bg-gray-700'
                       }`}
                     >
                       {link.label}
                       {link.external && (
-                        <svg class="w-3.5 h-3.5 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
-                        </svg>
+                        <svg class="w-3.5 h-3.5 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
                       )}
                     </a>
                   </li>
@@ -120,7 +118,14 @@ const sections = [
 
     if (toggle && sidebar) {
       toggle.addEventListener('click', () => {
-        sidebar.classList.toggle('hidden');
+        const isCollapsed = sidebar.classList.contains('max-h-0');
+        if (isCollapsed) {
+          sidebar.classList.remove('max-h-0', 'opacity-0');
+          sidebar.classList.add('max-h-[1000px]', 'opacity-100');
+        } else {
+          sidebar.classList.add('max-h-0', 'opacity-0');
+          sidebar.classList.remove('max-h-[1000px]', 'opacity-100');
+        }
       });
     }
   }

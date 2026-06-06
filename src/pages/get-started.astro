@@ -54,10 +54,10 @@ const base = b.endsWith('/') ? b : b + '/';
     <div class="rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden">
 
       <!-- Tab bar -->
-      <div class="flex flex-wrap border-b border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 overflow-x-auto">
+      <div class="flex border-b border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 overflow-x-auto scrollbar-none whitespace-nowrap">
         <button
           id="tab-npm"
-          class="install-tab active relative flex items-center gap-2 px-5 py-3 text-sm font-semibold transition-colors duration-150"
+          class="install-tab active relative flex items-center gap-2 px-5 py-3 text-sm font-semibold transition-all duration-150"
           data-tab="npm"
           type="button"
         >
@@ -277,6 +277,12 @@ cursor        <span class="text-green-400">registered</span></code></pre>
     cursor: pointer;
     background: none;
     margin-bottom: -1px;
+    flex-shrink: 0;
+    transition: transform 0.1s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .install-tab:active {
+    transform: scale(0.95);
   }
 
   .install-tab:hover {

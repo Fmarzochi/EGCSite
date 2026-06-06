@@ -43,13 +43,13 @@ const base = b.endsWith('/') ? b : b + '/';
         </p>
 
         <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mb-10 px-4 sm:px-0 animate-fade-in-up animate-fade-in-up-delay-2">
-          <a href={`${base}get-started`} class="w-full sm:w-auto inline-flex items-center justify-center gap-2 min-h-[48px] px-6 py-3 rounded-xl bg-egc-600 text-white font-semibold hover:bg-egc-700 transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-egc-500 focus:ring-offset-2">
+          <a href={`${base}get-started`} class="w-full sm:w-auto inline-flex items-center justify-center gap-2 min-h-[48px] px-6 py-3 rounded-xl bg-egc-600 text-white font-semibold hover:bg-egc-700 active:scale-95 transition-all duration-100 focus:outline-none focus:ring-2 focus:ring-egc-500 focus:ring-offset-2">
             Get Started
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
             </svg>
           </a>
-          <a href="https://github.com/Fmarzochi/EGC" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 min-h-[48px] px-6 py-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 font-semibold hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors duration-150">
+          <a href="https://github.com/Fmarzochi/EGC" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 min-h-[48px] px-6 py-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 font-semibold hover:bg-gray-50 dark:hover:bg-gray-800 active:scale-95 transition-all duration-100">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
             </svg>
@@ -95,7 +95,7 @@ const base = b.endsWith('/') ? b : b + '/';
     <!-- Stats -->
     <section class="border-y border-gray-100/50 dark:border-gray-800/20 bg-gradient-to-b from-transparent via-gray-100/80 to-transparent dark:from-transparent dark:via-gray-900/90 dark:to-transparent py-10 mb-16">
       <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center" data-animate>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 text-center" data-animate>
           {[
             { value: '9', label: 'Supported Tools' },
             { value: '228+', label: 'Skills' },
@@ -197,7 +197,7 @@ const base = b.endsWith('/') ? b : b + '/';
         <p class="text-xs font-semibold uppercase tracking-widest text-egc-600 dark:text-egc-400 mb-3">Ecosystem</p>
         <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Works with every AI coding tool</h2>
       </div>
-      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4" data-animate>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4" data-animate>
         {[
           { name: 'Claude Code',  badge: 'MCP + Bootstrap', icon: `${base}tools/anthropic.svg` },
           { name: 'Cursor',       badge: 'MCP + Bootstrap', icon: `${base}tools/cursor.svg` },
@@ -209,12 +209,12 @@ const base = b.endsWith('/') ? b : b + '/';
           { name: 'CodeBuddy',    badge: 'Context + Bootstrap', icon: `${base}tools/codebuddy.svg` },
           { name: 'Antigravity',  badge: 'MCP + Bootstrap', icon: `${base}tools/bytedance.svg` },
         ].map(tool => (
-          <div class="flex flex-col items-center gap-3 rounded-xl border border-gray-800 bg-gray-900 p-5 text-center hover:border-egc-500 hover-glow hover-lift transition-colors">
-            <div class="w-14 h-14 rounded-xl bg-white flex items-center justify-center">
-              <img src={tool.icon} alt={tool.name} class="w-9 h-9 object-contain" loading="lazy" />
+          <div class="flex flex-col items-center gap-3 rounded-xl border border-gray-800 bg-gray-900 p-4 sm:p-5 text-center hover:border-egc-500 hover-glow hover-lift transition-all duration-150 active:scale-[0.97]">
+            <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-white flex items-center justify-center">
+              <img src={tool.icon} alt={tool.name} class="w-7 h-7 sm:w-9 sm:h-9 object-contain" loading="lazy" />
             </div>
-            <div class="text-sm font-semibold text-gray-100">{tool.name}</div>
-            <div class="text-xs text-egc-400">{tool.badge}</div>
+            <div class="text-xs sm:text-sm font-semibold text-gray-100 truncate w-full">{tool.name}</div>
+            <div class="text-[10px] sm:text-xs text-egc-400">{tool.badge}</div>
           </div>
         ))}
       </div>
@@ -374,7 +374,7 @@ const base = b.endsWith('/') ? b : b + '/';
             href="https://github.com/sponsors/Fmarzochi"
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-2 min-h-[44px] px-5 py-2.5 rounded-xl bg-pink-500 hover:bg-pink-600 text-white text-sm font-semibold transition-colors"
+            class="inline-flex items-center gap-2 min-h-[44px] px-5 py-2.5 rounded-xl bg-pink-500 hover:bg-pink-600 text-white text-sm font-semibold active:scale-95 transition-all duration-100"
           >
             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M12 21.593c-.317.177-.834.177-1.151 0C9.774 20.57 3 16.259 3 9.5 3 6.462 5.462 4 8.5 4c1.4 0 2.672.536 3.5 1.393C12.828 4.536 14.1 4 15.5 4 18.538 4 21 6.462 21 9.5c0 6.759-6.774 11.07-9 12.093z"/>
@@ -395,13 +395,13 @@ const base = b.endsWith('/') ? b : b + '/';
         <h2 class="text-3xl font-bold text-white mb-4">Ready to give your AI a memory?</h2>
         <p class="text-egc-100 mb-8">Install in under 2 minutes. Works with the tools you already use.</p>
         <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
-          <a href={`${base}get-started`} class="w-full sm:w-auto inline-flex items-center justify-center gap-2 min-h-[48px] px-6 py-3 rounded-xl bg-white text-egc-700 font-semibold hover:bg-egc-50 transition-colors duration-150">
+          <a href={`${base}get-started`} class="w-full sm:w-auto inline-flex items-center justify-center gap-2 min-h-[48px] px-6 py-3 rounded-xl bg-white text-egc-700 font-semibold hover:bg-egc-50 active:scale-95 transition-all duration-100">
             Get Started
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
             </svg>
           </a>
-          <a href="https://github.com/Fmarzochi/EGC" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 min-h-[48px] px-6 py-3 rounded-xl border border-egc-400 text-white font-semibold hover:bg-egc-700 dark:hover:bg-egc-800 transition-colors duration-150">
+          <a href="https://github.com/Fmarzochi/EGC" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 min-h-[48px] px-6 py-3 rounded-xl border border-egc-400 text-white font-semibold hover:bg-egc-700 dark:hover:bg-egc-800 active:scale-95 transition-all duration-100">
             View on GitHub
           </a>
         </div>

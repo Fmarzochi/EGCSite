@@ -23,11 +23,18 @@
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* Prevent horizontal overflow at the root level */
+    overflow-x: hidden;
   }
 
   body {
     @apply bg-white text-gray-900 antialiased dark:bg-gray-950 dark:text-gray-100;
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    /* Ensure minimum readable body text on mobile */
+    font-size: 1rem;
+    line-height: 1.6;
+    /* Prevent horizontal scroll caused by any child */
+    overflow-x: hidden;
   }
 }
 
@@ -38,10 +45,13 @@
 
   .btn-primary {
     @apply inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-egc-600 text-white text-sm font-semibold hover:bg-egc-700 transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-egc-500 focus:ring-offset-2;
+    /* Ensure minimum touch target */
+    min-height: 44px;
   }
 
   .btn-secondary {
     @apply inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 bg-white text-gray-700 text-sm font-semibold hover:bg-gray-50 transition-colors duration-150 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-egc-500 focus:ring-offset-2;
+    min-height: 44px;
   }
 
   .code-block {
@@ -65,17 +75,58 @@
   }
 }
 
-.prose code {
-  @apply bg-gray-100 text-gray-800 px-1.5 py-0.5 rounded text-sm font-mono dark:bg-gray-800 dark:text-gray-200;
-}
+/* ==========================================================================
+   RESPONSIVE CODE BLOCKS — No horizontal page scroll
+   ========================================================================== */
 
-.prose pre code {
-  @apply bg-transparent text-inherit px-0 py-0;
+pre,
+code {
+  word-break: break-word;
 }
 
 pre {
   @apply code-block p-5 my-4;
+  -webkit-overflow-scrolling: touch;
 }
+
+/* Inline code wrapping */
+.prose code {
+  @apply bg-gray-100 text-gray-800 px-1.5 py-0.5 rounded text-sm font-mono dark:bg-gray-800 dark:text-gray-200;
+  word-break: break-all;
+}
+
+.prose pre code {
+  @apply bg-transparent text-inherit px-0 py-0;
+  word-break: normal;
+}
+
+/* Terminal / font-mono blocks inside cards */
+.font-mono {
+  overflow-wrap: break-word;
+}
+
+/* ==========================================================================
+   RESPONSIVE TABLES — Horizontal scroll wrapper + card fallback
+   ========================================================================== */
+
+/* Tables inside responsive wrappers get smooth scroll on touch */
+.overflow-x-auto {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Compact table cells on mobile */
+@media (max-width: 639px) {
+  table th,
+  table td {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    font-size: 0.8125rem;
+  }
+}
+
+/* ==========================================================================
+   BADGES
+   ========================================================================== */
 
 .badge {
   @apply inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium;
@@ -118,6 +169,13 @@ pre {
 
 .dark .hover-lift:hover {
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+}
+
+/* Disable hover-lift translate on touch devices to avoid sticky :hover */
+@media (hover: none) {
+  .hover-lift:hover {
+    transform: none;
+  }
 }
 
 .hover-glow {
@@ -180,6 +238,40 @@ pre {
     transparent 1px
   );
   background-size: 24px 24px;
+}
+
+/* ==========================================================================
+   MOBILE-SPECIFIC ENHANCEMENTS
+   ========================================================================== */
+
+/* Touch-friendly tap targets — links in nav, badges, etc. */
+@media (max-width: 639px) {
+  /* Ensure all interactive elements meet 44x44 minimum */
+  a, button {
+    min-height: 44px;
+    /* Flex display kept intact via existing classes */
+  }
+
+  /* Exception: inline links inside prose/text should not be 44px tall */
+  p a,
+  li a,
+  span a,
+  .text-xs a {
+    min-height: auto;
+  }
+
+  /* Reduce heavy shadows on mobile for performance */
+  .hover-lift:hover {
+    box-shadow: 0 8px 15px -5px rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* Safe area insets for notched devices */
+@supports (padding: env(safe-area-inset-bottom)) {
+  body {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
 }
 
 /* ==========================================================================

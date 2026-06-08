@@ -32,17 +32,17 @@ const base = b.endsWith('/') ? b : b + '/';
           </a>
         </div>
 
-        <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-gray-900 dark:text-white mb-6 leading-tight animate-fade-in-up text-balance">
+        <h1 class="text-2xl sm:text-4xl lg:text-6xl font-extrabold tracking-tight text-gray-900 dark:text-white mb-4 sm:mb-6 leading-tight animate-fade-in-up text-balance">
           Your AI remembers your<br class="hidden sm:block" />
           <span class="text-egc-600 dark:text-egc-400 gradient-text">project across sessions</span><br class="hidden sm:block" />
           and tools.
         </h1>
 
-        <p class="mx-auto max-w-2xl text-lg text-gray-600 dark:text-gray-400 mb-8 leading-relaxed animate-fade-in-up animate-fade-in-up-delay-1 text-pretty">
+        <p class="mx-auto max-w-2xl text-base sm:text-lg text-gray-600 dark:text-gray-400 mb-6 sm:mb-8 leading-relaxed animate-fade-in-up animate-fade-in-up-delay-1 text-pretty">
           EGC is an open-source runtime that gives every AI coding tool a shared, persistent memory of your project. Install once, works everywhere.
         </p>
 
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mb-10 px-4 sm:px-0 animate-fade-in-up animate-fade-in-up-delay-2">
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mb-8 sm:mb-10 px-4 sm:px-0 animate-fade-in-up animate-fade-in-up-delay-2">
           <a href={`${base}get-started`} class="w-full sm:w-auto inline-flex items-center justify-center gap-2 min-h-[48px] px-6 py-3 rounded-xl bg-egc-600 text-white font-semibold hover:bg-egc-700 active:scale-95 transition-all duration-100 focus:outline-none focus:ring-2 focus:ring-egc-500 focus:ring-offset-2">
             Get Started
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -64,7 +64,7 @@ const base = b.endsWith('/') ? b : b + '/';
             <span class="w-3 h-3 rounded-full bg-green-500"></span>
             <span class="ml-2 text-xs text-gray-400 font-mono">terminal</span>
           </div>
-          <div class="bg-gray-900 p-5 text-left font-mono text-sm text-gray-100 leading-relaxed overflow-x-auto relative min-h-[260px]" tabindex="0" role="region" aria-label="Terminal installation steps simulation">
+          <div class="bg-gray-900 p-3 sm:p-5 text-left font-mono text-xs sm:text-sm text-gray-100 leading-relaxed overflow-x-auto relative min-h-[220px] sm:min-h-[260px]" tabindex="0" role="region" aria-label="Terminal installation steps simulation">
             <!-- Terminal Skeleton Loader -->
             <div id="terminal-skeleton" class="space-y-3 animate-pulse py-2">
               <div class="h-4 bg-gray-800/80 rounded w-2/3"></div>
@@ -77,10 +77,10 @@ const base = b.endsWith('/') ? b : b + '/';
             <!-- Terminal Content (revealed dynamically) -->
             <div id="terminal-content" class="opacity-0 transition-opacity duration-500 hidden">
               <div class="text-gray-400"># Install via npm (recommended)</div>
-              <div><span class="text-egc-400">$</span> npm install -g @fmarzochi/egc</div>
+              <div class="whitespace-nowrap"><span class="text-egc-400">$</span> npm install -g @fmarzochi/egc</div>
               <div><span class="text-egc-400">$</span> egc install</div>
               <div class="mt-3 text-gray-400"># Or clone from source</div>
-              <div class="text-gray-500"><span class="text-gray-600">$</span> git clone https://github.com/Fmarzochi/EGC.git && cd EGC && sh install.sh</div>
+              <div class="text-gray-500 break-all sm:break-normal"><span class="text-gray-600">$</span> git clone https://github.com/Fmarzochi/EGC.git && cd EGC && sh install.sh</div>
               <div class="mt-3 text-gray-400"># Verify</div>
               <div><span class="text-egc-400">$</span> egc doctor</div>
               <div class="mt-2 text-egc-400">egc-guardian <span class="text-green-400">running</span></div>
@@ -98,13 +98,13 @@ const base = b.endsWith('/') ? b : b + '/';
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 text-center" data-animate>
           {[
             { value: '9', label: 'Supported Tools' },
-            { value: '228+', label: 'Skills' },
-            { value: '74', label: 'Commands' },
+            { value: '229+', label: 'Skills' },
+            { value: '76', label: 'Commands' },
             { value: '100%', label: 'Open Source' },
           ].map(stat => (
             <div class="hover-lift">
-              <div class="text-3xl font-extrabold text-egc-600 dark:text-egc-400 mb-1">{stat.value}</div>
-              <div class="text-sm text-gray-500 dark:text-gray-400">{stat.label}</div>
+              <div class="text-2xl sm:text-3xl font-extrabold text-egc-600 dark:text-egc-400 mb-1">{stat.value}</div>
+              <div class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">{stat.label}</div>
             </div>
           ))}
         </div>
@@ -113,20 +113,20 @@ const base = b.endsWith('/') ? b : b + '/';
 
     <!-- The Problem -->
     <section class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 mb-20" data-animate>
-      <div class="grid md:grid-cols-2 gap-8 items-center">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         <div>
           <p class="text-xs font-semibold uppercase tracking-widest text-egc-600 dark:text-egc-400 mb-3">The Problem</p>
-          <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4 leading-tight">Every AI session starts from zero.</h2>
-          <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">Close the window and the context is gone. Your stack preferences, the architectural decisions you made last week, the approach that failed after three attempts. Next session you spend the first ten minutes re-explaining ground you already covered.</p>
-          <p class="text-gray-600 dark:text-gray-400 leading-relaxed">It gets worse when you switch tools. Move from Cursor to Claude Code and you start over again. The AI doesn't know you. It never did.</p>
+          <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-4 leading-tight">Every AI session starts from zero.</h2>
+          <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400 leading-relaxed mb-4">Close the window and the context is gone. Your stack preferences, the architectural decisions you made last week, the approach that failed after three attempts. Next session you spend the first ten minutes re-explaining ground you already covered.</p>
+          <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400 leading-relaxed">It gets worse when you switch tools. Move from Cursor to Claude Code and you start over again. The AI doesn't know you. It never did.</p>
         </div>
-        <div class="rounded-2xl p-6 font-mono text-sm glass">
+        <div class="rounded-2xl p-4 sm:p-6 font-mono text-xs sm:text-sm glass overflow-hidden">
           <div class="text-gray-400 mb-3 text-xs">Without EGC</div>
           <div class="space-y-2 text-red-400/70 dark:text-red-400/50">
-            <div class="line-through">You: We're using PostgreSQL with row-level security...</div>
-            <div class="line-through">You: I prefer functional components, no classes...</div>
-            <div class="line-through">You: We tried Prisma but moved to Drizzle because...</div>
-            <div class="line-through">You: The auth flow uses sessions, not JWT...</div>
+            <div class="line-through break-words">You: We're using PostgreSQL with row-level security...</div>
+            <div class="line-through break-words">You: I prefer functional components, no classes...</div>
+            <div class="line-through break-words">You: We tried Prisma but moved to Drizzle because...</div>
+            <div class="line-through break-words">You: The auth flow uses sessions, not JWT...</div>
           </div>
           <div class="mt-4 text-gray-400 text-xs">Every. Single. Session.</div>
         </div>
@@ -134,12 +134,12 @@ const base = b.endsWith('/') ? b : b + '/';
     </section>
 
     <!-- How EGC fixes it -->
-    <section class="bg-gradient-to-b from-transparent via-gray-100 to-transparent dark:from-transparent dark:via-gray-900/90 dark:to-transparent py-20 mb-20">
+    <section class="bg-gradient-to-b from-transparent via-gray-100 to-transparent dark:from-transparent dark:via-gray-900/90 dark:to-transparent py-12 sm:py-20 mb-20">
       <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-12">
+        <div class="text-center mb-10 sm:mb-12">
           <p class="text-xs font-semibold uppercase tracking-widest text-egc-600 dark:text-egc-400 mb-3">The Solution</p>
-          <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">One install. Every tool. Permanent memory.</h2>
-          <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">sh install.sh detects which AI tools you have and registers the MCP servers in all of them. The AI reads your project state at the start of every session and saves decisions at the end.</p>
+          <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-4">One install. Every tool. Permanent memory.</h2>
+          <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">sh install.sh detects which AI tools you have and registers the MCP servers in all of them. The AI reads your project state at the start of every session and saves decisions at the end.</p>
         </div>
 
         <div class="rounded-2xl overflow-hidden mb-8 glass">
@@ -149,8 +149,8 @@ const base = b.endsWith('/') ? b : b + '/';
             <span class="w-3 h-3 rounded-full bg-green-500"></span>
             <span class="ml-2 text-xs text-gray-400 font-mono">With EGC</span>
           </div>
-          <div class="bg-gray-900 p-5 font-mono text-sm text-gray-100 overflow-x-auto" tabindex="0" role="region" aria-label="EGC state restoration session simulation">
-            <div class="text-gray-400"># You open Claude Code on a project you haven't touched in 2 weeks.</div>
+          <div class="bg-gray-900 p-3 sm:p-5 font-mono text-xs sm:text-sm text-gray-100 overflow-x-auto" tabindex="0" role="region" aria-label="EGC state restoration session simulation">
+            <div class="text-gray-400 break-words"># You open Claude Code on a project you haven't touched in 2 weeks.</div>
             <div class="text-gray-400"># Without typing anything:</div>
             <div class="mt-3 text-egc-400">State loaded from egc-memory</div>
             <div class="text-green-400 mt-1">Context and preferences acknowledged (terse responses).</div>
@@ -161,7 +161,7 @@ const base = b.endsWith('/') ? b : b + '/';
           </div>
         </div>
 
-        <div class="grid sm:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
           {[
             {
               icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>',
@@ -179,7 +179,7 @@ const base = b.endsWith('/') ? b : b + '/';
               description: 'Same state file, same context. No re-explaining.',
             },
           ].map(card => (
-            <div class="rounded-2xl p-6 hover-lift hover-glow glass">
+            <div class="rounded-2xl p-5 sm:p-6 hover-lift hover-glow glass">
               <div class="w-10 h-10 rounded-xl bg-egc-50 dark:bg-egc-900/30 flex items-center justify-center mb-4">
                 <svg class="w-5 h-5 text-egc-600 dark:text-egc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" set:html={card.icon}></svg>
               </div>
@@ -195,7 +195,7 @@ const base = b.endsWith('/') ? b : b + '/';
     <section class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 mb-20">
       <div class="text-center mb-10">
         <p class="text-xs font-semibold uppercase tracking-widest text-egc-600 dark:text-egc-400 mb-3">Ecosystem</p>
-        <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Works with every AI coding tool</h2>
+        <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">Works with every AI coding tool</h2>
       </div>
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4" data-animate>
         {[
@@ -209,34 +209,34 @@ const base = b.endsWith('/') ? b : b + '/';
           { name: 'CodeBuddy',    badge: 'Context + Bootstrap', icon: `${base}tools/codebuddy.svg` },
           { name: 'Antigravity',  badge: 'MCP + Bootstrap', icon: `${base}tools/bytedance.svg` },
         ].map(tool => (
-          <div class="flex flex-col items-center gap-3 rounded-xl border border-gray-800 bg-gray-900 p-4 sm:p-5 text-center hover:border-egc-500 hover-glow hover-lift transition-all duration-150 active:scale-[0.97]">
-            <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-white flex items-center justify-center">
-              <img src={tool.icon} alt={tool.name} class="w-7 h-7 sm:w-9 sm:h-9 object-contain" loading="lazy" />
+          <div class="flex flex-col items-center gap-2 sm:gap-3 rounded-xl border border-gray-800 bg-gray-900 p-3 sm:p-5 text-center hover:border-egc-500 hover-glow hover-lift transition-all duration-150 active:scale-[0.97]">
+            <div class="w-10 h-10 sm:w-14 sm:h-14 rounded-xl bg-white flex items-center justify-center">
+              <img src={tool.icon} alt={tool.name} class="w-6 h-6 sm:w-9 sm:h-9 object-contain" loading="lazy" />
             </div>
             <div class="text-xs sm:text-sm font-semibold text-gray-100 truncate w-full">{tool.name}</div>
-            <div class="text-[10px] sm:text-xs text-egc-400">{tool.badge}</div>
+            <div class="text-[10px] sm:text-xs text-egc-400 leading-tight">{tool.badge}</div>
           </div>
         ))}
       </div>
     </section>
 
     <!-- MCP Servers -->
-    <section class="bg-gradient-to-b from-transparent via-gray-100 to-transparent dark:from-transparent dark:via-gray-900/90 dark:to-transparent py-20 mb-20">
+    <section class="bg-gradient-to-b from-transparent via-gray-100 to-transparent dark:from-transparent dark:via-gray-900/90 dark:to-transparent py-12 sm:py-20 mb-20">
       <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-12">
+        <div class="text-center mb-10 sm:mb-12">
           <p class="text-xs font-semibold uppercase tracking-widest text-egc-600 dark:text-egc-400 mb-3">MCP Servers</p>
-          <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Two local servers, zero cloud</h2>
+          <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">Two local servers, zero cloud</h2>
         </div>
-        <div class="grid md:grid-cols-2 gap-6">
-          <div class="rounded-2xl border border-egc-200 dark:border-egc-900 bg-white dark:bg-gray-900 p-6 glass">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="rounded-2xl border border-egc-200 dark:border-egc-900 bg-white dark:bg-gray-900 p-4 sm:p-6 glass">
             <div class="flex items-center gap-3 mb-4">
-              <div class="w-10 h-10 rounded-xl bg-egc-50 dark:bg-egc-900/50 flex items-center justify-center">
+              <div class="w-10 h-10 rounded-xl bg-egc-50 dark:bg-egc-900/50 flex items-center justify-center shrink-0">
                 <svg class="w-5 h-5 text-egc-600 dark:text-egc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/>
                 </svg>
               </div>
-              <div>
-                <h3 class="font-bold text-gray-900 dark:text-white font-mono">egc-memory</h3>
+              <div class="min-w-0">
+                <h3 class="font-bold text-gray-900 dark:text-white font-mono text-sm sm:text-base truncate">egc-memory</h3>
                 <p class="text-xs text-gray-500 dark:text-gray-400">The one you'll use every session</p>
               </div>
             </div>
@@ -247,13 +247,13 @@ const base = b.endsWith('/') ? b : b + '/';
                 { tool: 'store_decision', desc: 'Persists a decision to SQLite' },
                 { tool: 'query_history', desc: 'Returns past decisions by timestamp' },
               ].map(row => (
-                <div class="flex items-start gap-3">
-                  <code class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 font-mono shrink-0">{row.tool}</code>
+                <div class="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3">
+                  <code class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 font-mono shrink-0 self-start">{row.tool}</code>
                   <span class="text-xs text-gray-600 dark:text-gray-400">{row.desc}</span>
                 </div>
               ))}
             </div>
-            <a href={`${base}docs/memory`} class="mt-5 inline-flex items-center gap-1 text-xs font-semibold text-egc-600 dark:text-egc-400 hover:underline">
+            <a href={`${base}docs/memory`} class="mt-5 inline-flex items-center gap-1 text-xs font-semibold text-egc-600 dark:text-egc-400 hover:underline min-h-[44px]">
               Read docs
               <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
@@ -261,15 +261,15 @@ const base = b.endsWith('/') ? b : b + '/';
             </a>
           </div>
 
-          <div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 glass">
+          <div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 sm:p-6 glass">
             <div class="flex items-center gap-3 mb-4">
-              <div class="w-10 h-10 rounded-xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+              <div class="w-10 h-10 rounded-xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center shrink-0">
                 <svg class="w-5 h-5 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
                 </svg>
               </div>
-              <div>
-                <h3 class="font-bold text-gray-900 dark:text-white font-mono">egc-guardian</h3>
+              <div class="min-w-0">
+                <h3 class="font-bold text-gray-900 dark:text-white font-mono text-sm sm:text-base truncate">egc-guardian</h3>
                 <p class="text-xs text-gray-500 dark:text-gray-400">Runs in the background</p>
               </div>
             </div>
@@ -280,13 +280,13 @@ const base = b.endsWith('/') ? b : b + '/';
                 { tool: 'reduce_context', desc: 'Deduplicates and trims Markdown payloads' },
                 { tool: 'orchestrate_task', desc: 'Routes prompts to relevant agents and skills' },
               ].map(row => (
-                <div class="flex items-start gap-3">
-                  <code class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 font-mono shrink-0">{row.tool}</code>
+                <div class="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3">
+                  <code class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 font-mono shrink-0 self-start">{row.tool}</code>
                   <span class="text-xs text-gray-600 dark:text-gray-400">{row.desc}</span>
                 </div>
               ))}
             </div>
-            <a href={`${base}docs/guardian`} class="mt-5 inline-flex items-center gap-1 text-xs font-semibold text-egc-600 dark:text-egc-400 hover:underline">
+            <a href={`${base}docs/guardian`} class="mt-5 inline-flex items-center gap-1 text-xs font-semibold text-egc-600 dark:text-egc-400 hover:underline min-h-[44px]">
               Read docs
               <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
@@ -301,10 +301,12 @@ const base = b.endsWith('/') ? b : b + '/';
     <section class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 mb-20">
       <div class="text-center mb-10">
         <p class="text-xs font-semibold uppercase tracking-widest text-egc-600 dark:text-egc-400 mb-3">Efficiency</p>
-        <h2 class="text-3xl font-bold text-gray-900 dark:text-white">87% fewer tokens to rebuild context</h2>
+        <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">87% fewer tokens to rebuild context</h2>
       </div>
-      <div class="rounded-2xl border border-gray-200 dark:border-gray-800 overflow-x-auto w-full" tabindex="0" role="region" aria-label="Tool comparison table">
-        <table class="w-full text-sm min-w-[500px]">
+
+      <!-- Desktop: table layout -->
+      <div class="hidden sm:block rounded-2xl border border-gray-200 dark:border-gray-800 overflow-x-auto w-full" tabindex="0" role="region" aria-label="Tool comparison table">
+        <table class="w-full text-sm">
           <thead>
             <tr class="bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
               <th class="px-6 py-4 text-left font-semibold text-gray-900 dark:text-white"></th>
@@ -331,27 +333,50 @@ const base = b.endsWith('/') ? b : b + '/';
           </tbody>
         </table>
       </div>
+
+      <!-- Mobile: card layout -->
+      <div class="sm:hidden space-y-4">
+        {[
+          { metric: 'Context overhead per session', without: '~1,500 tokens', withEgc: '~200 tokens' },
+          { metric: 'Cost for 20 sessions/month', without: '~$0.08-0.09', withEgc: '~$0.011-0.012' },
+          { metric: 'Time re-explaining context', without: '10 min/session', withEgc: '0' },
+        ].map(row => (
+          <div class="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-4">
+            <div class="text-sm font-semibold text-gray-900 dark:text-white mb-3">{row.metric}</div>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <div class="text-[10px] uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-1">Without EGC</div>
+                <div class="text-sm text-gray-500 dark:text-gray-400">{row.without}</div>
+              </div>
+              <div>
+                <div class="text-[10px] uppercase tracking-wider text-egc-600 dark:text-egc-400 mb-1">With EGC</div>
+                <div class="text-sm font-semibold text-egc-600 dark:text-egc-400">{row.withEgc}</div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
     </section>
 
     <!-- Security badges -->
     <section class="border-t border-gray-100 dark:border-gray-800 py-14">
       <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
         <p class="text-xs font-semibold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-6">Security</p>
-        <div class="flex flex-wrap items-center justify-center gap-4">
-          <a href="https://www.bestpractices.dev/projects/13099" target="_blank" rel="noopener noreferrer">
-            <img src="https://www.bestpractices.dev/projects/13099/badge" alt="OpenSSF Best Practices" class="h-6" />
+        <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+          <a href="https://www.bestpractices.dev/projects/13099" target="_blank" rel="noopener noreferrer" class="inline-flex items-center">
+            <img src="https://www.bestpractices.dev/projects/13099/badge" alt="OpenSSF Best Practices" class="h-5 sm:h-6" />
           </a>
-          <a href="https://securityscorecards.dev/viewer/?uri=github.com/Fmarzochi/EGC" target="_blank" rel="noopener noreferrer">
-            <img src="https://api.securityscorecards.dev/projects/github.com/Fmarzochi/EGC/badge" alt="OpenSSF Scorecard" class="h-6" />
+          <a href="https://securityscorecards.dev/viewer/?uri=github.com/Fmarzochi/EGC" target="_blank" rel="noopener noreferrer" class="inline-flex items-center">
+            <img src="https://api.securityscorecards.dev/projects/github.com/Fmarzochi/EGC/badge" alt="OpenSSF Scorecard" class="h-5 sm:h-6" />
           </a>
-          <a href="https://github.com/Fmarzochi/EGC/actions/workflows/codeql.yml" target="_blank" rel="noopener noreferrer">
-            <img src="https://img.shields.io/github/actions/workflow/status/Fmarzochi/EGC/codeql.yml?branch=main&label=CodeQL&logo=github" alt="CodeQL Status" class="h-6" />
+          <a href="https://github.com/Fmarzochi/EGC/actions/workflows/codeql.yml" target="_blank" rel="noopener noreferrer" class="inline-flex items-center">
+            <img src="https://img.shields.io/github/actions/workflow/status/Fmarzochi/EGC/codeql.yml?branch=main&label=CodeQL&logo=github" alt="CodeQL Status" class="h-5 sm:h-6" />
           </a>
-          <a href="https://github.com/Fmarzochi/EGC" target="_blank" rel="noopener noreferrer">
-            <img src="https://img.shields.io/badge/dependabot-active-blue?logo=dependabot&logoColor=white" alt="Dependabot Status" class="h-6" />
+          <a href="https://github.com/Fmarzochi/EGC" target="_blank" rel="noopener noreferrer" class="inline-flex items-center">
+            <img src="https://img.shields.io/badge/dependabot-active-blue?logo=dependabot&logoColor=white" alt="Dependabot Status" class="h-5 sm:h-6" />
           </a>
-          <a href="https://github.com/Fmarzochi/EGC/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">
-            <img src="https://img.shields.io/badge/license-MIT-blue" alt="MIT License" class="h-6" />
+          <a href="https://github.com/Fmarzochi/EGC/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" class="inline-flex items-center">
+            <img src="https://img.shields.io/badge/license-MIT-blue" alt="MIT License" class="h-5 sm:h-6" />
           </a>
         </div>
       </div>
@@ -359,7 +384,7 @@ const base = b.endsWith('/') ? b : b + '/';
 
     <!-- Sponsor -->
     <section class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-12 mb-4">
-      <div class="rounded-2xl border border-dashed border-gray-300 dark:border-gray-750 p-8 flex flex-col sm:flex-row items-center justify-between gap-6 glass">
+      <div class="rounded-2xl border border-dashed border-gray-300 dark:border-gray-750 p-5 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 glass">
         <div class="text-center sm:text-left">
           <div class="flex items-center justify-center sm:justify-start gap-2 mb-2">
             <svg class="w-5 h-5 text-pink-500 animate-heartbeat" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -367,14 +392,14 @@ const base = b.endsWith('/') ? b : b + '/';
             </svg>
             <span class="text-sm font-bold text-gray-900 dark:text-white">Sponsor EGC</span>
           </div>
-          <p class="text-sm text-gray-600 dark:text-gray-400 max-w-sm">EGC is free and open source. If it saves you time and tokens, consider sponsoring. It helps keep the project maintained and moving forward.</p>
+          <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 max-w-sm">EGC is free and open source. If it saves you time and tokens, consider sponsoring. It helps keep the project maintained and moving forward.</p>
         </div>
-        <div class="flex flex-col items-center gap-2 shrink-0">
+        <div class="flex flex-col items-center sm:items-end gap-2 shrink-0 w-full sm:w-auto">
           <a
             href="https://github.com/sponsors/Fmarzochi"
             target="_blank"
             rel="noopener noreferrer"
-            class="group inline-flex items-center justify-center gap-2 min-h-[44px] px-5 py-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 text-sm font-semibold hover:border-pink-300 dark:hover:border-pink-800/80 hover:text-pink-600 dark:hover:text-pink-400 hover:bg-pink-50/30 dark:hover:bg-pink-950/20 active:scale-95 transition-all duration-200"
+            class="group w-full sm:w-auto inline-flex items-center justify-center gap-2 min-h-[44px] px-5 py-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 text-sm font-semibold hover:border-pink-300 dark:hover:border-pink-800/80 hover:text-pink-600 dark:hover:text-pink-400 hover:bg-pink-50/30 dark:hover:bg-pink-950/20 active:scale-95 transition-all duration-200"
           >
             <svg class="w-4 h-4 text-pink-500/70 dark:text-pink-500/50 group-hover:text-pink-500 dark:group-hover:text-pink-400 transition-colors" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M12 21.593c-.317.177-.834.177-1.151 0C9.774 20.57 3 16.259 3 9.5 3 6.462 5.462 4 8.5 4c1.4 0 2.672.536 3.5 1.393C12.828 4.536 14.1 4 15.5 4 18.538 4 21 6.462 21 9.5c0 6.759-6.774 11.07-9 12.093z"/>
@@ -385,7 +410,7 @@ const base = b.endsWith('/') ? b : b + '/';
             href="https://www.paypal.com/donate/?business=fmarzochi%40gmail.com&currency_code=USD"
             target="_blank"
             rel="noopener noreferrer"
-            class="group inline-flex items-center justify-center gap-2 min-h-[44px] px-5 py-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 text-sm font-semibold hover:border-blue-300 dark:hover:border-blue-800/80 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50/30 dark:hover:bg-blue-950/20 active:scale-95 transition-all duration-200"
+            class="group w-full sm:w-auto inline-flex items-center justify-center gap-2 min-h-[44px] px-5 py-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 text-sm font-semibold hover:border-blue-300 dark:hover:border-blue-800/80 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50/30 dark:hover:bg-blue-950/20 active:scale-95 transition-all duration-200"
           >
             <svg class="w-4 h-4 text-blue-500/70 dark:text-blue-500/50 group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.541c-.013.076-.026.175-.041.254-.93 4.778-4.005 7.201-9.138 7.201h-2.19a.563.563 0 0 0-.556.479l-1.187 7.527h-.506l-.24 1.516a.56.56 0 0 0 .554.647h3.882c.46 0 .85-.334.922-.788.06-.26.76-4.852.816-5.09a.932.932 0 0 1 .923-.788h.58c3.76 0 6.705-1.528 7.565-5.946.36-1.847.174-3.388-.777-4.471z"/>
@@ -398,14 +423,14 @@ const base = b.endsWith('/') ? b : b + '/';
     </section>
 
     <!-- CTA -->
-    <section class="relative overflow-hidden bg-gradient-to-r from-egc-700 via-egc-600 to-egc-500 dark:from-egc-950 dark:via-egc-900 dark:to-egc-800 py-16 mb-0">
+    <section class="relative overflow-hidden bg-gradient-to-r from-egc-700 via-egc-600 to-egc-500 dark:from-egc-950 dark:via-egc-900 dark:to-egc-800 py-12 sm:py-16 mb-0">
       <!-- Gradient transition masks to blend colors into the layout -->
-      <div class="absolute top-0 inset-x-0 h-24 bg-gradient-to-b from-white to-transparent dark:from-gray-950 dark:to-transparent pointer-events-none opacity-90"></div>
-      <div class="absolute bottom-0 inset-x-0 h-24 bg-gradient-to-t from-white to-transparent dark:from-gray-950 dark:to-transparent pointer-events-none opacity-90"></div>
+      <div class="absolute top-0 inset-x-0 h-16 sm:h-24 bg-gradient-to-b from-white to-transparent dark:from-gray-950 dark:to-transparent pointer-events-none opacity-90"></div>
+      <div class="absolute bottom-0 inset-x-0 h-16 sm:h-24 bg-gradient-to-t from-white to-transparent dark:from-gray-950 dark:to-transparent pointer-events-none opacity-90"></div>
       <div class="relative z-10 mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center animate-fade-in-up" data-animate>
-        <h2 class="text-3xl font-bold text-white mb-4">Ready to give your AI a memory?</h2>
-        <p class="text-egc-100 mb-8">Install in under 2 minutes. Works with the tools you already use.</p>
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+        <h2 class="text-2xl sm:text-3xl font-bold text-white mb-4">Ready to give your AI a memory?</h2>
+        <p class="text-sm sm:text-base text-egc-100 mb-6 sm:mb-8">Install in under 2 minutes. Works with the tools you already use.</p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3 px-4 sm:px-0">
           <a href={`${base}get-started`} class="w-full sm:w-auto inline-flex items-center justify-center gap-2 min-h-[48px] px-6 py-3 rounded-xl bg-white text-egc-700 font-semibold hover:bg-egc-50 active:scale-95 transition-all duration-100">
             Get Started
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">

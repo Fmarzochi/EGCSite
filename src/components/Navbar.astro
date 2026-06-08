@@ -16,37 +16,40 @@ const navLinks = [
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <div class="flex h-16 items-center justify-between">
 
-      <div class="flex items-center gap-6">
-        <a href={base} class="flex items-center gap-2">
-          <img src={`${base}egc-logo.png`} alt="EGC Logo" class="h-6 w-6 object-contain" />
-          <span class="font-bold text-sm tracking-tight text-gray-900 dark:text-white">EGC</span>
+      <!-- Logo + brand -->
+      <div class="flex items-center gap-2 shrink-0">
+        <a href={base} class="flex items-center gap-2 min-h-[44px]">
+          <img src={`${base}egc-logo.png`} alt="EGC Logo" class="h-6 w-6 object-contain shrink-0" />
+          <span class="font-bold text-sm tracking-tight text-gray-900 dark:text-white whitespace-nowrap">EGC</span>
         </a>
-
-        <nav class="hidden md:flex items-center gap-1">
-          {navLinks.map(link => (
-            <a
-              href={link.href}
-              target={link.external ? '_blank' : undefined}
-              rel={link.external ? 'noopener noreferrer' : undefined}
-              class="px-3 py-1.5 rounded-md text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-egc-600 dark:hover:text-egc-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-150"
-            >
-              {link.label}
-              {link.external && (
-                <svg class="inline-block ml-0.5 w-3 h-3 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                </svg>
-              )}
-            </a>
-          ))}
-        </nav>
       </div>
 
+      <!-- Desktop nav -->
+      <nav class="hidden md:flex items-center gap-1">
+        {navLinks.map(link => (
+          <a
+            href={link.href}
+            target={link.external ? '_blank' : undefined}
+            rel={link.external ? 'noopener noreferrer' : undefined}
+            class="px-3 py-1.5 rounded-md text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-egc-600 dark:hover:text-egc-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-150"
+          >
+            {link.label}
+            {link.external && (
+              <svg class="inline-block ml-0.5 w-3 h-3 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            )}
+          </a>
+        ))}
+      </nav>
+
+      <!-- Right side: desktop CTA + mobile hamburger -->
       <div class="flex items-center gap-2">
         <a
           href="https://github.com/Fmarzochi/EGC"
           target="_blank"
           rel="noopener noreferrer"
-          class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-xs font-semibold hover:bg-gray-700 dark:hover:bg-gray-100 transition-colors duration-150"
+          class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-xs font-semibold hover:bg-gray-700 dark:hover:bg-gray-100 transition-colors duration-150"
         >
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
@@ -54,13 +57,14 @@ const navLinks = [
           GitHub
         </a>
 
+        <!-- Hamburger button (mobile only) -->
         <button
           id="mobile-menu-btn"
           type="button"
           aria-label="Open menu"
           aria-expanded="false"
           aria-controls="mobile-menu"
-          class="md:hidden p-3 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-egc-500 active:scale-95 active:bg-gray-200 dark:active:bg-gray-800 transition-all duration-100"
+          class="md:hidden p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-egc-500 focus:ring-offset-1 dark:focus:ring-offset-gray-950 active:scale-95 transition-all duration-150"
         >
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path class="line-1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16"/>
@@ -72,23 +76,52 @@ const navLinks = [
     </div>
   </div>
 
-  <div id="mobile-menu" class="md:hidden border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 px-4 shadow-lg transition-[max-height,opacity,visibility] duration-300 ease-in-out overflow-hidden max-h-0 opacity-0 pointer-events-none invisible">
-    <nav class="flex flex-col gap-1.5 py-3">
-      {navLinks.map(link => (
+  <!-- Backdrop overlay -->
+  <div
+    id="mobile-backdrop"
+    class="fixed inset-0 bg-black/20 dark:bg-black/40 backdrop-blur-sm z-[-1] opacity-0 pointer-events-none invisible transition-opacity duration-300 md:hidden"
+    aria-hidden="true"
+  ></div>
+
+  <!-- Mobile menu panel -->
+  <div
+    id="mobile-menu"
+    class="md:hidden absolute left-0 right-0 top-full border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 shadow-xl overflow-hidden transition-all duration-300 ease-in-out max-h-0 opacity-0 pointer-events-none invisible"
+  >
+    <nav class="flex flex-col gap-1 px-4 py-3">
+      {navLinks.map((link, i) => (
         <a
           href={link.href}
           target={link.external ? '_blank' : undefined}
           rel={link.external ? 'noopener noreferrer' : undefined}
-          class="flex items-center min-h-[44px] px-3 py-2 rounded-md text-base font-medium text-gray-600 dark:text-gray-400 hover:text-egc-600 dark:hover:text-egc-400 hover:bg-gray-50 dark:hover:bg-gray-900 active:scale-[0.98] active:bg-gray-100 dark:active:bg-gray-800 transition-all duration-100"
+          class:list={[
+            'mobile-nav-link flex items-center min-h-[44px] px-3 py-2.5 rounded-lg text-base font-medium text-gray-700 dark:text-gray-300 hover:text-egc-600 dark:hover:text-egc-400 hover:bg-gray-50 dark:hover:bg-gray-900 active:scale-[0.98] active:bg-gray-100 dark:active:bg-gray-800 transition-all duration-150',
+            `mobile-nav-link-${i}`,
+          ]}
         >
           {link.label}
           {link.external && (
-            <svg class="inline-block ml-1.5 w-4 h-4 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <svg class="ml-1.5 w-4 h-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
             </svg>
           )}
         </a>
       ))}
+
+      <!-- GitHub CTA in mobile menu -->
+      <div class="mt-2 pt-2 border-t border-gray-100 dark:border-gray-800">
+        <a
+          href="https://github.com/Fmarzochi/EGC"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="mobile-nav-link flex items-center justify-center gap-2 min-h-[44px] px-4 py-2.5 rounded-lg bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-sm font-semibold hover:bg-gray-700 dark:hover:bg-gray-100 active:scale-[0.98] transition-all duration-150"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+          </svg>
+          Star on GitHub
+        </a>
+      </div>
     </nav>
   </div>
 </header>
@@ -96,51 +129,111 @@ const navLinks = [
 <script>
   const mobileMenuBtn = document.getElementById('mobile-menu-btn');
   const mobileMenu = document.getElementById('mobile-menu');
+  const backdrop = document.getElementById('mobile-backdrop');
 
+  function openMenu() {
+    mobileMenuBtn?.setAttribute('aria-expanded', 'true');
+    mobileMenuBtn?.setAttribute('aria-label', 'Close menu');
+    mobileMenu?.classList.remove('max-h-0', 'opacity-0', 'pointer-events-none', 'invisible');
+    mobileMenu?.classList.add('max-h-[500px]', 'opacity-100', 'pointer-events-auto', 'visible');
+    backdrop?.classList.remove('opacity-0', 'pointer-events-none', 'invisible');
+    backdrop?.classList.add('opacity-100', 'pointer-events-auto', 'visible');
+    document.body.style.overflow = 'hidden';
+
+    // Staggered link entrance
+    const links = mobileMenu?.querySelectorAll('.mobile-nav-link');
+    links?.forEach((link, i) => {
+      const el = link as HTMLElement;
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(-8px)';
+      setTimeout(() => {
+        el.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0)';
+      }, 50 + i * 40);
+    });
+  }
+
+  function closeMenu() {
+    mobileMenuBtn?.setAttribute('aria-expanded', 'false');
+    mobileMenuBtn?.setAttribute('aria-label', 'Open menu');
+    mobileMenu?.classList.add('max-h-0', 'opacity-0', 'pointer-events-none', 'invisible');
+    mobileMenu?.classList.remove('max-h-[500px]', 'opacity-100', 'pointer-events-auto', 'visible');
+    backdrop?.classList.add('opacity-0', 'pointer-events-none', 'invisible');
+    backdrop?.classList.remove('opacity-100', 'pointer-events-auto', 'visible');
+    document.body.style.overflow = '';
+  }
+
+  function isMenuOpen(): boolean {
+    return mobileMenuBtn?.getAttribute('aria-expanded') === 'true';
+  }
+
+  // Toggle on hamburger click
   mobileMenuBtn?.addEventListener('click', () => {
-    const isExpanded = mobileMenuBtn.getAttribute('aria-expanded') === 'true';
-    mobileMenuBtn.setAttribute('aria-expanded', String(!isExpanded));
-    
-    if (isExpanded) {
-      mobileMenu?.classList.add('max-h-0', 'opacity-0', 'pointer-events-none', 'invisible');
-      mobileMenu?.classList.remove('max-h-[400px]', 'opacity-100', 'pointer-events-auto', 'visible');
+    if (isMenuOpen()) {
+      closeMenu();
     } else {
-      mobileMenu?.classList.remove('max-h-0', 'opacity-0', 'pointer-events-none', 'invisible');
-      mobileMenu?.classList.add('max-h-[400px]', 'opacity-100', 'pointer-events-auto', 'visible');
+      openMenu();
     }
   });
 
-  // Scroll dynamics
+  // Close on backdrop click
+  backdrop?.addEventListener('click', closeMenu);
+
+  // Close on link click (for same-page navigation)
+  mobileMenu?.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      closeMenu();
+    });
+  });
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isMenuOpen()) {
+      closeMenu();
+      mobileMenuBtn?.focus();
+    }
+  });
+
+  // Close menu on resize to desktop
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 768 && isMenuOpen()) {
+      closeMenu();
+    }
+  });
+
+  // Scroll dynamics (hide/show header on scroll)
   let lastScrollY = window.scrollY;
-  let scrollTimeout: NodeJS.Timeout | undefined;
+  let scrollTimeout: ReturnType<typeof setTimeout> | undefined;
   const header = document.getElementById('site-header');
 
   if (header) {
     window.addEventListener('scroll', () => {
       const currentScrollY = window.scrollY;
-      
-      // Clear timeout for detecting scroll stop
+
       if (scrollTimeout) clearTimeout(scrollTimeout);
-      
+
+      // Don't hide header while mobile menu is open
+      if (isMenuOpen()) {
+        lastScrollY = currentScrollY;
+        return;
+      }
+
       if (currentScrollY > 64) {
         if (currentScrollY > lastScrollY) {
-          // Scrolling down -> hide header
           header.classList.add('-translate-y-full');
           header.classList.remove('translate-y-0');
         } else {
-          // Scrolling up -> show header
           header.classList.add('translate-y-0');
           header.classList.remove('-translate-y-full');
         }
       } else {
-        // At the top -> always show
         header.classList.add('translate-y-0');
         header.classList.remove('-translate-y-full');
       }
-      
+
       lastScrollY = currentScrollY;
-      
-      // Scroll stop detection: reveal header after 250ms of inactivity
+
       scrollTimeout = setTimeout(() => {
         header.classList.add('translate-y-0');
         header.classList.remove('-translate-y-full');
@@ -150,17 +243,27 @@ const navLinks = [
 </script>
 
 <style>
+  /* Hamburger → X animation */
   .line-1, .line-2, .line-3 {
     transform-origin: center;
-    transition: transform 0.2s ease-in-out, opacity 0.15s ease-in-out;
+    transition: transform 0.25s ease-in-out, opacity 0.2s ease-in-out;
   }
   #mobile-menu-btn[aria-expanded="true"] .line-1 {
     transform: translateY(6px) rotate(45deg);
   }
   #mobile-menu-btn[aria-expanded="true"] .line-2 {
     opacity: 0;
+    transform: scaleX(0);
   }
   #mobile-menu-btn[aria-expanded="true"] .line-3 {
     transform: translateY(-6px) rotate(-45deg);
+  }
+
+  /* Ensure mobile menu is on top of page content */
+  #mobile-menu {
+    z-index: 40;
+  }
+  #mobile-backdrop {
+    z-index: 30;
   }
 </style>

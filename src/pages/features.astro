@@ -9,14 +9,14 @@ const base = b.endsWith('/') ? b : b + '/';
 
   <div class="pb-2 mb-8 border-b border-gray-200 dark:border-gray-800">
     <p class="text-xs font-semibold uppercase tracking-widest text-egc-600 dark:text-egc-400 mb-2">Getting Started</p>
-    <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">Features</h1>
-    <p class="text-gray-600 dark:text-gray-400">Everything EGC provides out of the box.</p>
+    <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-3">Features</h1>
+    <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400">Everything EGC provides out of the box.</p>
   </div>
 
   <!-- Core features -->
   <section class="mb-10">
     <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Core</h2>
-    <div class="grid sm:grid-cols-2 gap-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
       {[
         { title: 'Persistent memory', desc: 'State is saved at the end of each session and restored at the start. Decisions, preferences, and next steps survive window closes and tool switches.', icon: '🧠' },
         { title: 'Multi-tool', desc: 'Works with 9 AI coding tools. Install once and EGC registers itself in every tool you have installed.', icon: '🔌' },
@@ -25,11 +25,11 @@ const base = b.endsWith('/') ? b : b + '/';
         { title: 'Guardian layer', desc: 'egc-guardian blocks shell injection, unsafe writes, and dangerous commands before they execute.', icon: '🛡️' },
         { title: 'Decision history', desc: 'Every architectural decision is stored in SQLite with a timestamp. Query by date or tag.', icon: '📋' },
       ].map(card => (
-        <div class="flex gap-4 rounded-xl p-5 glass hover-lift transition-all duration-300">
+        <div class="flex gap-3 sm:gap-4 rounded-xl p-4 sm:p-5 glass hover-lift transition-all duration-300 min-h-[44px]">
           <div class="text-2xl shrink-0">{card.icon}</div>
-          <div>
+          <div class="min-w-0">
             <h3 class="font-semibold text-gray-900 dark:text-white text-sm mb-1">{card.title}</h3>
-            <p class="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">{card.desc}</p>
+            <p class="text-xs text-gray-600 dark:text-gray-400 leading-relaxed break-words">{card.desc}</p>
           </div>
         </div>
       ))}
@@ -40,7 +40,8 @@ const base = b.endsWith('/') ? b : b + '/';
   <section class="mb-10">
     <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Prompt library</h2>
     <p class="text-sm text-gray-600 dark:text-gray-400 mb-5">Optional. Asked during installation. Written from real experience, not generated.</p>
-    <div class="rounded-xl border border-gray-200 dark:border-gray-800 overflow-x-auto w-full mb-5">
+    <!-- Desktop table -->
+    <div class="hidden sm:block rounded-xl border border-gray-200 dark:border-gray-800 overflow-x-auto w-full mb-5">
       <table class="w-full text-sm min-w-[500px]">
         <thead>
           <tr class="bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
@@ -51,9 +52,9 @@ const base = b.endsWith('/') ? b : b + '/';
         </thead>
         <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
           {[
-            { type: 'Agents', count: '62', desc: 'Persona and behavior definitions' },
-            { type: 'Skills', count: '228+', desc: 'Domain-specific workflow runbooks' },
-            { type: 'Commands', count: '74', desc: 'Command definitions and lifecycle hooks' },
+            { type: 'Agents', count: '63', desc: 'Persona and behavior definitions' },
+            { type: 'Skills', count: '229+', desc: 'Domain-specific workflow runbooks' },
+            { type: 'Commands', count: '76', desc: 'Command definitions and lifecycle hooks' },
             { type: 'Rules', count: '111', desc: 'Constraints and governance directives' },
           ].map(row => (
             <tr class="bg-white dark:bg-gray-950">
@@ -65,13 +66,31 @@ const base = b.endsWith('/') ? b : b + '/';
         </tbody>
       </table>
     </div>
+    <!-- Mobile card layout -->
+    <div class="sm:hidden space-y-3 mb-5">
+      {[
+        { type: 'Agents', count: '63', desc: 'Persona and behavior definitions' },
+        { type: 'Skills', count: '229+', desc: 'Domain-specific workflow runbooks' },
+        { type: 'Commands', count: '76', desc: 'Command definitions and lifecycle hooks' },
+        { type: 'Rules', count: '111', desc: 'Constraints and governance directives' },
+      ].map(row => (
+        <div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4 bg-white dark:bg-gray-950">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="font-mono text-xs font-semibold text-egc-700 dark:text-egc-400">{row.type}</span>
+            <span class="font-bold text-sm text-gray-900 dark:text-white">{row.count}</span>
+          </div>
+          <p class="text-xs text-gray-600 dark:text-gray-400">{row.desc}</p>
+        </div>
+      ))}
+    </div>
     <p class="text-sm text-gray-600 dark:text-gray-400">Organized per harness: works in <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">.cursor/</code>, <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">.claude/</code>, <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">.gemini/</code>, and more. Switch tools and the same workflows follow you.</p>
   </section>
 
   <!-- Supported tools -->
   <section class="mb-10">
     <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Supported tools</h2>
-    <div class="rounded-xl border border-gray-200 dark:border-gray-800 overflow-x-auto w-full">
+    <!-- Desktop table -->
+    <div class="hidden sm:block rounded-xl border border-gray-200 dark:border-gray-800 overflow-x-auto w-full">
       <table class="w-full text-sm min-w-[500px]">
         <thead>
           <tr class="bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
@@ -105,6 +124,31 @@ const base = b.endsWith('/') ? b : b + '/';
           ))}
         </tbody>
       </table>
+    </div>
+    <!-- Mobile card layout -->
+    <div class="sm:hidden space-y-3">
+      {[
+        { tool: 'Claude Code', mcp: true, bootstrap: '~/.claude/CLAUDE.md' },
+        { tool: 'Antigravity CLI', mcp: true, bootstrap: '~/.gemini/GEMINI.md' },
+        { tool: 'Gemini CLI', mcp: true, bootstrap: '~/.gemini/GEMINI.md' },
+        { tool: 'Cursor', mcp: true, bootstrap: 'global cursor.rules' },
+        { tool: 'Codex CLI', mcp: true, bootstrap: '~/.codex/config.toml' },
+        { tool: 'OpenCode', mcp: true, bootstrap: '~/.opencode/instructions/EGC_MEMORY.md' },
+        { tool: 'Kiro', mcp: true, bootstrap: '~/.kiro/hooks/' },
+        { tool: 'Trae', mcp: false, bootstrap: '~/.trae/MEMORY.md' },
+        { tool: 'CodeBuddy', mcp: false, bootstrap: '~/.codebuddy/MEMORY.md' },
+      ].map(row => (
+        <div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4 bg-white dark:bg-gray-950">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="font-medium text-sm text-gray-900 dark:text-white">{row.tool}</span>
+            {row.mcp
+              ? <span class="inline-flex items-center gap-1 text-[10px] font-bold uppercase px-1.5 py-0.5 rounded-full bg-egc-100 dark:bg-egc-900/30 text-egc-700 dark:text-egc-400">MCP</span>
+              : <span class="inline-flex items-center gap-1 text-[10px] font-bold uppercase px-1.5 py-0.5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400">context</span>
+            }
+          </div>
+          <p class="font-mono text-xs text-gray-500 dark:text-gray-400 break-all">{row.bootstrap}</p>
+        </div>
+      ))}
     </div>
   </section>
 

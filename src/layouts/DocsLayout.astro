@@ -51,28 +51,54 @@ const sections = [
 
 <Base title={`${title} - EGC Docs`} description={description}>
   <Navbar />
+
+  <!-- Mobile Sidebar Toggle Button (fixed at bottom-right) -->
+  <button
+    id="docs-sidebar-toggle"
+    type="button"
+    aria-label="Open docs menu"
+    aria-expanded="false"
+    class="md:hidden fixed bottom-5 right-5 z-50 w-12 h-12 flex items-center justify-center rounded-full bg-egc-600 text-white shadow-lg shadow-egc-600/30 hover:bg-egc-700 active:scale-90 transition-all duration-150"
+  >
+    <svg id="docs-sidebar-icon-open" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+    </svg>
+    <svg id="docs-sidebar-icon-close" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+    </svg>
+  </button>
+
+  <!-- Mobile Sidebar Backdrop -->
+  <div
+    id="docs-sidebar-backdrop"
+    class="md:hidden fixed inset-0 z-40 bg-black/50 backdrop-blur-sm opacity-0 pointer-events-none invisible transition-all duration-300"
+    aria-hidden="true"
+  ></div>
+
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="flex flex-col lg:flex-row gap-8 py-8 min-h-screen">
+    <div class="flex flex-col md:flex-row gap-0 md:gap-8 py-4 md:py-8 min-h-screen">
 
-      <!-- Mobile Sidebar Toggle Button -->
-      <div class="lg:hidden flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 -mx-4 sm:-mx-6 lg:-mx-8">
-        <button
-          id="docs-sidebar-toggle"
-          type="button"
-          class="flex items-center gap-2 px-3 py-2 min-h-[44px] min-w-[44px] text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 active:scale-95 active:bg-gray-100 dark:active:bg-gray-700 transition-all duration-100"
-        >
-          <svg id="docs-sidebar-chevron" class="w-4 h-4 transition-transform duration-200 ease-in-out" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-          </svg>
-          <span>Menu de Documentação</span>
-        </button>
-        <span class="text-xs text-gray-500 dark:text-gray-400 font-mono">
-          {sections.flatMap(s => s.links).find(l => l.id === current)?.label || 'Docs'}
-        </span>
-      </div>
+      <!-- Sidebar -->
+      <aside
+        id="docs-sidebar"
+        class="fixed md:relative inset-y-0 left-0 z-40 w-72 md:w-56 shrink-0 bg-white dark:bg-gray-950 md:bg-transparent md:dark:bg-transparent border-r md:border-r-0 border-gray-200 dark:border-gray-800 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out overflow-y-auto md:overflow-visible"
+      >
+        <div class="sticky top-0 md:top-20 pt-16 md:pt-0 pb-6 px-4 md:px-0">
+          <!-- Mobile sidebar header -->
+          <div class="md:hidden flex items-center justify-between mb-4 pb-3 border-b border-gray-200 dark:border-gray-800">
+            <span class="text-sm font-semibold text-gray-900 dark:text-white">Documentation</span>
+            <button
+              id="docs-sidebar-close"
+              type="button"
+              aria-label="Close docs menu"
+              class="p-2 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 active:scale-95 transition-all duration-100"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
 
-      <aside id="docs-sidebar" class="w-full lg:w-56 shrink-0 border-b lg:border-b-0 border-gray-200 dark:border-gray-800 pb-6 lg:pb-0 transition-[max-height,opacity] duration-300 ease-in-out overflow-hidden max-h-0 opacity-0 lg:block lg:max-h-none lg:opacity-100 lg:overflow-visible">
-        <div class="sticky top-20 mt-4 lg:mt-0">
           {sections.map(section => (
             <div class="mb-6">
               <p class="mb-1.5 px-3 text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">{section.label}</p>
@@ -102,7 +128,8 @@ const sections = [
         </div>
       </aside>
 
-      <main class="flex-1 min-w-0 max-w-3xl">
+      <!-- Main Content -->
+      <main id="main-content" class="flex-1 min-w-0 max-w-3xl w-full docs-content">
         <slot />
       </main>
 
@@ -111,26 +138,103 @@ const sections = [
   <Footer />
 </Base>
 
+<style is:global>
+  /* Docs content: ensure code blocks and tables never overflow */
+  .docs-content pre {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100%;
+  }
+
+  .docs-content table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100%;
+  }
+
+  .docs-content img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Responsive headings */
+  @media (max-width: 767px) {
+    .docs-content h1 {
+      font-size: 1.5rem;
+      line-height: 2rem;
+    }
+    .docs-content h2 {
+      font-size: 1.25rem;
+      line-height: 1.75rem;
+    }
+  }
+
+  /* Lock body scroll when sidebar is open on mobile */
+  body.docs-sidebar-open {
+    overflow: hidden;
+  }
+</style>
+
 <script>
   function setupDocsSidebar() {
-    const toggle = document.getElementById('docs-sidebar-toggle');
+    const toggleBtn = document.getElementById('docs-sidebar-toggle');
+    const closeBtn = document.getElementById('docs-sidebar-close');
     const sidebar = document.getElementById('docs-sidebar');
-    const chevron = document.getElementById('docs-sidebar-chevron');
+    const backdrop = document.getElementById('docs-sidebar-backdrop');
+    const iconOpen = document.getElementById('docs-sidebar-icon-open');
+    const iconClose = document.getElementById('docs-sidebar-icon-close');
 
-    if (toggle && sidebar) {
-      toggle.addEventListener('click', () => {
-        const isCollapsed = sidebar.classList.contains('max-h-0');
-        if (isCollapsed) {
-          sidebar.classList.remove('max-h-0', 'opacity-0');
-          sidebar.classList.add('max-h-[1000px]', 'opacity-100');
-          chevron?.classList.add('rotate-180');
-        } else {
-          sidebar.classList.add('max-h-0', 'opacity-0');
-          sidebar.classList.remove('max-h-[1000px]', 'opacity-100');
-          chevron?.classList.remove('rotate-180');
-        }
-      });
+    function openSidebar() {
+      sidebar?.classList.remove('-translate-x-full');
+      sidebar?.classList.add('translate-x-0');
+      backdrop?.classList.remove('opacity-0', 'pointer-events-none', 'invisible');
+      backdrop?.classList.add('opacity-100', 'pointer-events-auto', 'visible');
+      iconOpen?.classList.add('hidden');
+      iconClose?.classList.remove('hidden');
+      toggleBtn?.setAttribute('aria-expanded', 'true');
+      toggleBtn?.setAttribute('aria-label', 'Close docs menu');
+      document.body.classList.add('docs-sidebar-open');
     }
+
+    function closeSidebar() {
+      sidebar?.classList.add('-translate-x-full');
+      sidebar?.classList.remove('translate-x-0');
+      backdrop?.classList.add('opacity-0', 'pointer-events-none', 'invisible');
+      backdrop?.classList.remove('opacity-100', 'pointer-events-auto', 'visible');
+      iconOpen?.classList.remove('hidden');
+      iconClose?.classList.add('hidden');
+      toggleBtn?.setAttribute('aria-expanded', 'false');
+      toggleBtn?.setAttribute('aria-label', 'Open docs menu');
+      document.body.classList.remove('docs-sidebar-open');
+    }
+
+    toggleBtn?.addEventListener('click', () => {
+      const isOpen = toggleBtn.getAttribute('aria-expanded') === 'true';
+      if (isOpen) {
+        closeSidebar();
+      } else {
+        openSidebar();
+      }
+    });
+
+    closeBtn?.addEventListener('click', closeSidebar);
+    backdrop?.addEventListener('click', closeSidebar);
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && toggleBtn?.getAttribute('aria-expanded') === 'true') {
+        closeSidebar();
+      }
+    });
+
+    // Close sidebar on navigation (for Astro view transitions)
+    sidebar?.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        // Delay to allow navigation to start
+        setTimeout(closeSidebar, 100);
+      });
+    });
   }
 
   document.addEventListener('astro:page-load', setupDocsSidebar);

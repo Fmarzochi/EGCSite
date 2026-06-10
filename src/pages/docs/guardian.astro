@@ -4,7 +4,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 
 <DocsLayout title="egc-guardian" description="The egc-guardian MCP server validates commands and writes, protecting your system from unsafe AI actions." current="guardian">
 
-  <div class="pb-2 mb-8 border-b border-black/10 dark:border-white/10">
+  <div class="pb-2 mb-8 border-b border-gray-200 dark:border-gray-800">
     <p class="text-xs font-semibold uppercase tracking-widest text-egc-600 dark:text-egc-400 mb-2">MCP Servers</p>
     <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-3 font-mono break-all">egc-guardian</h1>
     <p class="text-gray-600 dark:text-gray-400">Validation and safety layer. Runs in the background intercepting commands and file writes before they execute.</p>
@@ -51,8 +51,8 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
           tag: 'Utility',
         },
       ].map(tool => (
-        <div class="rounded-xl glass overflow-hidden">
-          <div class="flex flex-wrap items-center justify-between gap-2 px-4 sm:px-5 py-3 bg-white/10 dark:bg-white/5 border-b border-black/10 dark:border-white/10">
+        <div class="rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden">
+          <div class="flex flex-wrap items-center justify-between gap-2 px-4 sm:px-5 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
             <code class="text-sm font-mono font-bold text-egc-700 dark:text-egc-400">{tool.name}</code>
             <span class={`text-xs px-2 py-0.5 rounded-full font-medium ${tool.tag === 'Security' ? 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400' : 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400'}`}>{tool.tag}</span>
           </div>

@@ -26,7 +26,7 @@ const base = b.endsWith('/') ? b : b + '/';
         <div class="flex flex-wrap items-center justify-center gap-3 mb-8 sm:mb-10">
           <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-egc-700 dark:text-egc-300 text-xs font-medium glass hover-glow transition-all">
             <span class="w-2 h-2 rounded-full bg-egc-500 shadow-[0_0_8px_#22c55e] animate-pulse"></span>
-            v1.0.1 now available
+            v1.0.2 now available
             <a href="https://github.com/Fmarzochi/EGC/releases" target="_blank" rel="noopener noreferrer" class="underline underline-offset-2 hover:text-egc-600 dark:hover:text-egc-400">See release</a>
           </div>
           <a href="https://github.com/Fmarzochi/EGC" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-gray-700 dark:text-gray-100 text-xs font-medium hover:bg-black/5 dark:hover:bg-white/5 transition-all glass hover-lift">
@@ -166,8 +166,8 @@ const base = b.endsWith('/') ? b : b + '/';
             <div class="text-green-400 mt-1">Context and preferences acknowledged (terse responses).</div>
             <div class="text-green-400">Ready to pick up:</div>
             <div class="text-gray-300 ml-2">• Test full install on a clean machine</div>
-            <div class="text-gray-300 ml-2">• Add GEMINI.md with session memory protocol</div>
-            <div class="text-gray-300 ml-2">• Publish v1.0.1 fix to npm</div>
+            <div class="text-gray-300 ml-2">• Add skill discovery for Windsurf, Amp, Copilot</div>
+            <div class="text-gray-300 ml-2">• Publish v1.0.2 to npm</div>
           </div>
         </div>
 
@@ -210,15 +210,18 @@ const base = b.endsWith('/') ? b : b + '/';
       </div>
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4" data-animate>
         {[
-          { name: 'Claude Code',  badge: 'MCP + Bootstrap', icon: `${base}tools/anthropic.svg` },
-          { name: 'Cursor',       badge: 'MCP + Bootstrap', icon: `${base}tools/cursor.svg` },
-          { name: 'Codex CLI',    badge: 'MCP + Bootstrap', icon: `${base}tools/openai.svg` },
-          { name: 'Gemini CLI',   badge: 'MCP + Bootstrap', icon: `${base}tools/googlegemini.svg` },
-          { name: 'OpenCode',     badge: 'MCP + Bootstrap', icon: `${base}tools/opencode.svg` },
-          { name: 'Kiro',         badge: 'MCP + Bootstrap', icon: `${base}tools/kiro.svg` },
-          { name: 'Trae',         badge: 'Context + Bootstrap', icon: `${base}tools/trae.svg` },
-          { name: 'CodeBuddy',    badge: 'Context + Bootstrap', icon: `${base}tools/codebuddy.svg` },
-          { name: 'Antigravity',  badge: 'MCP + Bootstrap', icon: `${base}tools/bytedance.svg` },
+          { name: 'Claude Code',    badge: 'MCP + Skills', icon: `${base}tools/anthropic.svg` },
+          { name: 'Cursor',         badge: 'MCP + Bootstrap', icon: `${base}tools/cursor.svg` },
+          { name: 'Codex CLI',      badge: 'MCP + Skills', icon: `${base}tools/openai.svg` },
+          { name: 'Gemini CLI',     badge: 'MCP + Bootstrap', icon: `${base}tools/googlegemini.svg` },
+          { name: 'OpenCode',       badge: 'MCP + Skills', icon: `${base}tools/opencode.svg` },
+          { name: 'Windsurf',       badge: 'MCP + Skills', icon: `${base}tools/windsurf.svg` },
+          { name: 'Amp',            badge: 'MCP + Skills', icon: `${base}tools/amp.svg` },
+          { name: 'VS Code Copilot',badge: 'MCP + Skills', icon: `${base}tools/githubcopilot.svg` },
+          { name: 'Kiro',           badge: 'MCP + Bootstrap', icon: `${base}tools/kiro.svg` },
+          { name: 'Trae',           badge: 'Context + Bootstrap', icon: `${base}tools/trae.svg` },
+          { name: 'CodeBuddy',      badge: 'Context + Skills', icon: `${base}tools/codebuddy.svg` },
+          { name: 'Antigravity',    badge: 'MCP + Bootstrap', icon: `${base}tools/bytedance.svg` },
         ].map(tool => (
           <div class="flex flex-col items-center gap-2 sm:gap-3 rounded-xl p-3 sm:p-5 text-center hover:border-egc-500 hover-glow hover-lift transition-all duration-150 active:scale-[0.97] glass">
             <div class="w-10 h-10 sm:w-14 sm:h-14 rounded-xl bg-white shadow-lg shadow-black/5 dark:shadow-black/20 flex items-center justify-center">

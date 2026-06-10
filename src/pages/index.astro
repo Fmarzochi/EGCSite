@@ -13,18 +13,23 @@ const base = b.endsWith('/') ? b : b + '/';
 
   <main id="main-content">
     <!-- Hero -->
-    <section class="relative overflow-hidden bg-gradient-to-b from-gray-50 via-white to-white dark:from-gray-900 dark:via-gray-950 dark:to-gray-950 pt-16 pb-20 sm:pt-24 sm:pb-28">
-      <div class="absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
-        <div class="absolute left-1/2 top-0 -translate-x-1/2 w-[900px] h-[500px] rounded-full bg-egc-500/5 blur-3xl dark:bg-egc-500/10"></div>
+    <section class="relative overflow-hidden bg-gray-50 dark:bg-gray-950 pt-16 pb-20 sm:pt-24 sm:pb-28">
+      <!-- Grid pattern for glassmorphism refraction -->
+      <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMTI4LDEyOCwxMjgsMC4yKSIvPjwvc3ZnPg==')] dark:bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=')] [mask-image:linear-gradient(to_bottom,white,transparent)] z-0"></div>
+
+      <!-- Glow Orbs using standard Tailwind classes to ensure they compile -->
+      <div class="absolute inset-0 pointer-events-none overflow-hidden flex justify-center z-0" aria-hidden="true">
+        <div class="w-[500px] h-[500px] bg-egc-500/40 dark:bg-egc-500/30 blur-3xl rounded-full absolute top-[-100px] left-0 md:left-[20%] mix-blend-screen"></div>
+        <div class="w-[400px] h-[400px] bg-blue-500/30 dark:bg-blue-500/20 blur-3xl rounded-full absolute top-[50px] right-0 md:right-[20%] mix-blend-screen"></div>
       </div>
-      <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
-        <div class="flex flex-wrap items-center justify-center gap-2 mb-6">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-egc-50 dark:bg-egc-950/50 border border-egc-200 dark:border-egc-900 text-egc-700 dark:text-egc-300 text-xs font-medium">
-            <span class="w-1.5 h-1.5 rounded-full bg-egc-500 animate-pulse"></span>
+      <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center relative z-10">
+        <div class="flex flex-wrap items-center justify-center gap-3 mb-6">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-egc-700 dark:text-egc-300 text-xs font-medium glass hover-glow transition-all">
+            <span class="w-2 h-2 rounded-full bg-egc-500 shadow-[0_0_8px_#22c55e] animate-pulse"></span>
             v1.0.1 now available
-            <a href="https://github.com/Fmarzochi/EGC/releases" target="_blank" rel="noopener noreferrer" class="underline underline-offset-2">See release</a>
+            <a href="https://github.com/Fmarzochi/EGC/releases" target="_blank" rel="noopener noreferrer" class="underline underline-offset-2 hover:text-egc-600 dark:hover:text-egc-400">See release</a>
           </div>
-          <a href="https://github.com/Fmarzochi/EGC" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gray-900 dark:bg-gray-800 border border-gray-700 text-gray-100 text-xs font-medium hover:bg-gray-700 transition-colors">
+          <a href="https://github.com/Fmarzochi/EGC" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-gray-700 dark:text-gray-100 text-xs font-medium hover:bg-black/5 dark:hover:bg-white/5 transition-all glass hover-lift">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
             </svg>
@@ -57,27 +62,27 @@ const base = b.endsWith('/') ? b : b + '/';
           </a>
         </div>
 
-        <div class="max-w-xl mx-auto rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-800 shadow-xl glow-border animate-fade-in-up animate-fade-in-up-delay-3">
-          <div class="flex items-center gap-1.5 px-4 py-3 bg-gray-900 border-b border-gray-700">
-            <span class="w-3 h-3 rounded-full bg-red-500"></span>
-            <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
-            <span class="w-3 h-3 rounded-full bg-green-500"></span>
-            <span class="ml-2 text-xs text-gray-400 font-mono">terminal</span>
+        <div class="max-w-xl mx-auto rounded-2xl overflow-hidden shadow-2xl shadow-egc-500/20 animate-fade-in-up animate-fade-in-up-delay-3 glass hover-glow relative z-10">
+          <div class="flex items-center gap-2 px-4 py-3 bg-white/10 dark:bg-white/5 border-b border-black/10 dark:border-white/10 backdrop-blur-2xl">
+            <span class="w-3 h-3 rounded-full bg-red-500/90 shadow-sm"></span>
+            <span class="w-3 h-3 rounded-full bg-yellow-500/90 shadow-sm"></span>
+            <span class="w-3 h-3 rounded-full bg-green-500/90 shadow-sm"></span>
+            <span class="ml-2 text-xs text-gray-600 dark:text-gray-400 font-mono">terminal</span>
           </div>
-          <div class="bg-gray-900 p-3 sm:p-5 text-left font-mono text-xs sm:text-sm text-gray-100 leading-relaxed overflow-x-auto relative min-h-[220px] sm:min-h-[260px]" tabindex="0" role="region" aria-label="Terminal installation steps simulation">
+          <div class="p-4 sm:p-6 text-left font-mono text-xs sm:text-sm text-gray-800 dark:text-gray-100 leading-relaxed overflow-hidden relative min-h-[220px] sm:min-h-[260px]" tabindex="0" role="region" aria-label="Terminal installation steps simulation">
             <!-- Terminal Skeleton Loader -->
             <div id="terminal-skeleton" class="space-y-3 animate-pulse py-2">
-              <div class="h-4 bg-gray-800/80 rounded w-2/3"></div>
-              <div class="h-4 bg-gray-800/80 rounded w-1/2"></div>
-              <div class="h-4 bg-gray-800/80 rounded w-3/4"></div>
-              <div class="h-4 bg-gray-800/80 rounded w-4/5"></div>
-              <div class="h-4 bg-gray-800/80 rounded w-1/3"></div>
+              <div class="h-4 bg-gray-300/50 dark:bg-gray-700/50 rounded w-2/3"></div>
+              <div class="h-4 bg-gray-300/50 dark:bg-gray-700/50 rounded w-1/2"></div>
+              <div class="h-4 bg-gray-300/50 dark:bg-gray-700/50 rounded w-3/4"></div>
+              <div class="h-4 bg-gray-300/50 dark:bg-gray-700/50 rounded w-4/5"></div>
+              <div class="h-4 bg-gray-300/50 dark:bg-gray-700/50 rounded w-1/3"></div>
             </div>
 
             <!-- Terminal Content (revealed dynamically) -->
             <div id="terminal-content" class="opacity-0 transition-opacity duration-500 hidden">
               <div class="text-gray-400"># Install via npm (recommended)</div>
-              <div class="whitespace-nowrap"><span class="text-egc-400">$</span> npm install -g @egchq/egc</div>
+              <div class="break-all sm:break-normal"><span class="text-egc-400">$</span> npm install -g @egchq/egc</div>
               <div><span class="text-egc-400">$</span> egc install</div>
               <div class="mt-3 text-gray-400"># Or clone from source</div>
               <div class="text-gray-500 break-all sm:break-normal"><span class="text-gray-600">$</span> git clone https://github.com/Fmarzochi/EGC.git && cd EGC && sh install.sh</div>
@@ -112,7 +117,7 @@ const base = b.endsWith('/') ? b : b + '/';
     </section>
 
     <!-- The Problem -->
-    <section class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 mb-20" data-animate>
+    <section class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 mb-12 sm:mb-20" data-animate>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         <div>
           <p class="text-xs font-semibold uppercase tracking-widest text-egc-600 dark:text-egc-400 mb-3">The Problem</p>
@@ -134,7 +139,12 @@ const base = b.endsWith('/') ? b : b + '/';
     </section>
 
     <!-- How EGC fixes it -->
-    <section class="bg-gradient-to-b from-transparent via-gray-100 to-transparent dark:from-transparent dark:via-gray-900/90 dark:to-transparent py-12 sm:py-20 mb-20">
+    <section class="relative overflow-hidden bg-gradient-to-b from-transparent via-gray-100 to-transparent dark:from-transparent dark:via-gray-900/90 dark:to-transparent py-12 sm:py-20 mb-12 sm:mb-20">
+      <!-- Glow Orbs for Glassmorphism Refraction -->
+      <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+        <div class="absolute left-1/4 top-1/4 w-[500px] h-[500px] bg-egc-500/10 rounded-full blur-[100px] mix-blend-screen dark:bg-egc-500/10"></div>
+        <div class="absolute right-1/4 bottom-1/4 w-[400px] h-[400px] bg-blue-500/10 rounded-full blur-[80px] mix-blend-screen dark:bg-blue-500/10"></div>
+      </div>
       <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-10 sm:mb-12">
           <p class="text-xs font-semibold uppercase tracking-widest text-egc-600 dark:text-egc-400 mb-3">The Solution</p>
@@ -179,9 +189,10 @@ const base = b.endsWith('/') ? b : b + '/';
               description: 'Same state file, same context. No re-explaining.',
             },
           ].map(card => (
-            <div class="rounded-2xl p-5 sm:p-6 hover-lift hover-glow glass">
-              <div class="w-10 h-10 rounded-xl bg-egc-50 dark:bg-egc-900/30 flex items-center justify-center mb-4">
-                <svg class="w-5 h-5 text-egc-600 dark:text-egc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" set:html={card.icon}></svg>
+            <div class="rounded-2xl p-5 sm:p-6 hover-lift hover-glow glass relative group">
+              <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-egc-500/20 to-egc-600/5 border border-egc-500/30 flex items-center justify-center mb-5 relative overflow-hidden group-hover:border-egc-400/50 transition-colors">
+                <div class="absolute inset-0 bg-egc-500/20 blur-md"></div>
+                <svg class="w-6 h-6 text-egc-600 dark:text-egc-300 relative z-10 filter drop-shadow-[0_0_8px_rgba(34,197,94,0.6)]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" set:html={card.icon.replace(/stroke-width="2"/g, 'stroke-width="2.5"')}></svg>
               </div>
               <h3 class="font-semibold text-gray-900 dark:text-white mb-2">{card.title}</h3>
               <p class="text-sm text-gray-600 dark:text-gray-400">{card.description}</p>
@@ -192,7 +203,7 @@ const base = b.endsWith('/') ? b : b + '/';
     </section>
 
     <!-- Supported Tools -->
-    <section class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 mb-20">
+    <section class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 mb-12 sm:mb-20">
       <div class="text-center mb-10">
         <p class="text-xs font-semibold uppercase tracking-widest text-egc-600 dark:text-egc-400 mb-3">Ecosystem</p>
         <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">Works with every AI coding tool</h2>
@@ -209,8 +220,8 @@ const base = b.endsWith('/') ? b : b + '/';
           { name: 'CodeBuddy',    badge: 'Context + Bootstrap', icon: `${base}tools/codebuddy.svg` },
           { name: 'Antigravity',  badge: 'MCP + Bootstrap', icon: `${base}tools/bytedance.svg` },
         ].map(tool => (
-          <div class="flex flex-col items-center gap-2 sm:gap-3 rounded-xl border border-gray-800 bg-gray-900 p-3 sm:p-5 text-center hover:border-egc-500 hover-glow hover-lift transition-all duration-150 active:scale-[0.97]">
-            <div class="w-10 h-10 sm:w-14 sm:h-14 rounded-xl bg-white flex items-center justify-center">
+          <div class="flex flex-col items-center gap-2 sm:gap-3 rounded-xl p-3 sm:p-5 text-center hover:border-egc-500 hover-glow hover-lift transition-all duration-150 active:scale-[0.97] glass">
+            <div class="w-10 h-10 sm:w-14 sm:h-14 rounded-xl bg-white shadow-lg shadow-black/5 dark:shadow-black/20 flex items-center justify-center">
               <img src={tool.icon} alt={tool.name} class="w-6 h-6 sm:w-9 sm:h-9 object-contain" loading="lazy" />
             </div>
             <div class="text-xs sm:text-sm font-semibold text-gray-100 truncate w-full">{tool.name}</div>
@@ -221,14 +232,14 @@ const base = b.endsWith('/') ? b : b + '/';
     </section>
 
     <!-- MCP Servers -->
-    <section class="bg-gradient-to-b from-transparent via-gray-100 to-transparent dark:from-transparent dark:via-gray-900/90 dark:to-transparent py-12 sm:py-20 mb-20">
+    <section class="bg-gradient-to-b from-transparent via-gray-100 to-transparent dark:from-transparent dark:via-gray-900/90 dark:to-transparent py-12 sm:py-20 mb-12 sm:mb-20">
       <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-10 sm:mb-12">
           <p class="text-xs font-semibold uppercase tracking-widest text-egc-600 dark:text-egc-400 mb-3">MCP Servers</p>
           <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">Two local servers, zero cloud</h2>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="rounded-2xl border border-egc-200 dark:border-egc-900 bg-white dark:bg-gray-900 p-4 sm:p-6 glass">
+          <div class="rounded-2xl p-4 sm:p-6 glass hover-lift hover-glow">
             <div class="flex items-center gap-3 mb-4">
               <div class="w-10 h-10 rounded-xl bg-egc-50 dark:bg-egc-900/50 flex items-center justify-center shrink-0">
                 <svg class="w-5 h-5 text-egc-600 dark:text-egc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -261,7 +272,7 @@ const base = b.endsWith('/') ? b : b + '/';
             </a>
           </div>
 
-          <div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 sm:p-6 glass">
+          <div class="rounded-2xl p-4 sm:p-6 glass hover-lift hover-glow">
             <div class="flex items-center gap-3 mb-4">
               <div class="w-10 h-10 rounded-xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center shrink-0">
                 <svg class="w-5 h-5 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -298,34 +309,34 @@ const base = b.endsWith('/') ? b : b + '/';
     </section>
 
     <!-- Token savings -->
-    <section class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 mb-20">
+    <section class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 mb-12 sm:mb-20">
       <div class="text-center mb-10">
         <p class="text-xs font-semibold uppercase tracking-widest text-egc-600 dark:text-egc-400 mb-3">Efficiency</p>
         <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">87% fewer tokens to rebuild context</h2>
       </div>
 
       <!-- Desktop: table layout -->
-      <div class="hidden sm:block rounded-2xl border border-gray-200 dark:border-gray-800 overflow-x-auto w-full" tabindex="0" role="region" aria-label="Tool comparison table">
+      <div class="hidden sm:block rounded-2xl overflow-x-auto w-full glass" tabindex="0" role="region" aria-label="Tool comparison table">
         <table class="w-full text-sm">
           <thead>
-            <tr class="bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+            <tr class="border-b border-gray-200 dark:border-white/10">
               <th class="px-6 py-4 text-left font-semibold text-gray-900 dark:text-white"></th>
               <th class="px-6 py-4 text-center font-semibold text-gray-900 dark:text-white">Without EGC</th>
               <th class="px-6 py-4 text-center font-semibold text-egc-600 dark:text-egc-400">With EGC</th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
-            <tr class="bg-white dark:bg-gray-950">
+          <tbody class="divide-y divide-gray-100 dark:divide-white/5">
+            <tr class="transition-colors hover:bg-white/5">
               <td class="px-6 py-4 text-gray-700 dark:text-gray-300">Context overhead per session</td>
               <td class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">~1,500 tokens</td>
               <td class="px-6 py-4 text-center text-egc-600 dark:text-egc-400 font-semibold">~200 tokens</td>
             </tr>
-            <tr class="bg-gray-50/50 dark:bg-gray-900/30">
+            <tr class="transition-colors hover:bg-white/5">
               <td class="px-6 py-4 text-gray-700 dark:text-gray-300">Cost for 20 sessions/month</td>
               <td class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">~$0.08-0.09</td>
               <td class="px-6 py-4 text-center text-egc-600 dark:text-egc-400 font-semibold">~$0.011-0.012</td>
             </tr>
-            <tr class="bg-white dark:bg-gray-950">
+            <tr class="transition-colors hover:bg-white/5">
               <td class="px-6 py-4 text-gray-700 dark:text-gray-300">Time re-explaining context</td>
               <td class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">10 min/session</td>
               <td class="px-6 py-4 text-center text-egc-600 dark:text-egc-400 font-semibold">0</td>
@@ -341,7 +352,7 @@ const base = b.endsWith('/') ? b : b + '/';
           { metric: 'Cost for 20 sessions/month', without: '~$0.08-0.09', withEgc: '~$0.011-0.012' },
           { metric: 'Time re-explaining context', without: '10 min/session', withEgc: '0' },
         ].map(row => (
-          <div class="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-4">
+          <div class="rounded-xl p-4 glass hover-lift hover-glow">
             <div class="text-sm font-semibold text-gray-900 dark:text-white mb-3">{row.metric}</div>
             <div class="grid grid-cols-2 gap-3">
               <div>
@@ -383,8 +394,11 @@ const base = b.endsWith('/') ? b : b + '/';
     </section>
 
     <!-- Sponsor -->
-    <section class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-12 mb-4">
-      <div class="rounded-2xl border border-dashed border-gray-300 dark:border-gray-750 p-5 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 glass">
+    <section class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-12 mb-4 relative">
+      <div class="absolute inset-0 pointer-events-none -z-10" aria-hidden="true">
+        <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[300px] bg-pink-500/10 rounded-full blur-[80px] mix-blend-screen"></div>
+      </div>
+      <div class="rounded-2xl p-5 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 glass hover-glow">
         <div class="text-center sm:text-left">
           <div class="flex items-center justify-center sm:justify-start gap-2 mb-2">
             <svg class="w-5 h-5 text-pink-500 animate-heartbeat" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -424,7 +438,7 @@ const base = b.endsWith('/') ? b : b + '/';
 
     <!-- Backers -->
     <section class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-8 mb-4">
-      <div class="rounded-2xl border border-gray-200 dark:border-gray-800 p-6 sm:p-8 text-center glass">
+      <div class="rounded-2xl p-6 sm:p-8 text-center glass hover-glow">
         <h2 class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-6">Sponsors</h2>
         <div class="flex flex-col gap-8">
           <div>

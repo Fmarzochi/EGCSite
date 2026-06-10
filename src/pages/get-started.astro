@@ -17,7 +17,7 @@ const base = b.endsWith('/') ? b : b + '/';
   <section class="mb-10">
      <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Requirements</h2>
      <!-- Mobile: card layout, Desktop: table -->
-     <div class="hidden sm:block glass overflow-x-auto w-full">
+     <div class="rounded-xl hidden sm:block glass overflow-x-auto w-full">
        <table class="w-full text-sm min-w-[480px]">
          <thead>
            <tr class="bg-white/10 dark:bg-white/5 border-b border-black/10 dark:border-white/10">
@@ -52,7 +52,7 @@ const base = b.endsWith('/') ? b : b + '/';
          { name: 'Git', version: 'any', check: 'git --version' },
          { name: 'OS', version: 'Linux, macOS, Windows', check: '' },
        ].map(req => (
-         <div class="glass p-4">
+         <div class="rounded-xl glass p-4">
            <div class="flex items-center justify-between mb-2">
              <span class="font-semibold text-sm text-gray-900 dark:text-white">{req.name}</span>
              <code class="text-xs bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded font-mono">{req.version}</code>
@@ -70,7 +70,7 @@ const base = b.endsWith('/') ? b : b + '/';
     <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Choose your method</h2>
 
     <!-- Method tabs -->
-    <div class="glass overflow-hidden">
+    <div class="rounded-xl glass overflow-hidden">
 
       <!-- Tab bar — scrollable on mobile, no visible scrollbar -->
       <div class="install-tab-bar flex border-b border-black/10 dark:border-white/10 bg-gray-50 dark:bg-gray-900 overflow-x-auto">

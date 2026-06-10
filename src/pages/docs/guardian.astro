@@ -51,7 +51,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
           tag: 'Utility',
         },
       ].map(tool => (
-        <div class="glass overflow-hidden">
+        <div class="rounded-xl glass overflow-hidden">
           <div class="flex flex-wrap items-center justify-between gap-2 px-4 sm:px-5 py-3 bg-white/10 dark:bg-white/5 border-b border-black/10 dark:border-white/10">
             <code class="text-sm font-mono font-bold text-egc-700 dark:text-egc-400">{tool.name}</code>
             <span class={`text-xs px-2 py-0.5 rounded-full font-medium ${tool.tag === 'Security' ? 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400' : 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400'}`}>{tool.tag}</span>

@@ -13,7 +13,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
   <!-- Diagram -->
   <section class="mb-10">
     <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Overview</h2>
-    <div class="glass p-6 font-mono text-sm overflow-x-auto">
+    <div class="rounded-xl glass p-6 font-mono text-sm overflow-x-auto">
       <pre class="text-gray-700 dark:text-gray-300 text-[10px] sm:text-xs leading-relaxed"><code>
   ┌─────────────────────────────────────────────────────┐
   │                  AI Tool (Claude, Cursor…)           │
@@ -74,7 +74,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
           desc: 'State files are plain Markdown, one per project. SQLite database stores structured decision history for querying. Everything is local, human-readable, and version-control friendly.',
         },
       ].map(step => (
-        <div class="flex gap-4 glass p-5">
+        <div class="rounded-xl flex gap-4 glass p-5">
           <div class="shrink-0 w-7 h-7 rounded-full bg-egc-100 dark:bg-egc-900/30 text-egc-700 dark:text-egc-400 flex items-center justify-center text-sm font-bold">{step.n}</div>
           <div>
             <p class="font-semibold text-gray-900 dark:text-white text-sm mb-1">{step.title}</p>

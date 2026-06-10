@@ -7,7 +7,7 @@ const base = b.endsWith('/') ? b : b + '/';
 
 <DocsLayout title="Features" description="Full feature overview: persistent memory, prompt library, multi-tool support, security, and more." current="features">
 
-  <div class="pb-2 mb-8 border-b border-gray-200 dark:border-gray-800">
+  <div class="pb-2 mb-8 border-b border-black/10 dark:border-white/10">
     <p class="text-xs font-semibold uppercase tracking-widest text-egc-600 dark:text-egc-400 mb-2">Getting Started</p>
     <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-3">Features</h1>
     <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400">Everything EGC provides out of the box.</p>
@@ -41,10 +41,10 @@ const base = b.endsWith('/') ? b : b + '/';
     <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Prompt library</h2>
     <p class="text-sm text-gray-600 dark:text-gray-400 mb-5">Optional. Asked during installation. Written from real experience, not generated.</p>
     <!-- Desktop table -->
-    <div class="hidden sm:block rounded-xl border border-gray-200 dark:border-gray-800 overflow-x-auto w-full mb-5">
+    <div class="hidden sm:block glass overflow-x-auto w-full mb-5">
       <table class="w-full text-sm min-w-[500px]">
         <thead>
-          <tr class="bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+          <tr class="bg-white/10 dark:bg-white/5 border-b border-black/10 dark:border-white/10">
             <th class="px-5 py-3 text-left font-semibold text-gray-700 dark:text-gray-300">Type</th>
             <th class="px-5 py-3 text-center font-semibold text-gray-700 dark:text-gray-300">Count</th>
             <th class="px-5 py-3 text-left font-semibold text-gray-700 dark:text-gray-300">What it is</th>
@@ -57,7 +57,7 @@ const base = b.endsWith('/') ? b : b + '/';
             { type: 'Commands', count: '76', desc: 'Command definitions and lifecycle hooks' },
             { type: 'Rules', count: '111', desc: 'Constraints and governance directives' },
           ].map(row => (
-            <tr class="bg-white dark:bg-gray-950">
+            <tr class="bg-transparent">
               <td class="px-5 py-3 font-mono text-xs text-egc-700 dark:text-egc-400">{row.type}</td>
               <td class="px-5 py-3 text-center font-bold text-gray-900 dark:text-white">{row.count}</td>
               <td class="px-5 py-3 text-gray-600 dark:text-gray-400">{row.desc}</td>
@@ -74,7 +74,7 @@ const base = b.endsWith('/') ? b : b + '/';
         { type: 'Commands', count: '76', desc: 'Command definitions and lifecycle hooks' },
         { type: 'Rules', count: '111', desc: 'Constraints and governance directives' },
       ].map(row => (
-        <div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4 bg-white dark:bg-gray-950">
+        <div class="glass p-4">
           <div class="flex items-center justify-between mb-1.5">
             <span class="font-mono text-xs font-semibold text-egc-700 dark:text-egc-400">{row.type}</span>
             <span class="font-bold text-sm text-gray-900 dark:text-white">{row.count}</span>
@@ -90,10 +90,10 @@ const base = b.endsWith('/') ? b : b + '/';
   <section class="mb-10">
     <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Supported tools</h2>
     <!-- Desktop table -->
-    <div class="hidden sm:block rounded-xl border border-gray-200 dark:border-gray-800 overflow-x-auto w-full">
+    <div class="hidden sm:block glass overflow-x-auto w-full">
       <table class="w-full text-sm min-w-[500px]">
         <thead>
-          <tr class="bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+          <tr class="bg-white/10 dark:bg-white/5 border-b border-black/10 dark:border-white/10">
             <th class="px-5 py-3 text-left font-semibold text-gray-700 dark:text-gray-300">Tool</th>
             <th class="px-5 py-3 text-center font-semibold text-gray-700 dark:text-gray-300">MCP</th>
             <th class="px-5 py-3 text-left font-semibold text-gray-700 dark:text-gray-300">Bootstrap</th>
@@ -111,7 +111,7 @@ const base = b.endsWith('/') ? b : b + '/';
             { tool: 'Trae', mcp: false, bootstrap: '~/.trae/MEMORY.md' },
             { tool: 'CodeBuddy', mcp: false, bootstrap: '~/.codebuddy/MEMORY.md' },
           ].map(row => (
-            <tr class="bg-white dark:bg-gray-950">
+            <tr class="bg-transparent">
               <td class="px-5 py-3 font-medium text-gray-900 dark:text-white">{row.tool}</td>
               <td class="px-5 py-3 text-center">
                 {row.mcp
@@ -138,7 +138,7 @@ const base = b.endsWith('/') ? b : b + '/';
         { tool: 'Trae', mcp: false, bootstrap: '~/.trae/MEMORY.md' },
         { tool: 'CodeBuddy', mcp: false, bootstrap: '~/.codebuddy/MEMORY.md' },
       ].map(row => (
-        <div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4 bg-white dark:bg-gray-950">
+        <div class="glass p-4">
           <div class="flex items-center justify-between mb-1.5">
             <span class="font-medium text-sm text-gray-900 dark:text-white">{row.tool}</span>
             {row.mcp

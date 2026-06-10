@@ -7,7 +7,7 @@ const base = b.endsWith('/') ? b : b + '/';
 
 <DocsLayout title="egc-memory" description="The egc-memory MCP server provides persistent cross-session memory for AI coding tools." current="memory">
 
-  <div class="pb-2 mb-8 border-b border-gray-200 dark:border-gray-800">
+  <div class="pb-2 mb-8 border-b border-black/10 dark:border-white/10">
     <p class="text-xs font-semibold uppercase tracking-widest text-egc-600 dark:text-egc-400 mb-2">MCP Servers</p>
     <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-3 font-mono break-all">egc-memory</h1>
     <p class="text-gray-600 dark:text-gray-400">Persistent cross-session memory for AI coding tools. The one you'll use every session.</p>
@@ -50,8 +50,8 @@ const base = b.endsWith('/') ? b : b + '/';
           returns: 'Array of decision records with timestamps and tags.',
         },
       ].map(tool => (
-        <div class="rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden">
-          <div class="flex items-center gap-3 px-5 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+        <div class="glass overflow-hidden">
+          <div class="flex items-center gap-3 px-5 py-3 bg-white/10 dark:bg-white/5 border-b border-black/10 dark:border-white/10">
             <code class="text-sm font-mono font-bold text-egc-700 dark:text-egc-400">{tool.name}</code>
           </div>
           <div class="p-5">
@@ -114,7 +114,7 @@ Auth uses sessions via iron-session, not JWT.
         <pre class="bg-egc-900/10 dark:bg-egc-900/30 text-xs font-mono text-gray-700 dark:text-gray-300 p-3 rounded-lg overflow-x-auto"><code>get_state(&#123;&#125;)</code></pre>
         <p class="text-xs text-gray-600 dark:text-gray-400 mt-2">AI reads project state and picks up where the last session ended.</p>
       </div>
-      <div class="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5">
+      <div class="glass p-5">
         <div class="flex items-center gap-2 mb-3">
           <svg class="w-4 h-4 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>

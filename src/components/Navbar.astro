@@ -75,21 +75,20 @@ const navLinks = [
           aria-label="Open menu"
           aria-expanded="false"
           aria-controls="mobile-menu"
-          class="md:hidden p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-egc-500 focus:ring-offset-1 dark:focus:ring-offset-gray-950 active:scale-95 transition-all duration-150"
+          class="md:hidden p-2.5 min-w-[44px] min-h-[44px] flex flex-col items-center justify-center gap-[5px] rounded-lg focus:outline-none focus:ring-2 focus:ring-egc-500 focus:ring-offset-1 dark:focus:ring-offset-gray-950 active:scale-95 transition-all duration-150"
         >
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path class="line-1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16"/>
-            <path class="line-2" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 12h16"/>
-            <path class="line-3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 18h16"/>
-          </svg>
+          <span class="block w-6 h-[2px] bg-gray-600 dark:bg-gray-400 rounded-full transition-all duration-300 origin-center line-1"></span>
+          <span class="block w-6 h-[2px] bg-gray-600 dark:bg-gray-400 rounded-full transition-all duration-300 line-2"></span>
+          <span class="block w-6 h-[2px] bg-gray-600 dark:bg-gray-400 rounded-full transition-all duration-300 origin-center line-3"></span>
         </button>
       </div>
     </div>
   </div>
+</header>
 
-  <!-- Backdrop overlay -->
-  <div
-    id="mobile-backdrop"
+<!-- Backdrop overlay -->
+<div
+  id="mobile-backdrop"
     class="fixed inset-0 bg-black/20 dark:bg-black/40 backdrop-blur-sm z-[-1] opacity-0 pointer-events-none invisible transition-opacity duration-300 md:hidden"
     aria-hidden="true"
   ></div>
@@ -135,7 +134,7 @@ const navLinks = [
       </div>
     </nav>
   </div>
-</header>
+</div>
 
 <script>
   const mobileMenuBtn = document.getElementById('mobile-menu-btn');
@@ -255,19 +254,14 @@ const navLinks = [
 
 <style>
   /* Hamburger → X animation */
-  .line-1, .line-2, .line-3 {
-    transform-origin: center;
-    transition: transform 0.25s ease-in-out, opacity 0.2s ease-in-out;
-  }
   #mobile-menu-btn[aria-expanded="true"] .line-1 {
-    transform: translateY(6px) rotate(45deg);
+    transform: translateY(7px) rotate(45deg);
   }
   #mobile-menu-btn[aria-expanded="true"] .line-2 {
     opacity: 0;
-    transform: scaleX(0);
   }
   #mobile-menu-btn[aria-expanded="true"] .line-3 {
-    transform: translateY(-6px) rotate(-45deg);
+    transform: translateY(-7px) rotate(-45deg);
   }
 
   /* Ensure mobile menu is on top of page content */

@@ -50,7 +50,7 @@ import DocsLayout from '../layouts/DocsLayout.astro';
         <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
           {[
             { type: 'Agents', count: '63', desc: 'Persona and behavior definitions' },
-            { type: 'Skills', count: '229+', desc: 'Domain-specific workflow runbooks' },
+            { type: 'Skills', count: '229', desc: 'Domain-specific workflow runbooks' },
             { type: 'Commands', count: '76', desc: 'Command definitions and lifecycle hooks' },
             { type: 'Rules', count: '111', desc: 'Constraints and governance directives' },
           ].map(row => (
@@ -67,7 +67,7 @@ import DocsLayout from '../layouts/DocsLayout.astro';
     <div class="sm:hidden space-y-3 mb-5">
       {[
         { type: 'Agents', count: '63', desc: 'Persona and behavior definitions' },
-        { type: 'Skills', count: '229+', desc: 'Domain-specific workflow runbooks' },
+        { type: 'Skills', count: '229', desc: 'Domain-specific workflow runbooks' },
         { type: 'Commands', count: '76', desc: 'Command definitions and lifecycle hooks' },
         { type: 'Rules', count: '111', desc: 'Constraints and governance directives' },
       ].map(row => (
@@ -104,6 +104,10 @@ import DocsLayout from '../layouts/DocsLayout.astro';
             { tool: 'Cursor', mcp: true, bootstrap: 'global cursor.rules' },
             { tool: 'Codex CLI', mcp: true, bootstrap: '~/.codex/config.toml' },
             { tool: 'OpenCode', mcp: true, bootstrap: '~/.opencode/instructions/EGC_MEMORY.md' },
+            { tool: 'Windsurf', mcp: true, bootstrap: '~/.codeium/windsurf/' },
+            { tool: 'Amp', mcp: true, bootstrap: '~/.amp/' },
+            { tool: 'VS Code Copilot', mcp: true, bootstrap: '~/.github/' },
+            { tool: 'Zed', mcp: true, bootstrap: '~/.config/zed/AGENTS.md' },
             { tool: 'Kiro', mcp: true, bootstrap: '~/.kiro/hooks/' },
             { tool: 'Trae', mcp: false, bootstrap: '~/.trae/MEMORY.md' },
             { tool: 'CodeBuddy', mcp: false, bootstrap: '~/.codebuddy/MEMORY.md' },
@@ -131,6 +135,10 @@ import DocsLayout from '../layouts/DocsLayout.astro';
         { tool: 'Cursor', mcp: true, bootstrap: 'global cursor.rules' },
         { tool: 'Codex CLI', mcp: true, bootstrap: '~/.codex/config.toml' },
         { tool: 'OpenCode', mcp: true, bootstrap: '~/.opencode/instructions/EGC_MEMORY.md' },
+        { tool: 'Windsurf', mcp: true, bootstrap: '~/.codeium/windsurf/' },
+        { tool: 'Amp', mcp: true, bootstrap: '~/.amp/' },
+        { tool: 'VS Code Copilot', mcp: true, bootstrap: '~/.github/' },
+        { tool: 'Zed', mcp: true, bootstrap: '~/.config/zed/AGENTS.md' },
         { tool: 'Kiro', mcp: true, bootstrap: '~/.kiro/hooks/' },
         { tool: 'Trae', mcp: false, bootstrap: '~/.trae/MEMORY.md' },
         { tool: 'CodeBuddy', mcp: false, bootstrap: '~/.codebuddy/MEMORY.md' },

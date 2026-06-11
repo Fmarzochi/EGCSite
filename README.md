@@ -2,16 +2,16 @@
 
 [![Astro](https://img.shields.io/badge/Astro-5-FF5D01?logo=astro&logoColor=white)](https://astro.build) [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com) [![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org) [![GitHub Pages](https://img.shields.io/badge/GitHub_Pages-deployed-222222?logo=github&logoColor=white)](https://pages.github.com)
 
-Marketing and documentation website for [EGC — Extended Global Context](https://github.com/Fmarzochi/EGC).
+Marketing and documentation website for [EGC - Extended Global Context](https://github.com/Fmarzochi/EGC).
 
 **Live site:** https://fmarzochi.github.io/EGCSite
 
 ## Stack
 
-- [Astro 5](https://astro.build) — static site generator
-- [Tailwind CSS 3](https://tailwindcss.com) — utility-first styling with a custom EGC green palette
+- [Astro 5](https://astro.build): static site generator
+- [Tailwind CSS 3](https://tailwindcss.com): utility-first styling with a custom EGC green palette
 - TypeScript (strict)
-- GitHub Pages — deployment via GitHub Actions on every push to `main`
+- GitHub Pages: deployment via GitHub Actions on every push to `main`
 
 ## Local development
 
@@ -27,7 +27,7 @@ The dev server starts at `http://localhost:4321`.
 | Command | Description |
 |---|---|
 | `npm run dev` | Start dev server with hot reload |
-| `npm run build` | Build for production → `dist/` |
+| `npm run build` | Build for production into `dist/` |
 | `npm run preview` | Preview the production build locally |
 | `npm run lint` | Lint `.astro` and `.ts` files |
 | `npm run format` | Format with Prettier |
@@ -61,4 +61,4 @@ This repo follows the same conventions as the main EGC repo. Keep the version ba
 
 ## License
 
-MIT — see [LICENSE](https://github.com/Fmarzochi/EGC/blob/main/LICENSE) in the main EGC repo.
+MIT. See [LICENSE](https://github.com/Fmarzochi/EGC/blob/main/LICENSE) in the main EGC repo.

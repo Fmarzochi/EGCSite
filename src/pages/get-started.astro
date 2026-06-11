@@ -1,8 +1,7 @@
 ---
 import DocsLayout from '../layouts/DocsLayout.astro';
-
-const b = import.meta.env.BASE_URL;
-const base = b.endsWith('/') ? b : b + '/';
+import { getBase } from '../utils/base.ts';
+const base = getBase();
 ---
 
 <DocsLayout title="Get Started" description="Install EGC in under 2 minutes. Works with Claude Code, Cursor, Codex, Gemini CLI, and more." current="get-started">
@@ -21,9 +20,9 @@ const base = b.endsWith('/') ? b : b + '/';
        <table class="w-full text-sm min-w-[480px]">
          <thead>
            <tr class="bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
-             <th class="px-4 py-3 text-left font-semibold text-gray-700 dark:text-gray-300">Requirement</th>
-             <th class="px-4 py-3 text-left font-semibold text-gray-700 dark:text-gray-300">Version</th>
-             <th class="px-4 py-3 text-left font-semibold text-gray-700 dark:text-gray-300">Check</th>
+             <th scope="col" class="px-4 py-3 text-left font-semibold text-gray-700 dark:text-gray-300">Requirement</th>
+             <th scope="col" class="px-4 py-3 text-left font-semibold text-gray-700 dark:text-gray-300">Version</th>
+             <th scope="col" class="px-4 py-3 text-left font-semibold text-gray-700 dark:text-gray-300">Check</th>
            </tr>
          </thead>
          <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
@@ -152,7 +151,7 @@ const base = b.endsWith('/') ? b : b + '/';
       <!-- Linux panel -->
       <div id="panel-linux" class="install-panel hidden">
         <div class="p-4 sm:p-5 bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800">
-          <p class="text-sm text-gray-600 dark:text-gray-400">You need <a href="https://nodejs.org/en/download" target="_blank" rel="noopener noreferrer" class="text-egc-600 dark:text-egc-400 underline underline-offset-2">Node.js 18+</a>. Not sure? Run <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">node --version</code>.</p>
+          <p class="text-sm text-gray-600 dark:text-gray-400">You need <a href="https://nodejs.org/en/download" target="_blank" rel="noopener noreferrer" aria-label="Download Node.js 18+ (opens in new tab)" class="text-egc-600 dark:text-egc-400 underline underline-offset-2">Node.js 18+</a>. Not sure? Run <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">node --version</code>.</p>
         </div>
         <div class="flex items-center gap-1.5 px-4 py-2.5 bg-gray-900 border-b border-gray-700">
           <span class="w-2.5 h-2.5 rounded-full bg-red-500"></span>
@@ -168,7 +167,7 @@ const base = b.endsWith('/') ? b : b + '/';
       <!-- macOS panel -->
       <div id="panel-macos" class="install-panel hidden">
         <div class="p-4 sm:p-5 bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800">
-          <p class="text-sm text-gray-600 dark:text-gray-400">You need <a href="https://nodejs.org/en/download" target="_blank" rel="noopener noreferrer" class="text-egc-600 dark:text-egc-400 underline underline-offset-2">Node.js 18+</a>. Not sure? Run <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">node --version</code>.</p>
+          <p class="text-sm text-gray-600 dark:text-gray-400">You need <a href="https://nodejs.org/en/download" target="_blank" rel="noopener noreferrer" aria-label="Download Node.js 18+ (opens in new tab)" class="text-egc-600 dark:text-egc-400 underline underline-offset-2">Node.js 18+</a>. Not sure? Run <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">node --version</code>.</p>
         </div>
         <div class="flex items-center gap-1.5 px-4 py-2.5 bg-gray-900 border-b border-gray-700">
           <span class="w-2.5 h-2.5 rounded-full bg-red-500"></span>
@@ -184,7 +183,7 @@ const base = b.endsWith('/') ? b : b + '/';
       <!-- Windows panel -->
       <div id="panel-windows" class="install-panel hidden">
         <div class="p-4 sm:p-5 bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800">
-          <p class="text-sm text-gray-600 dark:text-gray-400">You need <a href="https://nodejs.org/en/download" target="_blank" rel="noopener noreferrer" class="text-egc-600 dark:text-egc-400 underline underline-offset-2">Node.js 18+</a> and PowerShell. Run as Administrator if prompted.</p>
+          <p class="text-sm text-gray-600 dark:text-gray-400">You need <a href="https://nodejs.org/en/download" target="_blank" rel="noopener noreferrer" aria-label="Download Node.js 18+ (opens in new tab)" class="text-egc-600 dark:text-egc-400 underline underline-offset-2">Node.js 18+</a> and PowerShell. Run as Administrator if prompted.</p>
         </div>
         <div class="flex items-center gap-1.5 px-4 py-2.5 bg-gray-900 border-b border-gray-700">
           <span class="w-2.5 h-2.5 rounded-full bg-red-500"></span>
@@ -311,6 +310,12 @@ cursor        <span class="text-green-400">registered</span></code></pre>
     flex-shrink: 0;
     transition: transform 0.1s ease, color 0.15s ease, border-color 0.15s ease;
     -webkit-tap-highlight-color: transparent;
+  }
+
+  .install-tab:focus-visible {
+    outline: 2px solid theme('colors.green.500');
+    outline-offset: 2px;
+    border-radius: 4px;
   }
 
   .install-tab:active {

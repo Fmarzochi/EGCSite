@@ -76,6 +76,40 @@
 }
 
 /* ==========================================================================
+   MODAL TABS
+   ========================================================================== */
+
+.modal-tab {
+  color: theme('colors.gray.500');
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  background: none;
+  margin-bottom: -1px;
+  flex-shrink: 0;
+  transition: transform 0.1s ease, color 0.15s ease, border-color 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.modal-tab:hover {
+  color: theme('colors.gray.300');
+}
+
+.modal-tab:active {
+  transform: scale(0.95);
+}
+
+.modal-tab:focus-visible {
+  outline: 2px solid theme('colors.green.500');
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.modal-tab.active {
+  color: theme('colors.green.400');
+  border-bottom-color: theme('colors.green.400');
+}
+
+/* ==========================================================================
    RESPONSIVE CODE BLOCKS — No horizontal page scroll
    ========================================================================== */
 
@@ -137,7 +171,7 @@ pre {
 }
 
 .badge-gray {
-  @apply badge bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-400;
+  @apply badge bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300;
 }
 
 /* ==========================================================================
@@ -204,6 +238,15 @@ pre {
   border-top: 1px solid rgba(255,255,255,0.25);
   border-left: 1px solid rgba(255,255,255,0.15);
   box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+
+@supports not (backdrop-filter: blur(1px)) {
+  .glass {
+    background: rgba(255, 255, 255, 0.95);
+  }
+  .dark .glass {
+    background: rgba(17, 24, 39, 0.95);
+  }
 }
 
 /* --- Glow border --------------------------------------------------------- */
@@ -286,6 +329,16 @@ pre {
 }
 
 /* ==========================================================================
+   ACCESSIBILITY — Focus Visibility
+   ========================================================================== */
+
+:focus-visible {
+  outline: 2px solid var(--egc-green);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ==========================================================================
    ACCESSIBILITY — Reduced Motion
    ========================================================================== */
 
@@ -300,6 +353,7 @@ pre {
   .animate-glow,
   .animate-shimmer,
   .animate-heartbeat,
+  .animate-pulse,
   .slide-down-enter {
     animation: none !important;
     opacity: 1 !important;

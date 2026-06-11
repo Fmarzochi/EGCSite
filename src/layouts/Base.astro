@@ -13,8 +13,8 @@ const {
   canonical,
 } = Astro.props;
 
-const b = import.meta.env.BASE_URL;
-const base = b.endsWith('/') ? b : b + '/';
+import { getBase } from '../utils/base.ts';
+const base = getBase();
 const canonicalURL = canonical ?? Astro.url.href;
 ---
 
@@ -35,14 +35,31 @@ const canonicalURL = canonical ?? Astro.url.href;
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={title} />
+    <meta property="og:image:type" content="image/png" />
 
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@EGC_tool" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" /></noscript>
     <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
     <title>{title}</title>
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "EGC - Extended Global Context",
+      "operatingSystem": "macOS, Windows, Linux",
+      "applicationCategory": "DeveloperApplication",
+      "url": "https://fmarzochi.github.io/EGCSite/"
+    })} />
   </head>
   <body class="antialiased" style="-webkit-text-size-adjust:100%;text-size-adjust:100%">
     <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-egc-600 focus:text-white focus:rounded-lg">

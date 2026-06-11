@@ -1,8 +1,5 @@
 ---
 import DocsLayout from '../layouts/DocsLayout.astro';
-
-const b = import.meta.env.BASE_URL;
-const base = b.endsWith('/') ? b : b + '/';
 ---
 
 <DocsLayout title="Features" description="Full feature overview: persistent memory, prompt library, multi-tool support, security, and more." current="features">
@@ -16,7 +13,7 @@ const base = b.endsWith('/') ? b : b + '/';
   <!-- Core features -->
   <section class="mb-10">
     <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Core</h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
       {[
         { title: 'Persistent memory', desc: 'State is saved at the end of each session and restored at the start. Decisions, preferences, and next steps survive window closes and tool switches.', icon: '🧠' },
         { title: 'Multi-tool', desc: 'Works with 9 AI coding tools. Install once and EGC registers itself in every tool you have installed.', icon: '🔌' },
@@ -45,9 +42,9 @@ const base = b.endsWith('/') ? b : b + '/';
       <table class="w-full text-sm min-w-[500px]">
         <thead>
           <tr class="bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
-            <th class="px-5 py-3 text-left font-semibold text-gray-700 dark:text-gray-300">Type</th>
-            <th class="px-5 py-3 text-center font-semibold text-gray-700 dark:text-gray-300">Count</th>
-            <th class="px-5 py-3 text-left font-semibold text-gray-700 dark:text-gray-300">What it is</th>
+            <th scope="col" class="px-5 py-3 text-left font-semibold text-gray-700 dark:text-gray-300">Type</th>
+            <th scope="col" class="px-5 py-3 text-center font-semibold text-gray-700 dark:text-gray-300">Count</th>
+            <th scope="col" class="px-5 py-3 text-left font-semibold text-gray-700 dark:text-gray-300">What it is</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
@@ -94,9 +91,9 @@ const base = b.endsWith('/') ? b : b + '/';
       <table class="w-full text-sm min-w-[500px]">
         <thead>
           <tr class="bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
-            <th class="px-5 py-3 text-left font-semibold text-gray-700 dark:text-gray-300">Tool</th>
-            <th class="px-5 py-3 text-center font-semibold text-gray-700 dark:text-gray-300">MCP</th>
-            <th class="px-5 py-3 text-left font-semibold text-gray-700 dark:text-gray-300">Bootstrap</th>
+            <th scope="col" class="px-5 py-3 text-left font-semibold text-gray-700 dark:text-gray-300">Tool</th>
+            <th scope="col" class="px-5 py-3 text-center font-semibold text-gray-700 dark:text-gray-300">MCP</th>
+            <th scope="col" class="px-5 py-3 text-left font-semibold text-gray-700 dark:text-gray-300">Bootstrap</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
@@ -115,8 +112,8 @@ const base = b.endsWith('/') ? b : b + '/';
               <td class="px-5 py-3 font-medium text-gray-900 dark:text-white">{row.tool}</td>
               <td class="px-5 py-3 text-center">
                 {row.mcp
-                  ? <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-egc-100 dark:bg-egc-900/30"><svg class="w-3 h-3 text-egc-600 dark:text-egc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></span>
-                  : <span class="text-xs text-gray-400">context</span>
+                  ? <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-egc-100 dark:bg-egc-900/30" aria-label="Yes"><svg class="w-3 h-3 text-egc-600 dark:text-egc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></span>
+                  : <span class="text-xs text-gray-400 dark:text-gray-300">context</span>
                 }
               </td>
               <td class="px-5 py-3 font-mono text-xs text-gray-500 dark:text-gray-400">{row.bootstrap}</td>

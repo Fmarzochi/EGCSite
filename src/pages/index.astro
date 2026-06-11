@@ -3,9 +3,9 @@ import Base from '../layouts/Base.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
-
-const b = import.meta.env.BASE_URL;
-const base = b.endsWith('/') ? b : b + '/';
+import { getBase } from '../utils/base.ts';
+import Icon from '../components/Icon.astro';
+const base = getBase();
 ---
 
 <Base title="EGC - Extended Global Context" description="Your AI remembers your project across sessions and tools. Persistent memory and shared context for every AI coding tool.">
@@ -19,20 +19,18 @@ const base = b.endsWith('/') ? b : b + '/';
 
       <!-- Glow Orbs using standard Tailwind classes to ensure they compile -->
       <div class="absolute inset-0 pointer-events-none overflow-hidden flex justify-center z-0" aria-hidden="true">
-        <div class="w-[500px] h-[500px] bg-egc-500/40 dark:bg-egc-500/30 blur-3xl rounded-full absolute top-[-100px] left-0 md:left-[20%] mix-blend-screen"></div>
-        <div class="w-[400px] h-[400px] bg-blue-500/30 dark:bg-blue-500/20 blur-3xl rounded-full absolute top-[50px] right-0 md:right-[20%] mix-blend-screen"></div>
+        <div class="hidden sm:block w-[280px] h-[280px] sm:w-[400px] sm:h-[400px] bg-egc-500/40 dark:bg-egc-500/30 blur-3xl rounded-full absolute top-[-100px] left-0 md:left-[20%] mix-blend-screen"></div>
+        <div class="hidden sm:block w-[280px] h-[280px] sm:w-[400px] sm:h-[400px] bg-blue-500/30 dark:bg-blue-500/20 blur-3xl rounded-full absolute top-[50px] right-0 md:right-[20%] mix-blend-screen"></div>
       </div>
       <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center relative z-10">
         <div class="flex flex-wrap items-center justify-center gap-3 mb-8 sm:mb-10">
           <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-egc-700 dark:text-egc-300 text-xs font-medium glass hover-glow transition-all">
             <span class="w-2 h-2 rounded-full bg-egc-500 shadow-[0_0_8px_#22c55e] animate-pulse"></span>
             v1.0.6 now available
-            <a href="https://github.com/Fmarzochi/EGC/releases" target="_blank" rel="noopener noreferrer" class="underline underline-offset-2 hover:text-egc-600 dark:hover:text-egc-400">See release</a>
+            <a href="https://github.com/Fmarzochi/EGC/releases" target="_blank" rel="noopener noreferrer" aria-label="See release notes (opens in new tab)" class="underline underline-offset-2 hover:text-egc-600 dark:hover:text-egc-400">See release</a>
           </div>
-          <a href="https://github.com/Fmarzochi/EGC" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-gray-700 dark:text-gray-100 text-xs font-medium hover:bg-black/5 dark:hover:bg-white/5 transition-all glass hover-lift">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
-            </svg>
+          <a href="https://github.com/Fmarzochi/EGC" target="_blank" rel="noopener noreferrer" aria-label="Fmarzochi/EGC on GitHub (opens in new tab)" class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-gray-700 dark:text-gray-100 text-xs font-medium hover:bg-black/5 dark:hover:bg-white/5 transition-all glass hover-lift">
+            <Icon name="github" size={12} />
             Fmarzochi/EGC
           </a>
         </div>
@@ -48,16 +46,14 @@ const base = b.endsWith('/') ? b : b + '/';
         </p>
 
         <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mb-8 sm:mb-10 px-4 sm:px-0 animate-fade-in-up animate-fade-in-up-delay-2">
-          <a href={`${base}get-started`} class="w-full sm:w-auto inline-flex items-center justify-center gap-2 min-h-[48px] px-6 py-3 rounded-xl bg-egc-600 text-white font-semibold hover:bg-egc-700 active:scale-95 transition-all duration-100 focus:outline-none focus:ring-2 focus:ring-egc-500 focus:ring-offset-2">
+          <button id="open-install-modal" type="button" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 min-h-[48px] px-6 py-3 rounded-xl bg-egc-600 text-white font-semibold hover:bg-egc-700 active:scale-95 transition-all duration-100 focus:outline-none focus:ring-2 focus:ring-egc-500 focus:ring-offset-2">
             Get Started
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
             </svg>
-          </a>
-          <a href="https://github.com/Fmarzochi/EGC" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 min-h-[48px] px-6 py-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 font-semibold hover:bg-gray-50 dark:hover:bg-gray-800 active:scale-95 transition-all duration-100">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
-            </svg>
+          </button>
+          <a href="https://github.com/Fmarzochi/EGC" target="_blank" rel="noopener noreferrer" aria-label="GitHub repository (opens in new tab)" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 min-h-[48px] px-6 py-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 font-semibold hover:bg-gray-50 dark:hover:bg-gray-800 active:scale-95 transition-all duration-100">
+            <Icon name="github" size={16} />
             GitHub
           </a>
         </div>
@@ -98,7 +94,7 @@ const base = b.endsWith('/') ? b : b + '/';
 
 
     <!-- Stats -->
-    <section class="border-y border-gray-100/50 dark:border-gray-800/20 bg-gradient-to-b from-transparent via-gray-100/80 to-transparent dark:from-transparent dark:via-gray-900/90 dark:to-transparent py-10 mb-16">
+    <section class="border-y border-gray-100/50 dark:border-gray-800/20 bg-gradient-to-b from-transparent via-gray-100/80 to-transparent dark:from-transparent dark:via-gray-900/90 dark:to-transparent py-10 mb-12 sm:mb-20">
       <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 text-center" data-animate>
           {[
@@ -142,8 +138,8 @@ const base = b.endsWith('/') ? b : b + '/';
     <section class="relative overflow-hidden bg-gradient-to-b from-transparent via-gray-100 to-transparent dark:from-transparent dark:via-gray-900/90 dark:to-transparent py-12 sm:py-20 mb-12 sm:mb-20">
       <!-- Glow Orbs for Glassmorphism Refraction -->
       <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
-        <div class="absolute left-1/4 top-1/4 w-[500px] h-[500px] bg-egc-500/10 rounded-full blur-[100px] mix-blend-screen dark:bg-egc-500/10"></div>
-        <div class="absolute right-1/4 bottom-1/4 w-[400px] h-[400px] bg-blue-500/10 rounded-full blur-[80px] mix-blend-screen dark:bg-blue-500/10"></div>
+        <div class="hidden sm:block absolute left-1/4 top-1/4 w-[280px] h-[280px] sm:w-[400px] sm:h-[400px] bg-egc-500/10 rounded-full blur-[100px] mix-blend-screen dark:bg-egc-500/10"></div>
+        <div class="hidden sm:block absolute right-1/4 bottom-1/4 w-[280px] h-[280px] sm:w-[400px] sm:h-[400px] bg-blue-500/10 rounded-full blur-[80px] mix-blend-screen dark:bg-blue-500/10"></div>
       </div>
       <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-10 sm:mb-12">
@@ -323,9 +319,9 @@ const base = b.endsWith('/') ? b : b + '/';
         <table class="w-full text-sm">
           <thead>
             <tr class="border-b border-gray-200 dark:border-white/10">
-              <th class="px-6 py-4 text-left font-semibold text-gray-900 dark:text-white"></th>
-              <th class="px-6 py-4 text-center font-semibold text-gray-900 dark:text-white">Without EGC</th>
-              <th class="px-6 py-4 text-center font-semibold text-egc-600 dark:text-egc-400">With EGC</th>
+              <th scope="col" class="px-6 py-4 text-left font-semibold text-gray-900 dark:text-white"><span class="sr-only">Metric</span></th>
+              <th scope="col" class="px-6 py-4 text-center font-semibold text-gray-900 dark:text-white">Without EGC</th>
+              <th scope="col" class="px-6 py-4 text-center font-semibold text-egc-600 dark:text-egc-400">With EGC</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-100 dark:divide-white/5">
@@ -359,7 +355,7 @@ const base = b.endsWith('/') ? b : b + '/';
             <div class="text-sm font-semibold text-gray-900 dark:text-white mb-3">{row.metric}</div>
             <div class="grid grid-cols-2 gap-3">
               <div>
-                <div class="text-[10px] uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-1">Without EGC</div>
+                <div class="text-[10px] uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-1">Without EGC</div>
                 <div class="text-sm text-gray-500 dark:text-gray-400">{row.without}</div>
               </div>
               <div>
@@ -375,25 +371,25 @@ const base = b.endsWith('/') ? b : b + '/';
     <!-- Security badges -->
     <section class="border-t border-gray-100 dark:border-gray-800 py-14">
       <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
-        <p class="text-xs font-semibold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-6">Security</p>
+        <p class="text-xs font-semibold uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-6">Security</p>
         <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
-          <a href="https://www.bestpractices.dev/projects/13099" target="_blank" rel="noopener noreferrer" class="inline-flex items-center">
-            <img src="https://www.bestpractices.dev/projects/13099/badge" alt="OpenSSF Best Practices" class="h-5 sm:h-6" />
+          <a href="https://www.bestpractices.dev/projects/13099" target="_blank" rel="noopener noreferrer" aria-label="OpenSSF Best Practices badge (opens in new tab)" class="inline-flex items-center focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500 rounded">
+            <img src="https://www.bestpractices.dev/projects/13099/badge" alt="OpenSSF Best Practices" class="h-5 sm:h-6" width="160" height="20" loading="lazy" />
           </a>
-          <a href="https://securityscorecards.dev/viewer/?uri=github.com/Fmarzochi/EGC" target="_blank" rel="noopener noreferrer" class="inline-flex items-center">
-            <img src="https://api.securityscorecards.dev/projects/github.com/Fmarzochi/EGC/badge" alt="OpenSSF Scorecard" class="h-5 sm:h-6" />
+          <a href="https://securityscorecards.dev/viewer/?uri=github.com/Fmarzochi/EGC" target="_blank" rel="noopener noreferrer" aria-label="OpenSSF Scorecard badge (opens in new tab)" class="inline-flex items-center focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500 rounded">
+            <img src="https://api.securityscorecards.dev/projects/github.com/Fmarzochi/EGC/badge" alt="OpenSSF Scorecard" class="h-5 sm:h-6" width="160" height="20" loading="lazy" />
           </a>
-          <a href="https://github.com/Fmarzochi/EGC/actions/workflows/codeql.yml" target="_blank" rel="noopener noreferrer" class="inline-flex items-center">
-            <img src="https://img.shields.io/github/actions/workflow/status/Fmarzochi/EGC/codeql.yml?branch=main&label=CodeQL&logo=github" alt="CodeQL Status" class="h-5 sm:h-6" />
+          <a href="https://github.com/Fmarzochi/EGC/actions/workflows/codeql.yml" target="_blank" rel="noopener noreferrer" aria-label="CodeQL workflow status (opens in new tab)" class="inline-flex items-center focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500 rounded">
+            <img src="https://img.shields.io/github/actions/workflow/status/Fmarzochi/EGC/codeql.yml?branch=main&label=CodeQL&logo=github" alt="CodeQL Status" class="h-5 sm:h-6" width="120" height="20" loading="lazy" />
           </a>
-          <a href="https://github.com/Fmarzochi/EGC" target="_blank" rel="noopener noreferrer" class="inline-flex items-center">
-            <img src="https://img.shields.io/badge/dependabot-active-blue?logo=dependabot&logoColor=white" alt="Dependabot Status" class="h-5 sm:h-6" />
+          <a href="https://github.com/Fmarzochi/EGC" target="_blank" rel="noopener noreferrer" aria-label="Dependabot status (opens in new tab)" class="inline-flex items-center focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500 rounded">
+            <img src="https://img.shields.io/badge/dependabot-active-blue?logo=dependabot&logoColor=white" alt="Dependabot Status" class="h-5 sm:h-6" width="120" height="20" loading="lazy" />
           </a>
-          <a href="https://github.com/Fmarzochi/EGC/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" class="inline-flex items-center">
-            <img src="https://img.shields.io/badge/license-MIT-blue" alt="MIT License" class="h-5 sm:h-6" />
+          <a href="https://github.com/Fmarzochi/EGC/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" aria-label="MIT License (opens in new tab)" class="inline-flex items-center focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500 rounded">
+            <img src="https://img.shields.io/badge/license-MIT-blue" alt="MIT License" class="h-5 sm:h-6" width="120" height="20" loading="lazy" />
           </a>
-          <a href="https://glama.ai/mcp/servers/Fmarzochi/EGC" target="_blank" rel="noopener noreferrer" class="inline-flex items-center">
-            <img src="https://glama.ai/mcp/servers/Fmarzochi/EGC/badges/score.svg" alt="Glama Score" class="h-5 sm:h-6" />
+          <a href="https://glama.ai/mcp/servers/Fmarzochi/EGC" target="_blank" rel="noopener noreferrer" aria-label="Glama MCP score (opens in new tab)" class="inline-flex items-center focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500 rounded">
+            <img src="https://glama.ai/mcp/servers/Fmarzochi/EGC/badges/score.svg" alt="Glama Score" class="h-5 sm:h-6" width="160" height="20" loading="lazy" />
           </a>
         </div>
       </div>
@@ -419,9 +415,10 @@ const base = b.endsWith('/') ? b : b + '/';
             href="https://github.com/sponsors/Fmarzochi"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="Sponsor on GitHub (opens in new tab)"
             class="group w-full sm:w-auto inline-flex items-center justify-center gap-2 min-h-[44px] px-5 py-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 text-sm font-semibold hover:border-pink-300 dark:hover:border-pink-800/80 hover:text-pink-600 dark:hover:text-pink-400 hover:bg-pink-50/30 dark:hover:bg-pink-950/20 active:scale-95 transition-all duration-200"
           >
-            <svg class="w-4 h-4 text-pink-500/70 dark:text-pink-500/50 group-hover:text-pink-500 dark:group-hover:text-pink-400 transition-colors" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <svg class="w-4 h-4 text-pink-500/70 dark:text-pink-500/50 group-hover:text-pink-500 dark:group-hover:text-pink-400 transition-colors animate-heartbeat" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M12 21.593c-.317.177-.834.177-1.151 0C9.774 20.57 3 16.259 3 9.5 3 6.462 5.462 4 8.5 4c1.4 0 2.672.536 3.5 1.393C12.828 4.536 14.1 4 15.5 4 18.538 4 21 6.462 21 9.5c0 6.759-6.774 11.07-9 12.093z"/>
             </svg>
             Sponsor on GitHub
@@ -430,6 +427,7 @@ const base = b.endsWith('/') ? b : b + '/';
             href="https://www.paypal.com/donate/?business=fmarzochi%40gmail.com&currency_code=USD"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="Donate via PayPal (opens in new tab)"
             class="group w-full sm:w-auto inline-flex items-center justify-center gap-2 min-h-[44px] px-5 py-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 text-sm font-semibold hover:border-blue-300 dark:hover:border-blue-800/80 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50/30 dark:hover:bg-blue-950/20 active:scale-95 transition-all duration-200"
           >
             <svg class="w-4 h-4 text-blue-500/70 dark:text-blue-500/50 group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -437,7 +435,7 @@ const base = b.endsWith('/') ? b : b + '/';
             </svg>
             Donate via PayPal
           </a>
-          <span class="text-xs text-gray-400 dark:text-gray-500">No GitHub account needed</span>
+          <span class="text-xs text-gray-500 dark:text-gray-400">No GitHub account needed</span>
         </div>
       </div>
     </section>
@@ -448,14 +446,14 @@ const base = b.endsWith('/') ? b : b + '/';
         <h2 class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-6">Sponsors</h2>
         <div class="flex flex-col gap-8">
           <div>
-            <p class="text-xs font-medium text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-4">Backers</p>
+            <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">Backers</p>
             <div class="flex flex-wrap justify-center gap-3">
               <a
                 href="https://github.com/chizormaangel-commits"
                 target="_blank"
                 rel="noopener noreferrer"
-                title="@chizormaangel-commits"
-                class="group relative"
+                aria-label="@chizormaangel-commits on GitHub (opens in new tab)"
+                class="group relative focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500 rounded-full"
               >
                 <img
                   src="https://avatars.githubusercontent.com/u/291871326?v=4"
@@ -469,8 +467,8 @@ const base = b.endsWith('/') ? b : b + '/';
             </div>
           </div>
           <div>
-            <p class="text-xs font-medium text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-3">Monthly sponsors</p>
-            <p class="text-xs text-gray-400 dark:text-gray-500 italic">Be the first</p>
+            <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">Monthly sponsors</p>
+            <p class="text-xs text-gray-500 dark:text-gray-400 italic">Be the first</p>
           </div>
         </div>
       </div>
@@ -491,13 +489,131 @@ const base = b.endsWith('/') ? b : b + '/';
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
             </svg>
           </a>
-          <a href="https://github.com/Fmarzochi/EGC" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 min-h-[48px] px-6 py-3 rounded-xl border border-egc-400 text-white font-semibold hover:bg-egc-700 dark:hover:bg-egc-800 active:scale-95 transition-all duration-100">
+          <a href="https://github.com/Fmarzochi/EGC" target="_blank" rel="noopener noreferrer" aria-label="View EGC on GitHub (opens in new tab)" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 min-h-[48px] px-6 py-3 rounded-xl border border-egc-400 text-white font-semibold hover:bg-egc-700 dark:hover:bg-egc-800 active:scale-95 transition-all duration-100">
             View on GitHub
           </a>
         </div>
       </div>
     </section>
   </main>
+
+  <!-- Install Modal -->
+  <div
+    id="install-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="install-modal-title"
+    class="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 opacity-0 pointer-events-none invisible transition-opacity duration-300"
+  >
+    <div id="install-modal-backdrop" class="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
+
+    <div
+      id="install-modal-panel"
+      class="relative w-full sm:max-w-lg bg-gray-950 border border-gray-800 shadow-2xl rounded-t-2xl sm:rounded-2xl translate-y-full sm:translate-y-6 sm:scale-95 transition-transform duration-300 ease-out max-h-[90vh] overflow-y-auto"
+    >
+      <!-- Header -->
+      <div class="flex items-center justify-between px-5 py-4 border-b border-gray-800 sticky top-0 bg-gray-950 z-10">
+        <div>
+          <p class="text-[10px] font-bold uppercase tracking-widest text-egc-400 mb-0.5">Quick Start</p>
+          <h2 id="install-modal-title" class="text-base font-bold text-white">Install EGC</h2>
+        </div>
+        <button id="close-install-modal" type="button" aria-label="Close" class="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800 transition-colors focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-egc-500">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Tabs -->
+      <div class="flex border-b border-gray-800 bg-gray-900 overflow-x-auto">
+        <button class="modal-tab active flex items-center gap-1.5 px-4 py-3 text-xs font-semibold whitespace-nowrap min-h-[44px]" data-modal-tab="npm" type="button">
+          <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M1.763 0C.786 0 0 .786 0 1.763v20.474C0 23.214.786 24 1.763 24h20.474c.977 0 1.763-.786 1.763-1.763V1.763C24 .786 23.214 0 22.237 0zM5.13 5.323h13.837v13.629h-3.502V8.69h-3.377v10.262H5.13z"/></svg>
+          npm
+          <span class="text-[9px] font-bold uppercase px-1 py-0.5 rounded-full bg-egc-900/50 text-egc-400">rec</span>
+        </button>
+        <button class="modal-tab flex items-center gap-1.5 px-4 py-3 text-xs font-semibold whitespace-nowrap min-h-[44px]" data-modal-tab="linux" type="button">
+          <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489a.424.424 0 00-.11.135c-.26.268-.45.6-.663.839-.199.199-.485.267-.797.4-.313.136-.658.269-.864.68-.09.189-.136.394-.132.602 0 .199.027.4.055.536.058.399.116.728.04.97-.249.68-.28 1.145-.106 1.484.174.334.535.47.94.601.81.2 1.91.135 2.774.6.926.466 1.866.67 2.616.47.526-.116.97-.464 1.208-.946.587-.003 1.23-.269 2.26-.334.699-.058 1.574.267 2.577.2.025.134.063.198.114.333l.003.003c.391.778 1.113 1.022 1.903 1.395.81.401 1.726.57 2.34.467.307-.065.56-.26.713-.552.512-.882.064-1.547-.12-1.792l-.053-.07a2.551 2.551 0 01-.172-.573c-.015-.131.017-.322.076-.451.336-.717.09-1.384-.272-1.845-.298-.378-.667-.6-.91-.727l-.108-.044a1.95 1.95 0 01-.368-.353c-.267-.359-.465-.799-.725-1.159-.122-.169-.376-.479-.553-.652-.4-.398-.646-.654-.646-1.072 0-.412.163-.855.283-1.267.127-.42.243-.805.217-1.133-.063-.79-.512-1.47-.855-2.012l-.07-.106c-.39-.6-.66-.994-.917-1.78-.264-.812-.363-1.725-.31-2.596.035-.475.095-.787.176-1.134l.01-.042c.03-.122.06-.238.07-.36.01-.12.004-.233-.01-.337C14.078 1.147 13.318 0 12.504 0z"/></svg>
+          Linux
+        </button>
+        <button class="modal-tab flex items-center gap-1.5 px-4 py-3 text-xs font-semibold whitespace-nowrap min-h-[44px]" data-modal-tab="macos" type="button">
+          <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg>
+          macOS
+        </button>
+        <button class="modal-tab flex items-center gap-1.5 px-4 py-3 text-xs font-semibold whitespace-nowrap min-h-[44px]" data-modal-tab="windows" type="button">
+          <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>
+          Windows
+        </button>
+      </div>
+
+      <!-- Panels -->
+      <div id="modal-panel-npm" class="modal-panel">
+        <div class="px-5 py-3 bg-gray-950 border-b border-gray-800">
+          <p class="text-xs text-gray-400">Works on <strong class="text-white">Linux, macOS, and Windows</strong>. No git clone needed.</p>
+        </div>
+        <div class="flex items-center gap-1.5 px-4 py-2 bg-gray-900 border-b border-gray-700">
+          <span class="w-2 h-2 rounded-full bg-red-500"></span>
+          <span class="w-2 h-2 rounded-full bg-yellow-500"></span>
+          <span class="w-2 h-2 rounded-full bg-green-500"></span>
+          <span class="ml-2 text-[11px] text-gray-400 font-mono">terminal</span>
+        </div>
+        <pre class="bg-gray-900 px-5 py-4 text-gray-100 text-xs font-mono overflow-x-auto m-0"><code><span class="text-egc-400">$</span> npm install -g @egchq/egc
+<span class="text-egc-400">$</span> egc install</code></pre>
+      </div>
+
+      <div id="modal-panel-linux" class="modal-panel hidden">
+        <div class="px-5 py-3 bg-gray-950 border-b border-gray-800">
+          <p class="text-xs text-gray-400">Requires <a href="https://nodejs.org/en/download" target="_blank" rel="noopener noreferrer" aria-label="Node.js 18+ (opens in new tab)" class="text-egc-400 underline underline-offset-2">Node.js 18+</a> and git.</p>
+        </div>
+        <div class="flex items-center gap-1.5 px-4 py-2 bg-gray-900 border-b border-gray-700">
+          <span class="w-2 h-2 rounded-full bg-red-500"></span>
+          <span class="w-2 h-2 rounded-full bg-yellow-500"></span>
+          <span class="w-2 h-2 rounded-full bg-green-500"></span>
+          <span class="ml-2 text-[11px] text-gray-400 font-mono">bash</span>
+        </div>
+        <pre class="bg-gray-900 px-5 py-4 text-gray-100 text-xs font-mono overflow-x-auto m-0"><code><span class="text-egc-400">$</span> git clone https://github.com/Fmarzochi/EGC.git
+<span class="text-egc-400">$</span> cd EGC && sh install.sh</code></pre>
+      </div>
+
+      <div id="modal-panel-macos" class="modal-panel hidden">
+        <div class="px-5 py-3 bg-gray-950 border-b border-gray-800">
+          <p class="text-xs text-gray-400">Requires <a href="https://nodejs.org/en/download" target="_blank" rel="noopener noreferrer" aria-label="Node.js 18+ (opens in new tab)" class="text-egc-400 underline underline-offset-2">Node.js 18+</a> and git.</p>
+        </div>
+        <div class="flex items-center gap-1.5 px-4 py-2 bg-gray-900 border-b border-gray-700">
+          <span class="w-2 h-2 rounded-full bg-red-500"></span>
+          <span class="w-2 h-2 rounded-full bg-yellow-500"></span>
+          <span class="w-2 h-2 rounded-full bg-green-500"></span>
+          <span class="ml-2 text-[11px] text-gray-400 font-mono">zsh</span>
+        </div>
+        <pre class="bg-gray-900 px-5 py-4 text-gray-100 text-xs font-mono overflow-x-auto m-0"><code><span class="text-egc-400">$</span> git clone https://github.com/Fmarzochi/EGC.git
+<span class="text-egc-400">$</span> cd EGC && sh install.sh</code></pre>
+      </div>
+
+      <div id="modal-panel-windows" class="modal-panel hidden">
+        <div class="px-5 py-3 bg-gray-950 border-b border-gray-800">
+          <p class="text-xs text-gray-400">Requires <a href="https://nodejs.org/en/download" target="_blank" rel="noopener noreferrer" aria-label="Node.js 18+ (opens in new tab)" class="text-egc-400 underline underline-offset-2">Node.js 18+</a> and PowerShell.</p>
+        </div>
+        <div class="flex items-center gap-1.5 px-4 py-2 bg-gray-900 border-b border-gray-700">
+          <span class="w-2 h-2 rounded-full bg-red-500"></span>
+          <span class="w-2 h-2 rounded-full bg-yellow-500"></span>
+          <span class="w-2 h-2 rounded-full bg-green-500"></span>
+          <span class="ml-2 text-[11px] text-gray-400 font-mono">powershell</span>
+        </div>
+        <pre class="bg-gray-900 px-5 py-4 text-gray-100 text-xs font-mono overflow-x-auto m-0"><code><span class="text-egc-400">PS&gt;</span> git clone https://github.com/Fmarzochi/EGC.git
+<span class="text-egc-400">PS&gt;</span> cd EGC; .\install.ps1</code></pre>
+      </div>
+
+      <!-- Footer -->
+      <div class="px-5 py-3 border-t border-gray-800 flex items-center justify-between">
+        <p class="text-[11px] text-gray-500">Works with Claude Code, Cursor, Codex &amp; more.</p>
+        <a href={`${base}get-started`} class="text-xs text-egc-400 hover:text-egc-300 font-semibold flex items-center gap-1 transition-colors">
+          Full guide
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
 
   <Footer />
 
@@ -519,7 +635,7 @@ const base = b.endsWith('/') ? b : b + '/';
   });
 
   // Terminal skeleton to content loading transition
-  setTimeout(() => {
+  function revealTerminal() {
     const skeleton = document.getElementById('terminal-skeleton');
     const content = document.getElementById('terminal-content');
     if (skeleton && content) {
@@ -528,7 +644,56 @@ const base = b.endsWith('/') ? b : b + '/';
       setTimeout(() => {
         content.classList.remove('opacity-0');
       }, 50);
+    }
   }
-}, 1200);
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => setTimeout(revealTerminal, 300));
+  } else {
+    setTimeout(revealTerminal, 300);
+  }
+
+  // Install Modal
+  const modal = document.getElementById('install-modal');
+  const panel = document.getElementById('install-modal-panel');
+  const backdrop = document.getElementById('install-modal-backdrop');
+  const openBtn = document.getElementById('open-install-modal');
+  const closeBtn = document.getElementById('close-install-modal');
+
+  function openModal() {
+    modal?.classList.remove('opacity-0', 'pointer-events-none', 'invisible');
+    modal?.classList.add('opacity-100', 'pointer-events-auto', 'visible');
+    panel?.classList.remove('translate-y-full', 'sm:translate-y-6', 'sm:scale-95');
+    panel?.classList.add('translate-y-0', 'sm:scale-100');
+    document.body.classList.add('overflow-hidden');
+    closeBtn?.focus();
+  }
+
+  function closeModal() {
+    modal?.classList.add('opacity-0', 'pointer-events-none', 'invisible');
+    modal?.classList.remove('opacity-100', 'pointer-events-auto', 'visible');
+    panel?.classList.add('translate-y-full', 'sm:translate-y-6', 'sm:scale-95');
+    panel?.classList.remove('translate-y-0', 'sm:scale-100');
+    document.body.classList.remove('overflow-hidden');
+    openBtn?.focus();
+  }
+
+  openBtn?.addEventListener('click', openModal);
+  closeBtn?.addEventListener('click', closeModal);
+  backdrop?.addEventListener('click', closeModal);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal && !modal.classList.contains('invisible')) closeModal();
+  });
+
+  document.querySelectorAll('.modal-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const target = (tab as HTMLElement).dataset.modalTab;
+      document.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.modal-panel').forEach(p => p.classList.add('hidden'));
+      tab.classList.add('active');
+      document.getElementById(`modal-panel-${target}`)?.classList.remove('hidden');
+    });
+  });
 </script>
 </Base>

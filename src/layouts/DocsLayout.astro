@@ -10,9 +10,9 @@ export interface Props {
   current?: string;
 }
 
+import { getBase } from '../utils/base.ts';
 const { title, description, current } = Astro.props;
-const b = import.meta.env.BASE_URL;
-const base = b.endsWith('/') ? b : b + '/';
+const base = getBase();
 
 const sections = [
   {
@@ -101,7 +101,7 @@ const sections = [
 
           {sections.map(section => (
             <div class="mb-6">
-              <p class="mb-1.5 px-3 text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">{section.label}</p>
+              <p class="mb-1.5 px-3 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">{section.label}</p>
               <ul class="space-y-1">
                 {section.links.map(link => (
                   <li>
@@ -111,8 +111,8 @@ const sections = [
                       rel={link.external ? 'noopener noreferrer' : undefined}
                       class={`flex items-center justify-between px-3 py-2.5 min-h-[44px] rounded-lg text-sm transition-all duration-100 ${
                         current === link.id
-                          ? 'text-egc-700 dark:text-egc-400 bg-egc-50 dark:bg-egc-950/50 font-semibold active:scale-[0.98]'
-                          : 'text-gray-600 dark:text-gray-400 hover:text-egc-600 dark:hover:text-egc-400 hover:bg-gray-100 dark:hover:bg-gray-800 active:scale-[0.98] active:bg-gray-200 dark:active:bg-gray-700'
+                          ? 'text-egc-600 dark:text-egc-400 bg-egc-500/10 dark:bg-egc-500/10 font-semibold border-l-2 border-egc-500 pl-[calc(0.75rem-2px)] active:scale-[0.98]'
+                          : 'text-gray-600 dark:text-gray-400 border-l-2 border-transparent hover:text-egc-600 dark:hover:text-egc-400 hover:bg-gray-500/5 dark:hover:bg-gray-700/50 active:scale-[0.98]'
                       }`}
                     >
                       {link.label}
@@ -147,9 +147,7 @@ const sections = [
   }
 
   .docs-content table {
-    display: block;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+    width: 100%;
     max-width: 100%;
   }
 

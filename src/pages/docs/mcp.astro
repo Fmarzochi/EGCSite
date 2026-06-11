@@ -1,8 +1,7 @@
 ---
 import DocsLayout from '../../layouts/DocsLayout.astro';
-
-const b = import.meta.env.BASE_URL;
-const base = b.endsWith('/') ? b : b + '/';
+import { getBase } from '../../utils/base.ts';
+const base = getBase();
 ---
 
 <DocsLayout title="MCP Servers" description="Overview of the two MCP servers that power EGC: egc-memory and egc-guardian." current="mcp">

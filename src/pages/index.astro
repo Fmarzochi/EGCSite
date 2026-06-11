@@ -161,8 +161,8 @@ const base = getBase();
             <div class="mt-3 text-egc-400">State loaded from egc-memory</div>
             <div class="text-green-400 mt-1">Context and preferences acknowledged (terse responses).</div>
             <div class="text-green-400">Ready to pick up:</div>
-            <div class="text-gray-300 ml-2">• Test full install on a clean machine</div>
-            <div class="text-gray-300 ml-2">• Add skill discovery for Windsurf, Amp, Copilot</div>
+            <div class="text-gray-300 ml-2">• Zed editor support landed -- 13 harnesses now Tier 1</div>
+            <div class="text-gray-300 ml-2">• EACCES fix: preinstall detects bad npm prefix before install fails</div>
             <div class="text-gray-300 ml-2">• v1.0.7 on npm -- egc init auto-repairs drift on first run</div>
           </div>
         </div>
@@ -218,6 +218,7 @@ const base = getBase();
           { name: 'Trae',           badge: 'Context + Bootstrap', icon: `${base}tools/trae.svg` },
           { name: 'CodeBuddy',      badge: 'Context + Skills', icon: `${base}tools/codebuddy.svg` },
           { name: 'Antigravity',    badge: 'MCP + Bootstrap', icon: `${base}tools/bytedance.svg` },
+          { name: 'Zed',            badge: 'MCP + Bootstrap', icon: `${base}tools/zed.svg` },
         ].map(tool => (
           <div class="flex flex-col items-center gap-2 sm:gap-3 rounded-xl p-3 sm:p-5 text-center hover:border-egc-500 hover-glow hover-lift transition-all duration-150 active:scale-[0.97] glass">
             <div class="w-10 h-10 sm:w-14 sm:h-14 rounded-xl bg-white shadow-lg shadow-black/5 dark:shadow-black/20 flex items-center justify-center">

@@ -1,5 +1,7 @@
 # EGCSite
 
+[![Astro](https://img.shields.io/badge/Astro-5-FF5D01?logo=astro&logoColor=white)](https://astro.build) [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com) [![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org) [![GitHub Pages](https://img.shields.io/badge/GitHub_Pages-deployed-222222?logo=github&logoColor=white)](https://pages.github.com)
+
 Marketing and documentation website for [EGC — Extended Global Context](https://github.com/Fmarzochi/EGC).
 
 **Live site:** https://fmarzochi.github.io/EGCSite

@@ -27,9 +27,9 @@ const base = getBase();
           </div>
         </div>
         <div class="space-y-1.5 mb-4">
-          {['get_state', 'update_state', 'store_decision', 'query_history'].map(t => (
+          {['get_state', 'update_state', 'store_decision', 'query_history', 'search_history', 'working_memory_set', 'working_memory_get', 'working_memory_list', 'lesson_save', 'lesson_recall', 'lesson_reinforce', 'detect_patterns', 'compress_observations', 'get_project_state'].map(t => (
             <div class="flex items-center gap-2">
-              <span class="w-1.5 h-1.5 rounded-full bg-egc-500"></span>
+              <span class="w-1.5 h-1.5 rounded-full bg-egc-500 shrink-0"></span>
               <code class="text-xs font-mono text-gray-700 dark:text-gray-300">{t}</code>
             </div>
           ))}

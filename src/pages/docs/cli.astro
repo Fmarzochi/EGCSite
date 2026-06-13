@@ -26,14 +26,33 @@ cursor        registered`,
         },
         {
           cmd: 'egc status',
-          desc: 'Show the last 5 decisions saved to memory for the current project.',
+          desc: 'Show the last 5 decisions saved to memory for the current project, along with the active branch state file.',
           example: `$ egc status
 
+Branch: feat/auth  (state: ~/.egc/state/my-app/feat-auth.md)
 [2026-06-05] Moved from Prisma to Drizzle ORM
 [2026-06-04] Dropped JWT in favor of iron-session
 [2026-06-03] Settled on functional-only components
 [2026-06-02] PostgreSQL with row-level security
 [2026-06-01] Next.js 15 App Router`,
+        },
+        {
+          cmd: 'egc consolidate',
+          desc: 'Compact the state file for the current project when it grows too large. Rewrites entries in three layers: Working (last 7 days, kept verbatim), Episodic (last 30 days, summarized per week), and Semantic (older entries, condensed to core facts). The original file is backed up to ~/.egc/state/archive/ before any rewrite.',
+          example: `$ egc consolidate
+
+Consolidating state for my-app...
+Working layer:  3 entries kept verbatim
+Episodic layer: 12 entries summarized (2 weeks)
+Semantic layer: 31 entries condensed
+✓ Written to ~/.egc/state/my-app/main.md
+  Backup at ~/.egc/state/archive/my-app-main-20260613.md
+
+# Preview without writing:
+$ egc consolidate --dry-run
+
+# Run even if below the line threshold:
+$ egc consolidate --force`,
         },
         {
           cmd: 'egc install',

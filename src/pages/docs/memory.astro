@@ -46,6 +46,54 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
           description: 'Returns past decisions filtered by timestamp and/or tag. Useful for auditing architectural decisions over time.',
           returns: 'Array of decision records with timestamps and tags.',
         },
+        {
+          name: 'search_history',
+          signature: 'search_history({ query: string, limit?: number })',
+          description: 'Full-text search over stored observations using FTS5 with BM25 ranking. Returns results ordered by relevance rather than recency.',
+          returns: 'Array of matching observations ranked by relevance score.',
+        },
+        {
+          name: 'set_working_memory',
+          signature: 'set_working_memory({ key: string, value: string, ttl_seconds?: number })',
+          description: 'Stores a transient value for the current session with an optional TTL. Entries expire automatically so the memory store does not accumulate stale data across sessions.',
+          returns: 'Confirmation with the stored key and expiry timestamp.',
+        },
+        {
+          name: 'get_working_memory',
+          signature: 'get_working_memory({ key: string })',
+          description: 'Retrieves a working memory value by key. Returns null if the key does not exist or has expired.',
+          returns: 'The stored value string, or null.',
+        },
+        {
+          name: 'delete_working_memory',
+          signature: 'delete_working_memory({ key: string })',
+          description: 'Removes a working memory entry before its TTL expires.',
+          returns: 'Confirmation string.',
+        },
+        {
+          name: 'add_lesson',
+          signature: 'add_lesson({ content: string, tags?: string[] })',
+          description: 'Records cross-session knowledge with a confidence score that decays over time. Lessons that are reinforced across sessions gain confidence; stale lessons surface for review rather than being applied forever.',
+          returns: 'Confirmation with the stored lesson ID.',
+        },
+        {
+          name: 'list_lessons',
+          signature: 'list_lessons({ min_confidence?: number, tags?: string[], limit?: number })',
+          description: 'Returns lessons ordered by confidence descending. Lessons below min_confidence are included so you can choose to reinforce or forget them.',
+          returns: 'Array of lesson records with content, confidence, and last-seen timestamp.',
+        },
+        {
+          name: 'forget_lesson',
+          signature: 'forget_lesson({ id: string })',
+          description: 'Permanently removes a lesson from the store.',
+          returns: 'Confirmation string.',
+        },
+        {
+          name: 'detect_patterns',
+          signature: 'detect_patterns({ window_days?: number, min_occurrences?: number })',
+          description: 'Analyzes runtime events recorded by hooks to surface repeated commands and recurring errors across sessions. Helps identify automation candidates and structural issues.',
+          returns: 'Object with patterns array and metadata about the analysis window.',
+        },
       ].map(tool => (
         <div class="rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden">
           <div class="flex items-center gap-3 px-5 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">

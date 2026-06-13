@@ -220,11 +220,11 @@ const base = getBase();
           { name: 'Antigravity',    badge: 'MCP + Bootstrap', icon: `${base}tools/bytedance.svg` },
           { name: 'Zed',            badge: 'MCP + Bootstrap', icon: `${base}tools/zed.svg` },
         ].map(tool => (
-          <div class="flex flex-col items-center gap-2 sm:gap-3 rounded-xl p-3 sm:p-5 text-center hover:border-egc-500 hover-glow hover-lift transition-all duration-150 active:scale-[0.97] glass">
+          <div class="flex flex-col items-center gap-2 sm:gap-3 rounded-xl p-3 sm:p-5 text-center hover:border-egc-500/60 transition-all duration-200 hover:scale-[1.03] active:scale-[0.97] glass" style="transition-property: transform, border-color, box-shadow;">
             <div class="w-10 h-10 sm:w-14 sm:h-14 rounded-xl bg-white shadow-lg shadow-black/5 dark:shadow-black/20 flex items-center justify-center">
-              <img src={tool.icon} alt={tool.name} class="w-6 h-6 sm:w-9 sm:h-9 object-contain" loading="lazy" />
+              <img src={tool.icon} alt="" aria-hidden="true" class="w-6 h-6 sm:w-9 sm:h-9 object-contain" loading="lazy" />
             </div>
-            <div class="text-xs sm:text-sm font-semibold text-gray-100 truncate w-full">{tool.name}</div>
+            <div class="text-xs sm:text-sm font-semibold text-gray-100 leading-tight w-full">{tool.name}</div>
             <div class="text-[10px] sm:text-xs text-egc-400 leading-tight">{tool.badge}</div>
           </div>
         ))}

@@ -261,6 +261,7 @@ const base = getBase();
                 { tool: 'set_working_memory', desc: 'Stores transient context with TTL' },
                 { tool: 'add_lesson', desc: 'Records cross-session knowledge with confidence decay' },
                 { tool: 'detect_patterns', desc: 'Surfaces repeated commands and recurring errors' },
+                { tool: 'compress_observations', desc: 'Compresses raw hook events into typed summaries' },
               ].map(row => (
                 <div class="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3">
                   <code class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 font-mono shrink-0 self-start">{row.tool}</code>

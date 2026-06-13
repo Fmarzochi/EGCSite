@@ -94,6 +94,12 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
           description: 'Analyzes runtime events recorded by hooks to surface repeated commands and recurring errors across sessions. Helps identify automation candidates and structural issues.',
           returns: 'Object with patterns array and metadata about the analysis window.',
         },
+        {
+          name: 'compress_observations',
+          signature: 'compress_observations({ project_path?: string, since?: string, limit?: number })',
+          description: 'Compresses raw hook observations into structured typed summaries (tool_failure, tool_success, file_edit, etc.) using rule-based analysis. Reduces token usage when injecting context into new sessions.',
+          returns: 'Object with count of compressed items and a summary of what was processed.',
+        },
       ].map(tool => (
         <div class="rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden">
           <div class="flex items-center gap-3 px-5 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">

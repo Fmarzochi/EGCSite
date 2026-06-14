@@ -13,7 +13,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
   <!-- Overview -->
   <section class="mb-10">
     <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Overview</h2>
-    <p class="text-gray-600 dark:text-gray-400 mb-4">egc-guardian intercepts shell commands and file system writes before they execute. It blocks patterns that are unsafe — shell injection, writes to sensitive paths, known dangerous binaries — and passes everything else through.</p>
+    <p class="text-gray-600 dark:text-gray-400 mb-4">egc-guardian intercepts shell commands and file system writes before they execute. It blocks patterns that are unsafe (shell injection, writes to sensitive paths, known dangerous binaries) and passes everything else through.</p>
     <p class="text-gray-600 dark:text-gray-400">It also provides context utilities: <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">reduce_context</code> trims Markdown payloads to reduce token usage, and <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">orchestrate_task</code> routes prompts to the relevant agents and skills.</p>
   </section>
 
@@ -46,7 +46,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
         {
           name: 'orchestrate_task',
           signature: 'orchestrate_task({ prompt: string, context?: string })',
-          description: 'Analyzes a prompt and returns a routing suggestion: which agents, skills, and commands are most relevant. Does not execute anything — returns a plan for the AI to follow.',
+          description: 'Analyzes a prompt and returns a routing suggestion: which agents, skills, and commands are most relevant. Does not execute anything. Returns a plan for the AI to follow.',
           returns: 'Object with suggested agents, skills, and commands.',
           tag: 'Utility',
         },

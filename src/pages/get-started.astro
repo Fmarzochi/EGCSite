@@ -207,7 +207,7 @@ const base = getBase();
         { n: '1', title: 'Compiles MCP servers', desc: 'Builds egc-guardian and egc-memory from TypeScript source.' },
         { n: '2', title: 'Initializes the database', desc: 'Creates the local SQLite database at ~/.egc/ for persistent memory.' },
         { n: '3', title: 'Cognitive bootstrap', desc: 'Writes the memory protocol into the global instruction files for each detected tool (CLAUDE.md, GEMINI.md, cursor.rules, etc.).' },
-        { n: '4', title: 'Registers MCP servers', desc: 'Adds both servers to every detected tool\'s MCP config. Runs once per tool, idempotent.' },
+        { n: '4', title: 'Registers MCP servers and hooks', desc: 'Adds both servers to every detected tool\'s MCP config. For Claude Code, also installs a SessionStart hook (loads state automatically) and a Stop hook (saves state automatically at session end). Runs once per tool, idempotent.' },
         { n: '5', title: 'Prompt library (optional)', desc: 'Asks whether to install 229 skills, 76 commands, and 63 agents. Skipped automatically in CI.' },
       ].map(step => (
         <div class="flex gap-3 sm:gap-4">

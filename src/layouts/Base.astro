@@ -51,6 +51,7 @@ const canonicalURL = canonical ?? Astro.url.href;
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" /></noscript>
     <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+    <link rel="alternate" type="application/rss+xml" title="EGC Releases" href={`${base}rss.xml`} />
     <title>{title}</title>
     <script data-goatcounter="https://egc.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
     <script type="application/ld+json" set:html={JSON.stringify({

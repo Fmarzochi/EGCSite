@@ -2,7 +2,7 @@
 import DocsLayout from '../../layouts/DocsLayout.astro';
 ---
 
-<DocsLayout title="Security" description="EGC security posture: OpenSSF, CodeQL, SonarCloud, Dependency Review, ClusterFuzzLite, Dependabot, and vulnerability reporting." current="security">
+<DocsLayout title="Security" description="EGC security posture: OpenSSF, CodeQL, SonarCloud, Socket.dev supply chain, Dependency Review, ClusterFuzzLite, Dependabot, and vulnerability reporting." current="security">
 
   <div class="pb-2 mb-8 border-b border-gray-200 dark:border-gray-800">
     <p class="text-xs font-semibold uppercase tracking-widest text-egc-600 dark:text-egc-400 mb-2">Reference</p>
@@ -25,6 +25,9 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
       </a>
       <a href="https://github.com/Fmarzochi/EGC/actions/workflows/codeql.yml" target="_blank" rel="noopener noreferrer" aria-label="CodeQL status (opens in new tab)">
         <img src="https://img.shields.io/github/actions/workflow/status/Fmarzochi/EGC/codeql.yml?branch=main&label=CodeQL&logo=github&style=flat" alt="CodeQL" class="h-6" />
+      </a>
+      <a href="https://socket.dev/npm/package/@egchq/egc" target="_blank" rel="noopener noreferrer" aria-label="Socket.dev supply chain score (opens in new tab)">
+        <img src="https://socket.dev/api/badge/npm/package/@egchq/egc" alt="Socket" class="h-6" />
       </a>
     </div>
 
@@ -71,6 +74,12 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
           icon: '✅',
           desc: 'CII Best Practices badge achieved. Validates documentation, test coverage, vulnerability reporting process, and project hygiene.',
           href: 'https://www.bestpractices.dev/projects/13099',
+        },
+        {
+          title: 'Socket.dev',
+          icon: '🧦',
+          desc: 'Supply chain protection on every PR touching package.json. Catches malicious packages, typosquatting, and obfuscated code before they reach the codebase.',
+          href: 'https://socket.dev/npm/package/@egchq/egc',
         },
         {
           title: 'DCO',

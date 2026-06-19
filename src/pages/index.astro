@@ -163,7 +163,7 @@ const base = getBase();
             <div class="text-green-400">Ready to pick up:</div>
             <div class="text-gray-300 ml-2">• working_memory, lessons, detect_patterns, compress_observations added</div>
             <div class="text-gray-300 ml-2">• branch-aware state: switching branches restores branch context</div>
-            <div class="text-gray-300 ml-2">• v1.1.0 on npm -- 13 tools supported</div>
+            <div class="text-gray-300 ml-2">• v1.1.0 on npm -- 14 tools supported</div>
           </div>
         </div>
 
@@ -258,8 +258,13 @@ const base = getBase();
                 { tool: 'store_decision', desc: 'Persists a decision to SQLite' },
                 { tool: 'query_history', desc: 'Returns past decisions by timestamp' },
                 { tool: 'search_history', desc: 'Full-text search with BM25 ranking' },
+                { tool: 'get_project_state', desc: 'Returns full project state for a given path' },
                 { tool: 'working_memory_set', desc: 'Stores transient context with TTL' },
+                { tool: 'working_memory_get', desc: 'Retrieves a transient memory entry by key' },
+                { tool: 'working_memory_list', desc: 'Lists all active transient memory entries' },
                 { tool: 'lesson_save', desc: 'Records cross-session knowledge with confidence decay' },
+                { tool: 'lesson_recall', desc: 'Searches lessons by relevance using FTS5' },
+                { tool: 'lesson_reinforce', desc: 'Increases confidence score of a stored lesson' },
                 { tool: 'detect_patterns', desc: 'Surfaces repeated commands and recurring errors' },
                 { tool: 'compress_observations', desc: 'Compresses raw hook events into typed summaries' },
               ].map(row => (

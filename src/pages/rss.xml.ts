@@ -3,6 +3,13 @@ import type { APIContext } from 'astro';
 
 const releases = [
   {
+    title: 'EGC v1.1.1',
+    pubDate: new Date('2026-06-19'),
+    description:
+      'Patch release: FTS5 index on lesson_recall, state DB path via getEGCDir, better-sqlite3 doctor check, harness-aware detect_patterns, bootstrap-state-db test coverage. Community contribution: OpenRouter model mappings for DeepSeek R1/Chat v3, Qwen3 235B/32B, Llama 4 Maverick/Scout, Llama 3.3 70B.',
+    link: 'https://github.com/Fmarzochi/EGC/releases/tag/v1.1.1',
+  },
+  {
     title: 'EGC v1.1.0',
     pubDate: new Date('2026-06-13'),
     description:

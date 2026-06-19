@@ -157,4 +157,48 @@ import DocsLayout from '../layouts/DocsLayout.astro';
     </div>
   </section>
 
+  <!-- Supported LLM providers -->
+  <section class="mb-10">
+    <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Supported LLM providers</h2>
+    <p class="text-sm text-gray-600 dark:text-gray-400 mb-5">EGC routes to any supported provider via <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">ModelResolver</code>. Fallback chains degrade automatically when a model is unavailable.</p>
+    <div class="hidden sm:block rounded-xl border border-gray-200 dark:border-gray-800 overflow-x-auto w-full">
+      <table class="w-full text-sm min-w-[500px]">
+        <thead>
+          <tr class="bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+            <th scope="col" class="px-5 py-3 text-left font-semibold text-gray-700 dark:text-gray-300">Provider</th>
+            <th scope="col" class="px-5 py-3 text-left font-semibold text-gray-700 dark:text-gray-300">Models</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
+          {[
+            { provider: 'Google Gemini', models: 'Gemini 2.5 Pro / Flash / Flash-Lite, 2.0 Flash, 1.5 Pro / Flash' },
+            { provider: 'Anthropic Claude', models: 'Opus 4.5, Sonnet 4.7, Haiku 4.7' },
+            { provider: 'OpenAI', models: 'GPT-4o, GPT-4o-mini' },
+            { provider: 'OpenRouter', models: 'DeepSeek R1, DeepSeek Chat V3, Qwen3 235B, Qwen3 32B, Llama 4 Maverick, Llama 4 Scout, Llama 3.3 70B, Gemini 2.5 via OR, GPT-4o via OR, and more' },
+            { provider: 'Ollama', models: 'Llama 3.2 (local, offline)' },
+          ].map(row => (
+            <tr class="bg-white dark:bg-gray-950">
+              <td class="px-5 py-3 font-medium text-gray-900 dark:text-white whitespace-nowrap">{row.provider}</td>
+              <td class="px-5 py-3 text-gray-600 dark:text-gray-400 text-xs">{row.models}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <div class="sm:hidden space-y-3">
+      {[
+        { provider: 'Google Gemini', models: 'Gemini 2.5 Pro / Flash / Flash-Lite, 2.0 Flash, 1.5 Pro / Flash' },
+        { provider: 'Anthropic Claude', models: 'Opus 4.5, Sonnet 4.7, Haiku 4.7' },
+        { provider: 'OpenAI', models: 'GPT-4o, GPT-4o-mini' },
+        { provider: 'OpenRouter', models: 'DeepSeek R1, DeepSeek Chat V3, Qwen3 235B, Qwen3 32B, Llama 4 Maverick, Llama 4 Scout, Llama 3.3 70B, and more' },
+        { provider: 'Ollama', models: 'Llama 3.2 (local, offline)' },
+      ].map(row => (
+        <div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4 bg-white dark:bg-gray-950">
+          <p class="font-medium text-sm text-gray-900 dark:text-white mb-1">{row.provider}</p>
+          <p class="text-xs text-gray-600 dark:text-gray-400">{row.models}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
 </DocsLayout>

@@ -3,6 +3,13 @@ import type { APIContext } from 'astro';
 
 const releases = [
   {
+    title: 'EGC v1.1.2',
+    pubDate: new Date('2026-06-20'),
+    description:
+      'New: egc watch bidirectional sync daemon, auto_learn guardian tool, update_state propagates to 11 tool config files, natural language interface triggers. Guardian pipeline: CacheAligner, ContentRouter, SmartCrusher, Headroom Phase 2. sql.js replaces better-sqlite3 (no native build). GitLab CI mirror, Code of Conduct, undici CVE patch.',
+    link: 'https://github.com/Fmarzochi/EGC/releases/tag/v1.1.2',
+  },
+  {
     title: 'EGC v1.1.1',
     pubDate: new Date('2026-06-19'),
     description:

@@ -37,7 +37,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
         {
           name: 'update_state',
           signature: 'update_state({ project_path?: string, context?: string, decisions?: { what: string, why?: string }[], avoid?: { what: string, why?: string }[], preferences?: string[], next?: string[] })',
-          description: 'Saves this session\'s decisions and preferences. Writes to the state file of the current git branch when the project is a git repository. Merges with existing state and does not erase previous memory. Only include fields that changed this session.',
+          description: 'Saves this session\'s decisions and preferences. Writes to the state file of the current git branch when the project is a git repository. Merges with existing state and does not erase previous memory. Only include fields that changed this session. Also propagates the updated context to all EGC-managed tool config files found in the project (Cursor, Copilot, Gemini CLI, Windsurf, Trae, Zed, Cline, Aider, .cursorrules, AGENTS.md, llms.txt) so every tool stays in sync.',
           returns: 'Confirmation string with the updated state file path.',
         },
         {

@@ -78,6 +78,21 @@ rules    111`,
 ✓ ~/.gemini/GEMINI.md restored`,
         },
         {
+          cmd: 'egc watch',
+          desc: 'Start the bidirectional state sync daemon. Watches all EGC-managed tool config files in the project. When any file is edited outside of EGC\'s own propagation cycle — for example, when you update context in Cursor — the change is extracted from the EGC block and synced to all other tools automatically. Changes are also merged back into ~/.egc/state/ for full round-trip persistence.',
+          example: `$ egc watch
+
+[egc watch] Watching 4 tool config file(s) in /my-project
+[egc watch] Press Ctrl+C to stop.
+[egc watch] gemini changed -> synced to: cursor, copilot, aider + state file
+
+# Watch a specific project:
+$ egc watch /path/to/project
+
+# Suppress output:
+$ egc watch --quiet`,
+        },
+        {
           cmd: 'egc auto-update',
           desc: 'Pull the latest changes from GitHub and reinstall managed targets.',
           example: `$ egc auto-update

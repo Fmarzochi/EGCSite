@@ -35,6 +35,8 @@
     line-height: 1.6;
     /* Prevent horizontal scroll caused by any child */
     overflow-x: hidden;
+    /* Safe padding to prevent floating CTA from covering footer content */
+    padding-bottom: 150px;
   }
 }
 

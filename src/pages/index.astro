@@ -164,8 +164,8 @@ const base = getBase();
             <div class="text-gray-300 ml-2">• working_memory, lessons, detect_patterns, compress_observations added</div>
             <div class="text-gray-300 ml-2">• branch-aware state: switching branches restores branch context</div>
             <div class="text-gray-300 ml-2">• update_state propagates context to 11 tool config files automatically</div>
-            <div class="text-gray-300 ml-2">• egc watch: bidirectional sync -- edit any tool file, all others update</div>
-            <div class="text-gray-300 ml-2">• v1.1.2 on npm -- 13 tools supported</div>
+            <div class="text-gray-300 ml-2">• egc watch: bidirectional sync - edit any tool file, all others update</div>
+            <div class="text-gray-300 ml-2">• v1.1.2 on npm - 13 tools supported</div>
           </div>
         </div>
 
@@ -302,7 +302,7 @@ const base = getBase();
                 { tool: 'validate_write', desc: 'Blocks writes to sensitive paths (~/.ssh, /etc)' },
                 { tool: 'reduce_context', desc: 'Deduplicates and trims Markdown payloads' },
                 { tool: 'orchestrate_task', desc: 'Routes prompts to relevant agents and skills' },
-                { tool: 'auto_learn', desc: 'Extracts patterns from session history and reinforces lessons automatically' },
+                { tool: 'auto_learn', desc: 'Mines session failures and propagates lessons to all AI tool config files in the project' },
               ].map(row => (
                 <div class="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3">
                   <code class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 font-mono shrink-0 self-start">{row.tool}</code>

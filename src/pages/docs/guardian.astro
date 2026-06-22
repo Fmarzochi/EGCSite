@@ -50,11 +50,18 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
           returns: 'Object with suggested agents, skills, and commands.',
           tag: 'Utility',
         },
+        {
+          name: 'auto_learn',
+          signature: 'auto_learn({ project_path: string, target_file?: string, limit?: number })',
+          description: 'Mines recent tool failures from session history and writes actionable recommendations to all AI tool config files found in the project (CLAUDE.md, GEMINI.md, AGENTS.md, Cursor rules, Copilot instructions, Windsurf rules, and others). Only writes to files that already exist. Safe to call at any time; skips gracefully if no failures are found.',
+          returns: 'Object with patterns_found, recommendations_written, target_file, propagated_to (list of files written), and skipped.',
+          tag: 'Learning',
+        },
       ].map(tool => (
         <div class="rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden">
           <div class="flex flex-wrap items-center justify-between gap-2 px-4 sm:px-5 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
             <code class="text-sm font-mono font-bold text-egc-700 dark:text-egc-400">{tool.name}</code>
-            <span class={`text-xs px-2 py-0.5 rounded-full font-medium ${tool.tag === 'Security' ? 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400' : 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400'}`}>{tool.tag}</span>
+            <span class={`text-xs px-2 py-0.5 rounded-full font-medium ${tool.tag === 'Security' ? 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400' : tool.tag === 'Learning' ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400' : 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400'}`}>{tool.tag}</span>
           </div>
           <div class="p-5">
             <pre class="bg-gray-900 text-gray-300 text-xs font-mono p-3 rounded-lg overflow-x-auto mb-4"><code>{tool.signature}</code></pre>

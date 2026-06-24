@@ -93,6 +93,19 @@ $ egc watch /path/to/project
 $ egc watch --quiet`,
         },
         {
+          cmd: 'egc dashboard',
+          desc: 'Start the EGC Dashboard, a real-time Mission Control panel at http://localhost:7890. Shows live tool calls, file edits, shell commands, token usage, memory state, and agent status as your AI works. The dashboard auto-starts after egc init and runs as a background server.',
+          example: `$ egc dashboard
+
+EGC Dashboard running at http://localhost:7890
+
+# Stop the background server:
+$ egc dashboard stop
+
+# Check if it's running:
+$ egc dashboard status`,
+        },
+        {
           cmd: 'egc auto-update',
           desc: 'Pull the latest changes from GitHub and reinstall managed targets.',
           example: `$ egc auto-update

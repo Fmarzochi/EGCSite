@@ -3,6 +3,13 @@ import type { APIContext } from 'astro';
 
 const releases = [
   {
+    title: 'EGC v1.1.3',
+    pubDate: new Date('2026-06-24'),
+    description:
+      'New: EGC Dashboard (egc dashboard) -- real-time Mission Control at localhost:7890, auto-starts after egc init, WebSocket live feed of tool calls, memory state, token usage and cost. IDE hook emitters for Cursor, Kiro and OpenCode. Security: XSS escaping, CORS restricted to localhost. Bug fixes: OpenAI tool serialization, async ReActAgent, OpenRouter X-Title header, GeminiProvider null content.',
+    link: 'https://github.com/Fmarzochi/EGC/releases/tag/v1.1.3',
+  },
+  {
     title: 'EGC v1.1.2',
     pubDate: new Date('2026-06-20'),
     description:

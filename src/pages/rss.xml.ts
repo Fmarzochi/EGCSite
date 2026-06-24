@@ -3,6 +3,13 @@ import type { APIContext } from 'astro';
 
 const releases = [
   {
+    title: 'EGC v1.1.5',
+    pubDate: new Date('2026-06-24'),
+    description:
+      'Bug fixes: SessionStart hook no longer crashes with MODULE_NOT_FOUND (install plan now copies propagate-state and project-detect libs). egc init opens the browser automatically after starting the dashboard. ESLint ignores .claude/worktrees/ and dashboard/ to prevent lint CI failures.',
+    link: 'https://github.com/Fmarzochi/EGC/releases/tag/v1.1.5',
+  },
+  {
     title: 'EGC v1.1.4',
     pubDate: new Date('2026-06-24'),
     description:

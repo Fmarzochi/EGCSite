@@ -3,6 +3,13 @@ import type { APIContext } from 'astro';
 
 const releases = [
   {
+    title: 'EGC v1.1.4',
+    pubDate: new Date('2026-06-24'),
+    description:
+      'Hotfix: corrects the npm package to include the dashboard/ directory and the ws dependency, which were missing from the v1.1.3 tarball. Users who installed v1.1.3 and saw "EGC Dashboard not found" should run npm install -g @egchq/egc to get the fix.',
+    link: 'https://github.com/Fmarzochi/EGC/releases/tag/v1.1.4',
+  },
+  {
     title: 'EGC v1.1.3',
     pubDate: new Date('2026-06-24'),
     description:

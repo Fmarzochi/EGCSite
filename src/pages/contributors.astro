@@ -181,19 +181,21 @@ const podiumMeta = [
               <div class="flex flex-col items-center flex-1 max-w-[210px]">
                 <a
                   href={`${base}contributors/${c.login}`}
-                  class={`group relative w-full flex flex-col items-center glass hover-lift rounded-2xl px-5 pt-8 pb-4 transition-all duration-300 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500 ${meta.rank === 1 ? 'ring-2 ring-yellow-400/40' : ''}`}
+                  class={`group w-full flex flex-col items-center glass hover-lift rounded-2xl px-5 pt-6 pb-4 transition-all duration-300 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500 ${meta.rank === 1 ? 'ring-2 ring-yellow-400/40' : ''}`}
                 >
-                  <div class={`absolute -top-3 left-1/2 -translate-x-1/2 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shadow-lg ${meta.badge}`}>
-                    {meta.rank}
+                  <div class="relative mb-3">
+                    <img
+                      src={c.avatar}
+                      alt={c.name}
+                      width={meta.rank === 1 ? '72' : '56'}
+                      height={meta.rank === 1 ? '72' : '56'}
+                      class={`rounded-full ring-2 transition-all duration-200 block ${meta.rank === 1 ? 'ring-yellow-400/60 group-hover:ring-yellow-400' : 'ring-gray-700 group-hover:ring-egc-500'}`}
+                      loading="lazy"
+                    />
+                    <div class={`absolute -bottom-1 -right-1 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold shadow-lg ${meta.badge}`}>
+                      {meta.rank}
+                    </div>
                   </div>
-                  <img
-                    src={c.avatar}
-                    alt={c.name}
-                    width={meta.rank === 1 ? '72' : '56'}
-                    height={meta.rank === 1 ? '72' : '56'}
-                    class={`rounded-full mb-3 ring-2 transition-all duration-200 ${meta.rank === 1 ? 'ring-yellow-400/60 group-hover:ring-yellow-400' : 'ring-gray-700 group-hover:ring-egc-500'}`}
-                    loading="lazy"
-                  />
                   <p class="font-bold text-white text-sm text-center leading-tight mb-0.5">{c.name}</p>
                   <p class="text-xs text-gray-500 mb-2">@{c.login}</p>
                   <span class={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold border ${tier.color} mb-2`}>

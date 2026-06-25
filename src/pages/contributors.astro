@@ -30,11 +30,12 @@ const totalPrs = contributors.reduce((s, c) => s + c.prs, 0);
 
 const champion = contributors.find(c => c.login === MONTHLY_CHAMPION.login) ?? contributors[0];
 
-const podiumOrder = [topThree[1], topThree[0], topThree[2]].filter(Boolean);
+// Desktop podium order: 2nd left, 1st center, 3rd right
+const podiumOrder = [topThree[1], topThree[0], topThree[2]].filter(Boolean) as Contributor[];
 const podiumMeta = [
-  { rank: 2, height: 'h-40', badge: 'bg-slate-400 text-slate-900', label: '2nd' },
-  { rank: 1, height: 'h-52', badge: 'bg-yellow-400 text-gray-900', label: '1st' },
-  { rank: 3, height: 'h-32', badge: 'bg-amber-600 text-white',     label: '3rd' },
+  { rank: 2, badge: 'bg-slate-400 text-slate-900', pedestalH: 'h-16' },
+  { rank: 1, badge: 'bg-yellow-400 text-gray-900', pedestalH: 'h-24' },
+  { rank: 3, badge: 'bg-amber-600 text-white',     pedestalH: 'h-10' },
 ];
 ---
 
@@ -92,14 +93,14 @@ const podiumMeta = [
           <div class="absolute inset-0 pointer-events-none -z-10" aria-hidden="true">
             <div class="absolute inset-0 bg-gradient-to-r from-yellow-400/5 via-transparent to-egc-500/5"></div>
           </div>
-          <div class="flex flex-col sm:flex-row items-center gap-6 p-6 sm:p-8">
+          <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 p-5 sm:p-8">
             <div class="shrink-0">
               <div class="relative">
                 <img
                   src={champion.avatar}
                   alt={champion.name}
-                  width="80"
-                  height="80"
+                  width="72"
+                  height="72"
                   class="rounded-full ring-2 ring-yellow-400/60"
                   loading="lazy"
                 />
@@ -111,7 +112,7 @@ const podiumMeta = [
                 <span class="text-xs font-bold uppercase tracking-widest text-yellow-400">Contributor of the Month</span>
                 <span class="text-xs text-gray-600">{MONTHLY_CHAMPION.month}</span>
               </div>
-              <p class="font-bold text-white text-lg">{champion.name}</p>
+              <p class="font-bold text-white text-base sm:text-lg">{champion.name}</p>
               <p class="text-xs text-gray-500 mb-2">@{champion.login}</p>
               <p class="text-sm text-gray-400 leading-relaxed">{MONTHLY_CHAMPION.reason}</p>
             </div>
@@ -130,45 +131,87 @@ const podiumMeta = [
     <!-- Podium -->
     {topThree.length >= 3 && (
       <section class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 mb-4">
-        <p class="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-8 text-center">Leaderboard</p>
-        <div class="flex items-end justify-center gap-3 sm:gap-4">
-          {podiumOrder.map((c, idx) => {
-            const meta = podiumMeta[idx];
+        <p class="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-6 sm:mb-8 text-center">Leaderboard</p>
+
+        <!-- Mobile: ranked list -->
+        <div class="sm:hidden flex flex-col gap-3">
+          {topThree.map((c, i) => {
+            const rankBadge = ['bg-yellow-400 text-gray-900', 'bg-slate-400 text-slate-900', 'bg-amber-600 text-white'][i];
             const tier = TIER_CONFIG[c.tier];
             return (
               <a
                 href={`${base}contributors/${c.login}`}
-                class={`group relative flex flex-col items-center glass hover-lift transition-all duration-300 rounded-2xl px-3 sm:px-6 pt-6 pb-4 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500 ${meta.height} w-full max-w-[180px] ${meta.rank === 1 ? 'ring-2 ring-yellow-400/40' : ''}`}
-                style="align-items:center;justify-content:flex-end;"
+                class={`group flex items-center gap-3 rounded-2xl p-4 glass hover-lift transition-all duration-200 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500 ${i === 0 ? 'ring-2 ring-yellow-400/30' : ''}`}
               >
-                <div class={`absolute -top-3 left-1/2 -translate-x-1/2 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shadow-lg ${meta.badge}`}>
-                  {meta.rank}
-                </div>
+                <div class={`shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold shadow ${rankBadge}`}>{i + 1}</div>
                 <img
                   src={c.avatar}
                   alt={c.name}
-                  width={meta.rank === 1 ? '72' : '56'}
-                  height={meta.rank === 1 ? '72' : '56'}
-                  class={`rounded-full mb-3 mt-2 ring-2 transition-all duration-200 ${meta.rank === 1 ? 'ring-yellow-400/60 group-hover:ring-yellow-400' : 'ring-gray-700 group-hover:ring-egc-500'}`}
+                  width={i === 0 ? '52' : '44'}
+                  height={i === 0 ? '52' : '44'}
+                  class={`rounded-full ring-2 shrink-0 ${i === 0 ? 'ring-yellow-400/60' : 'ring-gray-700'}`}
                   loading="lazy"
                 />
-                <p class="font-bold text-white text-xs sm:text-sm text-center leading-tight mb-0.5">{c.name}</p>
-                <p class="text-xs text-gray-500 mb-2">@{c.login}</p>
-                <span class={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold border ${tier.color} mb-2`}>
-                  {tier.icon} {tier.label}
-                </span>
-                <div class="flex flex-wrap justify-center gap-1 mb-2">
-                  {c.badges.slice(0, 2).map(key => {
-                    const b = BADGE_DEFS[key];
-                    return b ? (
-                      <span class="text-xs" title={b.label}>{b.icon}</span>
-                    ) : null;
-                  })}
+                <div class="min-w-0 flex-1">
+                  <p class="font-bold text-white text-sm truncate">{c.name}</p>
+                  <p class="text-xs text-gray-500 mb-1">@{c.login}</p>
+                  <div class="flex items-center gap-1 flex-wrap">
+                    <span class={`inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full text-xs font-semibold border ${tier.color}`}>{tier.icon}</span>
+                    {c.badges.slice(0, 3).map(key => {
+                      const b = BADGE_DEFS[key];
+                      return b ? <span title={b.label}>{b.icon}</span> : null;
+                    })}
+                  </div>
                 </div>
-                <span class="text-xs font-bold text-egc-400">
-                  {c.commits > 0 ? `${c.commits} commits` : `${c.prs} PR${c.prs !== 1 ? 's' : ''}`}
-                </span>
+                <div class="shrink-0 text-right">
+                  <span class="block text-sm font-bold text-egc-400">{c.commits > 0 ? c.commits : c.prs}</span>
+                  <span class="block text-xs text-gray-600">{c.commits > 0 ? 'commits' : 'PRs'}</span>
+                </div>
               </a>
+            );
+          })}
+        </div>
+
+        <!-- Desktop: visual podium (2nd, 1st, 3rd) -->
+        <div class="hidden sm:flex items-end justify-center gap-4">
+          {podiumOrder.map((c, idx) => {
+            const meta = podiumMeta[idx];
+            const tier = TIER_CONFIG[c.tier];
+            return (
+              <div class="flex flex-col items-center flex-1 max-w-[210px]">
+                <a
+                  href={`${base}contributors/${c.login}`}
+                  class={`group relative w-full flex flex-col items-center glass hover-lift rounded-2xl px-5 pt-8 pb-4 transition-all duration-300 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500 ${meta.rank === 1 ? 'ring-2 ring-yellow-400/40' : ''}`}
+                >
+                  <div class={`absolute -top-3 left-1/2 -translate-x-1/2 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shadow-lg ${meta.badge}`}>
+                    {meta.rank}
+                  </div>
+                  <img
+                    src={c.avatar}
+                    alt={c.name}
+                    width={meta.rank === 1 ? '72' : '56'}
+                    height={meta.rank === 1 ? '72' : '56'}
+                    class={`rounded-full mb-3 ring-2 transition-all duration-200 ${meta.rank === 1 ? 'ring-yellow-400/60 group-hover:ring-yellow-400' : 'ring-gray-700 group-hover:ring-egc-500'}`}
+                    loading="lazy"
+                  />
+                  <p class="font-bold text-white text-sm text-center leading-tight mb-0.5">{c.name}</p>
+                  <p class="text-xs text-gray-500 mb-2">@{c.login}</p>
+                  <span class={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold border ${tier.color} mb-2`}>
+                    {tier.icon} {tier.label}
+                  </span>
+                  <div class="flex flex-wrap justify-center gap-1 mb-2">
+                    {c.badges.slice(0, 2).map(key => {
+                      const b = BADGE_DEFS[key];
+                      return b ? <span class="text-sm" title={b.label}>{b.icon}</span> : null;
+                    })}
+                  </div>
+                  <span class="text-xs font-bold text-egc-400">
+                    {c.commits > 0 ? `${c.commits} commit${c.commits !== 1 ? 's' : ''}` : `${c.prs} PR${c.prs !== 1 ? 's' : ''}`}
+                  </span>
+                </a>
+                <!-- Pedestal step -->
+                <div class={`w-full ${meta.pedestalH} rounded-b-xl ${meta.rank === 1 ? 'bg-yellow-400/10' : 'bg-gray-800/40'}`}></div>
+              </div>
             );
           })}
         </div>
@@ -228,10 +271,11 @@ const podiumMeta = [
       <!-- Tier legend -->
       <div class="mt-8 rounded-xl p-4 glass">
         <p class="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-3">Tiers</p>
-        <div class="flex flex-wrap gap-3">
+        <div class="flex flex-wrap gap-2 sm:gap-3">
           {(Object.entries(TIER_CONFIG) as [string, typeof TIER_CONFIG[keyof typeof TIER_CONFIG]][]).map(([, t]) => (
-            <span class={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border ${t.color}`}>
-              {t.icon} {t.label} <span class="opacity-50">({t.minCommits}+ commits)</span>
+            <span class={`inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 rounded-full text-xs font-semibold border ${t.color}`}>
+              {t.icon} <span class="hidden sm:inline">{t.label}</span><span class="sm:hidden">{t.label.split(' ')[0]}</span>
+              <span class="opacity-50 hidden sm:inline">({t.minCommits}+ commits)</span>
             </span>
           ))}
         </div>
@@ -273,7 +317,7 @@ const podiumMeta = [
             </div>
             <p class="text-xs text-gray-500 max-w-xs">EGC is free and open source. Sponsors keep it alive and moving forward.</p>
           </div>
-          <div class="flex flex-col sm:flex-row gap-2 shrink-0">
+          <div class="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
             <a
               href="https://github.com/sponsors/Fmarzochi"
               target="_blank"
@@ -321,6 +365,7 @@ const podiumMeta = [
             </a>
           </div>
         </div>
+
       </div>
     </section>
 

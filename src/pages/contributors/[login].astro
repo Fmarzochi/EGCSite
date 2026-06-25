@@ -1,0 +1,197 @@
+---
+import Base from '../../layouts/Base.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import { getBase } from '../../utils/base.ts';
+import {
+  highlights,
+  BADGE_DEFS,
+  MONTHLY_CHAMPION,
+} from '../../data/contributors.ts';
+
+export async function getStaticPaths() {
+  return Object.keys(highlights).map(login => ({ params: { login } }));
+}
+
+const { login } = Astro.params;
+const info = highlights[login as string];
+const base = getBase();
+
+if (!info) {
+  return Astro.redirect(`${base}contributors`);
+}
+
+const avatar = `https://github.com/${login}.png`;
+
+let githubBio = '';
+let githubLocation = '';
+let githubFollowers = 0;
+let githubRepos = 0;
+
+try {
+  const headers: Record<string, string> = { Accept: 'application/vnd.github+json' };
+  const token = import.meta.env.GITHUB_TOKEN;
+  if (token) headers['Authorization'] = `Bearer ${token}`;
+  const res = await fetch(`https://api.github.com/users/${login}`, { headers });
+  if (res.ok) {
+    const data = await res.json() as {
+      bio?: string;
+      location?: string;
+      followers?: number;
+      public_repos?: number;
+    };
+    githubBio = data.bio ?? '';
+    githubLocation = data.location ?? '';
+    githubFollowers = data.followers ?? 0;
+    githubRepos = data.public_repos ?? 0;
+  }
+} catch {
+  // static data only
+}
+
+const isChampion = MONTHLY_CHAMPION.login === login;
+---
+
+<Base
+  title={`${info.name} -- EGC Hall of Fame`}
+  description={`${info.name} (@${login}) -- ${info.highlight}`}
+>
+  <Navbar />
+
+  <main id="main-content">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
+
+      <!-- Back link -->
+      <a
+        href={`${base}contributors`}
+        class="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-egc-400 transition-colors duration-200 mb-8"
+      >
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M11 17l-5-5m0 0l5-5m-5 5h12"/></svg>
+        Hall of Fame
+      </a>
+
+      <!-- Champion banner -->
+      {isChampion && (
+        <div class="flex items-center gap-3 rounded-xl px-4 py-3 mb-6 bg-yellow-400/10 border border-yellow-400/30">
+          <span class="text-xl">🏅</span>
+          <div>
+            <p class="text-xs font-bold uppercase tracking-widest text-yellow-400">Contributor of the Month</p>
+            <p class="text-xs text-gray-400">{MONTHLY_CHAMPION.month}</p>
+          </div>
+        </div>
+      )}
+
+      <!-- Profile card -->
+      <div class="rounded-2xl glass overflow-hidden mb-6">
+        <div class="relative">
+          <div class="h-24 bg-gradient-to-r from-egc-900/40 via-gray-900 to-yellow-900/20"></div>
+          <div class="absolute left-6 -bottom-10">
+            <img
+              src={avatar}
+              alt={info.name}
+              width="80"
+              height="80"
+              class={`rounded-full ring-4 ring-gray-900 ${isChampion ? 'ring-yellow-400/60' : ''}`}
+            />
+          </div>
+        </div>
+
+        <div class="pt-14 px-6 pb-6">
+          <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+            <div>
+              <h1 class="text-xl font-bold text-white">{info.name}</h1>
+              <p class="text-sm text-gray-500 mb-3">@{login}</p>
+              {githubBio && <p class="text-sm text-gray-400 mb-2">{githubBio}</p>}
+              {githubLocation && (
+                <p class="flex items-center gap-1 text-xs text-gray-600">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                  {githubLocation}
+                </p>
+              )}
+            </div>
+            <a
+              href={`https://github.com/${login}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="shrink-0 inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-gray-700 bg-gray-900 text-gray-300 text-sm font-semibold hover:border-egc-500 hover:text-egc-400 active:scale-95 transition-all duration-200"
+            >
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12"/></svg>
+              GitHub
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats row -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+        {[
+          { label: 'PRs merged', value: info.prs },
+          { label: 'Badges', value: info.badges.length },
+          { label: 'GitHub repos', value: githubRepos || '--' },
+          { label: 'Followers', value: githubFollowers || '--' },
+        ].map(s => (
+          <div class="rounded-xl p-4 glass text-center">
+            <div class="text-xl font-extrabold text-egc-400">{s.value}</div>
+            <div class="text-xs text-gray-500 mt-1">{s.label}</div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Contribution -->
+      <div class="rounded-2xl glass p-6 mb-6">
+        <p class="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-3">What they built</p>
+        <p class="text-sm text-gray-300 leading-relaxed mb-4">{info.highlight}</p>
+        <p class="text-xs text-gray-600">Joined {info.since}</p>
+      </div>
+
+      <!-- Badges -->
+      {info.badges.length > 0 && (
+        <div class="rounded-2xl glass p-6 mb-6">
+          <p class="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-4">Badges</p>
+          <div class="flex flex-wrap gap-2">
+            {info.badges.map(key => {
+              const b = BADGE_DEFS[key];
+              return b ? (
+                <span class={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-semibold ${b.color}`}>
+                  {b.icon} {b.label}
+                </span>
+              ) : null;
+            })}
+          </div>
+        </div>
+      )}
+
+      <!-- Actions -->
+      <div class="flex flex-wrap gap-3">
+        <a
+          href={`https://github.com/${login}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gray-800 hover:bg-gray-700 text-white text-sm font-semibold transition-colors duration-200 active:scale-95"
+        >
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12"/></svg>
+          View GitHub profile
+        </a>
+        <a
+          href={`https://github.com/Fmarzochi/EGC/commits?author=${login}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-egc-900/60 hover:bg-egc-800/60 text-egc-400 text-sm font-semibold border border-egc-700/40 transition-colors duration-200 active:scale-95"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          View commits on EGC
+        </a>
+        <a
+          href={`${base}contributors`}
+          class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-gray-700 text-gray-400 text-sm font-semibold hover:text-white hover:border-gray-500 transition-colors duration-200 active:scale-95"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M11 17l-5-5m0 0l5-5m-5 5h12"/></svg>
+          Back to Hall of Fame
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <Footer />
+</Base>

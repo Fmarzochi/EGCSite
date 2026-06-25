@@ -3,99 +3,44 @@ import Base from '../layouts/Base.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import { getBase } from '../utils/base.ts';
+import {
+  fetchContributors,
+  buildFallback,
+  BADGE_DEFS,
+  TIER_CONFIG,
+  MONTHLY_CHAMPION,
+  type Contributor,
+} from '../data/contributors.ts';
+
 const base = getBase();
-
-const OWNER = 'Fmarzochi';
-const REPO = 'EGC';
-const EXCLUDED = new Set([OWNER, 'dependabot[bot]', 'github-actions[bot]']);
-
-const highlights: Record<string, { name: string; highlight: string; since: string }> = {
-  Kunall7890:           { name: 'Kunal Jaiswal',      highlight: 'Zed editor support, compress_observations MCP tool, Windows dashboard fix', since: 'Jun 11, 2026' },
-  gaoflow:              { name: 'Vincent Gao',         highlight: 'Fixed critical bugs across all AI providers in a single day',               since: 'Jun 22, 2026' },
-  muhammadhasnain3031:  { name: 'Muhammad Husnain',    highlight: 'OpenRouter model mappings, Arabic and Hindi README translations',            since: 'Jun 19, 2026' },
-  'NITESH-DTU':         { name: 'Nitesh Kumar',        highlight: 'Fixed two critical egc-memory bugs back to back',                           since: 'Jun 16, 2026' },
-  'vasu-sachdeva':      { name: 'Vasu Sachdeva',       highlight: 'Null safety fixes across Claude and Ollama providers',                      since: 'Jun 23, 2026' },
-  shekar50:             { name: 'Shekar',               highlight: 'Usage analytics heatmap for the dashboard',                                 since: 'Jun 25, 2026' },
-  shantoshdurai:        { name: 'Santosh Durai',        highlight: 'Added --version/-v flag to the EGC CLI',                                    since: 'Jun 10, 2026' },
-  koteshyelamati:       { name: 'Kotesh Yelamati',      highlight: 'Windows HOME/USERPROFILE environment variable fix',                         since: 'Jun 17, 2026' },
-  lesbass:              { name: 'Stefano Maffeis',      highlight: 'JSONDecodeError fix in OpenAI and OpenRouter providers',                    since: 'Jun 22, 2026' },
-  'srivastava-prakhar': { name: 'Prakhar Srivastava',   highlight: 'Narrowed overly broad exception handling in model selector',               since: 'Jun 23, 2026' },
-  ayushikaul02:         { name: 'Ayushi Kaul',          highlight: 'Co-authored fix for bare except in Gemini provider',                       since: 'Jun 22, 2026' },
-  krishna3554:          { name: 'Krishna Lokhande',     highlight: 'Co-authored fix for AttributeError in Claude provider',                    since: 'Jun 22, 2026' },
-  vaishnavidesai09:     { name: 'Vaishnavi Desai',      highlight: 'Co-authored Ollama usage token fix in the provider layer',                 since: 'Jun 22, 2026' },
-};
-
-type Contributor = {
-  login: string;
-  name: string;
-  avatar: string;
-  commits: number;
-  additions: number;
-  highlight: string;
-  since: string;
-};
-
-async function fetchContributors(): Promise<Contributor[]> {
-  const headers: Record<string, string> = { Accept: 'application/vnd.github+json' };
-  const token = import.meta.env.GITHUB_TOKEN;
-  if (token) headers['Authorization'] = `Bearer ${token}`;
-
-  const statsRes = await fetch(
-    `https://api.github.com/repos/${OWNER}/${REPO}/stats/contributors`,
-    { headers }
-  );
-
-  if (statsRes.status === 202 || !statsRes.ok) throw new Error('GitHub API not ready');
-
-  const statsData = await statsRes.json() as {
-    author: { login: string; avatar_url: string };
-    total: number;
-    weeks: { a: number; d: number; c: number }[];
-  }[];
-
-  const result = statsData
-    .filter(c => !EXCLUDED.has(c.author.login) && !c.author.login.includes('[bot]'))
-    .sort((a, b) => b.total - a.total)
-    .map(c => {
-      const additions = c.weeks.reduce((sum, w) => sum + w.a, 0);
-      const info = highlights[c.author.login];
-      return {
-        login: c.author.login,
-        name: info?.name ?? c.author.login,
-        avatar: `https://github.com/${c.author.login}.png`,
-        commits: c.total,
-        additions,
-        highlight: info?.highlight ?? 'Contributed to EGC',
-        since: info?.since ?? '',
-      };
-    });
-
-  if (result.length === 0) throw new Error('Empty contributor list');
-  return result;
-}
 
 let contributors: Contributor[] = [];
 try {
-  contributors = await fetchContributors();
+  contributors = await fetchContributors(import.meta.env.GITHUB_TOKEN);
 } catch {
-  contributors = Object.entries(highlights).map(([login, info]) => ({
-    login,
-    name: info.name,
-    avatar: `https://github.com/${login}.png`,
-    commits: 0,
-    additions: 0,
-    highlight: info.highlight,
-    since: info.since,
-  }));
+  contributors = buildFallback();
 }
 
 const topThree = contributors.slice(0, 3);
 const rest = contributors.slice(3);
+
+const totalCommits = contributors.reduce((s, c) => s + c.commits, 0);
+const totalAdditions = contributors.reduce((s, c) => s + c.additions, 0);
+const totalPrs = contributors.reduce((s, c) => s + c.prs, 0);
+
+const champion = contributors.find(c => c.login === MONTHLY_CHAMPION.login) ?? contributors[0];
+
+const podiumOrder = [topThree[1], topThree[0], topThree[2]].filter(Boolean);
+const podiumMeta = [
+  { rank: 2, height: 'h-40', badge: 'bg-slate-400 text-slate-900', label: '2nd' },
+  { rank: 1, height: 'h-52', badge: 'bg-yellow-400 text-gray-900', label: '1st' },
+  { rank: 3, height: 'h-32', badge: 'bg-amber-600 text-white',     label: '3rd' },
+];
 ---
 
 <Base
-  title="Top Contributors -- EGC"
-  description="The developers who built EGC together. Every pull request, every bug report, every translation counts."
+  title="Hall of Fame -- EGC"
+  description="The developers who shaped EGC. Every commit, every bug fix, every translation -- permanently recognized."
 >
   <Navbar />
 
@@ -104,13 +49,11 @@ const rest = contributors.slice(3);
     <!-- Hero -->
     <section class="relative overflow-hidden py-16 sm:py-24">
       <div class="absolute inset-0 pointer-events-none -z-10" aria-hidden="true">
-        <div class="absolute left-1/4 top-0 w-[500px] h-[400px] bg-egc-500/10 rounded-full blur-[100px] mix-blend-screen"></div>
-        <div class="absolute right-1/4 bottom-0 w-[400px] h-[300px] bg-yellow-400/8 rounded-full blur-[100px] mix-blend-screen"></div>
+        <div class="absolute left-1/4 top-0 w-[600px] h-[400px] bg-yellow-400/6 rounded-full blur-[120px] mix-blend-screen"></div>
+        <div class="absolute right-1/4 bottom-0 w-[400px] h-[300px] bg-egc-500/8 rounded-full blur-[100px] mix-blend-screen"></div>
       </div>
 
       <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
-
-        <!-- Icon + badge -->
         <div class="flex items-center justify-center mb-6">
           <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl glass shadow-lg">
             <svg class="w-8 h-8 text-yellow-400" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -120,18 +63,18 @@ const rest = contributors.slice(3);
         </div>
 
         <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-4">
-          Top Contributors
+          Hall of Fame
         </h1>
-        <p class="text-base sm:text-lg text-gray-400 max-w-xl mx-auto mb-8">
-          EGC is built by developers like you. Every pull request, every bug fix, every translation is here permanently.
+        <p class="text-base sm:text-lg text-gray-400 max-w-xl mx-auto mb-10">
+          Every developer who shipped something real for EGC is here permanently. No bots, no placeholders -- just the people who looked at an open issue and fixed it.
         </p>
 
-        <!-- Stats row -->
-        <div class="flex flex-wrap items-center justify-center gap-6 sm:gap-10 mb-4">
+        <div class="flex flex-wrap items-center justify-center gap-8 sm:gap-14">
           {[
             { value: String(contributors.length), label: 'Contributors' },
-            { value: String(contributors.reduce((s, c) => s + c.commits, 0)), label: 'Commits' },
-            { value: `+${contributors.reduce((s, c) => s + c.additions, 0).toLocaleString('en')}`, label: 'Lines added' },
+            { value: String(totalCommits || '--'), label: 'Commits' },
+            { value: totalAdditions > 0 ? `+${totalAdditions.toLocaleString('en')}` : '--', label: 'Lines added' },
+            { value: String(totalPrs), label: 'PRs merged' },
           ].map(s => (
             <div class="text-center">
               <div class="text-2xl sm:text-3xl font-extrabold text-egc-400">{s.value}</div>
@@ -142,87 +85,162 @@ const rest = contributors.slice(3);
       </div>
     </section>
 
-    <!-- Podium: top 3 -->
-    <section class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 mb-12">
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        {topThree.map((c, i) => (
-          <a
-            href={`https://github.com/${c.login}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            class={`group relative rounded-2xl p-6 flex flex-col items-center text-center glass hover-lift transition-all duration-300 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500 ${i === 0 ? 'ring-2 ring-yellow-400/40' : ''}`}
-          >
-            <!-- Rank badge -->
-            <div class={`absolute -top-3 left-1/2 -translate-x-1/2 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shadow-lg ${i === 0 ? 'bg-yellow-400 text-gray-900' : i === 1 ? 'bg-gray-300 text-gray-900' : 'bg-amber-600 text-white'}`}>
-              {i + 1}
+    <!-- Contributor of the Month -->
+    {champion && (
+      <section class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 mb-12">
+        <div class="relative rounded-2xl overflow-hidden glass">
+          <div class="absolute inset-0 pointer-events-none -z-10" aria-hidden="true">
+            <div class="absolute inset-0 bg-gradient-to-r from-yellow-400/5 via-transparent to-egc-500/5"></div>
+          </div>
+          <div class="flex flex-col sm:flex-row items-center gap-6 p-6 sm:p-8">
+            <div class="shrink-0">
+              <div class="relative">
+                <img
+                  src={champion.avatar}
+                  alt={champion.name}
+                  width="80"
+                  height="80"
+                  class="rounded-full ring-2 ring-yellow-400/60"
+                  loading="lazy"
+                />
+                <span class="absolute -bottom-1 -right-1 text-lg leading-none">🏅</span>
+              </div>
             </div>
+            <div class="flex-1 text-center sm:text-left">
+              <div class="flex items-center justify-center sm:justify-start gap-2 mb-1">
+                <span class="text-xs font-bold uppercase tracking-widest text-yellow-400">Contributor of the Month</span>
+                <span class="text-xs text-gray-600">{MONTHLY_CHAMPION.month}</span>
+              </div>
+              <p class="font-bold text-white text-lg">{champion.name}</p>
+              <p class="text-xs text-gray-500 mb-2">@{champion.login}</p>
+              <p class="text-sm text-gray-400 leading-relaxed">{MONTHLY_CHAMPION.reason}</p>
+            </div>
+            <a
+              href={`${base}contributors/${champion.login}`}
+              class="shrink-0 inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-yellow-400/10 hover:bg-yellow-400/20 text-yellow-300 text-sm font-semibold border border-yellow-400/30 transition-colors duration-200 active:scale-95"
+            >
+              View profile
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+            </a>
+          </div>
+        </div>
+      </section>
+    )}
 
-            <img
-              src={c.avatar}
-              alt={c.name}
-              width="72"
-              height="72"
-              class={`rounded-full mb-4 mt-2 ring-2 transition-all duration-200 ${i === 0 ? 'ring-yellow-400/60 group-hover:ring-yellow-400' : 'ring-gray-700 group-hover:ring-egc-500'}`}
-              loading="lazy"
-            />
-
-            <p class="font-bold text-white text-sm mb-0.5">{c.name}</p>
-            <p class="text-xs text-gray-500 mb-3">@{c.login}</p>
-
-            <div class="flex items-center gap-3 mb-4">
-              <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-egc-900/60 text-egc-400 text-xs font-semibold">
-                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                {c.commits} commit{c.commits !== 1 ? 's' : ''}
-              </span>
-              {c.additions > 0 && (
-                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-gray-800/60 text-gray-400 text-xs font-semibold">
-                  +{c.additions}
+    <!-- Podium -->
+    {topThree.length >= 3 && (
+      <section class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 mb-4">
+        <p class="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-8 text-center">Leaderboard</p>
+        <div class="flex items-end justify-center gap-3 sm:gap-4">
+          {podiumOrder.map((c, idx) => {
+            const meta = podiumMeta[idx];
+            const tier = TIER_CONFIG[c.tier];
+            return (
+              <a
+                href={`${base}contributors/${c.login}`}
+                class={`group relative flex flex-col items-center glass hover-lift transition-all duration-300 rounded-2xl px-3 sm:px-6 pt-6 pb-4 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500 ${meta.height} w-full max-w-[180px] ${meta.rank === 1 ? 'ring-2 ring-yellow-400/40' : ''}`}
+                style="align-items:center;justify-content:flex-end;"
+              >
+                <div class={`absolute -top-3 left-1/2 -translate-x-1/2 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shadow-lg ${meta.badge}`}>
+                  {meta.rank}
+                </div>
+                <img
+                  src={c.avatar}
+                  alt={c.name}
+                  width={meta.rank === 1 ? '72' : '56'}
+                  height={meta.rank === 1 ? '72' : '56'}
+                  class={`rounded-full mb-3 mt-2 ring-2 transition-all duration-200 ${meta.rank === 1 ? 'ring-yellow-400/60 group-hover:ring-yellow-400' : 'ring-gray-700 group-hover:ring-egc-500'}`}
+                  loading="lazy"
+                />
+                <p class="font-bold text-white text-xs sm:text-sm text-center leading-tight mb-0.5">{c.name}</p>
+                <p class="text-xs text-gray-500 mb-2">@{c.login}</p>
+                <span class={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold border ${tier.color} mb-2`}>
+                  {tier.icon} {tier.label}
                 </span>
-              )}
-            </div>
+                <div class="flex flex-wrap justify-center gap-1 mb-2">
+                  {c.badges.slice(0, 2).map(key => {
+                    const b = BADGE_DEFS[key];
+                    return b ? (
+                      <span class="text-xs" title={b.label}>{b.icon}</span>
+                    ) : null;
+                  })}
+                </div>
+                <span class="text-xs font-bold text-egc-400">
+                  {c.commits > 0 ? `${c.commits} commits` : `${c.prs} PR${c.prs !== 1 ? 's' : ''}`}
+                </span>
+              </a>
+            );
+          })}
+        </div>
+      </section>
+    )}
 
-            <p class="text-xs text-gray-500 leading-relaxed">{c.highlight}</p>
+    <!-- All contributors grid -->
+    <section class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 mt-12 mb-10">
+      <p class="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-6">All contributors</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        {rest.map(c => {
+          const tier = TIER_CONFIG[c.tier];
+          return (
+            <a
+              href={`${base}contributors/${c.login}`}
+              class="group flex items-center gap-4 rounded-xl p-4 glass hover-lift transition-all duration-200 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500"
+            >
+              <img
+                src={c.avatar}
+                alt={c.name}
+                width="48"
+                height="48"
+                class="rounded-full ring-2 ring-transparent group-hover:ring-egc-500 transition-all duration-200 shrink-0"
+                loading="lazy"
+              />
+              <div class="min-w-0 flex-1">
+                <div class="flex items-center gap-2 mb-0.5">
+                  <p class="font-semibold text-white text-sm truncate">{c.name}</p>
+                  <span class={`shrink-0 inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-xs font-semibold border ${tier.color}`}>
+                    {tier.icon}
+                  </span>
+                </div>
+                <p class="text-xs text-gray-500 mb-1">@{c.login}</p>
+                <div class="flex items-center gap-1.5 flex-wrap">
+                  {c.badges.map(key => {
+                    const b = BADGE_DEFS[key];
+                    return b ? (
+                      <span class={`inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full text-xs font-medium ${b.color}`}>
+                        {b.icon} {b.label}
+                      </span>
+                    ) : null;
+                  })}
+                </div>
+              </div>
+              <div class="ml-auto shrink-0 text-right">
+                <span class="block text-xs font-bold text-egc-400">
+                  {c.commits > 0 ? `${c.commits} commit${c.commits !== 1 ? 's' : ''}` : 'co-author'}
+                </span>
+                <span class="block text-xs text-gray-600">{c.prs} PR{c.prs !== 1 ? 's' : ''}</span>
+                {c.additions > 0 && <span class="block text-xs text-gray-700">+{c.additions.toLocaleString('en')}</span>}
+              </div>
+            </a>
+          );
+        })}
+      </div>
 
-            <p class="text-xs text-gray-600 mt-3">Since {c.since}</p>
-          </a>
-        ))}
+      <!-- Tier legend -->
+      <div class="mt-8 rounded-xl p-4 glass">
+        <p class="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-3">Tiers</p>
+        <div class="flex flex-wrap gap-3">
+          {(Object.entries(TIER_CONFIG) as [string, typeof TIER_CONFIG[keyof typeof TIER_CONFIG]][]).map(([, t]) => (
+            <span class={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border ${t.color}`}>
+              {t.icon} {t.label} <span class="opacity-50">({t.minCommits}+ commits)</span>
+            </span>
+          ))}
+        </div>
       </div>
     </section>
 
-    <!-- All contributors grid -->
+    <!-- CTA -->
     <section class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 mb-16">
-      <h2 class="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-6">All contributors</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        {rest.map(c => (
-          <a
-            href={`https://github.com/${c.login}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="group flex items-center gap-4 rounded-xl p-4 glass hover-lift transition-all duration-200 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500"
-          >
-            <img
-              src={c.avatar}
-              alt={c.name}
-              width="48"
-              height="48"
-              class="rounded-full ring-2 ring-transparent group-hover:ring-egc-500 transition-all duration-200 shrink-0"
-              loading="lazy"
-            />
-            <div class="min-w-0">
-              <p class="font-semibold text-white text-sm truncate">{c.name}</p>
-              <p class="text-xs text-gray-500 mb-1">@{c.login}</p>
-              <p class="text-xs text-gray-500 leading-snug truncate">{c.highlight}</p>
-            </div>
-            <div class="ml-auto shrink-0 text-right">
-              <span class="block text-xs font-bold text-egc-400">{c.commits > 0 ? `${c.commits} commit${c.commits !== 1 ? 's' : ''}` : 'co-author'}</span>
-              {c.additions > 0 && <span class="block text-xs text-gray-600">+{c.additions}</span>}
-            </div>
-          </a>
-        ))}
-      </div>
-
-      <!-- CTA: become a contributor -->
-      <div class="mt-8 rounded-2xl p-6 sm:p-8 text-center glass hover-glow">
+      <div class="rounded-2xl p-6 sm:p-8 text-center glass hover-glow">
         <p class="text-sm text-gray-400 mb-4">
           Want your name on this page? Find an open issue and ship a fix.
         </p>
@@ -240,13 +258,11 @@ const rest = contributors.slice(3);
 
     <!-- Sponsors -->
     <section class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 pb-20">
-
       <div class="relative rounded-2xl p-6 sm:p-10 glass hover-glow overflow-hidden">
         <div class="absolute inset-0 pointer-events-none -z-10" aria-hidden="true">
           <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[300px] bg-pink-500/10 rounded-full blur-[80px] mix-blend-screen"></div>
         </div>
 
-        <!-- Header -->
         <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-10">
           <div class="text-center sm:text-left">
             <div class="flex items-center justify-center sm:justify-start gap-2 mb-1">
@@ -279,13 +295,11 @@ const rest = contributors.slice(3);
           </div>
         </div>
 
-        <!-- Monthly sponsors -->
         <div class="mb-8">
           <p class="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-4">Monthly sponsors</p>
           <p class="text-xs text-gray-600 italic">Be the first monthly sponsor.</p>
         </div>
 
-        <!-- One-time backers -->
         <div>
           <p class="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-4">Backers</p>
           <div class="flex flex-wrap gap-3">
@@ -307,7 +321,6 @@ const rest = contributors.slice(3);
             </a>
           </div>
         </div>
-
       </div>
     </section>
 

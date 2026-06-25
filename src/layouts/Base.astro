@@ -14,6 +14,7 @@ const {
 } = Astro.props;
 
 import { getBase } from '../utils/base.ts';
+import '../styles/global.css';
 const base = getBase();
 const canonicalURL = canonical ?? Astro.url.href;
 ---

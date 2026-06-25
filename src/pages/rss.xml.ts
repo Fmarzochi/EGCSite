@@ -3,6 +3,13 @@ import type { APIContext } from 'astro';
 
 const releases = [
   {
+    title: 'EGC v1.1.6',
+    pubDate: new Date('2026-06-25'),
+    description:
+      'Usage analytics heatmap in the dashboard (GitHub-style, hour x day-of-week). Node.js < 20 version guard with clear error message. npm install vs git checkout detection in auto-update. Codecov patch check set to informational.',
+    link: 'https://github.com/Fmarzochi/EGC/releases/tag/v1.1.6',
+  },
+  {
     title: 'EGC v1.1.5',
     pubDate: new Date('2026-06-24'),
     description:

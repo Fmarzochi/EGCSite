@@ -45,15 +45,15 @@ async function fetchContributors(): Promise<Contributor[]> {
     { headers }
   );
 
-  if (!statsRes.ok && statsRes.status !== 202) throw new Error('GitHub API error');
+  if (statsRes.status === 202 || !statsRes.ok) throw new Error('GitHub API not ready');
 
-  const statsData = statsRes.status === 202 ? [] : await statsRes.json() as {
+  const statsData = await statsRes.json() as {
     author: { login: string; avatar_url: string };
     total: number;
     weeks: { a: number; d: number; c: number }[];
   }[];
 
-  return statsData
+  const result = statsData
     .filter(c => !EXCLUDED.has(c.author.login) && !c.author.login.includes('[bot]'))
     .sort((a, b) => b.total - a.total)
     .map(c => {
@@ -69,6 +69,9 @@ async function fetchContributors(): Promise<Contributor[]> {
         since: info?.since ?? '',
       };
     });
+
+  if (result.length === 0) throw new Error('Empty contributor list');
+  return result;
 }
 
 let contributors: Contributor[] = [];

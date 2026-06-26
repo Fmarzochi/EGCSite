@@ -279,7 +279,7 @@ const base = getBase();
                 <p class="text-xs text-gray-500 dark:text-gray-400">The one you'll use every session</p>
               </div>
             </div>
-            <div class="space-y-2">
+            <div class="grid gap-x-3 gap-y-1.5 items-baseline" style="grid-template-columns: max-content 1fr">
               {[
                 { tool: 'get_state', desc: 'Reads project memory at session start' },
                 { tool: 'update_state', desc: 'Saves decisions and next steps, propagates context to all tool config files' },
@@ -295,12 +295,10 @@ const base = getBase();
                 { tool: 'lesson_reinforce', desc: 'Increases confidence score of a stored lesson' },
                 { tool: 'detect_patterns', desc: 'Surfaces repeated commands and recurring errors' },
                 { tool: 'compress_observations', desc: 'Compresses raw hook events into typed summaries' },
-              ].map(row => (
-                <div class="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3">
-                  <code class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 font-mono shrink-0 self-start">{row.tool}</code>
-                  <span class="text-xs text-gray-600 dark:text-gray-400">{row.desc}</span>
-                </div>
-              ))}
+              ].flatMap(row => [
+                <code class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 font-mono">{row.tool}</code>,
+                <span class="text-xs text-gray-600 dark:text-gray-400">{row.desc}</span>,
+              ])}
             </div>
             <a href={`${base}docs/memory`} class="mt-5 inline-flex items-center gap-1 text-xs font-semibold text-egc-600 dark:text-egc-400 hover:underline min-h-[44px]">
               Read docs
@@ -322,19 +320,17 @@ const base = getBase();
                 <p class="text-xs text-gray-500 dark:text-gray-400">Runs in the background</p>
               </div>
             </div>
-            <div class="space-y-2">
+            <div class="grid gap-x-3 gap-y-1.5 items-baseline" style="grid-template-columns: max-content 1fr">
               {[
                 { tool: 'validate_command', desc: 'Blocks shell injection and unsafe binaries' },
                 { tool: 'validate_write', desc: 'Blocks writes to sensitive paths (~/.ssh, /etc)' },
                 { tool: 'reduce_context', desc: 'Deduplicates and trims Markdown payloads' },
                 { tool: 'orchestrate_task', desc: 'Routes prompts to relevant agents and skills' },
                 { tool: 'auto_learn', desc: 'Mines session failures and propagates lessons to all AI tool config files in the project' },
-              ].map(row => (
-                <div class="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3">
-                  <code class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 font-mono shrink-0 self-start">{row.tool}</code>
-                  <span class="text-xs text-gray-600 dark:text-gray-400">{row.desc}</span>
-                </div>
-              ))}
+              ].flatMap(row => [
+                <code class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 font-mono">{row.tool}</code>,
+                <span class="text-xs text-gray-600 dark:text-gray-400">{row.desc}</span>,
+              ])}
             </div>
             <a href={`${base}docs/guardian`} class="mt-5 inline-flex items-center gap-1 text-xs font-semibold text-egc-600 dark:text-egc-400 hover:underline min-h-[44px]">
               Read docs

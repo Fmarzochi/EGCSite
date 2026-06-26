@@ -8,7 +8,7 @@ import Icon from '../components/Icon.astro';
 const base = getBase();
 ---
 
-<Base title="EGC - Extended Global Context" description="Your AI remembers your project across sessions and tools. Persistent memory and shared context for every AI coding tool.">
+<Base title="EGC - Extended Global Context" description="Stop re-explaining your codebase every session. EGC gives every AI coding tool persistent memory of your project — install once, works everywhere.">
   <Navbar />
 
   <main id="main-content">
@@ -41,7 +41,7 @@ const base = getBase();
         </h1>
 
         <p class="mx-auto max-w-2xl text-base sm:text-lg text-gray-600 dark:text-gray-400 mb-4 leading-relaxed animate-fade-in-up animate-fade-in-up-delay-1 text-pretty">
-          EGC gives every AI coding tool a shared, persistent memory of your project. Your stack preferences, architectural decisions, and next steps survive across sessions and tools. Install once, works everywhere.
+          Every time you open a new session or switch tools, the AI starts from zero. EGC fixes that: one install gives every AI coding tool a shared, persistent memory of your stack, your decisions, and your next steps.
         </p>
 
         <div class="mx-auto max-w-lg mb-6 sm:mb-8 rounded-xl glass border border-red-500/20 px-4 py-3 text-left animate-fade-in-up animate-fade-in-up-delay-1">
@@ -54,13 +54,19 @@ const base = getBase();
         </div>
 
         <div class="flex items-center justify-center mb-5 animate-fade-in-up animate-fade-in-up-delay-2">
-          <div class="inline-flex items-center gap-3 px-4 py-2.5 rounded-xl glass border border-gray-200 dark:border-gray-700 font-mono text-sm text-gray-800 dark:text-gray-100 hover-glow transition-all group cursor-pointer" id="copy-install-cmd" role="button" tabindex="0" aria-label="Copy install command">
-            <span class="text-egc-500 select-none">$</span>
-            <span class="select-all">npm install -g @egchq/egc</span>
-            <svg id="copy-icon" class="w-4 h-4 text-gray-400 group-hover:text-egc-500 transition-colors flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
-            </svg>
-            <span id="copy-label" class="text-xs text-gray-400 group-hover:text-egc-500 transition-colors hidden sm:inline">copy</span>
+          <div class="inline-flex flex-col gap-1 px-4 py-3 rounded-xl glass border border-gray-200 dark:border-gray-700 font-mono text-sm text-gray-800 dark:text-gray-100 hover-glow transition-all group cursor-pointer" id="copy-install-cmd" role="button" tabindex="0" aria-label="Copy install commands">
+            <div class="flex items-center gap-3">
+              <span class="text-egc-500 select-none">$</span>
+              <span class="select-all">npm install -g @egchq/egc</span>
+              <svg id="copy-icon" class="w-4 h-4 text-gray-400 group-hover:text-egc-500 transition-colors flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+              </svg>
+              <span id="copy-label" class="text-xs text-gray-400 group-hover:text-egc-500 transition-colors hidden sm:inline">copy</span>
+            </div>
+            <div class="flex items-center gap-3 text-gray-500 dark:text-gray-400">
+              <span class="text-egc-500/60 select-none">$</span>
+              <span>egc install</span>
+            </div>
           </div>
         </div>
 
@@ -406,7 +412,7 @@ const base = getBase();
     <section class="border-t border-gray-100 dark:border-gray-800 py-14">
       <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
         <p class="text-xs font-semibold uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-3">Security</p>
-        <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">Stores decisions and preferences in local SQLite. Never your source code. No cloud.</p>
+        <p class="text-sm text-gray-400 dark:text-gray-300 mb-6">Stores decisions and preferences in local SQLite. Never in your source code. Never in the cloud.</p>
         <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
           <a href="https://www.bestpractices.dev/projects/13099" target="_blank" rel="noopener noreferrer" aria-label="OpenSSF Best Practices badge (opens in new tab)" class="inline-flex items-center focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500 rounded">
             <img src="https://www.bestpractices.dev/projects/13099/badge" alt="OpenSSF Best Practices" class="h-5 sm:h-6" width="160" height="20" loading="lazy" />
@@ -694,7 +700,7 @@ const base = getBase();
   const copyIcon = document.getElementById('copy-icon');
   if (copyBtn) {
     const activate = () => {
-      navigator.clipboard.writeText('npm install -g @egchq/egc').then(() => {
+      navigator.clipboard.writeText('npm install -g @egchq/egc\negc install').then(() => {
         if (copyLabel) copyLabel.textContent = 'copied!';
         if (copyIcon) copyIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>';
         setTimeout(() => {

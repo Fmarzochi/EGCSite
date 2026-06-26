@@ -8,7 +8,7 @@ import Icon from '../components/Icon.astro';
 const base = getBase();
 ---
 
-<Base title="EGC - Extended Global Context" description="Stop re-explaining your codebase every session. EGC gives every AI coding tool persistent memory of your project — install once, works everywhere.">
+<Base title="EGC - Extended Global Context" description="Stop re-explaining your codebase every session. EGC gives every AI coding tool persistent memory of your project -- install once, works everywhere.">
   <Navbar />
 
   <main id="main-content">
@@ -45,7 +45,7 @@ const base = getBase();
         </p>
 
         <div class="mx-auto max-w-lg mb-6 sm:mb-8 rounded-xl glass border border-red-500/20 px-4 py-3 text-left animate-fade-in-up animate-fade-in-up-delay-1">
-          <p class="text-[10px] font-semibold uppercase tracking-widest text-red-400 mb-2">Without EGC — every session</p>
+          <p class="text-[10px] font-semibold uppercase tracking-widest text-red-400 mb-2">Without EGC -- every session</p>
           <div class="space-y-1 font-mono text-xs text-red-400/60 dark:text-red-400/50">
             <div class="line-through">"We use PostgreSQL with row-level security..."</div>
             <div class="line-through">"I prefer functional components, no classes..."</div>
@@ -486,16 +486,24 @@ const base = getBase();
           <!-- Tool Partners -->
           <div>
             <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">Tool Partners</p>
-            <a
-              href="https://github.com/sponsors/Fmarzochi"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Become a Tool Partner (opens in new tab)"
-              class="group inline-flex flex-col items-center justify-center gap-2 w-48 h-24 rounded-xl border-2 border-dashed border-egc-500/30 hover:border-egc-400/60 hover:bg-egc-500/5 transition-all duration-200 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500"
-            >
-              <span class="w-8 h-8 rounded-full border border-dashed border-egc-500/40 group-hover:border-egc-400/70 flex items-center justify-center text-egc-500/50 group-hover:text-egc-400 transition-colors text-lg font-light">+</span>
-              <span class="text-xs text-gray-500 dark:text-gray-400 group-hover:text-egc-400 transition-colors">Your tool logo here</span>
-            </a>
+            <div class="flex flex-wrap justify-center gap-3">
+              <a
+                href="https://www.pincushion.io/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Pincushion -- AI feedback tool (opens in new tab)"
+                class="group relative focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500 rounded-full"
+              >
+                <img
+                  src="https://www.pincushion.io/apple-touch-icon.png"
+                  alt="Pincushion"
+                  width="52"
+                  height="52"
+                  class="rounded-full ring-2 ring-transparent group-hover:ring-egc-400 dark:group-hover:ring-egc-500 transition-all duration-200"
+                  loading="lazy"
+                />
+              </a>
+            </div>
           </div>
 
           <!-- Annual Sponsors -->

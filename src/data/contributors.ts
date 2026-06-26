@@ -85,12 +85,17 @@ export async function fetchContributors(githubToken?: string): Promise<Contribut
   const headers: Record<string, string> = { Accept: 'application/vnd.github+json' };
   if (githubToken) headers['Authorization'] = `Bearer ${githubToken}`;
 
-  const statsRes = await fetch(
-    `https://api.github.com/repos/${OWNER}/${REPO}/stats/contributors`,
-    { headers }
-  );
+  let statsRes: Response | undefined;
+  for (let attempt = 0; attempt < 4; attempt++) {
+    statsRes = await fetch(
+      `https://api.github.com/repos/${OWNER}/${REPO}/stats/contributors`,
+      { headers }
+    );
+    if (statsRes.status !== 202) break;
+    await new Promise(r => setTimeout(r, 3000));
+  }
 
-  if (statsRes.status === 202 || !statsRes.ok) throw new Error('GitHub API not ready');
+  if (!statsRes || statsRes.status === 202 || !statsRes.ok) throw new Error('GitHub API not ready');
 
   const statsData = await statsRes.json() as {
     author: { login: string };
@@ -124,16 +129,18 @@ export async function fetchContributors(githubToken?: string): Promise<Contribut
 }
 
 export function buildFallback(): Contributor[] {
-  return Object.entries(highlights).map(([login, info]) => ({
-    login,
-    name: info.name,
-    avatar: `https://github.com/${login}.png`,
-    commits: 0,
-    additions: 0,
-    highlight: info.highlight,
-    since: info.since,
-    prs: info.prs,
-    badges: info.badges,
-    tier: 'community' as Tier,
-  }));
+  return Object.entries(highlights)
+    .sort((a, b) => b[1].prs - a[1].prs)
+    .map(([login, info]) => ({
+      login,
+      name: info.name,
+      avatar: `https://github.com/${login}.png`,
+      commits: info.prs,
+      additions: 0,
+      highlight: info.highlight,
+      since: info.since,
+      prs: info.prs,
+      badges: info.badges,
+      tier: getTier(info.prs),
+    }));
 }

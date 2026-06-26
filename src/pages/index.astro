@@ -40,9 +40,18 @@ const base = getBase();
           <span class="text-egc-600 dark:text-egc-400 gradient-text">codebase every session.</span>
         </h1>
 
-        <p class="mx-auto max-w-2xl text-base sm:text-lg text-gray-600 dark:text-gray-400 mb-6 sm:mb-8 leading-relaxed animate-fade-in-up animate-fade-in-up-delay-1 text-pretty">
+        <p class="mx-auto max-w-2xl text-base sm:text-lg text-gray-600 dark:text-gray-400 mb-4 leading-relaxed animate-fade-in-up animate-fade-in-up-delay-1 text-pretty">
           EGC gives every AI coding tool a shared, persistent memory of your project. Your stack preferences, architectural decisions, and next steps survive across sessions and tools. Install once, works everywhere.
         </p>
+
+        <div class="mx-auto max-w-lg mb-6 sm:mb-8 rounded-xl glass border border-red-500/20 px-4 py-3 text-left animate-fade-in-up animate-fade-in-up-delay-1">
+          <p class="text-[10px] font-semibold uppercase tracking-widest text-red-400 mb-2">Without EGC — every session</p>
+          <div class="space-y-1 font-mono text-xs text-red-400/60 dark:text-red-400/50">
+            <div class="line-through">"We use PostgreSQL with row-level security..."</div>
+            <div class="line-through">"I prefer functional components, no classes..."</div>
+            <div class="line-through">"We moved from Prisma to Drizzle because..."</div>
+          </div>
+        </div>
 
         <div class="flex items-center justify-center mb-5 animate-fade-in-up animate-fade-in-up-delay-2">
           <div class="inline-flex items-center gap-3 px-4 py-2.5 rounded-xl glass border border-gray-200 dark:border-gray-700 font-mono text-sm text-gray-800 dark:text-gray-100 hover-glow transition-all group cursor-pointer" id="copy-install-cmd" role="button" tabindex="0" aria-label="Copy install command">
@@ -57,7 +66,7 @@ const base = getBase();
 
         <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mb-8 sm:mb-10 px-4 sm:px-0 animate-fade-in-up animate-fade-in-up-delay-2">
           <button id="open-install-modal" type="button" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 min-h-[48px] px-6 py-3 rounded-xl bg-egc-600 text-white font-semibold hover:bg-egc-700 active:scale-95 transition-all duration-100 focus:outline-none focus:ring-2 focus:ring-egc-500 focus:ring-offset-2">
-            Get Started
+            Install, 2 min
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
             </svg>

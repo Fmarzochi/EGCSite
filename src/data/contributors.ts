@@ -16,6 +16,7 @@ export interface HighlightEntry {
   since: string;
   prs: number;
   badges: string[];
+  additions?: number;
 }
 
 export interface Contributor {
@@ -60,19 +61,19 @@ export function getTier(commits: number): Tier {
 }
 
 export const highlights: Record<string, HighlightEntry> = {
-  Kunall7890:           { name: 'Kunal Jaiswal',     highlight: 'Zed editor support, compress_observations MCP tool, Windows dashboard fix', since: 'Jun 11, 2026', prs: 3, badges: ['pioneer', 'multiFeature', 'newFeature'] },
-  gaoflow:              { name: 'Vincent Gao',        highlight: 'Fixed critical bugs across all AI providers in a single day',               since: 'Jun 22, 2026', prs: 2, badges: ['bugHunter', 'speedDemon'] },
-  muhammadhasnain3031:  { name: 'Muhammad Husnain',   highlight: 'OpenRouter model mappings, Arabic and Hindi README translations',            since: 'Jun 19, 2026', prs: 2, badges: ['translator', 'multiFeature'] },
-  'NITESH-DTU':         { name: 'Nitesh Kumar',       highlight: 'Fixed two critical egc-memory bugs back to back',                           since: 'Jun 16, 2026', prs: 2, badges: ['bugHunter', 'reliability'] },
-  'vasu-sachdeva':      { name: 'Vasu Sachdeva',      highlight: 'Null safety fixes across Claude and Ollama providers',                      since: 'Jun 23, 2026', prs: 1, badges: ['reliability'] },
-  shekar50:             { name: 'Shekar',              highlight: 'Usage analytics heatmap for the dashboard',                                 since: 'Jun 25, 2026', prs: 1, badges: ['newFeature'] },
-  shantoshdurai:        { name: 'Santosh Durai',       highlight: 'Added --version/-v flag to the EGC CLI',                                    since: 'Jun 10, 2026', prs: 1, badges: ['pioneer', 'cli'] },
-  koteshyelamati:       { name: 'Kotesh Yelamati',     highlight: 'Windows HOME/USERPROFILE environment variable fix',                         since: 'Jun 17, 2026', prs: 1, badges: ['crossPlatform'] },
-  lesbass:              { name: 'Stefano Maffeis',     highlight: 'JSONDecodeError fix in OpenAI and OpenRouter providers',                    since: 'Jun 22, 2026', prs: 1, badges: ['bugHunter'] },
-  'srivastava-prakhar': { name: 'Prakhar Srivastava',  highlight: 'Narrowed overly broad exception handling in model selector',               since: 'Jun 23, 2026', prs: 1, badges: ['codeQuality'] },
-  ayushikaul02:         { name: 'Ayushi Kaul',         highlight: 'Co-authored fix for bare except in Gemini provider',                       since: 'Jun 22, 2026', prs: 1, badges: ['coAuthor'] },
-  krishna3554:          { name: 'Krishna Lokhande',    highlight: 'Co-authored fix for AttributeError in Claude provider',                    since: 'Jun 22, 2026', prs: 1, badges: ['coAuthor'] },
-  vaishnavidesai09:     { name: 'Vaishnavi Desai',     highlight: 'Co-authored Ollama usage token fix in the provider layer',                 since: 'Jun 22, 2026', prs: 1, badges: ['coAuthor'] },
+  Kunall7890:           { name: 'Kunal Jaiswal',     highlight: 'Zed editor support, compress_observations MCP tool, dashboard cost widget with time-range filter', since: 'Jun 11, 2026', prs: 4, badges: ['pioneer', 'multiFeature', 'newFeature'], additions: 1040 },
+  gaoflow:              { name: 'Vincent Gao',        highlight: 'Fixed critical bugs across all AI providers in a single day',               since: 'Jun 22, 2026', prs: 2, badges: ['bugHunter', 'speedDemon'],                    additions: 203  },
+  muhammadhasnain3031:  { name: 'Muhammad Husnain',   highlight: 'OpenRouter model mappings, Arabic and Hindi README translations',            since: 'Jun 19, 2026', prs: 2, badges: ['translator', 'multiFeature'],                 additions: 406  },
+  'NITESH-DTU':         { name: 'Nitesh Kumar',       highlight: 'Fixed two critical egc-memory bugs back to back',                           since: 'Jun 16, 2026', prs: 2, badges: ['bugHunter', 'reliability'],                   additions: 164  },
+  'vasu-sachdeva':      { name: 'Vasu Sachdeva',      highlight: 'Null safety fixes across Claude and Ollama providers',                      since: 'Jun 23, 2026', prs: 1, badges: ['reliability'],                               additions: 5    },
+  shekar50:             { name: 'Shekar',              highlight: 'Usage analytics heatmap for the dashboard',                                 since: 'Jun 25, 2026', prs: 1, badges: ['newFeature'],                                additions: 275  },
+  shantoshdurai:        { name: 'Santosh Durai',       highlight: 'Added --version/-v flag to the EGC CLI',                                    since: 'Jun 10, 2026', prs: 1, badges: ['pioneer', 'cli'],                           additions: 23   },
+  koteshyelamati:       { name: 'Kotesh Yelamati',     highlight: 'Windows HOME/USERPROFILE environment variable fix',                         since: 'Jun 17, 2026', prs: 1, badges: ['crossPlatform'],                            additions: 16   },
+  lesbass:              { name: 'Stefano Maffeis',     highlight: 'JSONDecodeError fix in OpenAI and OpenRouter providers',                    since: 'Jun 22, 2026', prs: 1, badges: ['bugHunter'],                               additions: 12   },
+  'srivastava-prakhar': { name: 'Prakhar Srivastava',  highlight: 'Narrowed overly broad exception handling in model selector',               since: 'Jun 23, 2026', prs: 1, badges: ['codeQuality'],                             additions: 1    },
+  ayushikaul02:         { name: 'Ayushi Kaul',         highlight: 'Co-authored fix for bare except in Gemini provider',                       since: 'Jun 22, 2026', prs: 1, badges: ['coAuthor'],                               additions: 12   },
+  krishna3554:          { name: 'Krishna Lokhande',    highlight: 'Co-authored fix for AttributeError in Claude provider',                    since: 'Jun 22, 2026', prs: 1, badges: ['coAuthor'],                               additions: 100  },
+  vaishnavidesai09:     { name: 'Vaishnavi Desai',     highlight: 'Co-authored Ollama usage token fix in the provider layer',                 since: 'Jun 22, 2026', prs: 1, badges: ['coAuthor'],                               additions: 8    },
 };
 
 export const MONTHLY_CHAMPION = {
@@ -136,7 +137,7 @@ export function buildFallback(): Contributor[] {
       name: info.name,
       avatar: `https://github.com/${login}.png`,
       commits: info.prs,
-      additions: 0,
+      additions: info.additions ?? 0,
       highlight: info.highlight,
       since: info.since,
       prs: info.prs,

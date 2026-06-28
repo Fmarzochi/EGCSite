@@ -33,9 +33,9 @@ const champion = contributors.find(c => c.login === MONTHLY_CHAMPION.login) ?? c
 // Desktop podium order: 2nd left, 1st center, 3rd right
 const podiumOrder = [topThree[1], topThree[0], topThree[2]].filter(Boolean) as Contributor[];
 const podiumMeta = [
-  { rank: 2, badge: 'bg-slate-400 text-slate-900', pedestalH: 'h-16' },
-  { rank: 1, badge: 'bg-yellow-400 text-gray-900', pedestalH: 'h-24' },
-  { rank: 3, badge: 'bg-amber-600 text-white',     pedestalH: 'h-10' },
+  { rank: 2, badge: 'bg-slate-400 text-slate-900', pedestalH: 'h-20' },
+  { rank: 1, badge: 'bg-yellow-400 text-gray-900', pedestalH: 'h-36' },
+  { rank: 3, badge: 'bg-amber-600 text-white',     pedestalH: 'h-12' },
 ];
 ---
 
@@ -173,7 +173,7 @@ const podiumMeta = [
         </div>
 
         <!-- Desktop: visual podium (2nd, 1st, 3rd) -->
-        <div class="hidden sm:flex items-end justify-center gap-4">
+        <div class="hidden sm:flex items-end justify-center gap-2">
           {podiumOrder.map((c, idx) => {
             const meta = podiumMeta[idx];
             const tier = TIER_CONFIG[c.tier];
@@ -181,7 +181,7 @@ const podiumMeta = [
               <div class="flex flex-col items-center flex-1 max-w-[210px]">
                 <a
                   href={`${base}contributors/${c.login}`}
-                  class={`group w-full flex flex-col items-center glass hover-lift rounded-2xl px-5 pt-6 pb-4 transition-all duration-300 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500 ${meta.rank === 1 ? 'ring-2 ring-yellow-400/40' : ''}`}
+                  class={`group w-full flex flex-col items-center glass hover-lift rounded-t-2xl px-5 pt-6 pb-4 transition-all duration-300 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500 ${meta.rank === 1 ? 'ring-2 ring-yellow-400/40' : ''}`}
                 >
                   <div class="relative mb-3">
                     <img
@@ -212,7 +212,19 @@ const podiumMeta = [
                   </span>
                 </a>
                 <!-- Pedestal step -->
-                <div class={`w-full ${meta.pedestalH} rounded-b-xl ${meta.rank === 1 ? 'bg-yellow-400/10' : 'bg-gray-800/40'}`}></div>
+                <div class={`w-full ${meta.pedestalH} rounded-b-xl relative overflow-hidden flex items-center justify-center
+                  ${meta.rank === 1 ? 'bg-gradient-to-b from-yellow-400/25 to-yellow-400/8'
+                  : meta.rank === 2 ? 'bg-gradient-to-b from-slate-400/20 to-slate-400/6'
+                  : 'bg-gradient-to-b from-amber-600/20 to-amber-600/6'}`}>
+                  <div class={`absolute top-0 left-0 right-0 h-0.5
+                    ${meta.rank === 1 ? 'bg-yellow-400/70'
+                    : meta.rank === 2 ? 'bg-slate-400/55'
+                    : 'bg-amber-600/50'}`}></div>
+                  <span class={`font-black select-none leading-none opacity-40
+                    ${meta.rank === 1 ? 'text-6xl text-yellow-400'
+                    : meta.rank === 2 ? 'text-5xl text-slate-400'
+                    : 'text-4xl text-amber-600'}`}>{meta.rank}</span>
+                </div>
               </div>
             );
           })}

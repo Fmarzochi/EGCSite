@@ -87,6 +87,8 @@ export const highlights: Record<string, HighlightEntry> = {
   ayushikaul02:         { name: 'Ayushi Kaul',         highlight: 'Co-authored fix for bare except in Gemini provider',                       since: 'Jun 22, 2026', prs: 1, badges: ['coAuthor'],                               additions: 12   },
   krishna3554:          { name: 'Krishna Lokhande',    highlight: 'Co-authored fix for AttributeError in Claude provider',                    since: 'Jun 22, 2026', prs: 1, badges: ['coAuthor'],                               additions: 100  },
   vaishnavidesai09:     { name: 'Vaishnavi Desai',     highlight: 'Co-authored Ollama usage token fix in the provider layer',                 since: 'Jun 22, 2026', prs: 1, badges: ['coAuthor'],                               additions: 8    },
+  minus43:              { name: 'minus43',              highlight: 'First Korean README translation, bringing EGC to Korean-speaking developers', since: 'Jun 29, 2026', prs: 1, badges: ['translator', 'pioneer'],                additions: 193  },
+  Maqbool61:            { name: 'Maqbool Ahmed',        highlight: 'Fixed /stats overcounting -- replaced naive regex with anchored markers for Lesson and Pattern lines', since: 'Jun 29, 2026', prs: 1, badges: ['bugHunter'], additions: 5    },
 };
 
 function prevMonthLabel(): string {

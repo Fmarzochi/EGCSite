@@ -32,6 +32,19 @@ export interface Contributor {
   tier: Tier;
 }
 
+export interface MonthlyChampion {
+  login: string;
+  name: string;
+  month: string;
+  reason: string;
+}
+
+type RawStat = {
+  author: { login: string };
+  total: number;
+  weeks: { w: number; a: number; d: number; c: number }[];
+};
+
 export const BADGE_DEFS: Record<string, BadgeDef> = {
   pioneer:       { icon: '🌟', label: 'Pioneer',        color: 'text-yellow-300 bg-yellow-400/10 border border-yellow-400/30' },
   bugHunter:     { icon: '🐛', label: 'Bug Hunter',     color: 'text-green-400 bg-green-400/10 border border-green-400/30' },
@@ -76,13 +89,58 @@ export const highlights: Record<string, HighlightEntry> = {
   vaishnavidesai09:     { name: 'Vaishnavi Desai',     highlight: 'Co-authored Ollama usage token fix in the provider layer',                 since: 'Jun 22, 2026', prs: 1, badges: ['coAuthor'],                               additions: 8    },
 };
 
-export const MONTHLY_CHAMPION = {
-  login: 'gaoflow',
-  month: 'June 2026',
-  reason: 'Fixed critical bugs across all AI providers in a single day -- OpenAI, Anthropic, Gemini, and OpenRouter simultaneously.',
-};
+function prevMonthLabel(): string {
+  const d = new Date();
+  d.setMonth(d.getMonth() - 1);
+  return d.toLocaleString('en-US', { month: 'long', year: 'numeric' });
+}
 
-export async function fetchContributors(githubToken?: string): Promise<Contributor[]> {
+function computeMonthlyChampion(rawStats: RawStat[]): MonthlyChampion | null {
+  const now = new Date();
+  const prevStart = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+  const prevEnd = new Date(now.getFullYear(), now.getMonth(), 1);
+
+  let topLogin = '';
+  let topCommits = 0;
+  let topAdditions = 0;
+
+  for (const c of rawStats) {
+    if (EXCLUDED.has(c.author.login) || c.author.login.includes('[bot]')) continue;
+    let monthCommits = 0;
+    let monthAdditions = 0;
+    for (const w of c.weeks) {
+      const weekDate = new Date(w.w * 1000);
+      if (weekDate >= prevStart && weekDate < prevEnd) {
+        monthCommits += w.c;
+        monthAdditions += w.a;
+      }
+    }
+    if (monthCommits > topCommits || (monthCommits === topCommits && monthAdditions > topAdditions)) {
+      topCommits = monthCommits;
+      topAdditions = monthAdditions;
+      topLogin = c.author.login;
+    }
+  }
+
+  if (!topLogin || topCommits === 0) return null;
+
+  const info = highlights[topLogin];
+  const month = prevMonthLabel();
+  const stats = `${topCommits} commit${topCommits !== 1 ? 's' : ''}${topAdditions > 0 ? ` and +${topAdditions.toLocaleString('en')} lines` : ''} in ${month}.`;
+  const reason = info?.highlight ? `${info.highlight} -- ${stats}` : stats;
+
+  return {
+    login: topLogin,
+    name: info?.name ?? topLogin,
+    month,
+    reason,
+  };
+}
+
+export async function fetchContributors(githubToken?: string): Promise<{
+  contributors: Contributor[];
+  champion: MonthlyChampion | null;
+}> {
   const headers: Record<string, string> = { Accept: 'application/vnd.github+json' };
   if (githubToken) headers['Authorization'] = `Bearer ${githubToken}`;
 
@@ -98,13 +156,9 @@ export async function fetchContributors(githubToken?: string): Promise<Contribut
 
   if (!statsRes || statsRes.status === 202 || !statsRes.ok) throw new Error('GitHub API not ready');
 
-  const statsData = await statsRes.json() as {
-    author: { login: string };
-    total: number;
-    weeks: { a: number; d: number; c: number }[];
-  }[];
+  const statsData = await statsRes.json() as RawStat[];
 
-  const result = statsData
+  const contributors = statsData
     .filter(c => !EXCLUDED.has(c.author.login) && !c.author.login.includes('[bot]'))
     .sort((a, b) => b.total - a.total)
     .map(c => {
@@ -125,8 +179,9 @@ export async function fetchContributors(githubToken?: string): Promise<Contribut
       };
     });
 
-  if (result.length === 0) throw new Error('Empty contributor list');
-  return result;
+  if (contributors.length === 0) throw new Error('Empty contributor list');
+
+  return { contributors, champion: computeMonthlyChampion(statsData) };
 }
 
 export function buildFallback(): Contributor[] {

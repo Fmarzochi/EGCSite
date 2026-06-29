@@ -8,15 +8,18 @@ import {
   buildFallback,
   BADGE_DEFS,
   TIER_CONFIG,
-  MONTHLY_CHAMPION,
+  type MonthlyChampion,
   type Contributor,
 } from '../data/contributors.ts';
 
 const base = getBase();
 
 let contributors: Contributor[] = [];
+let monthlyChampion: MonthlyChampion | null = null;
 try {
-  contributors = await fetchContributors(import.meta.env.GITHUB_TOKEN);
+  const result = await fetchContributors(import.meta.env.GITHUB_TOKEN);
+  contributors = result.contributors;
+  monthlyChampion = result.champion;
 } catch {
   contributors = buildFallback();
 }
@@ -28,7 +31,9 @@ const totalCommits = contributors.reduce((s, c) => s + c.commits, 0);
 const totalAdditions = contributors.reduce((s, c) => s + c.additions, 0);
 const totalPrs = contributors.reduce((s, c) => s + c.prs, 0);
 
-const champion = contributors.find(c => c.login === MONTHLY_CHAMPION.login) ?? contributors[0];
+const champion = monthlyChampion
+  ? (contributors.find(c => c.login === monthlyChampion!.login) ?? null)
+  : null;
 
 // Desktop podium order: 2nd left, 1st center, 3rd right
 const podiumOrder = [topThree[1], topThree[0], topThree[2]].filter(Boolean) as Contributor[];
@@ -110,11 +115,11 @@ const podiumMeta = [
             <div class="flex-1 text-center sm:text-left">
               <div class="flex items-center justify-center sm:justify-start gap-2 mb-1">
                 <span class="text-xs font-bold uppercase tracking-widest text-yellow-400">Contributor of the Month</span>
-                <span class="text-xs text-gray-600">{MONTHLY_CHAMPION.month}</span>
+                <span class="text-xs text-gray-600">{monthlyChampion!.month}</span>
               </div>
               <p class="font-bold text-white text-base sm:text-lg">{champion.name}</p>
               <p class="text-xs text-gray-500 mb-2">@{champion.login}</p>
-              <p class="text-sm text-gray-400 leading-relaxed">{MONTHLY_CHAMPION.reason}</p>
+              <p class="text-sm text-gray-400 leading-relaxed">{monthlyChampion!.reason}</p>
             </div>
             <a
               href={`${base}contributors/${champion.login}`}

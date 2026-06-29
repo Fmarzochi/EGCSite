@@ -4,16 +4,30 @@ import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
 import { getBase } from '../../utils/base.ts';
 import {
+  fetchContributors,
   highlights,
   BADGE_DEFS,
-  MONTHLY_CHAMPION,
 } from '../../data/contributors.ts';
 
 export async function getStaticPaths() {
-  return Object.keys(highlights).map(login => ({ params: { login } }));
+  let championLogin = '';
+  let championMonth = '';
+  try {
+    const token = import.meta.env.GITHUB_TOKEN;
+    const { champion } = await fetchContributors(token);
+    championLogin = champion?.login ?? '';
+    championMonth = champion?.month ?? '';
+  } catch {
+    // static data only
+  }
+  return Object.keys(highlights).map(login => ({
+    params: { login },
+    props: { championLogin, championMonth },
+  }));
 }
 
 const { login } = Astro.params;
+const { championLogin, championMonth } = Astro.props;
 const info = highlights[login as string];
 const base = getBase();
 
@@ -49,7 +63,7 @@ try {
   // static data only
 }
 
-const isChampion = MONTHLY_CHAMPION.login === login;
+const isChampion = championLogin === login;
 ---
 
 <Base
@@ -76,7 +90,7 @@ const isChampion = MONTHLY_CHAMPION.login === login;
           <span class="text-xl">🏅</span>
           <div>
             <p class="text-xs font-bold uppercase tracking-widest text-yellow-400">Contributor of the Month</p>
-            <p class="text-xs text-gray-400">{MONTHLY_CHAMPION.month}</p>
+            <p class="text-xs text-gray-400">{championMonth}</p>
           </div>
         </div>
       )}

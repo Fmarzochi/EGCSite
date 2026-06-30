@@ -89,6 +89,7 @@ export const highlights: Record<string, HighlightEntry> = {
   vaishnavidesai09:     { name: 'Vaishnavi Desai',     highlight: 'Co-authored Ollama usage token fix in the provider layer',                 since: 'Jun 22, 2026', prs: 1, badges: ['coAuthor'],                               additions: 8    },
   minus43:              { name: 'minus43',              highlight: 'First Korean README translation, bringing EGC to Korean-speaking developers', since: 'Jun 29, 2026', prs: 1, badges: ['translator', 'pioneer'],                additions: 193  },
   Maqbool61:            { name: 'Maqbool Ahmed',        highlight: 'Fixed /stats overcounting -- replaced naive regex with anchored markers for Lesson and Pattern lines', since: 'Jun 29, 2026', prs: 1, badges: ['bugHunter'], additions: 5    },
+  'Ap-0007':            { name: 'vanta.nox',            highlight: 'Proposed 4 security hardening improvements: state file permission hardening, path traversal guard, dedicated audit log, and MCP rate limiter', since: 'Jun 30, 2026', prs: 1, badges: ['coAuthor', 'codeQuality'], additions: 30 },
 };
 
 function prevMonthLabel(): string {

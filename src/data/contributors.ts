@@ -91,7 +91,8 @@ export const highlights: Record<string, HighlightEntry> = {
   Maqbool61:            { name: 'Maqbool Ahmed',        highlight: 'Fixed /stats overcounting with anchored markers, cost gate for unsupported IDEs in accumulateEvent, and chmod 600 hardening on audit.log', since: 'Jun 29, 2026', prs: 3, badges: ['bugHunter', 'reliability'], additions: 28   },
   'Ap-0007':            { name: 'vanta.nox',            highlight: 'Proposed 4 security hardening improvements: state file permission hardening, path traversal guard, dedicated audit log, and MCP rate limiter', since: 'Jun 30, 2026', prs: 1, badges: ['coAuthor', 'codeQuality'], additions: 30 },
   BlackPool25:          { name: 'Shreyas S Joshi',      highlight: 'Guard clause + factory pattern for accumulateEvent with 8 regression tests, closing a telemetry state corruption bug',                           since: 'Jun 30, 2026', prs: 1, badges: ['bugHunter', 'codeQuality'],              additions: 224 },
-  Vile93:               { name: 'Vile',                  highlight: 'Fixed path traversal vulnerability in dashboard static file server -- proper boundary check with path.sep prevents sibling directory access', since: 'Jun 30, 2026', prs: 1, badges: ['bugHunter', 'codeQuality'], additions: 6 },
+  Vile93:               { name: 'Vile',                  highlight: 'Fixed path traversal vulnerability in dashboard static file server and added full Russian README translation', since: 'Jun 30, 2026', prs: 2, badges: ['bugHunter', 'codeQuality', 'translator'], additions: 200 },
+  developmentwithparth1311: { name: 'Parth',            highlight: 'Scoped rate limiter per project path in egc-guardian -- independent 60s windows per project prevent cross-project interference', since: 'Jun 30, 2026', prs: 1, badges: ['newFeature', 'reliability'], additions: 30 },
 };
 
 function prevMonthLabel(): string {

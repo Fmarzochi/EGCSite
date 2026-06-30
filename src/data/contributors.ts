@@ -90,6 +90,7 @@ export const highlights: Record<string, HighlightEntry> = {
   minus43:              { name: 'minus43',              highlight: 'First Korean README translation, bringing EGC to Korean-speaking developers', since: 'Jun 29, 2026', prs: 1, badges: ['translator', 'pioneer'],                additions: 193  },
   Maqbool61:            { name: 'Maqbool Ahmed',        highlight: 'Fixed /stats overcounting with anchored markers, cost gate for unsupported IDEs in accumulateEvent, and chmod 600 hardening on audit.log', since: 'Jun 29, 2026', prs: 3, badges: ['bugHunter', 'reliability'], additions: 28   },
   'Ap-0007':            { name: 'vanta.nox',            highlight: 'Proposed 4 security hardening improvements: state file permission hardening, path traversal guard, dedicated audit log, and MCP rate limiter', since: 'Jun 30, 2026', prs: 1, badges: ['coAuthor', 'codeQuality'], additions: 30 },
+  BlackPool25:          { name: 'Shreyas S Joshi',      highlight: 'Guard clause + factory pattern for accumulateEvent with 8 regression tests, closing a telemetry state corruption bug',                           since: 'Jun 30, 2026', prs: 1, badges: ['bugHunter', 'codeQuality'],              additions: 224 },
 };
 
 function prevMonthLabel(): string {

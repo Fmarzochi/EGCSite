@@ -92,7 +92,7 @@ export const highlights: Record<string, HighlightEntry> = {
   'Ap-0007':            { name: 'vanta.nox',            highlight: 'Proposed 4 security hardening improvements: state file permission hardening, path traversal guard, dedicated audit log, and MCP rate limiter', since: 'Jun 30, 2026', prs: 1, badges: ['coAuthor', 'codeQuality'], additions: 30 },
   BlackPool25:          { name: 'Shreyas S Joshi',      highlight: 'Guard clause + factory pattern for accumulateEvent with 8 regression tests, closing a telemetry state corruption bug',                           since: 'Jun 30, 2026', prs: 1, badges: ['bugHunter', 'codeQuality'],              additions: 224 },
   Vile93:               { name: 'Vile',                  highlight: 'Fixed path traversal vulnerability in dashboard static file server and added full Russian README translation', since: 'Jun 30, 2026', prs: 2, badges: ['bugHunter', 'codeQuality', 'translator'], additions: 200 },
-  developmentwithparth1311: { name: 'Parth',            highlight: 'Scoped rate limiter per project path in egc-guardian -- independent 60s windows per project prevent cross-project interference', since: 'Jun 30, 2026', prs: 1, badges: ['newFeature', 'reliability'], additions: 30 },
+  developmentwithparth1311: { name: 'Parth',            highlight: 'Scoped rate limiter per project path in egc-guardian; capped POST /event body at 256 KB to prevent memory exhaustion DoS', since: 'Jun 30, 2026', prs: 2, badges: ['newFeature', 'reliability', 'bugHunter'], additions: 176 },
 };
 
 function prevMonthLabel(): string {

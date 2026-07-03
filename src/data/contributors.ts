@@ -74,7 +74,7 @@ export function getTier(commits: number): Tier {
 }
 
 export const highlights: Record<string, HighlightEntry> = {
-  Kunall7890:           { name: 'Kunal Jaiswal',     highlight: 'Zed editor support, compress_observations MCP tool, multiple runtime fixes, dashboard cost widget with time-range filter, team memory sync via git backend, and session budget guardian with token and cost limits', since: 'Jun 11, 2026', prs: 10, badges: ['pioneer', 'multiFeature', 'newFeature', 'reliability'], additions: 2783 },
+  Kunall7890:           { name: 'Kunal Jaiswal',     highlight: 'Zed editor support, compress_observations MCP tool, multiple runtime fixes, dashboard cost widget with time-range filter, team memory sync via git backend, session budget guardian with token and cost limits, and plugin registry with npm and local path support', since: 'Jun 11, 2026', prs: 11, badges: ['pioneer', 'multiFeature', 'newFeature', 'reliability'], additions: 3271 },
   gaoflow:              { name: 'Vincent Gao',        highlight: 'Fixed critical bugs across all AI providers (OpenAI, Claude, Gemini, Ollama) in a single day', since: 'Jun 22, 2026', prs: 5, badges: ['bugHunter', 'speedDemon'],                    additions: 203  },
   muhammadhasnain3031:  { name: 'Muhammad Husnain',   highlight: 'OpenRouter model mappings (DeepSeek, Qwen, Llama), Arabic and Hindi README translations', since: 'Jun 19, 2026', prs: 3, badges: ['translator', 'multiFeature'],                 additions: 520  },
   'NITESH-DTU':         { name: 'Nitesh Kumar',       highlight: 'Fixed two critical egc-memory bugs back to back',                           since: 'Jun 16, 2026', prs: 2, badges: ['bugHunter', 'reliability'],                   additions: 164  },

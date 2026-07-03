@@ -93,6 +93,7 @@ export const highlights: Record<string, HighlightEntry> = {
   BlackPool25:          { name: 'Shreyas S Joshi',      highlight: 'Guard clause + factory pattern for accumulateEvent with 8 regression tests, closing a telemetry state corruption bug',                           since: 'Jun 30, 2026', prs: 1, badges: ['bugHunter', 'codeQuality'],              additions: 224 },
   Vile93:               { name: 'Vile',                  highlight: 'Fixed path traversal vulnerability in dashboard static file server, full Russian README translation, and VS Code Copilot log detection by newest modification time', since: 'Jun 30, 2026', prs: 3, badges: ['bugHunter', 'codeQuality', 'translator'], additions: 215 },
   developmentwithparth1311: { name: 'Parth',            highlight: 'Scoped rate limiter per project path in egc-guardian; capped POST /event body at 256 KB to prevent memory exhaustion DoS', since: 'Jun 30, 2026', prs: 2, badges: ['newFeature', 'reliability', 'bugHunter'], additions: 164 },
+  'VIUK-XV':            { name: 'VIUK-XV',               highlight: 'First Japanese README translation, bringing EGC to Japanese-speaking developers', since: 'Jul 3, 2026', prs: 1, badges: ['translator', 'pioneer'], additions: 199 },
 };
 
 function prevMonthLabel(): string {

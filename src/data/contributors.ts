@@ -74,11 +74,11 @@ export function getTier(commits: number): Tier {
 }
 
 export const highlights: Record<string, HighlightEntry> = {
-  Kunall7890:           { name: 'Kunal Jaiswal',     highlight: 'Zed editor support, compress_observations MCP tool, multiple runtime fixes, dashboard cost widget with time-range filter, CSV and JSON session export', since: 'Jun 11, 2026', prs: 9, badges: ['pioneer', 'multiFeature', 'newFeature', 'reliability'], additions: 1167 },
+  Kunall7890:           { name: 'Kunal Jaiswal',     highlight: 'Zed editor support, compress_observations MCP tool, multiple runtime fixes, dashboard cost widget with time-range filter', since: 'Jun 11, 2026', prs: 8, badges: ['pioneer', 'multiFeature', 'newFeature', 'reliability'], additions: 1026 },
   gaoflow:              { name: 'Vincent Gao',        highlight: 'Fixed critical bugs across all AI providers (OpenAI, Claude, Gemini, Ollama) in a single day', since: 'Jun 22, 2026', prs: 5, badges: ['bugHunter', 'speedDemon'],                    additions: 203  },
-  muhammadhasnain3031:  { name: 'Muhammad Husnain',   highlight: 'OpenRouter model mappings (DeepSeek, Qwen, Llama), Arabic and Hindi README translations', since: 'Jun 19, 2026', prs: 3, badges: ['translator', 'multiFeature'],                 additions: 406  },
+  muhammadhasnain3031:  { name: 'Muhammad Husnain',   highlight: 'OpenRouter model mappings (DeepSeek, Qwen, Llama), Arabic and Hindi README translations', since: 'Jun 19, 2026', prs: 3, badges: ['translator', 'multiFeature'],                 additions: 520  },
   'NITESH-DTU':         { name: 'Nitesh Kumar',       highlight: 'Fixed two critical egc-memory bugs back to back',                           since: 'Jun 16, 2026', prs: 2, badges: ['bugHunter', 'reliability'],                   additions: 164  },
-  'vasu-sachdeva':      { name: 'Vasu Sachdeva',      highlight: 'Null safety fixes across Claude and Ollama providers',                      since: 'Jun 23, 2026', prs: 1, badges: ['reliability'],                               additions: 5    },
+  'vasu-sachdeva':      { name: 'Vasu Sachdeva',      highlight: 'Null safety fixes across Claude and Ollama providers',                      since: 'Jun 23, 2026', prs: 1, badges: ['reliability'],                               additions: 1    },
   shekar50:             { name: 'Shekar',              highlight: 'Usage analytics heatmap and per-provider token/cost breakdown in the dashboard Cost Summary panel',   since: 'Jun 25, 2026', prs: 2, badges: ['newFeature'],                                additions: 374  },
   shantoshdurai:        { name: 'Santosh Durai',       highlight: 'Added --version/-v flag to the EGC CLI',                                    since: 'Jun 10, 2026', prs: 1, badges: ['pioneer', 'cli'],                           additions: 23   },
   koteshyelamati:       { name: 'Kotesh Yelamati',     highlight: 'Windows HOME/USERPROFILE environment variable fix',                         since: 'Jun 17, 2026', prs: 1, badges: ['crossPlatform'],                            additions: 16   },
@@ -92,7 +92,7 @@ export const highlights: Record<string, HighlightEntry> = {
   'Ap-0007':            { name: 'vanta.nox',            highlight: 'Proposed 4 security hardening improvements: state file permission hardening, path traversal guard, dedicated audit log, and MCP rate limiter', since: 'Jun 30, 2026', prs: 1, badges: ['coAuthor', 'codeQuality'], additions: 30 },
   BlackPool25:          { name: 'Shreyas S Joshi',      highlight: 'Guard clause + factory pattern for accumulateEvent with 8 regression tests, closing a telemetry state corruption bug',                           since: 'Jun 30, 2026', prs: 1, badges: ['bugHunter', 'codeQuality'],              additions: 224 },
   Vile93:               { name: 'Vile',                  highlight: 'Fixed path traversal vulnerability in dashboard static file server, full Russian README translation, and VS Code Copilot log detection by newest modification time', since: 'Jun 30, 2026', prs: 3, badges: ['bugHunter', 'codeQuality', 'translator'], additions: 215 },
-  developmentwithparth1311: { name: 'Parth',            highlight: 'Scoped rate limiter per project path in egc-guardian; capped POST /event body at 256 KB to prevent memory exhaustion DoS', since: 'Jun 30, 2026', prs: 2, badges: ['newFeature', 'reliability', 'bugHunter'], additions: 176 },
+  developmentwithparth1311: { name: 'Parth',            highlight: 'Scoped rate limiter per project path in egc-guardian; capped POST /event body at 256 KB to prevent memory exhaustion DoS', since: 'Jun 30, 2026', prs: 2, badges: ['newFeature', 'reliability', 'bugHunter'], additions: 164 },
 };
 
 function prevMonthLabel(): string {

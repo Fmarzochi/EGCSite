@@ -57,6 +57,7 @@ export const BADGE_DEFS: Record<string, BadgeDef> = {
   coAuthor:      { icon: '🤝', label: 'Co-Author',      color: 'text-gray-400 bg-gray-400/10 border border-gray-400/30' },
   cli:           { icon: '💻', label: 'CLI Expert',     color: 'text-egc-400 bg-egc-400/10 border border-egc-400/30' },
   multiFeature:  { icon: '🚀', label: 'Multi-Feature',  color: 'text-indigo-400 bg-indigo-400/10 border border-indigo-400/30' },
+  security:      { icon: '🔒', label: 'Security',       color: 'text-red-400 bg-red-400/10 border border-red-400/30' },
 };
 
 export const TIER_CONFIG: Record<Tier, { label: string; minCommits: number; color: string; ring: string; icon: string }> = {

@@ -20,7 +20,7 @@ import DocsLayout from '../layouts/DocsLayout.astro';
         { title: 'Multi-tool', desc: 'Works with 14 AI coding tools. Install once and EGC registers itself in every tool you have installed.', icon: '🔌' },
         { title: 'Local-first', desc: 'All state stays on your machine at ~/.egc/. Nothing is sent externally. Human-readable plain Markdown.', icon: '🔒' },
         { title: 'Zero config', desc: 'sh install.sh handles everything. Detects your tools, builds the servers, bootstraps the protocol.', icon: '⚡' },
-        { title: 'Guardian layer', desc: 'egc-guardian blocks shell injection, unsafe writes, and dangerous commands before they execute.', icon: '🛡️' },
+        { title: 'Guardian layer', desc: 'egc-guardian enforces safety at the harness level: every shell command and file write is validated before execution. UserPromptSubmit and PreToolUse hooks block dangerous patterns without AI behavioral calls.', icon: '🛡️' },
         { title: 'Decision history', desc: 'Every architectural decision is stored in SQLite with a timestamp. Query by date or tag.', icon: '📋' },
       ].map(card => (
         <div class="flex gap-3 sm:gap-4 rounded-xl p-4 sm:p-5 glass hover-lift transition-all duration-300 min-h-[44px]">

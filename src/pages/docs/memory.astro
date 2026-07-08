@@ -14,7 +14,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
   <section class="mb-10">
     <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Overview</h2>
     <p class="text-gray-600 dark:text-gray-400 mb-4">egc-memory is a local MCP server that stores project state in a SQLite database at <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">~/.egc/state/</code>. The AI reads it at the start of each session and writes to it at the end.</p>
-    <p class="text-gray-600 dark:text-gray-400">State is stored per-project as plain Markdown files. Human-readable, version-control friendly, never leaves your machine.</p>
+    <p class="text-gray-600 dark:text-gray-400">State is stored per project branch as Markdown files encrypted at rest (AES-256-GCM). The memory server and session hooks decrypt them transparently; nothing ever leaves your machine.</p>
   </section>
 
   <!-- Tools reference -->
@@ -124,7 +124,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
   <!-- State file format -->
   <section class="mb-10">
     <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">State file format</h2>
-    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">State files live at <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">~/.egc/state/&lt;project-slug&gt;.md</code>. The slug is derived from the absolute path of the project directory.</p>
+    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">State files live at <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">~/.egc/state/&lt;project-slug&gt;/&lt;branch&gt;.md</code>, one per project branch (flat <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">&lt;project-slug&gt;.md</code> files from older versions are still read). The slug is derived from the absolute path of the project directory, and files are encrypted at rest with the key at <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">~/.egc/encryption.key</code>.</p>
     <div class="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-800">
       <div class="px-4 py-2.5 bg-gray-900 border-b border-gray-700">
         <span class="text-xs text-gray-400 font-mono">~/.egc/state/Projetos--my-app.md</span>

@@ -31,7 +31,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
         },
         {
           q: 'What happens if the state file gets corrupted?',
-          a: 'Run egc repair to restore managed files. State files are plain Markdown. You can also edit or delete them manually. The SQLite database is separate from the Markdown files.',
+          a: 'Run egc repair to restore managed files. State files are Markdown encrypted at rest; the memory server reads and writes them for you, and its GCM authentication detects corruption on read. You can delete a state file manually to reset a project. The SQLite database is separate from the state files.',
         },
         {
           q: 'Is the prompt library required?',

@@ -3,6 +3,34 @@ import type { APIContext } from 'astro';
 
 const releases = [
   {
+    title: 'EGC v1.1.10',
+    pubDate: new Date('2026-07-11'),
+    description:
+      'Bug fix: egc status always reported "Install health: missing" regardless of actual install state, because upsertInstallState() was never called anywhere in the install pipeline. Both real completion points (a fresh install and repair/auto-update) now sync into the status store right after writing the JSON file.',
+    link: 'https://github.com/Fmarzochi/EGC/releases/tag/v1.1.10',
+  },
+  {
+    title: 'EGC v1.1.9',
+    pubDate: new Date('2026-07-11'),
+    description:
+      'Security: TOCTOU race in encryption key generation eliminated (loadOrCreateEncKey now publishes keys atomically). resolveProjectPath cwd/PWD fallback fixed. New: update_state accepts force: true to recover from a state file that fails to decrypt, quarantining the corrupted file instead of blocking forever. Concurrent-access regression tests are now required for changes touching shared files under ~/.egc/.',
+    link: 'https://github.com/Fmarzochi/EGC/releases/tag/v1.1.9',
+  },
+  {
+    title: 'EGC v1.1.8',
+    pubDate: new Date('2026-07-11'),
+    description:
+      'New: Continue.dev support as the 14th supported harness. autonomous-lesson-learning skill orchestrates continuous-agent-loop patterns with the egc-memory lesson tools. Security: EGC Guardian credential denylist replaced whole-directory blocks with the specific credential files each AI tool stores. runCommand uses spawnSync with argv tokenization instead of execSync, closing a shell-injection surface.',
+    link: 'https://github.com/Fmarzochi/EGC/releases/tag/v1.1.8',
+  },
+  {
+    title: 'EGC v1.1.7',
+    pubDate: new Date('2026-07-06'),
+    description:
+      'Bug fixes: null guards added across stress-test assertions in db-adapter, state-store, and telemetry. telemetry ping() refactored to Promise.resolve().then().catch(), fixing a SonarCloud finding and a subtle test timing issue. Windows libuv crash patch consolidated: idempotent DB close, BOM-safe JSON parsing, async ping() fix, and graceful process exit.',
+    link: 'https://github.com/Fmarzochi/EGC/releases/tag/v1.1.7',
+  },
+  {
     title: 'EGC v1.1.6',
     pubDate: new Date('2026-06-25'),
     description:

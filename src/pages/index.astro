@@ -260,6 +260,33 @@ const base = getBase();
       </div>
     </section>
 
+    <!-- LLM Providers -->
+    <section class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 mb-12 sm:mb-20">
+      <div class="text-center mb-10">
+        <p class="text-xs font-semibold uppercase tracking-widest text-egc-600 dark:text-egc-400 mb-3">LLM Providers</p>
+        <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">Bring your own model</h2>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4" data-animate>
+        {[
+          { name: 'Claude',      badge: 'Native provider', icon: `${base}tools/anthropic.svg` },
+          { name: 'ChatGPT',     badge: 'Native provider', icon: `${base}tools/openai.svg` },
+          { name: 'Gemini',      badge: 'Native provider', icon: `${base}tools/googlegemini.svg` },
+          { name: 'DeepSeek',    badge: 'Native provider', icon: `${base}tools/deepseek.svg` },
+          { name: 'Mistral AI',  badge: 'Native provider', icon: `${base}tools/mistral.svg` },
+          { name: 'Ollama',      badge: 'Native provider', icon: `${base}tools/ollama.svg` },
+          { name: 'OpenRouter',  badge: 'Broker provider', icon: `${base}tools/openrouter.svg` },
+        ].map(tool => (
+          <div class="flex flex-col items-center gap-2 sm:gap-3 rounded-xl p-3 sm:p-5 text-center hover:border-egc-500/60 transition-all duration-200 hover:scale-[1.03] active:scale-[0.97] glass" style="transition-property: transform, border-color, box-shadow;">
+            <div class="w-10 h-10 sm:w-14 sm:h-14 rounded-xl bg-white shadow-lg shadow-black/5 dark:shadow-black/20 flex items-center justify-center">
+              <img src={tool.icon} alt="" aria-hidden="true" class="w-6 h-6 sm:w-9 sm:h-9 object-contain" loading="lazy" />
+            </div>
+            <div class="text-xs sm:text-sm font-semibold text-gray-100 leading-tight w-full">{tool.name}</div>
+            <div class="text-[10px] sm:text-xs text-egc-400 leading-tight">{tool.badge}</div>
+          </div>
+        ))}
+      </div>
+    </section>
+
     <!-- MCP Servers -->
     <section class="bg-gradient-to-b from-transparent via-gray-100 to-transparent dark:from-transparent dark:via-gray-900/90 dark:to-transparent py-12 sm:py-20 mb-12 sm:mb-20">
       <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">

@@ -15,6 +15,7 @@ export interface HighlightEntry {
   highlight: string;
   since: string;
   prs: number;
+  commits: number;
   badges: string[];
   additions?: number;
 }
@@ -75,27 +76,27 @@ export function getTier(commits: number): Tier {
 }
 
 export const highlights: Record<string, HighlightEntry> = {
-  Kunall7890:           { name: 'Kunal Jaiswal',     highlight: 'Zed editor support, compress_observations MCP tool, multiple runtime fixes, dashboard cost widget with time-range filter, team memory sync via git backend, session budget guardian with token and cost limits, and plugin registry with npm and local path support', since: 'Jun 11, 2026', prs: 12, badges: ['pioneer', 'multiFeature', 'newFeature', 'reliability'], additions: 3597 },
-  gaoflow:              { name: 'Vincent Gao',        highlight: 'Fixed critical bugs across all AI providers (OpenAI, Claude, Gemini, Ollama) in a single day', since: 'Jun 22, 2026', prs: 5, badges: ['bugHunter', 'speedDemon'],                    additions: 203  },
-  muhammadhasnain3031:  { name: 'Muhammad Husnain',   highlight: 'OpenRouter model mappings (DeepSeek, Qwen, Llama), Arabic and Hindi README translations', since: 'Jun 19, 2026', prs: 3, badges: ['translator', 'multiFeature'],                 additions: 406  },
-  'NITESH-DTU':         { name: 'Nitesh Kumar',       highlight: 'Fixed two critical egc-memory bugs back to back',                           since: 'Jun 16, 2026', prs: 2, badges: ['bugHunter', 'reliability'],                   additions: 164  },
-  'vasu-sachdeva':      { name: 'Vasu Sachdeva',      highlight: 'Null safety fixes across Claude and Ollama providers',                      since: 'Jun 23, 2026', prs: 1, badges: ['reliability'],                               additions: 5    },
-  shekar50:             { name: 'Shekar',              highlight: 'Usage analytics heatmap and per-provider token/cost breakdown in the dashboard Cost Summary panel',   since: 'Jun 25, 2026', prs: 2, badges: ['newFeature'],                                additions: 374  },
-  shantoshdurai:        { name: 'Santosh Durai',       highlight: 'Added --version/-v flag to the EGC CLI',                                    since: 'Jun 10, 2026', prs: 1, badges: ['pioneer', 'cli'],                           additions: 23   },
-  koteshyelamati:       { name: 'Kotesh Yelamati',     highlight: 'Windows HOME/USERPROFILE environment variable fix',                         since: 'Jun 17, 2026', prs: 1, badges: ['crossPlatform'],                            additions: 16   },
-  lesbass:              { name: 'Stefano Maffeis',     highlight: 'JSONDecodeError fix in OpenAI and OpenRouter providers',                    since: 'Jun 22, 2026', prs: 1, badges: ['bugHunter'],                               additions: 12   },
-  'srivastava-prakhar': { name: 'Prakhar Srivastava',  highlight: 'Narrowed overly broad exception handling in model selector',               since: 'Jun 23, 2026', prs: 1, badges: ['codeQuality'],                             additions: 1    },
-  ayushikaul02:         { name: 'Ayushi Kaul',         highlight: 'Co-authored fix for bare except in Gemini provider',                       since: 'Jun 22, 2026', prs: 1, badges: ['coAuthor'],                               additions: 12   },
-  krishna3554:          { name: 'Krishna Lokhande',    highlight: 'Co-authored fix for AttributeError in Claude provider',                    since: 'Jun 22, 2026', prs: 1, badges: ['coAuthor'],                               additions: 100  },
-  vaishnavidesai09:     { name: 'Vaishnavi Desai',     highlight: 'Co-authored Ollama usage token fix in the provider layer',                 since: 'Jun 22, 2026', prs: 1, badges: ['coAuthor'],                               additions: 8    },
-  minus43:              { name: 'minus43',              highlight: 'First Korean README translation, bringing EGC to Korean-speaking developers', since: 'Jun 29, 2026', prs: 1, badges: ['translator', 'pioneer'],                additions: 193  },
-  Maqbool61:            { name: 'Maqbool Ahmed',        highlight: 'Fixed /stats overcounting, cost gate for unsupported IDEs, chmod 600 hardening, aider-watcher reset on file truncation, hybrid debounce with extension filtering, Continue.dev MCP registration, audit-log.ts with recursive secret redaction and 5 MB rotation, egc replay with timeline scrubbing, HMAC-SHA256 integrity check on state files, native Zed IDE integration via template-driven mcp-register.js, AES-256-GCM encryption for .md state files at rest with backward-compatible migration, native DeepSeek provider integration, post-merge hardening (temperature normalization, exception retagging, provider resolution), and Mistral/DeepSeek model registry cleanup (vision capability fix, dead test stub removal, native DeepSeek model ID resolution)', since: 'Jun 29, 2026', prs: 14, badges: ['bugHunter', 'reliability', 'newFeature', 'multiFeature', 'security'], additions: 3028 },
-  'Ap-0007':            { name: 'vanta.nox',            highlight: 'Proposed 4 security hardening improvements: state file permission hardening, path traversal guard, dedicated audit log, and MCP rate limiter', since: 'Jun 30, 2026', prs: 1, badges: ['coAuthor', 'codeQuality'], additions: 30 },
-  BlackPool25:          { name: 'Shreyas S Joshi',      highlight: 'Guard clause + factory pattern for accumulateEvent with 8 regression tests, closing a telemetry state corruption bug',                           since: 'Jun 30, 2026', prs: 1, badges: ['bugHunter', 'codeQuality'],              additions: 224 },
-  Vile93:               { name: 'Vile',                  highlight: 'Fixed path traversal vulnerability in dashboard static file server, full Russian README translation, and VS Code Copilot log detection by newest modification time', since: 'Jun 30, 2026', prs: 3, badges: ['bugHunter', 'codeQuality', 'translator'], additions: 215 },
-  developmentwithparth1311: { name: 'Parth',            highlight: 'Scoped rate limiter per project path in egc-guardian; capped POST /event body at 256 KB to prevent memory exhaustion DoS; strict CLI flag validation in egc replay rejecting unrecognized options; native Mistral AI provider integration', since: 'Jun 30, 2026', prs: 4, badges: ['newFeature', 'reliability', 'bugHunter', 'codeQuality'], additions: 436 },
-  'VIUK-XV':            { name: 'VIUK-XV',               highlight: 'First Japanese README translation, bringing EGC to Japanese-speaking developers', since: 'Jul 3, 2026', prs: 1, badges: ['translator', 'pioneer'], additions: 199 },
-  fuentes71:            { name: 'Mateus Fuentes',         highlight: 'Security audit and reliability sweep across 12 PRs: shell-injection fix (spawnSync), atomic SQLite migrations, SEC-05 byte-load limits, Zod schema enforcement, TOCTOU getDb fix, JSON parse crash guard, hook dispatcher, stdin leak, SQLITE_FULL handling, async trace log, path traversal guard in egc-memory, db-adapter persist error handling, and arbitration queue invariant documentation with stress test', since: 'Jul 3, 2026', prs: 12, badges: ['bugHunter', 'crossPlatform', 'security'], additions: 295 },
+  Kunall7890:           { name: 'Kunal Jaiswal',     highlight: 'Zed editor support, compress_observations MCP tool, multiple runtime fixes, dashboard cost widget with time-range filter, team memory sync via git backend, session budget guardian with token and cost limits, and plugin registry with npm and local path support', since: 'Jun 11, 2026', prs: 12, commits: 30, badges: ['pioneer', 'multiFeature', 'newFeature', 'reliability'], additions: 3597 },
+  gaoflow:              { name: 'Vincent Gao',        highlight: 'Fixed critical bugs across all AI providers (OpenAI, Claude, Gemini, Ollama) in a single day', since: 'Jun 22, 2026', prs: 5, commits: 6, badges: ['bugHunter', 'speedDemon'],                    additions: 203  },
+  muhammadhasnain3031:  { name: 'Muhammad Husnain',   highlight: 'OpenRouter model mappings (DeepSeek, Qwen, Llama), Arabic and Hindi README translations', since: 'Jun 19, 2026', prs: 3, commits: 6, badges: ['translator', 'multiFeature'],                 additions: 406  },
+  'NITESH-DTU':         { name: 'Nitesh Kumar',       highlight: 'Fixed two critical egc-memory bugs back to back',                           since: 'Jun 16, 2026', prs: 2, commits: 4, badges: ['bugHunter', 'reliability'],                   additions: 164  },
+  'vasu-sachdeva':      { name: 'Vasu Sachdeva',      highlight: 'Null safety fixes across Claude and Ollama providers',                      since: 'Jun 23, 2026', prs: 1, commits: 1, badges: ['reliability'],                               additions: 5    },
+  shekar50:             { name: 'Shekar',              highlight: 'Usage analytics heatmap and per-provider token/cost breakdown in the dashboard Cost Summary panel',   since: 'Jun 25, 2026', prs: 2, commits: 4, badges: ['newFeature'],                                additions: 374  },
+  shantoshdurai:        { name: 'Santosh Durai',       highlight: 'Added --version/-v flag to the EGC CLI',                                    since: 'Jun 10, 2026', prs: 1, commits: 1, badges: ['pioneer', 'cli'],                           additions: 23   },
+  koteshyelamati:       { name: 'Kotesh Yelamati',     highlight: 'Windows HOME/USERPROFILE environment variable fix',                         since: 'Jun 17, 2026', prs: 1, commits: 12, badges: ['crossPlatform'],                            additions: 16   },
+  lesbass:              { name: 'Stefano Maffeis',     highlight: 'JSONDecodeError fix in OpenAI and OpenRouter providers',                    since: 'Jun 22, 2026', prs: 1, commits: 1, badges: ['bugHunter'],                               additions: 12   },
+  'srivastava-prakhar': { name: 'Prakhar Srivastava',  highlight: 'Narrowed overly broad exception handling in model selector',               since: 'Jun 23, 2026', prs: 1, commits: 1, badges: ['codeQuality'],                             additions: 1    },
+  ayushikaul02:         { name: 'Ayushi Kaul',         highlight: 'Co-authored fix for bare except in Gemini provider',                       since: 'Jun 22, 2026', prs: 1, commits: 1, badges: ['coAuthor'],                               additions: 12   },
+  krishna3554:          { name: 'Krishna Lokhande',    highlight: 'Co-authored fix for AttributeError in Claude provider',                    since: 'Jun 22, 2026', prs: 1, commits: 1, badges: ['coAuthor'],                               additions: 100  },
+  vaishnavidesai09:     { name: 'Vaishnavi Desai',     highlight: 'Co-authored Ollama usage token fix in the provider layer',                 since: 'Jun 22, 2026', prs: 1, commits: 1, badges: ['coAuthor'],                               additions: 8    },
+  minus43:              { name: 'minus43',              highlight: 'First Korean README translation, bringing EGC to Korean-speaking developers', since: 'Jun 29, 2026', prs: 1, commits: 3, badges: ['translator', 'pioneer'],                additions: 193  },
+  Maqbool61:            { name: 'Maqbool Ahmed',        highlight: 'Fixed /stats overcounting, cost gate for unsupported IDEs, chmod 600 hardening, aider-watcher reset on file truncation, hybrid debounce with extension filtering, Continue.dev MCP registration, audit-log.ts with recursive secret redaction and 5 MB rotation, egc replay with timeline scrubbing, HMAC-SHA256 integrity check on state files, native Zed IDE integration via template-driven mcp-register.js, AES-256-GCM encryption for .md state files at rest with backward-compatible migration, native DeepSeek provider integration, post-merge hardening (temperature normalization, exception retagging, provider resolution), and Mistral/DeepSeek model registry cleanup (vision capability fix, dead test stub removal, native DeepSeek model ID resolution)', since: 'Jun 29, 2026', prs: 14, commits: 30, badges: ['bugHunter', 'reliability', 'newFeature', 'multiFeature', 'security'], additions: 3028 },
+  'Ap-0007':            { name: 'vanta.nox',            highlight: 'Proposed 4 security hardening improvements: state file permission hardening, path traversal guard, dedicated audit log, and MCP rate limiter', since: 'Jun 30, 2026', prs: 1, commits: 1, badges: ['coAuthor', 'codeQuality'], additions: 30 },
+  BlackPool25:          { name: 'Shreyas S Joshi',      highlight: 'Guard clause + factory pattern for accumulateEvent with 8 regression tests, closing a telemetry state corruption bug',                           since: 'Jun 30, 2026', prs: 1, commits: 2, badges: ['bugHunter', 'codeQuality'],              additions: 224 },
+  Vile93:               { name: 'Vile',                  highlight: 'Fixed path traversal vulnerability in dashboard static file server, full Russian README translation, and VS Code Copilot log detection by newest modification time', since: 'Jun 30, 2026', prs: 3, commits: 7, badges: ['bugHunter', 'codeQuality', 'translator'], additions: 215 },
+  developmentwithparth1311: { name: 'Parth',            highlight: 'Scoped rate limiter per project path in egc-guardian; capped POST /event body at 256 KB to prevent memory exhaustion DoS; strict CLI flag validation in egc replay rejecting unrecognized options; native Mistral AI provider integration', since: 'Jun 30, 2026', prs: 4, commits: 10, badges: ['newFeature', 'reliability', 'bugHunter', 'codeQuality'], additions: 436 },
+  'VIUK-XV':            { name: 'VIUK-XV',               highlight: 'First Japanese README translation, bringing EGC to Japanese-speaking developers', since: 'Jul 3, 2026', prs: 1, commits: 0, badges: ['translator', 'pioneer'], additions: 199 },
+  fuentes71:            { name: 'Mateus Fuentes',         highlight: 'Security audit and reliability sweep across 12 PRs: shell-injection fix (spawnSync), atomic SQLite migrations, SEC-05 byte-load limits, Zod schema enforcement, TOCTOU getDb fix, JSON parse crash guard, hook dispatcher, stdin leak, SQLITE_FULL handling, async trace log, path traversal guard in egc-memory, db-adapter persist error handling, and arbitration queue invariant documentation with stress test', since: 'Jul 3, 2026', prs: 12, commits: 14, badges: ['bugHunter', 'crossPlatform', 'security'], additions: 295 },
 };
 
 function prevMonthLabel(): string {
@@ -195,17 +196,17 @@ export async function fetchContributors(githubToken?: string): Promise<{
 
 export function buildFallback(): Contributor[] {
   return Object.entries(highlights)
-    .sort((a, b) => b[1].prs - a[1].prs)
+    .sort((a, b) => b[1].commits - a[1].commits)
     .map(([login, info]) => ({
       login,
       name: info.name,
       avatar: `https://github.com/${login}.png`,
-      commits: info.prs,
+      commits: info.commits,
       additions: info.additions ?? 0,
       highlight: info.highlight,
       since: info.since,
       prs: info.prs,
       badges: info.badges,
-      tier: getTier(info.prs),
+      tier: getTier(info.commits),
     }));
 }

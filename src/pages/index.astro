@@ -123,7 +123,7 @@ const base = getBase();
       <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 text-center" data-animate>
           {[
-            { value: '14', label: 'Supported Tools' },
+            { value: '19', label: 'Supported Tools' },
             { value: '229+', label: 'Skills' },
             { value: '76', label: 'Commands' },
             { value: '100%', label: 'Open Source' },
@@ -191,7 +191,7 @@ const base = getBase();
             <div class="text-gray-300 ml-2">• update_state propagates context to 11 tool config files automatically</div>
             <div class="text-gray-300 ml-2">• egc watch: bidirectional sync - edit any tool file, all others update</div>
             <div class="text-gray-300 ml-2">• egc dashboard, egc replay, egc budget, egc plugin -- all available</div>
-            <div class="text-gray-300 ml-2">• 14 tools: Zed + Continue.dev native, AES-256-GCM state encryption</div>
+            <div class="text-gray-300 ml-2">• 19 tools: Aider + Warp native, AES-256-GCM state encryption</div>
           </div>
         </div>
 
@@ -248,6 +248,11 @@ const base = getBase();
           { name: 'CodeBuddy',      badge: 'Context + Skills', icon: `${base}tools/codebuddy.svg` },
           { name: 'Antigravity',    badge: 'MCP + Bootstrap', icon: `${base}tools/googlegemini.svg` },
           { name: 'Zed',            badge: 'MCP + Bootstrap', icon: `${base}tools/zed.svg` },
+          { name: 'Goose',          badge: 'MCP + Skills', icon: `${base}tools/goose.svg` },
+          { name: 'Amazon Q Developer', badge: 'MCP + Skills', icon: `${base}tools/amazonq.svg` },
+          { name: 'OpenHands',      badge: 'MCP + Skills', icon: `${base}tools/openhands.svg` },
+          { name: 'Aider',          badge: 'MCP + Skills', icon: `${base}tools/aider.svg` },
+          { name: 'Warp',           badge: 'MCP + Skills', icon: `${base}tools/warp.svg` },
         ].map(tool => (
           <div class="flex flex-col items-center gap-2 sm:gap-3 rounded-xl p-3 sm:p-5 text-center hover:border-egc-500/60 transition-all duration-200 hover:scale-[1.03] active:scale-[0.97] glass" style="transition-property: transform, border-color, box-shadow;">
             <div class="w-10 h-10 sm:w-14 sm:h-14 rounded-xl bg-white shadow-lg shadow-black/5 dark:shadow-black/20 flex items-center justify-center">
@@ -275,6 +280,9 @@ const base = getBase();
           { name: 'Mistral AI',  badge: 'Native provider', icon: `${base}tools/mistral.svg` },
           { name: 'Ollama',      badge: 'Native provider', icon: `${base}tools/ollama.svg` },
           { name: 'OpenRouter',  badge: 'Broker provider', icon: `${base}tools/openrouter.svg` },
+          { name: 'Groq',        badge: 'Native provider', icon: `${base}tools/groq.svg` },
+          { name: 'Vertex AI',   badge: 'Native provider', icon: `${base}tools/vertexai.svg` },
+          { name: 'Cohere',      badge: 'Native provider', icon: `${base}tools/cohere.svg` },
         ].map(tool => (
           <div class="flex flex-col items-center gap-2 sm:gap-3 rounded-xl p-3 sm:p-5 text-center hover:border-egc-500/60 transition-all duration-200 hover:scale-[1.03] active:scale-[0.97] glass" style="transition-property: transform, border-color, box-shadow;">
             <div class="w-10 h-10 sm:w-14 sm:h-14 rounded-xl bg-white shadow-lg shadow-black/5 dark:shadow-black/20 flex items-center justify-center">

@@ -3,6 +3,13 @@ import type { APIContext } from 'astro';
 
 const releases = [
   {
+    title: 'EGC v1.1.11',
+    pubDate: new Date('2026-07-16'),
+    description:
+      'Bug fix: dashboard telemetry and cost showing zero in nearly every session, traced to four root causes -- missing PreToolUse/PostToolUse hook wiring for claude.running, the Stop hook not forwarding the model field, Claude Code omitting token usage from the Stop payload (now read from the session transcript instead), and the /stats regexes never matching the real state-file format (now queried directly from SQLite). Also: cyclomatic complexity reduced in resolveInstallPlan and analyzeRecord, the two largest functions flagged by the EGC-128 security audit, each split into focused single-purpose helpers with the full 2825-test suite kept green.',
+    link: 'https://github.com/Fmarzochi/EGC/releases/tag/v1.1.11',
+  },
+  {
     title: 'EGC v1.1.10',
     pubDate: new Date('2026-07-11'),
     description:

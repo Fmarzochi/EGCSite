@@ -124,8 +124,8 @@ const base = getBase();
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 text-center" data-animate>
           {[
             { value: '20', label: 'Supported Tools' },
-            { value: '229+', label: 'Skills' },
-            { value: '76', label: 'Commands' },
+            { value: '230+', label: 'Skills' },
+            { value: '77', label: 'Commands' },
             { value: '100%', label: 'Open Source' },
           ].map(stat => (
             <div class="hover-lift">
@@ -192,6 +192,8 @@ const base = getBase();
             <div class="text-gray-300 ml-2">• egc watch: bidirectional sync - edit any tool file, all others update</div>
             <div class="text-gray-300 ml-2">• egc dashboard, egc replay, egc budget, egc plugin -- all available</div>
             <div class="text-gray-300 ml-2">• 20 tools: JetBrains Junie native, AES-256-GCM state encryption</div>
+            <div class="text-gray-300 ml-2">• global memory across projects, session bus for parallel sessions</div>
+            <div class="text-gray-300 ml-2">• Token Crusher active: shell output compressed before it costs tokens</div>
           </div>
         </div>
 
@@ -252,6 +254,7 @@ const base = getBase();
           { name: 'Amazon Q Developer', badge: 'MCP + Skills', icon: `${base}tools/amazonq.svg` },
           { name: 'OpenHands',      badge: 'MCP + Skills', icon: `${base}tools/openhands.svg` },
           { name: 'Aider',          badge: 'MCP + Skills', icon: `${base}tools/aider.svg` },
+          { name: 'JetBrains Junie', badge: 'Guidelines',   icon: `${base}tools/junie.svg` },
           { name: 'Warp',           badge: 'MCP + Skills', icon: `${base}tools/warp.svg` },
         ].map(tool => (
           <div class="flex flex-col items-center gap-2 sm:gap-3 rounded-xl p-3 sm:p-5 text-center hover:border-egc-500/60 transition-all duration-200 hover:scale-[1.03] active:scale-[0.97] glass" style="transition-property: transform, border-color, box-shadow;">

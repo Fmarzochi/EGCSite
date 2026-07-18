@@ -19,6 +19,7 @@ import DocsLayout from '../layouts/DocsLayout.astro';
         { title: 'Global memory', desc: 'A user-wide scope shared across every project: save transversal preferences and lessons once with scope global, and every session in every tool starts already knowing them. Project state always wins.', icon: '🌍' },
         { title: 'Token Crusher', desc: 'Shell output is compressed up to 90% before it reaches the model: long git logs, test noise and install spam shrink while errors always survive. egc saved reports your accumulated savings at zero token cost.', icon: '⚡' },
         { title: 'Session Bus', desc: 'Parallel sessions announce presence, split territory and take fail-fast cooperative path locks, so two sessions never duplicate work or corrupt shared state.', icon: '🚌' },
+        { title: 'Commit privacy', desc: 'Populated memory never reaches a commit: pre-commit block, CI guard, and a git clean filter configured by egc init that stages a zeroed blob even when hooks are bypassed. Your context stays yours.', icon: '🔒' },
         { title: 'Bidirectional sync', desc: 'update_state propagates context to all 11 tool config files automatically. Run egc watch to also sync changes you make directly in any tool file back to state and to all other tools in real time.', icon: '🔄' },
         { title: 'Multi-tool', desc: 'Works with 20 AI coding tools. Install once and EGC registers itself in every tool you have installed.', icon: '🔌' },
         { title: 'Local-first', desc: 'All state stays on your machine at ~/.egc/, encrypted at rest with AES-256-GCM. Nothing is sent externally.', icon: '🔒' },
@@ -54,8 +55,8 @@ import DocsLayout from '../layouts/DocsLayout.astro';
         <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
           {[
             { type: 'Agents', count: '63', desc: 'Persona and behavior definitions' },
-            { type: 'Skills', count: '229', desc: 'Domain-specific workflow runbooks' },
-            { type: 'Commands', count: '76', desc: 'Command definitions and lifecycle hooks' },
+            { type: 'Skills', count: '230', desc: 'Domain-specific workflow runbooks' },
+            { type: 'Commands', count: '77', desc: 'Command definitions and lifecycle hooks' },
             { type: 'Rules', count: '111', desc: 'Constraints and governance directives' },
           ].map(row => (
             <tr class="bg-white dark:bg-gray-950">
@@ -71,8 +72,8 @@ import DocsLayout from '../layouts/DocsLayout.astro';
     <div class="sm:hidden space-y-3 mb-5">
       {[
         { type: 'Agents', count: '63', desc: 'Persona and behavior definitions' },
-        { type: 'Skills', count: '229', desc: 'Domain-specific workflow runbooks' },
-        { type: 'Commands', count: '76', desc: 'Command definitions and lifecycle hooks' },
+        { type: 'Skills', count: '230', desc: 'Domain-specific workflow runbooks' },
+        { type: 'Commands', count: '77', desc: 'Command definitions and lifecycle hooks' },
         { type: 'Rules', count: '111', desc: 'Constraints and governance directives' },
       ].map(row => (
         <div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4 bg-white dark:bg-gray-950">
@@ -116,6 +117,12 @@ import DocsLayout from '../layouts/DocsLayout.astro';
             { tool: 'Kiro', mcp: true, bootstrap: '~/.kiro/hooks/' },
             { tool: 'Trae', mcp: false, bootstrap: '~/.trae/MEMORY.md' },
             { tool: 'CodeBuddy', mcp: false, bootstrap: '~/.codebuddy/MEMORY.md' },
+            { tool: 'JetBrains Junie', mcp: false, bootstrap: '.junie/guidelines.md' },
+            { tool: 'Goose', mcp: false, bootstrap: '~/.agents/skills/' },
+            { tool: 'Amazon Q Developer', mcp: false, bootstrap: '.amazonq/rules/' },
+            { tool: 'OpenHands', mcp: false, bootstrap: '~/.agents/skills/' },
+            { tool: 'Aider', mcp: false, bootstrap: '.aider/skills/ + .aider.conf.yml' },
+            { tool: 'Warp', mcp: false, bootstrap: '.warp/skills/ + AGENTS.md index' },
           ].map(row => (
             <tr class="bg-white dark:bg-gray-950">
               <td class="px-5 py-3 font-medium text-gray-900 dark:text-white">{row.tool}</td>
@@ -148,6 +155,12 @@ import DocsLayout from '../layouts/DocsLayout.astro';
         { tool: 'Kiro', mcp: true, bootstrap: '~/.kiro/hooks/' },
         { tool: 'Trae', mcp: false, bootstrap: '~/.trae/MEMORY.md' },
         { tool: 'CodeBuddy', mcp: false, bootstrap: '~/.codebuddy/MEMORY.md' },
+        { tool: 'JetBrains Junie', mcp: false, bootstrap: '.junie/guidelines.md' },
+        { tool: 'Goose', mcp: false, bootstrap: '~/.agents/skills/' },
+        { tool: 'Amazon Q Developer', mcp: false, bootstrap: '.amazonq/rules/' },
+        { tool: 'OpenHands', mcp: false, bootstrap: '~/.agents/skills/' },
+        { tool: 'Aider', mcp: false, bootstrap: '.aider/skills/ + .aider.conf.yml' },
+        { tool: 'Warp', mcp: false, bootstrap: '.warp/skills/ + AGENTS.md index' },
       ].map(row => (
         <div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4 bg-white dark:bg-gray-950">
           <div class="flex items-center justify-between mb-1.5">

@@ -3,6 +3,13 @@ import type { APIContext } from 'astro';
 
 const releases = [
   {
+    title: 'EGC v1.1.12',
+    pubDate: new Date('2026-07-18'),
+    description:
+      'Omnipresent Context: user-wide Global Memory shared across every project (update_state scope global, deduplicated Global Memory section in get_state and the session-start hooks, project always wins), Token Crusher built into the package (egc run compresses noisy shell output up to 90% before it reaches the model, egc saved reports accumulated savings at zero token cost, silent fail-open rewrite in the bash dispatcher), Session Bus MVP (presence, territory and fail-fast cooperative path locks between parallel sessions), commit privacy enforced in three layers with the public baseline scrubbed, multi-session SQLite write arbitration hardened with jitter, and the zero-friction DCO hook finally armed with its executable bit.',
+    link: 'https://github.com/Fmarzochi/EGC/releases/tag/v1.1.12',
+  },
+  {
     title: 'EGC v1.1.11',
     pubDate: new Date('2026-07-16'),
     description:

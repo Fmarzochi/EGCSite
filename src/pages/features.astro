@@ -16,8 +16,11 @@ import DocsLayout from '../layouts/DocsLayout.astro';
     <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
       {[
         { title: 'Persistent memory', desc: 'State is saved at the end of each session and restored at the start. Decisions, preferences, and next steps survive window closes and tool switches.', icon: '🧠' },
+        { title: 'Global memory', desc: 'A user-wide scope shared across every project: save transversal preferences and lessons once with scope global, and every session in every tool starts already knowing them. Project state always wins.', icon: '🌍' },
+        { title: 'Token Crusher', desc: 'Shell output is compressed up to 90% before it reaches the model: long git logs, test noise and install spam shrink while errors always survive. egc saved reports your accumulated savings at zero token cost.', icon: '⚡' },
+        { title: 'Session Bus', desc: 'Parallel sessions announce presence, split territory and take fail-fast cooperative path locks, so two sessions never duplicate work or corrupt shared state.', icon: '🚌' },
         { title: 'Bidirectional sync', desc: 'update_state propagates context to all 11 tool config files automatically. Run egc watch to also sync changes you make directly in any tool file back to state and to all other tools in real time.', icon: '🔄' },
-        { title: 'Multi-tool', desc: 'Works with 14 AI coding tools. Install once and EGC registers itself in every tool you have installed.', icon: '🔌' },
+        { title: 'Multi-tool', desc: 'Works with 20 AI coding tools. Install once and EGC registers itself in every tool you have installed.', icon: '🔌' },
         { title: 'Local-first', desc: 'All state stays on your machine at ~/.egc/, encrypted at rest with AES-256-GCM. Nothing is sent externally.', icon: '🔒' },
         { title: 'Zero config', desc: 'sh install.sh handles everything. Detects your tools, builds the servers, bootstraps the protocol.', icon: '⚡' },
         { title: 'Guardian layer', desc: 'egc-guardian enforces safety at the harness level: every shell command and file write is validated before execution. UserPromptSubmit and PreToolUse hooks block dangerous patterns without AI behavioral calls.', icon: '🛡️' },

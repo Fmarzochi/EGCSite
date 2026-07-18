@@ -98,6 +98,7 @@ const podiumMeta = [
           <div class="absolute inset-0 pointer-events-none -z-10" aria-hidden="true">
             <div class="absolute inset-0 bg-gradient-to-r from-yellow-400/5 via-transparent to-egc-500/5"></div>
           </div>
+          <button type="button" data-hype={champion.login} title="Hype this contributor (1 vote a day)" aria-label={`Hype ${champion.name}`} class="hype-btn absolute top-3 right-3 z-10 inline-flex items-center gap-1 h-7 px-2 rounded-full text-xs font-semibold backdrop-blur-md bg-white/10 border border-white/15 text-gray-300 hover:text-orange-400 hover:border-orange-400/40 motion-safe:hover:scale-105 motion-safe:active:scale-95 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400">🔥<span class="hype-count tabular-nums"></span></button>
           <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 p-5 sm:p-8">
             <div class="shrink-0">
               <div class="relative">
@@ -136,7 +137,8 @@ const podiumMeta = [
     <!-- Podium -->
     {topThree.length >= 3 && (
       <section class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 mb-4">
-        <p class="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-6 sm:mb-8 text-center">Leaderboard</p>
+        <p class="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-1 text-center">Leaderboard</p>
+        <p class="text-xs text-gray-600 mb-6 sm:mb-8 text-center">🔥 Hype your favorite contributor, one vote a day</p>
 
         <!-- Mobile: ranked list -->
         <div class="sm:hidden flex flex-col gap-3">
@@ -144,6 +146,8 @@ const podiumMeta = [
             const rankBadge = ['bg-yellow-400 text-gray-900', 'bg-slate-400 text-slate-900', 'bg-amber-600 text-white'][i];
             const tier = TIER_CONFIG[c.tier];
             return (
+              <div class="relative">
+              <button type="button" data-hype={c.login} title="Hype this contributor (1 vote a day)" aria-label={`Hype ${c.name}`} class="hype-btn absolute -top-2 -right-1 z-10 inline-flex items-center gap-1 h-7 px-2 rounded-full text-xs font-semibold backdrop-blur-md bg-white/10 border border-white/15 text-gray-300 hover:text-orange-400 hover:border-orange-400/40 motion-safe:hover:scale-105 motion-safe:active:scale-95 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400">🔥<span class="hype-count tabular-nums"></span></button>
               <a
                 href={`${base}contributors/${c.login}`}
                 class={`group flex items-center gap-3 rounded-2xl p-4 glass hover-lift transition-all duration-200 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500 ${i === 0 ? 'ring-2 ring-yellow-400/30' : ''}`}
@@ -173,6 +177,7 @@ const podiumMeta = [
                   <span class="block text-xs text-gray-600">{c.commits > 0 ? 'commits' : 'PRs'}</span>
                 </div>
               </a>
+              </div>
             );
           })}
         </div>
@@ -183,7 +188,8 @@ const podiumMeta = [
             const meta = podiumMeta[idx];
             const tier = TIER_CONFIG[c.tier];
             return (
-              <div class="flex flex-col items-center flex-1 max-w-[210px]">
+              <div class="relative flex flex-col items-center flex-1 max-w-[210px]">
+                <button type="button" data-hype={c.login} title="Hype this contributor (1 vote a day)" aria-label={`Hype ${c.name}`} class="hype-btn absolute top-2 right-2 z-10 inline-flex items-center gap-1 h-7 px-2 rounded-full text-xs font-semibold backdrop-blur-md bg-white/10 border border-white/15 text-gray-300 hover:text-orange-400 hover:border-orange-400/40 motion-safe:hover:scale-105 motion-safe:active:scale-95 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400">🔥<span class="hype-count tabular-nums"></span></button>
                 <a
                   href={`${base}contributors/${c.login}`}
                   class={`group w-full flex flex-col items-center glass hover-lift rounded-t-2xl px-5 pt-6 pb-4 transition-all duration-300 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500 ${meta.rank === 1 ? 'ring-2 ring-yellow-400/40' : ''}`}
@@ -239,11 +245,14 @@ const podiumMeta = [
 
     <!-- All contributors grid -->
     <section class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 mt-12 mb-10">
-      <p class="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-6">All contributors</p>
+      <p class="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-1">All contributors</p>
+      <p class="text-xs text-gray-600 mb-6">🔥 Hype your favorite contributor, one vote a day</p>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {rest.map(c => {
           const tier = TIER_CONFIG[c.tier];
           return (
+            <div class="relative">
+            <button type="button" data-hype={c.login} title="Hype this contributor (1 vote a day)" aria-label={`Hype ${c.name}`} class="hype-btn absolute -top-2 -right-1 z-10 inline-flex items-center gap-1 h-7 px-2 rounded-full text-xs font-semibold backdrop-blur-md bg-white/10 border border-white/15 text-gray-300 hover:text-orange-400 hover:border-orange-400/40 motion-safe:hover:scale-105 motion-safe:active:scale-95 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400">🔥<span class="hype-count tabular-nums"></span></button>
             <a
               href={`${base}contributors/${c.login}`}
               class="group flex items-center gap-4 rounded-xl p-4 glass hover-lift transition-all duration-200 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500"
@@ -283,6 +292,7 @@ const podiumMeta = [
                 {c.additions > 0 && <span class="block text-xs text-gray-700">+{c.additions.toLocaleString('en')}</span>}
               </div>
             </a>
+            </div>
           );
         })}
       </div>
@@ -414,4 +424,70 @@ const podiumMeta = [
   </main>
 
   <Footer />
+
+  <style is:global>
+    .hype-btn.hype-voted {
+      color: #fb923c;
+      border-color: rgba(251, 146, 60, 0.4);
+      background: rgba(249, 115, 22, 0.12);
+      cursor: default;
+    }
+    .hype-btn.hype-voted:hover { transform: none; }
+  </style>
+
+  <script>
+    const NS = 'egc-halloffame';
+    const API = 'https://abacus.jasoncameron.dev';
+    const btns = Array.from(document.querySelectorAll('.hype-btn')) as HTMLButtonElement[];
+    const today = new Date().toISOString().slice(0, 10);
+
+    function byLogin(login: string) {
+      return btns.filter(b => b.dataset.hype === login);
+    }
+    function paintVoted(b: HTMLButtonElement) {
+      b.classList.add('hype-voted');
+      b.setAttribute('aria-pressed', 'true');
+      b.title = 'Already hyped today! Resets tomorrow';
+    }
+    function setCount(login: string, value: number) {
+      for (const b of byLogin(login)) {
+        const el = b.querySelector('.hype-count');
+        if (el) el.textContent = String(value);
+      }
+    }
+
+    for (const b of btns) {
+      const login = b.dataset.hype || '';
+      if (localStorage.getItem(`hype:${login}:${today}`)) paintVoted(b);
+      b.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const key = `hype:${login}:${today}`;
+        if (localStorage.getItem(key)) return;
+        localStorage.setItem(key, '1');
+        for (const twin of byLogin(login)) paintVoted(twin);
+        const el = b.querySelector('.hype-count');
+        const cur = parseInt(el?.textContent || '0', 10) || 0;
+        setCount(login, cur + 1);
+        // Fire-and-forget: o Abacus grava o voto global; keepalive garante o envio
+        // mesmo se a aba fechar. Sem rollback: a trava do localStorage ja impede repeticao.
+        try { fetch(`${API}/hit/${NS}/${encodeURIComponent(login)}`, { keepalive: true }); } catch { /* offline: voto local mantido */ }
+      });
+    }
+
+    const logins = Array.from(new Set(btns.map(b => b.dataset.hype || '').filter(Boolean)));
+    Promise.all(
+      logins.map(login =>
+        fetch(`${API}/get/${NS}/${encodeURIComponent(login)}`)
+          .then(r => (r.ok ? r.json() : { value: 0 }))
+          .then(d => [login, typeof d.value === 'number' ? d.value : 0] as const)
+          .catch(() => [login, null] as const)
+      )
+    ).then(pairs => {
+      for (const [login, value] of pairs) {
+        // null = servico inacessivel (adblock/offline): botao segue funcional, numero oculto
+        if (value !== null) setCount(login, value);
+      }
+    });
+  </script>
 </Base>

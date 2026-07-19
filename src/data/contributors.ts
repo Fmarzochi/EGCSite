@@ -102,6 +102,7 @@ export const highlights: Record<string, HighlightEntry> = {
   harshjainnn:          { name: 'harshjainnn',           highlight: 'Hat-trick in a single day: dashboard offline badge with per-endpoint failure streaks, POST /event rejecting malformed JSON with a 400, and the fix that stopped a dead WebSocket from being invisible to the offline logic', since: 'Jul 19, 2026', prs: 3, commits: 3, badges: ['newFeature', 'bugHunter', 'reliability'], additions: 232 },
   'Sufiyan-MSA':        { name: 'Mohammed Sufiyan Ahmed', highlight: 'Stopped stream=True from silently downgrading to a blocking call across the OpenAI-compatible providers, raising loudly in OpenAI, DeepSeek, Groq and Mistral with regression tests for every path', since: 'Jul 19, 2026', prs: 1, commits: 1, badges: ['bugHunter'], additions: 126 },
   'Aki-new':            { name: 'Akisolu',                highlight: 'Fixed the zh-CN README rendering after catching that the issue itself pointed at the wrong file, verifying before coding on a first contribution', since: 'Jul 19, 2026', prs: 1, commits: 1, badges: ['bugHunter'], additions: 1 },
+  aryamirani:           { name: 'Arya Mirani',            highlight: 'Removed the last em dash from the docs per repo convention, with a clean first-commit DCO and a natural rewrite', since: 'Jul 19, 2026', prs: 1, commits: 1, badges: ['codeQuality'], additions: 1 },
 };
 
 function prevMonthLabel(): string {

@@ -7,7 +7,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
   <div class="pb-2 mb-8 border-b border-gray-200 dark:border-gray-800">
     <p class="text-xs font-semibold uppercase tracking-widest text-egc-600 dark:text-egc-400 mb-2">Reference</p>
     <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-3">CLI Reference</h1>
-    <p class="text-gray-600 dark:text-gray-400">All commands available after running <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">sh install.sh</code>.</p>
+    <p class="text-gray-600 dark:text-gray-400">You never need to type any of these: open your AI tool and just talk, and the auto-intuition protocol maps your intent to the right action. Every command below exists for people who prefer explicit control, and each one is valid on its own.</p>
   </div>
 
   <section class="mb-10">
@@ -66,7 +66,7 @@ $ egc consolidate --force`,
 
 agents    63
 skills   230
-commands  76
+commands  77
 rules    111`,
         },
         {
@@ -104,6 +104,42 @@ $ egc dashboard stop
 
 # Check if it's running:
 $ egc dashboard status`,
+        },
+        {
+          cmd: 'egc run',
+          desc: 'Run any command through the Token Crusher. Noisy output (long git logs, test noise, install spam, giant JSON) is compressed up to 90% before it reaches the model; errors and warnings always survive. On hook-capable tools this happens silently without typing anything.',
+          example: `$ egc run git log
+... (12439 more commits)
+[egc-crusher] saved ~139178 tokens (full output: rerun with --raw)
+
+# Escape hatch, full output:
+$ egc run --raw git log`,
+        },
+        {
+          cmd: 'egc gain',
+          desc: 'The full Token Crusher savings panel: totals, average per run, biggest crush, efficiency meter, and a breakdown by command kind. Read from the local ledger at zero token cost. Or just ask your AI "how much did I save?" and it runs this for you.',
+          example: `$ egc gain
+
+EGC Token Gain (local ledger, zero token cost)
+  Crushed runs:     12
+  Tokens saved:     ~412.7K
+  Efficiency:       ████████████████████████ 97.3%
+
+# Run-by-run log:
+$ egc gain --history
+
+# Short summary:
+$ egc saved`,
+        },
+        {
+          cmd: 'egc discover',
+          desc: 'Scan your recent session transcripts for crushable output that never went through the Token Crusher, and see what those runs could have saved.',
+          example: `$ egc discover
+
+EGC Discover: crushable output that skipped the Token Crusher
+  Transcripts scanned: 40 (last 7 days)
+  Missed runs:         41
+  Potential savings:   up to ~39.5K tokens`,
         },
         {
           cmd: 'egc auto-update',

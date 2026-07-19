@@ -3,11 +3,11 @@ import type { APIContext } from 'astro';
 
 const releases = [
   {
-    title: 'EGC v1.1.13',
+    title: 'EGC v1.1.14',
     pubDate: new Date('2026-07-18'),
     description:
       'Commit privacy completed: egc init now configures a git clean filter (filter.egc-memory.clean) and binds the four memory propagation files in .git/info/attributes, so git add stages a zeroed blob even when local hooks are bypassed. The working tree keeps the populated memory, the installer prints the action plan before applying it and honors --dry-run, and everything stays local to .git.',
-    link: 'https://github.com/Fmarzochi/EGC/releases/tag/v1.1.13',
+    link: 'https://github.com/Fmarzochi/EGC/releases/tag/v1.1.14',
   },
   {
     title: 'EGC v1.1.12',
@@ -76,7 +76,7 @@ const releases = [
     title: 'EGC v1.1.3',
     pubDate: new Date('2026-06-24'),
     description:
-      'New: EGC Dashboard (egc dashboard) -- real-time Mission Control at localhost:7890, auto-starts after egc init, WebSocket live feed of tool calls, memory state, token usage and cost. IDE hook emitters for Cursor, Kiro and OpenCode. Security: XSS escaping, CORS restricted to localhost. Bug fixes: OpenAI tool serialization, async ReActAgent, OpenRouter X-Title header, GeminiProvider null content.',
+      'New: EGC Dashboard (egc dashboard) -- real-time Mission Control at localhost:7890, auto-starts after egc install and egc init, WebSocket live feed of tool calls, memory state, token usage and cost. IDE hook emitters for Cursor, Kiro and OpenCode. Security: XSS escaping, CORS restricted to localhost. Bug fixes: OpenAI tool serialization, async ReActAgent, OpenRouter X-Title header, GeminiProvider null content.',
     link: 'https://github.com/Fmarzochi/EGC/releases/tag/v1.1.3',
   },
   {

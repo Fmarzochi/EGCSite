@@ -94,7 +94,7 @@ $ egc watch --quiet`,
         },
         {
           cmd: 'egc dashboard',
-          desc: 'Start the EGC Dashboard, a real-time Mission Control panel at http://localhost:7890. Shows live tool calls, file edits, shell commands, token usage, memory state, and agent status as your AI works. The dashboard auto-starts after egc init and runs as a background server.',
+          desc: 'Start the EGC Dashboard, a real-time Mission Control panel at http://localhost:7890. Shows live tool calls, file edits, shell commands, token usage, memory state, and agent status as your AI works. The dashboard auto-starts after egc install and egc init and runs as a background server.',
           example: `$ egc dashboard
 
 EGC Dashboard running at http://localhost:7890
@@ -140,6 +140,27 @@ EGC Discover: crushable output that skipped the Token Crusher
   Transcripts scanned: 40 (last 7 days)
   Missed runs:         41
   Potential savings:   up to ~39.5K tokens`,
+        },
+        {
+          cmd: 'egc claw',
+          desc: 'NanoClaw REPL: a persistent, session-aware agent loop with zero dependencies. Conversation history lives in plain Markdown files, so sessions survive restarts and stay greppable.',
+          example: `$ egc claw
+
+NanoClaw v2: Session: default
+Type /help for commands, exit to quit.
+
+claw> `,
+        },
+        {
+          cmd: 'egc harness-audit',
+          desc: 'Scores your harness setup across tool coverage, context efficiency, quality gates, memory persistence, eval coverage, security guardrails, and cost efficiency. Text or JSON output.',
+          example: `$ egc harness-audit --format json
+
+{
+  "scope": "repo",
+  "deterministic": true,
+  ...
+}`,
         },
         {
           cmd: 'egc auto-update',

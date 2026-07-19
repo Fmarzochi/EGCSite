@@ -25,7 +25,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
         {
           name: 'validate_command',
           signature: 'validate_command({ command: string, cwd?: string })',
-          description: 'Validates a shell command before execution. Blocks shell injection patterns (semicolons, pipes to bash, backtick execution), known dangerous binaries, and commands targeting protected paths.',
+          description: 'Validates a shell command before execution. Blocks shell injection patterns (semicolons, pipes to bash, backtick execution), known dangerous binaries, inline eval even when the flag is glued to its value, grep pattern files pointed at protected paths, paths smuggled inside flag=value forms, and commands targeting protected paths. Secret redaction also covers Google-style API keys.',
           returns: '{ allowed: boolean, reason?: string }',
           tag: 'Security',
         },

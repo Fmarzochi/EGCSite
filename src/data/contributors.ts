@@ -103,7 +103,7 @@ export const highlights: Record<string, HighlightEntry> = {
   'Sufiyan-MSA':        { name: 'Mohammed Sufiyan Ahmed', highlight: 'Stopped stream=True from silently downgrading to a blocking call across the OpenAI-compatible providers, raising loudly in OpenAI, DeepSeek, Groq and Mistral with regression tests for every path', since: 'Jul 19, 2026', prs: 1, commits: 1, badges: ['bugHunter'], additions: 126 },
   'Aki-new':            { name: 'Akisolu',                highlight: 'Fixed the zh-CN README rendering after catching that the issue itself pointed at the wrong file, verifying before coding on a first contribution', since: 'Jul 19, 2026', prs: 1, commits: 1, badges: ['bugHunter'], additions: 1 },
   aryamirani:           { name: 'Arya Mirani',            highlight: 'Removed the last em dash from the docs per repo convention, with a clean first-commit DCO and a natural rewrite', since: 'Jul 19, 2026', prs: 1, commits: 1, badges: ['codeQuality'], additions: 1 },
-  LuckysHorizon:        { name: 'LuckysHorizon',          highlight: 'Full Italian README translation, the 10th language EGC speaks, with the language selector wired into all ten READMEs and review notes fixed within minutes', since: 'Jul 19, 2026', prs: 1, commits: 1, badges: ['translator'], additions: 149 },
+  LuckysHorizon:        { name: 'Manikanta Boda',         highlight: 'Full Italian README translation, the 10th language EGC speaks, with the language selector wired into all ten READMEs and review notes fixed within minutes', since: 'Jul 19, 2026', prs: 1, commits: 1, badges: ['translator'], additions: 149 },
 };
 
 function prevMonthLabel(): string {

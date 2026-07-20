@@ -33,12 +33,14 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
    │query_hist │    │orchestrate_task│
    └────┬──────┘    └────────────────┘
         │
-   ┌────▼──────────────────┐
-   │  ~/.egc/              │
-   │  ├── state/           │
-   │  │   └── project.md   │
-   │  └── db.sqlite        │
-   └───────────────────────┘
+   ┌────▼──────────────────────────┐
+   │  ~/.egc/                      │
+   │  ├── state/                   │
+   │  │   └── project/branch.md    │
+   │  ├── metrics/crusher.jsonl    │
+   │  ├── encryption.key           │
+   │  └── db.sqlite                │
+   └───────────────────────────────┘
       </code></pre>
     </div>
   </section>
@@ -51,7 +53,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
         {
           n: '1',
           title: 'AI Tool Layer',
-          desc: 'Claude Code, Cursor, Codex, Gemini CLI, Antigravity CLI, OpenCode, Windsurf, Amp, VS Code Copilot, Zed, Kiro, Trae, CodeBuddy, Continue.dev. Each tool reads state at session start and writes at session end via the MCP protocol. The cognitive bootstrap injected by the installer writes this protocol into each tool\'s global instruction file.',
+          desc: 'Claude Code, Cursor, Codex, Gemini CLI, Antigravity CLI, OpenCode, Windsurf, Amp, VS Code Copilot, Zed, Kiro, Trae, CodeBuddy, Continue.dev, Junie, Goose, Amazon Q, OpenHands, Aider, and Warp: 20+ managed install targets. Each tool reads state at session start and writes at session end via the MCP protocol. The cognitive bootstrap injected by the installer writes this protocol into each tool\'s global instruction file.',
         },
         {
           n: '2',
@@ -61,17 +63,22 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
         {
           n: '3',
           title: 'egc-memory',
-          desc: 'Handles all memory operations. Reads and writes Markdown state files. Persists decisions to SQLite. Returns structured project context to the AI.',
+          desc: 'Handles all memory operations. Reads and writes Markdown state files scoped per project and git branch. Persists decisions to SQLite with BM25 full-text search. Runs the session bus so parallel sessions announce presence, claim paths, and hand work off without collisions.',
         },
         {
           n: '4',
           title: 'egc-guardian',
-          desc: 'Validates commands and file writes before execution. Also provides context utilities (reduce_context, orchestrate_task). Runs transparently. The AI calls it as part of its normal operation.',
+          desc: 'Validates commands and file writes before execution and provides context utilities (reduce_context, orchestrate_task, auto_learn). Enforcement is wired at the harness level too: prompt routing and pre-tool hooks run on every session, and the Token Crusher compresses shell output before it reaches the model, with savings tracked in a local ledger (egc gain).',
         },
         {
           n: '5',
           title: 'Local Storage (~/.egc/)',
-          desc: 'State files are Markdown, one per project branch, encrypted at rest with AES-256-GCM. SQLite database stores structured decision history for querying. Everything is local and never leaves your machine.',
+          desc: 'State files are Markdown, one per project branch, encrypted at rest with AES-256-GCM and integrity-checked with HMAC-SHA256. SQLite stores structured decision history for querying, and the crusher ledger records every token saving. Everything is local and never leaves your machine.',
+        },
+        {
+          n: '6',
+          title: 'Dashboard (localhost:7890)',
+          desc: 'Real-time mission control launched right after install: live tool calls, token usage, provider comparison, session replay, and export to CSV/JSON. IDE hook emitters stream events from Cursor, Kiro, OpenCode, and CodeBuddy.',
         },
       ].map(step => (
         <div class="flex gap-4 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5">

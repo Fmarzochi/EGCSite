@@ -106,6 +106,30 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
           description: 'Compresses raw hook observations into structured typed summaries (tool_failure, tool_success, file_edit, etc.) using rule-based analysis. Reduces token usage when injecting context into new sessions.',
           returns: 'Object with count of compressed items and a summary of what was processed.',
         },
+        {
+          name: 'session_announce',
+          signature: 'session_announce({ project_path?: string, territory?: string })',
+          description: 'Registers this session on the session bus so parallel sessions can see each other. Doubles as a heartbeat; dead sessions are swept automatically after 10 minutes.',
+          returns: 'Object with the session id and the list of live peers.',
+        },
+        {
+          name: 'session_peers',
+          signature: 'session_peers({ project_path?: string })',
+          description: 'Lists the other live sessions working on the same project, with their announced territories. Check it before picking work in parallel setups.',
+          returns: 'Array of peer sessions with territory and last heartbeat.',
+        },
+        {
+          name: 'claim_path',
+          signature: 'claim_path({ path: string })',
+          description: 'Takes a cooperative, fail-fast lock on a file or directory before editing shared ground. A refused claim means another live session holds it: coordinate or work elsewhere.',
+          returns: 'Object confirming the claim or naming the session that holds it.',
+        },
+        {
+          name: 'release_path',
+          signature: 'release_path({ path: string })',
+          description: 'Releases a previously claimed path so other sessions can take it.',
+          returns: 'Confirmation of the release.',
+        },
       ].map(tool => (
         <div class="rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden">
           <div class="flex items-center gap-3 px-5 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">

@@ -415,9 +415,18 @@ const base = getBase();
               <td class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">10 min/session</td>
               <td class="px-6 py-4 text-center text-egc-600 dark:text-egc-400 font-semibold">0</td>
             </tr>
+            <tr class="transition-colors hover:bg-white/5">
+              <td class="px-6 py-4 text-gray-700 dark:text-gray-300">Shell output entering the model</td>
+              <td class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">full command output</td>
+              <td class="px-6 py-4 text-center text-egc-600 dark:text-egc-400 font-semibold">crushed up to 99.7%</td>
+            </tr>
           </tbody>
         </table>
       </div>
+
+      <p class="text-center text-sm text-gray-600 dark:text-gray-400 mt-6 max-w-2xl mx-auto">
+        The built-in <span class="font-semibold text-egc-600 dark:text-egc-400">Token Crusher</span> compresses shell output before it ever reaches the model and records every saving in a local ledger. One giant git log went from 545 KB to 1.6 KB in a single crush. Run <code class="text-xs bg-gray-100 dark:bg-white/10 px-1.5 py-0.5 rounded font-mono">egc gain</code> to see your own numbers.
+      </p>
 
       <!-- Mobile: card layout -->
       <div class="sm:hidden space-y-4">
@@ -425,6 +434,7 @@ const base = getBase();
           { metric: 'Context overhead per session', without: '~1,500 tokens', withEgc: '~200 tokens' },
           { metric: 'Cost for 20 sessions/month', without: '~$0.08-0.09', withEgc: '~$0.011-0.012' },
           { metric: 'Time re-explaining context', without: '10 min/session', withEgc: '0' },
+          { metric: 'Shell output entering the model', without: 'full command output', withEgc: 'crushed up to 99.7%' },
         ].map(row => (
           <div class="rounded-xl p-4 glass hover-lift hover-glow">
             <div class="text-sm font-semibold text-gray-900 dark:text-white mb-3">{row.metric}</div>

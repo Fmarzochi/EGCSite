@@ -3,11 +3,25 @@ import type { APIContext } from 'astro';
 
 const releases = [
   {
+    title: 'EGC v1.1.15',
+    pubDate: new Date('2026-07-21'),
+    description:
+      'Current release. Native install targets for Cline, Qwen Code and Roo Code, so egc install wires EGC into three more agents out of the box. Every native LLM provider client now sets an explicit HTTP timeout, and non-streaming providers raise a clear error instead of hanging on stream=True. A French README brings EGC to nine languages. The dashboard serves static files added after startup without a restart and preserves multi-byte UTF-8 split across TCP chunks. High-severity fast-uri and linkify-it advisories patched.',
+    link: 'https://github.com/Fmarzochi/EGC/releases/tag/v1.1.15',
+  },
+  {
     title: 'EGC v1.1.14',
+    pubDate: new Date('2026-07-19'),
+    description:
+      'A full pre-release audit landed 18 hardening PRs in a single day. Guardian validator sealed against glued eval flags, grep pattern-file reads and flag-embedded protected paths; provider errors now redact API keys. The live dashboard starts right after egc install; egc claw (persistent session REPL) and egc harness-audit are first-class CLI commands. First Chinese Simplified README, making eight languages.',
+    link: 'https://github.com/Fmarzochi/EGC/releases/tag/v1.1.14',
+  },
+  {
+    title: 'EGC v1.1.13',
     pubDate: new Date('2026-07-18'),
     description:
       'Commit privacy completed: egc init now configures a git clean filter (filter.egc-memory.clean) and binds the four memory propagation files in .git/info/attributes, so git add stages a zeroed blob even when local hooks are bypassed. The working tree keeps the populated memory, the installer prints the action plan before applying it and honors --dry-run, and everything stays local to .git.',
-    link: 'https://github.com/Fmarzochi/EGC/releases/tag/v1.1.14',
+    link: 'https://github.com/Fmarzochi/EGC/releases/tag/v1.1.13',
   },
   {
     title: 'EGC v1.1.12',

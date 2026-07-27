@@ -27,7 +27,7 @@ const base = getBase();
           </div>
         </div>
         <div class="space-y-1.5 mb-4">
-          {['get_state', 'update_state', 'store_decision', 'query_history', 'search_history', 'working_memory_set', 'working_memory_get', 'working_memory_list', 'lesson_save', 'lesson_recall', 'lesson_reinforce', 'detect_patterns', 'compress_observations', 'get_project_state'].map(t => (
+          {['get_state', 'update_state', 'store_decision', 'query_history', 'search_history', 'working_memory_set', 'working_memory_get', 'working_memory_list', 'lesson_save', 'lesson_recall', 'lesson_reinforce', 'detect_patterns', 'compress_observations', 'get_project_state', 'session_announce', 'session_peers', 'session_send', 'session_events', 'claim_path', 'release_path', 'team_init', 'team_sync', 'team_status'].map(t => (
             <div class="flex items-center gap-2">
               <span class="w-1.5 h-1.5 rounded-full bg-egc-500 shrink-0"></span>
               <code class="text-xs font-mono text-gray-700 dark:text-gray-300">{t}</code>
@@ -50,7 +50,7 @@ const base = getBase();
           </div>
         </div>
         <div class="space-y-1.5 mb-4">
-          {['validate_command', 'validate_write', 'reduce_context', 'orchestrate_task'].map(t => (
+          {['validate_command', 'validate_write', 'reduce_context', 'orchestrate_task', 'auto_learn'].map(t => (
             <div class="flex items-center gap-2">
               <span class="w-1.5 h-1.5 rounded-full bg-gray-400 dark:bg-gray-600"></span>
               <code class="text-xs font-mono text-gray-700 dark:text-gray-300">{t}</code>

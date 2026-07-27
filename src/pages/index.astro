@@ -193,7 +193,7 @@ const base = getBase();
             <div class="text-gray-300 ml-2">• egc dashboard, egc replay, egc budget, egc plugin -- all available</div>
             <div class="text-gray-300 ml-2">• 23 tools: JetBrains Junie native, AES-256-GCM state encryption</div>
             <div class="text-gray-300 ml-2">• global memory across projects, session bus for parallel sessions</div>
-            <div class="text-gray-300 ml-2">• Token Crusher active: shell output compressed before it costs tokens</div>
+            <div class="text-gray-300 ml-2">• Token Crusher active: egc run compresses noisy output, egc gain / egc saved report savings</div>
           </div>
         </div>
 
@@ -337,6 +337,15 @@ const base = getBase();
                 { tool: 'lesson_reinforce', desc: 'Increases confidence score of a stored lesson' },
                 { tool: 'detect_patterns', desc: 'Surfaces repeated commands and recurring errors' },
                 { tool: 'compress_observations', desc: 'Compresses raw hook events into typed summaries' },
+                { tool: 'session_announce', desc: 'Registers presence and territory on the session bus, doubles as heartbeat' },
+                { tool: 'session_peers', desc: 'Lists live sessions and active path locks' },
+                { tool: 'session_send', desc: 'Sends an event to another session, or broadcasts to the whole project' },
+                { tool: 'session_events', desc: 'Reads events addressed to this session, delivered exactly once' },
+                { tool: 'claim_path', desc: 'Cooperatively locks a path before editing; fails fast if another session holds it' },
+                { tool: 'release_path', desc: 'Releases a path lock held by this session' },
+                { tool: 'team_init', desc: 'Sets up a git-backed sync destination for team memory sharing' },
+                { tool: 'team_sync', desc: 'Pulls and pushes lessons between teammates, last-write-wins' },
+                { tool: 'team_status', desc: 'Shows team sync health: last sync, conflicts, remote URL' },
               ].flatMap(row => [
                 <code class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 font-mono">{row.tool}</code>,
                 <span class="text-xs text-gray-600 dark:text-gray-400">{row.desc}</span>,

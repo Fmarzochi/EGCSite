@@ -3,6 +3,13 @@ import type { APIContext } from 'astro';
 
 const releases = [
   {
+    title: 'EGC v1.1.17',
+    pubDate: new Date('2026-07-27'),
+    description:
+      'Bug fix: install.sh was writing Git Bash POSIX-style paths into the MCP config JSON on Windows, which native Windows MCP clients cannot resolve -- the real cause behind unreliable Windows installs. Now detected via uname -s and rewritten through pwd -W. install.ps1 is resynced with install.sh after drifting for several releases: Node version floor, lockfile-aware dependency install, a data-loss bug where a malformed existing MCP config was silently overwritten, Codex CLI TOML path escaping, and a src/ build guard. This release also carries an apology: v1.1.16 shipped with a changelog covering only 2 of the ~25 pull requests actually released, corrected in #1044.',
+    link: 'https://github.com/Fmarzochi/EGC/releases/tag/v1.1.17',
+  },
+  {
     title: 'EGC v1.1.16',
     pubDate: new Date('2026-07-26'),
     description:

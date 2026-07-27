@@ -3,6 +3,13 @@ import type { APIContext } from 'astro';
 
 const releases = [
   {
+    title: 'EGC v1.1.16',
+    pubDate: new Date('2026-07-26'),
+    description:
+      'Security: destructive-CLI hard blocks in the Guardian validator for docker/gh/prisma variants, an absolute-path bypass closed, the bash hook dispatcher now fails closed instead of fail-open on its own errors, and all remaining Dependabot/Scorecard advisories cleared. Fixes: Crowdin translation sync corruption fixed at the root (sync is now one-way, Crowdin to repo only), three runtime bugs from a deep source audit fixed, bare egc install fixed on the published npm package, and the fuzz harness actually fuzzing now instead of running blind. Maintenance: CodeRabbit reviews contributor PRs automatically, and Docker images run as a non-root user via a multi-stage build.',
+    link: 'https://github.com/Fmarzochi/EGC/releases/tag/v1.1.16',
+  },
+  {
     title: 'EGC v1.1.15',
     pubDate: new Date('2026-07-21'),
     description:

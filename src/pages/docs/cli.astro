@@ -185,6 +185,21 @@ EGC Discover: crushable output that skipped the Token Crusher
   Potential savings:   up to ~39.5K tokens`,
         },
         {
+          cmd: 'egc crusher-shim',
+          desc: 'Install a PATH-level binary shim (git, npm, pip, gh, and more) that compresses noisy output for any tool that shells out to run them, not just harnesses whose hooks support rewriting a command. A human at an interactive terminal always gets full, untouched output; only non-interactive output capture goes through the Token Crusher.',
+          example: `$ egc crusher-shim install
+Shim directory: ~/.egc/bin
+Installed: git, npm, pip, gh, ...
+PATH updated in: ~/.bashrc, ~/.profile
+Open a new terminal for it to take effect.
+
+# Check status:
+$ egc crusher-shim status
+
+# Remove it:
+$ egc crusher-shim uninstall`,
+        },
+        {
           cmd: 'egc claw',
           desc: 'NanoClaw REPL: a persistent, session-aware agent loop with zero dependencies. Conversation history lives in plain Markdown files, so sessions survive restarts and stay greppable.',
           example: `$ egc claw

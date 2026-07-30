@@ -61,4 +61,4 @@ This repo follows the same conventions as the main EGC repo. Keep the version ba
 
 ## License
 
-MIT. See [LICENSE](https://github.com/Fmarzochi/EGC/blob/main/LICENSE) in the main EGC repo.
+Apache-2.0. See [LICENSE](https://github.com/Fmarzochi/EGC/blob/main/LICENSE) in the main EGC repo.

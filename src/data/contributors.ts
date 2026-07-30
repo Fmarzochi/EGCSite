@@ -109,6 +109,7 @@ export const highlights: Record<string, HighlightEntry> = {
   'ankit24417-sys':     { name: 'Ankit',                  highlight: 'Full French README translation, the 11th language EGC speaks, wired into the language selector across all eleven READMEs', since: 'Jul 21, 2026', prs: 1, commits: 4, badges: ['translator'], additions: 151 },
   Iahmacun:             { name: 'Lahmacun',               highlight: 'First Turkish README translation, the 12th language EGC speaks, wired into the language selector across all twelve READMEs', since: 'Jul 22, 2026', prs: 1, commits: 1, badges: ['translator'], additions: 130 },
   'rathaur-ankit':      { name: 'Ankit Rathaur',          highlight: 'First German README translation, the 13th language EGC speaks, wired into the language selector across all thirteen READMEs', since: 'Jul 22, 2026', prs: 1, commits: 1, badges: ['translator'], additions: 267 },
+  helalferrari:         { name: 'Helal Ferrari Cabral',    highlight: 'Reported the EGC-513 memory corruption bug and the BUG-08 state.db divergence bug via direct contact, leading to fixes in #1102, #1103 and #1104', since: 'Jul 30, 2026', prs: 1, commits: 1, badges: ['bugHunter', 'coAuthor'], additions: 1 },
 };
 
 function prevMonthLabel(): string {

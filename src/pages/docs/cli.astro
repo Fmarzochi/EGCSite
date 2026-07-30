@@ -22,7 +22,10 @@ egc-guardian  running
 egc-memory    running
 database      ok
 claude code   registered
-cursor        registered`,
+cursor        registered
+
+# Check against a local development checkout instead of the installed package:
+$ egc doctor --repo-root /path/to/EGC`,
         },
         {
           cmd: 'egc status',
@@ -82,7 +85,10 @@ Catalog matches for "memory session":
           example: `$ egc repair
 
 ✓ ~/.claude/CLAUDE.md restored
-✓ ~/.gemini/GEMINI.md restored`,
+✓ ~/.gemini/GEMINI.md restored
+
+# Repair against a local development checkout instead of the installed package:
+$ egc repair --repo-root /path/to/EGC`,
         },
         {
           cmd: 'egc replay',
@@ -201,7 +207,7 @@ claw> `,
         },
         {
           cmd: 'egc auto-update',
-          desc: 'Pull the latest changes from GitHub and reinstall managed targets.',
+          desc: 'Pull the latest changes from GitHub, reinstall managed targets, and re-run the cognitive bootstrap so already-configured installs pick up new protocol sections instead of staying frozen at whatever shipped on first install.',
           example: `$ egc auto-update
 
 Pulling latest from origin/main...
@@ -209,7 +215,10 @@ Building egc-guardian... done
 Building egc-memory...  done
 Reinstalling targets...
 ✓ claude code updated
-✓ cursor updated`,
+✓ cursor updated
+
+# Update against a local development checkout instead of the installed package:
+$ egc auto-update --repo-root /path/to/EGC`,
         },
       ].map(item => (
         <div class="rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden">

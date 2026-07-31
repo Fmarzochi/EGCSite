@@ -210,6 +210,7 @@ const base = getBase();
         { n: '3', title: 'Cognitive bootstrap', desc: 'Writes the memory protocol into the global instruction files for each detected tool (CLAUDE.md, GEMINI.md, cursor.rules, etc.).' },
         { n: '4', title: 'Registers MCP servers and hooks', desc: 'Adds both servers to every detected tool\'s MCP config. For Claude Code, also installs a SessionStart hook (loads state automatically) and a Stop hook (saves state automatically at session end). Runs once per tool, idempotent.' },
         { n: '5', title: 'Prompt library (optional)', desc: 'Asks whether to install 230 skills, 77 commands, and 63 agents. Skipped automatically in CI.' },
+        { n: '6', title: 'Token Crusher binary shim', desc: 'Installs a PATH-level shim (git, npm, gh, and more) under ~/.egc/bin as a best-effort step. Covers a known gap where the automatic hook never fires for commands the AI assistant itself issues on Claude Code.' },
       ].map(step => (
         <div class="flex gap-3 sm:gap-4">
           <div class="shrink-0 w-7 h-7 rounded-full bg-egc-100 dark:bg-egc-900/30 text-egc-700 dark:text-egc-400 flex items-center justify-center text-sm font-bold">{step.n}</div>
@@ -247,6 +248,9 @@ const base = getBase();
   <span class="text-green-400">✓</span> registered in VS Code Copilot
 
 Install prompt library? (63 agents, 230 skills, 77 commands) [y/N]:
+
+  Installing Token Crusher binary shim...
+  <span class="text-green-400">✓</span> Installed: git, npm, gh, ...
 
 <span class="text-green-400">Installation complete.</span>
 Run 'egc doctor' to verify.</code></pre>

@@ -186,7 +186,7 @@ EGC Discover: crushable output that skipped the Token Crusher
         },
         {
           cmd: 'egc crusher-shim',
-          desc: 'Install a PATH-level binary shim (git, npm, pip, gh, and more) that compresses noisy output for any tool that shells out to run them, not just harnesses whose hooks support rewriting a command. A human at an interactive terminal always gets full, untouched output; only non-interactive output capture goes through the Token Crusher.',
+          desc: 'Installed automatically by egc install and egc auto-update. A PATH-level binary shim (git, npm, pip, gh, and more) that compresses noisy output for any tool that shells out to run them. Covers a known gap: on Claude Code, the PreToolUse hook rewrite never fires for commands the AI assistant runs through its own Bash tool, only for a human typing directly into the terminal, so this is what makes the Crusher work there too. A human at an interactive terminal always gets full, untouched output; only non-interactive output capture goes through the Token Crusher.',
           example: `$ egc crusher-shim install
 Shim directory: ~/.egc/bin
 Installed: git, npm, pip, gh, ...

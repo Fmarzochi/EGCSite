@@ -8,9 +8,10 @@ on:
     types: [egc-release]
   schedule:
     - cron: '0 6 * * 1'
+    - cron: '0 6 1 * *'
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -33,6 +34,21 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Archive last month's Hall of Fame champion
+        run: node scripts/sync-champion-history.mjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Commit champion history if it changed
+        run: |
+          if ! git diff --quiet -- src/data/champion-history.json; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add src/data/champion-history.json
+            git commit -m "chore(hall-of-fame): archive last month's champion"
+            git push
+          fi
 
       - name: Build
         run: npm run build

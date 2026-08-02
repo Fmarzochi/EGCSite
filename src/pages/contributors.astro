@@ -6,6 +6,7 @@ import { getBase } from '../utils/base.ts';
 import {
   fetchContributors,
   buildFallback,
+  getChampionHistory,
   BADGE_DEFS,
   TIER_CONFIG,
   type MonthlyChampion,
@@ -34,6 +35,10 @@ const totalPrs = contributors.reduce((s, c) => s + c.prs, 0);
 const champion = monthlyChampion
   ? (contributors.find(c => c.login === monthlyChampion!.login) ?? null)
   : null;
+
+// Past champions, most recent first. The current month's champion (rendered above in its own
+// spotlight card) is excluded here so it isn't shown twice while it's still the reigning title.
+const pastChampions = getChampionHistory().filter(h => h.month !== monthlyChampion?.month);
 
 // Desktop podium order: 2nd left, 1st center, 3rd right
 const podiumOrder = [topThree[1], topThree[0], topThree[2]].filter(Boolean) as Contributor[];
@@ -130,6 +135,33 @@ const podiumMeta = [
               <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
             </a>
           </div>
+        </div>
+      </section>
+    )}
+
+    <!-- Past Champions of the Month -->
+    {pastChampions.length > 0 && (
+      <section class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 mb-12">
+        <p class="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-3 text-center">Past Champions</p>
+        <div class="flex flex-wrap justify-center gap-3">
+          {pastChampions.map(h => (
+            <a
+              href={`${base}contributors/${h.login}`}
+              class="group flex items-center gap-2 rounded-full pl-1.5 pr-3 py-1.5 glass hover-lift transition-all duration-200 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500"
+              title={h.reason}
+            >
+              <img
+                src={`https://github.com/${h.login}.png`}
+                alt={h.name}
+                width="24"
+                height="24"
+                class="rounded-full ring-1 ring-yellow-400/50"
+                loading="lazy"
+              />
+              <span class="text-xs font-semibold text-gray-300 group-hover:text-white">{h.name}</span>
+              <span class="text-xs text-gray-600">{h.month}</span>
+            </a>
+          ))}
         </div>
       </section>
     )}

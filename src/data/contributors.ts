@@ -1,3 +1,5 @@
+import championHistoryData from './champion-history.json';
+
 export const OWNER = 'Fmarzochi';
 export const REPO = 'EGC';
 export const EXCLUDED = new Set([OWNER, 'dependabot[bot]', 'github-actions[bot]']);
@@ -38,6 +40,13 @@ export interface MonthlyChampion {
   name: string;
   month: string;
   reason: string;
+}
+
+export interface ChampionHistoryRecord {
+  login: string;
+  month: string;
+  commits: number;
+  additions: number;
 }
 
 type RawStat = {
@@ -118,6 +127,25 @@ function prevMonthLabel(): string {
   return d.toLocaleString('en-US', { month: 'long', year: 'numeric' });
 }
 
+function buildChampionReason(login: string, month: string, commits: number, additions: number): { name: string; reason: string } {
+  const info = highlights[login];
+  const stats = `${commits} commit${commits !== 1 ? 's' : ''}${additions > 0 ? ` and +${additions.toLocaleString('en')} lines` : ''} in ${month}.`;
+  const reason = info?.highlight ? `${info.highlight} -- ${stats}` : stats;
+  return { name: info?.name ?? login, reason };
+}
+
+// Champions from months already rolled past the current one, kept permanently so the
+// Hall of Fame never loses a past title when computeMonthlyChampion moves on to the next
+// month. New entries are appended by scripts/sync-champion-history.mjs on each build.
+export function getChampionHistory(): MonthlyChampion[] {
+  return (championHistoryData as ChampionHistoryRecord[])
+    .map(record => {
+      const { name, reason } = buildChampionReason(record.login, record.month, record.commits, record.additions);
+      return { login: record.login, name, month: record.month, reason };
+    })
+    .reverse();
+}
+
 function computeMonthlyChampion(rawStats: RawStat[]): MonthlyChampion | null {
   const now = new Date();
   const prevStart = new Date(now.getFullYear(), now.getMonth() - 1, 1);
@@ -147,17 +175,10 @@ function computeMonthlyChampion(rawStats: RawStat[]): MonthlyChampion | null {
 
   if (!topLogin || topCommits === 0) return null;
 
-  const info = highlights[topLogin];
   const month = prevMonthLabel();
-  const stats = `${topCommits} commit${topCommits !== 1 ? 's' : ''}${topAdditions > 0 ? ` and +${topAdditions.toLocaleString('en')} lines` : ''} in ${month}.`;
-  const reason = info?.highlight ? `${info.highlight} -- ${stats}` : stats;
+  const { name, reason } = buildChampionReason(topLogin, month, topCommits, topAdditions);
 
-  return {
-    login: topLogin,
-    name: info?.name ?? topLogin,
-    month,
-    reason,
-  };
+  return { login: topLogin, name, month, reason };
 }
 
 export async function fetchContributors(githubToken?: string): Promise<{
@@ -181,9 +202,18 @@ export async function fetchContributors(githubToken?: string): Promise<{
 
   const statsData = await statsRes.json() as RawStat[];
 
+  const additionsByLogin = new Map<string, number>();
+  for (const c of statsData) {
+    additionsByLogin.set(c.author.login, c.weeks.reduce((sum, w) => sum + w.a, 0));
+  }
+
   const contributors = statsData
     .filter(c => !EXCLUDED.has(c.author.login) && !c.author.login.includes('[bot]'))
-    .sort((a, b) => b.total - a.total)
+    .sort((a, b) => {
+      if (b.total !== a.total) return b.total - a.total;
+      // Tie on commit count: rank ties by total lines added, same rule used for the monthly champion.
+      return (additionsByLogin.get(b.author.login) ?? 0) - (additionsByLogin.get(a.author.login) ?? 0);
+    })
     .map(c => {
       const additions = c.weeks.reduce((sum, w) => sum + w.a, 0);
       const info = highlights[c.author.login];
@@ -209,7 +239,11 @@ export async function fetchContributors(githubToken?: string): Promise<{
 
 export function buildFallback(): Contributor[] {
   return Object.entries(highlights)
-    .sort((a, b) => b[1].commits - a[1].commits)
+    .sort((a, b) => {
+      if (b[1].commits !== a[1].commits) return b[1].commits - a[1].commits;
+      // Tie on commit count: rank ties by total lines added, same rule used for the monthly champion.
+      return (b[1].additions ?? 0) - (a[1].additions ?? 0);
+    })
     .map(([login, info]) => ({
       login,
       name: info.name,

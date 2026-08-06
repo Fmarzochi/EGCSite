@@ -3,6 +3,13 @@ import type { APIContext } from 'astro';
 
 const releases = [
   {
+    title: 'EGC v1.1.18',
+    pubDate: new Date('2026-08-06'),
+    description:
+      'Production hardening across 20+ pull requests. Root cause of the sandboxed-install crashes fixed: the Token Crusher PATH shim could fork-bomb the host under an isolated HOME; resolution is now anchored to the launcher physical directory with a circuit breaker, covered by POSIX and Windows regression tests. Installers made honest end to end: Claude Code MCP registration goes through the real CLI instead of a dead config file, the bare install merges the project .mcp.json of the invoking directory, one registration list serves all three entry points so Continue.dev and Zed are finally registered everywhere, and the installation guide matches actual behavior. Guardian no longer denies reading paths it only protects against writes, a design approved by two independent security audits. Token Crusher compresses JSON with nested lists, measured 637 KB down to 31 KB on a real payload. egc repair rebuilds what it can instead of abandoning the whole target, MCP server builds are self-contained and cross-platform, Windows sessions no longer drop bridge events on slow cold starts, and neither a repo clone nor the Codex plugin auto-bundles third-party MCP servers any more. Verified before tagging with real end-to-end installs of the packed tarball on physical Linux and macOS machines.',
+    link: 'https://github.com/Fmarzochi/EGC/releases/tag/v1.1.18',
+  },
+  {
     title: 'EGC v1.1.17',
     pubDate: new Date('2026-07-27'),
     description:

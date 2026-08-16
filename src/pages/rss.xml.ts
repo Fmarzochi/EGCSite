@@ -3,6 +3,12 @@ import type { APIContext } from 'astro';
 
 const releases = [
   {
+    title: 'EGC v1.1.20',
+    pubDate: new Date('2026-08-16'),
+    description:
+      'The Real-Time Session Mesh, hardened: the recommended release of the mesh line. Everything v1.1.19 shipped plus the corrections born from its own release process: the PowerShell install suite adopts the shared Windows subprocess budgets (a hardcoded 30s cap starved a slow cold runner during tag validation while the bit-identical script passed everywhere else), the chaos harness gained cleanup guarantees (workers die with their parent, the temp directory survives no failure path), and the release checklist now codifies the gates that were missing: the tag-ref CI run must finish green, the inbox swept, and the published artifact verified end to end before any announcement. This was the first release shipped under the full protocol.',
+  },
+  {
     title: 'EGC v1.1.19',
     pubDate: new Date('2026-08-16'),
     description:

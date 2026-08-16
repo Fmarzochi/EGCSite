@@ -3,6 +3,12 @@ import type { APIContext } from 'astro';
 
 const releases = [
   {
+    title: 'EGC v1.1.19',
+    pubDate: new Date('2026-08-16'),
+    description:
+      'The Real-Time Session Mesh release. Every open tab of your AI tools now knows what the others are doing, live: wake-on-write transport with session_wait long-polling (push ON by default, EGC_MESH_PUSH=0 opts out), cognitive protocol v4 teaching every install to announce presence, drain events on the [egc-mesh] notice, claim paths before shared edits, and park when idle, plus a native turn-boundary wake signal on Claude Code, Antigravity (project and global), Codex CLI, Trae, Amp, and Kiro. Measured on real machines: 26ms wake, p95 11ms, zero loss or duplication at 1000 events across 10 subscribers, with the per-harness delivery map in the integration-tiers spec kept honest by a parity test. Gemini CLI, Continue.dev, and Roo Code retired after their vendors discontinued them: an honest 20 supported tools, with egc auto-update skipping retired targets instead of crashing. The session bus was proven under fire by the expert chaos audition, which surfaced a real double-delivery race between overlapping readers, fixed in the same PR with a compare-and-swap on the event cursor and hardened in a same-night follow-up. The dashboard gained an operable session bus view.',
+  },
+  {
     title: 'EGC v1.1.18',
     pubDate: new Date('2026-08-06'),
     description:

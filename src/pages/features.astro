@@ -55,10 +55,10 @@ import DocsLayout from '../layouts/DocsLayout.astro';
         </thead>
         <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
           {[
-            { type: 'Agents', count: '63', desc: 'Persona and behavior definitions' },
+            { type: 'Agents', count: '61', desc: 'Persona and behavior definitions' },
             { type: 'Skills', count: '232', desc: 'Domain-specific workflow runbooks' },
             { type: 'Commands', count: '77', desc: 'Command definitions and lifecycle hooks' },
-            { type: 'Rules', count: '111', desc: 'Constraints and governance directives' },
+            { type: 'Rules', count: '109', desc: 'Constraints and governance directives' },
           ].map(row => (
             <tr class="bg-white dark:bg-gray-950">
               <td class="px-5 py-3 font-mono text-xs text-egc-700 dark:text-egc-400">{row.type}</td>
@@ -72,10 +72,10 @@ import DocsLayout from '../layouts/DocsLayout.astro';
     <!-- Mobile card layout -->
     <div class="sm:hidden space-y-3 mb-5">
       {[
-        { type: 'Agents', count: '63', desc: 'Persona and behavior definitions' },
+        { type: 'Agents', count: '61', desc: 'Persona and behavior definitions' },
         { type: 'Skills', count: '232', desc: 'Domain-specific workflow runbooks' },
         { type: 'Commands', count: '77', desc: 'Command definitions and lifecycle hooks' },
-        { type: 'Rules', count: '111', desc: 'Constraints and governance directives' },
+        { type: 'Rules', count: '109', desc: 'Constraints and governance directives' },
       ].map(row => (
         <div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4 bg-white dark:bg-gray-950">
           <div class="flex items-center justify-between mb-1.5">

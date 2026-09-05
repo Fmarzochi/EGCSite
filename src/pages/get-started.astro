@@ -147,6 +147,10 @@ const base = getBase();
         </div>
         <pre class="bg-gray-900 p-4 sm:p-5 text-gray-100 text-xs sm:text-sm font-mono overflow-x-auto m-0 rounded-none"><code><span class="text-egc-400">$</span> npm install -g @egchq/egc
 <span class="text-egc-400">$</span> egc install</code></pre>
+        <div class="p-4 sm:p-5 bg-white dark:bg-gray-950 border-t border-gray-200 dark:border-gray-800 space-y-2">
+          <p class="text-sm text-gray-600 dark:text-gray-400"><strong>Permissions:</strong> if <code>npm install -g</code> fails with <code>EACCES</code> (Node from your distro's package manager, or any root-owned global prefix), run only the <code>npm install -g</code> step with <code>sudo</code> and everything else as your normal user. A Node version manager such as nvm, mise or fnm never needs sudo.</p>
+          <p class="text-sm text-gray-600 dark:text-gray-400"><strong>Then wake up the brain:</strong> the bare install prepares the runtime only. Inside a real project, run <code>egc init</code> once so your AI tools restore its memory on their very first prompt. <code>egc doctor</code> should end with <code>errors=0</code>.</p>
+        </div>
       </div>
 
       <!-- Linux panel -->

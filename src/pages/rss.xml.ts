@@ -3,6 +3,13 @@ import type { APIContext } from 'astro';
 
 const releases = [
   {
+    title: 'EGC v1.1.21',
+    pubDate: new Date('2026-09-05'),
+    description:
+      'The hardening round: an eighteen-step security pass across the memory server, the installer, the hooks and the dashboard, with tighter defaults and stricter checks on what EGC accepts from disk, from the network and from the tools it talks to, each step with its own tests. Plus the September field fixes: egc install on a root-owned npm prefix, MCP servers on older glibc, every egc help exiting 0, Windsurf hooks coexisting, and the EGC Scrubber.',
+    link: 'https://github.com/Fmarzochi/EGC/releases/tag/v1.1.21',
+  },
+  {
     title: 'EGC v1.1.20',
     pubDate: new Date('2026-08-16'),
     description:

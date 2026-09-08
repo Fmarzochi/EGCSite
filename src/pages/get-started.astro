@@ -199,6 +199,9 @@ const base = getBase();
         <pre class="bg-gray-900 p-4 sm:p-5 text-gray-100 text-xs sm:text-sm font-mono overflow-x-auto m-0 rounded-none"><code><span class="text-egc-400">PS&gt;</span> git clone https://github.com/Fmarzochi/EGC.git
 <span class="text-egc-400">PS&gt;</span> cd EGC
 <span class="text-egc-400">PS&gt;</span> .\scripts\install.ps1</code></pre>
+        <div class="p-4 sm:p-5 bg-white dark:bg-gray-950 border-t border-gray-200 dark:border-gray-800 space-y-2">
+          <p class="text-sm text-gray-600 dark:text-gray-400"><strong>Upgrading later with <code>npm install -g @egchq/egc@latest</code>:</strong> close the AI tools and terminals that run EGC first. npm renames the package folder during the update, and Windows refuses while any process holds a file inside it (an AI tool running the EGC MCP servers is enough). The failure reads <code>EBUSY: resource busy or locked</code>; closing the tools clears it, and so does a reboot.</p>
+        </div>
       </div>
 
     </div>

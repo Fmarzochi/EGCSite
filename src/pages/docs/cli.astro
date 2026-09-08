@@ -222,7 +222,7 @@ claw> `,
         },
         {
           cmd: 'egc auto-update',
-          desc: 'Pull the latest changes from GitHub, reinstall managed targets, and re-run the cognitive bootstrap so already-configured installs pick up new protocol sections instead of staying frozen at whatever shipped on first install.',
+          desc: 'Pull the latest changes from GitHub, reinstall managed targets, and re-run the cognitive bootstrap so already-configured installs pick up new protocol sections instead of staying frozen at whatever shipped on first install. On an npm install it prints the upgrade command instead; on Windows, close the AI tools and terminals that run EGC before running it, or npm fails with EBUSY on a file it cannot rename.',
           example: `$ egc auto-update
 
 Pulling latest from origin/main...

@@ -58,6 +58,22 @@ $ egc consolidate --dry-run
 $ egc consolidate --force`,
         },
         {
+          cmd: 'egc export',
+          desc: 'Print the decrypted memory document for a project (default: the current directory) or for the user-wide global scope. Plain text is the Agent Memory Interchange Markdown document as stored; --json parses it into header fields and the five sections. Read-only: the state file and the key are never modified. Exit codes: 0 printed, 1 usage error or a state file or key that cannot be read or trusted, 2 no memory for the scope, 3 encrypted memory whose key is missing.',
+          example: `$ egc export
+
+# Project State
+project: /home/you/projects/my-app
+branch: main
+...
+
+# Another project, as JSON:
+$ egc export --project /path/to/other-app --json
+
+# The global scope shared by all projects:
+$ egc export --scope global`,
+        },
+        {
           cmd: 'egc install',
           desc: 'Install or reinstall the prompt library to a target harness. Useful when you add a new tool after the initial install.',
           example: `$ egc install --target cursor`,

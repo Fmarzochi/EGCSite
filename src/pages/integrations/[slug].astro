@@ -1,0 +1,108 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+import { getBase } from '../../utils/base.ts';
+import { integrations, SUPPORT_LEVEL_LABEL, SUPPORT_LEVEL_SUMMARY } from '../../data/integrations.ts';
+
+export function getStaticPaths() {
+  return integrations.map(integration => ({ params: { slug: integration.slug }, props: { integration } }));
+}
+
+const { integration } = Astro.props;
+const base = getBase();
+const others = integrations.filter(entry => entry.slug !== integration.slug);
+const title = `EGC for ${integration.name}: one memory shared with every AI coding tool`;
+const description = `Give ${integration.name} the same persistent memory, guardrails and context as ${others.length} other AI coding tools. One local install, encrypted on your machine, nothing sent to a cloud.`;
+const levelLabel = SUPPORT_LEVEL_LABEL[integration.level];
+const levelSummary = SUPPORT_LEVEL_SUMMARY[integration.level];
+const levelClass = integration.level === 'core'
+  ? 'bg-egc-100 text-egc-800 dark:bg-egc-900/40 dark:text-egc-300'
+  : 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300';
+const faculties = [
+  {
+    name: 'Memory',
+    text: `Decisions, session context, working memory and lessons captured in ${integration.name} are available in every other tool you open, and the other way around. Encrypted at rest, kept per project and branch, never committed.`,
+  },
+  {
+    name: 'Session Mesh',
+    text: integration.meshSignal
+      ? `Open sessions announce themselves, claim the files they edit and exchange events on a local bus. ${integration.meshSignal}`
+      : `Open sessions announce themselves, claim the files they edit and exchange events on a local bus; ${integration.name} reads the bus through the MCP tools and the memory protocol.`,
+  },
+  {
+    name: 'Guardian',
+    text: `Command validation and write gating through the egc-guardian MCP tools. ${integration.hooks}`,
+  },
+  {
+    name: 'Token Crusher',
+    text: 'Shell output is compressed before it reaches the model, with every error and warning kept and a local ledger of what it saved. Where the tool has no hook that rewrites commands, the PATH-level shim (egc crusher-shim) covers git, npm, gh and the rest.',
+  },
+];
+---
+
+<DocsLayout title={title} description={description} current="integrations">
+
+  <div class="pb-2 mb-8 border-b border-gray-200 dark:border-gray-800">
+    <p class="text-xs font-semibold uppercase tracking-widest text-egc-600 dark:text-egc-400 mb-2">Integrations</p>
+    <div class="flex items-center gap-4 mb-3">
+      <div class="w-12 h-12 rounded-xl bg-white shadow-lg shadow-black/5 dark:shadow-black/20 flex items-center justify-center shrink-0">
+        <img src={`${base}tools/${integration.icon}`} alt="" aria-hidden="true" class="w-8 h-8 object-contain" />
+      </div>
+      <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">EGC for {integration.name}</h1>
+    </div>
+    <p class="text-gray-600 dark:text-gray-400 mb-4">{description}</p>
+    <span class={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold ${levelClass}`}>{levelLabel}</span>
+    <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">{levelSummary} <a href="https://github.com/Fmarzochi/EGC/blob/main/docs/governance/support-levels.md" class="underline hover:text-egc-600 dark:hover:text-egc-400">How support levels work</a>.</p>
+  </div>
+
+  <section class="mb-10">
+    <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Install</h2>
+    <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">One command sets up the engine for {integration.name} and every other tool it detects. Then run <code class="font-mono text-egc-700 dark:text-egc-400">egc init</code> once in each project you want EGC to manage.</p>
+    <div class="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-800 mb-3">
+      <pre class="bg-gray-900 p-4 sm:p-5 text-xs sm:text-sm font-mono overflow-x-auto m-0 rounded-none text-gray-100"><code>npm install -g @egchq/egc &amp;&amp; egc install
+cd your-project &amp;&amp; egc init</code></pre>
+    </div>
+    <p class="text-sm text-gray-600 dark:text-gray-400">The prompt library (agents, skills, commands and rules) is optional and off by default. Add it to every detected tool with <code class="font-mono text-egc-700 dark:text-egc-400">egc install --prompt-library</code>, or to {integration.name} alone with <code class="font-mono text-egc-700 dark:text-egc-400">egc install --target {integration.targetId} --profile full</code>.</p>
+  </section>
+
+  <section class="mb-10">
+    <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">What {integration.name} gets</h2>
+    <div class="grid sm:grid-cols-2 gap-4">
+      {faculties.map(faculty => (
+        <div class="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5">
+          <h3 class="font-semibold text-gray-900 dark:text-white mb-2">{faculty.name}</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400">{faculty.text}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="mb-10">
+    <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Where EGC installs</h2>
+    <div class="rounded-xl border border-gray-200 dark:border-gray-800 overflow-x-auto">
+      <table class="w-full text-sm min-w-[480px]">
+        <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
+          <tr class="bg-white dark:bg-gray-950"><th scope="row" class="px-5 py-3 text-left font-semibold text-gray-700 dark:text-gray-300 w-40">Target id</th><td class="px-5 py-3 font-mono text-xs text-egc-700 dark:text-egc-400">{integration.targetId}</td></tr>
+          <tr class="bg-white dark:bg-gray-950"><th scope="row" class="px-5 py-3 text-left font-semibold text-gray-700 dark:text-gray-300">Files</th><td class="px-5 py-3 text-gray-600 dark:text-gray-400">{integration.installs}</td></tr>
+          <tr class="bg-white dark:bg-gray-950"><th scope="row" class="px-5 py-3 text-left font-semibold text-gray-700 dark:text-gray-300">MCP servers</th><td class="px-5 py-3 text-gray-600 dark:text-gray-400">{integration.mcp}</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="text-xs text-gray-500 dark:text-gray-400 mt-3">The full map of how each tool integrates lives in the <a href="https://github.com/Fmarzochi/EGC/blob/main/docs/spec/integration-tiers.md" class="underline hover:text-egc-600 dark:hover:text-egc-400">integration tiers spec</a>.</p>
+  </section>
+
+  <section class="mb-10">
+    <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Share memory between {integration.name} and</h2>
+    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Every tool below reads and writes the same memory as {integration.name}. Open two of them side by side and the second already knows what the first decided.</p>
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+      {others.map(other => (
+        <a href={`${base}integrations/${other.slug}`} class="flex items-center gap-3 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-3 hover:border-egc-500/60 transition-colors">
+          <div class="w-8 h-8 rounded-lg bg-white shadow shadow-black/5 flex items-center justify-center shrink-0">
+            <img src={`${base}tools/${other.icon}`} alt="" aria-hidden="true" class="w-5 h-5 object-contain" loading="lazy" />
+          </div>
+          <span class="text-sm font-medium text-gray-900 dark:text-gray-100 leading-tight">{other.name}</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+</DocsLayout>

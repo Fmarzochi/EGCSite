@@ -1,0 +1,41 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+import { getBase } from '../../utils/base.ts';
+import { integrations, SUPPORT_LEVEL_LABEL } from '../../data/integrations.ts';
+const base = getBase();
+const core = integrations.filter(entry => entry.level === 'core');
+const community = integrations.filter(entry => entry.level === 'community');
+const groups = [
+  { label: SUPPORT_LEVEL_LABEL.core, entries: core, note: 'The maintainer or an area steward runs these daily; a regression caused by a vendor change is fixed before the next release.' },
+  { label: SUPPORT_LEVEL_LABEL.community, entries: community, note: 'Installed, registered and tested in CI like the core tools; a vendor change that breaks one waits for a report or a pull request.' },
+];
+---
+
+<DocsLayout title="Integrations: EGC in 20 AI coding tools" description="One shared memory across Claude Code, Cursor, Codex, OpenCode, Antigravity and 15 other AI coding tools. Pick your tool to see what EGC installs, where, and what it guarantees." current="integrations">
+
+  <div class="pb-2 mb-8 border-b border-gray-200 dark:border-gray-800">
+    <p class="text-xs font-semibold uppercase tracking-widest text-egc-600 dark:text-egc-400 mb-2">Integrations</p>
+    <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-3">One brain, {integrations.length} AI coding tools</h1>
+    <p class="text-gray-600 dark:text-gray-400">Every tool gets the two local MCP servers, the memory protocol and the session bus. Pick yours to see what EGC installs, where it goes, and how native hooks decide what Guardian and the Token Crusher can do inside it.</p>
+  </div>
+
+  {groups.map(group => (
+    <section class="mb-10">
+      <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-1">{group.label}</h2>
+      <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">{group.note}</p>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+        {group.entries.map(entry => (
+          <a href={`${base}integrations/${entry.slug}`} class="flex items-center gap-3 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-3 hover:border-egc-500/60 transition-colors">
+            <div class="w-8 h-8 rounded-lg bg-white shadow shadow-black/5 flex items-center justify-center shrink-0">
+              <img src={`${base}tools/${entry.icon}`} alt="" aria-hidden="true" class="w-5 h-5 object-contain" loading="lazy" />
+            </div>
+            <span class="text-sm font-medium text-gray-900 dark:text-gray-100 leading-tight">{entry.name}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+  ))}
+
+  <p class="text-xs text-gray-500 dark:text-gray-400">Support levels are defined in <a href="https://github.com/Fmarzochi/EGC/blob/main/docs/governance/support-levels.md" class="underline hover:text-egc-600 dark:hover:text-egc-400">the governance docs</a>; the integration mechanics per tool are in the <a href="https://github.com/Fmarzochi/EGC/blob/main/docs/spec/integration-tiers.md" class="underline hover:text-egc-600 dark:hover:text-egc-400">integration tiers spec</a>.</p>
+
+</DocsLayout>

@@ -236,34 +236,34 @@ const base = getBase();
       </div>
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4" data-animate>
         {[
-          { name: 'Claude Code',    badge: 'MCP + Skills', icon: `${base}tools/anthropic.svg` },
-          { name: 'Cursor',         badge: 'MCP + Bootstrap', icon: `${base}tools/cursor.svg` },
-          { name: 'Codex CLI',      badge: 'MCP + Skills', icon: `${base}tools/openai.svg` },
-          { name: 'OpenCode',       badge: 'MCP + Skills', icon: `${base}tools/opencode.svg` },
-          { name: 'Windsurf',       badge: 'MCP + Skills', icon: `${base}tools/windsurf.svg` },
-          { name: 'Amp',            badge: 'MCP + Skills', icon: `${base}tools/amp.svg` },
-          { name: 'VS Code Copilot',badge: 'MCP + Skills', icon: `${base}tools/githubcopilot.svg` },
-          { name: 'Kiro',           badge: 'MCP + Bootstrap', icon: `${base}tools/kiro.svg` },
-          { name: 'Trae',           badge: 'Context + Bootstrap', icon: `${base}tools/trae.svg` },
-          { name: 'CodeBuddy',      badge: 'Context + Skills', icon: `${base}tools/codebuddy.svg` },
-          { name: 'Antigravity',    badge: 'MCP + Bootstrap', icon: `${base}tools/googlegemini.svg` },
-          { name: 'Zed',            badge: 'MCP + Bootstrap', icon: `${base}tools/zed.svg` },
-          { name: 'Goose',          badge: 'Skills', icon: `${base}tools/goose.svg` },
-          { name: 'Amazon Q Developer', badge: 'Skills', icon: `${base}tools/amazonq.svg` },
-          { name: 'OpenHands',      badge: 'Skills', icon: `${base}tools/openhands.svg` },
-          { name: 'Aider',          badge: 'Skills', icon: `${base}tools/aider.svg` },
-          { name: 'JetBrains Junie', badge: 'Guidelines',   icon: `${base}tools/junie.svg` },
-          { name: 'Warp',           badge: 'Skills', icon: `${base}tools/warp.svg` },
-          { name: 'Cline',          badge: 'Rules',        icon: `${base}tools/cline.svg` },
-          { name: 'Qwen Code',      badge: 'Skills',       icon: `${base}tools/qwencode.svg` },
+          { name: 'Claude Code',    slug: 'claude-code', badge: 'MCP + Skills', icon: `${base}tools/anthropic.svg` },
+          { name: 'Cursor',         slug: 'cursor', badge: 'MCP + Bootstrap', icon: `${base}tools/cursor.svg` },
+          { name: 'Codex CLI',      slug: 'codex-cli', badge: 'MCP + Skills', icon: `${base}tools/openai.svg` },
+          { name: 'OpenCode',       slug: 'opencode', badge: 'MCP + Skills', icon: `${base}tools/opencode.svg` },
+          { name: 'Windsurf',       slug: 'windsurf', badge: 'MCP + Skills', icon: `${base}tools/windsurf.svg` },
+          { name: 'Amp',            slug: 'amp', badge: 'MCP + Skills', icon: `${base}tools/amp.svg` },
+          { name: 'VS Code Copilot',slug: 'vs-code-copilot', badge: 'MCP + Skills', icon: `${base}tools/githubcopilot.svg` },
+          { name: 'Kiro',           slug: 'kiro', badge: 'MCP + Bootstrap', icon: `${base}tools/kiro.svg` },
+          { name: 'Trae',           slug: 'trae', badge: 'Context + Bootstrap', icon: `${base}tools/trae.svg` },
+          { name: 'CodeBuddy',      slug: 'codebuddy', badge: 'Context + Skills', icon: `${base}tools/codebuddy.svg` },
+          { name: 'Antigravity',    slug: 'antigravity', badge: 'MCP + Bootstrap', icon: `${base}tools/googlegemini.svg` },
+          { name: 'Zed',            slug: 'zed', badge: 'MCP + Bootstrap', icon: `${base}tools/zed.svg` },
+          { name: 'Goose',          slug: 'goose', badge: 'Skills', icon: `${base}tools/goose.svg` },
+          { name: 'Amazon Q Developer', slug: 'amazon-q-developer', badge: 'Skills', icon: `${base}tools/amazonq.svg` },
+          { name: 'OpenHands',      slug: 'openhands', badge: 'Skills', icon: `${base}tools/openhands.svg` },
+          { name: 'Aider',          slug: 'aider', badge: 'Skills', icon: `${base}tools/aider.svg` },
+          { name: 'JetBrains Junie', slug: 'jetbrains-junie', badge: 'Guidelines',   icon: `${base}tools/junie.svg` },
+          { name: 'Warp',           slug: 'warp', badge: 'Skills', icon: `${base}tools/warp.svg` },
+          { name: 'Cline',          slug: 'cline', badge: 'Rules',        icon: `${base}tools/cline.svg` },
+          { name: 'Qwen Code',      slug: 'qwen-code', badge: 'Skills',       icon: `${base}tools/qwencode.svg` },
         ].map(tool => (
-          <div class="flex flex-col items-center gap-2 sm:gap-3 rounded-xl p-3 sm:p-5 text-center hover:border-egc-500/60 transition-all duration-200 hover:scale-[1.03] active:scale-[0.97] glass" style="transition-property: transform, border-color, box-shadow;">
+          <a href={`${base}integrations/${tool.slug}`} aria-label={`EGC for ${tool.name}`} class="flex flex-col items-center gap-2 sm:gap-3 rounded-xl p-3 sm:p-5 text-center hover:border-egc-500/60 transition-all duration-200 hover:scale-[1.03] active:scale-[0.97] glass focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-egc-500" style="transition-property: transform, border-color, box-shadow;">
             <div class="w-10 h-10 sm:w-14 sm:h-14 rounded-xl bg-white shadow-lg shadow-black/5 dark:shadow-black/20 flex items-center justify-center">
               <img src={tool.icon} alt="" aria-hidden="true" class="w-6 h-6 sm:w-9 sm:h-9 object-contain" loading="lazy" />
             </div>
             <div class="text-xs sm:text-sm font-semibold text-gray-100 leading-tight w-full">{tool.name}</div>
             <div class="text-[10px] sm:text-xs text-egc-400 leading-tight">{tool.badge}</div>
-          </div>
+          </a>
         ))}
       </div>
     </section>

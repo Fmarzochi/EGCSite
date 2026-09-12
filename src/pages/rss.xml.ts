@@ -46,7 +46,7 @@ const releases = [
     title: 'EGC v1.1.15',
     pubDate: new Date('2026-07-21'),
     description:
-      'Current release. Native install targets for Cline, Qwen Code and Roo Code, so egc install wires EGC into three more agents out of the box. Every native LLM provider client now sets an explicit HTTP timeout, and non-streaming providers raise a clear error instead of hanging on stream=True. A French README brings EGC to nine languages. The dashboard serves static files added after startup without a restart and preserves multi-byte UTF-8 split across TCP chunks. High-severity fast-uri and linkify-it advisories patched.',
+      'Native install targets for Cline, Qwen Code and Roo Code, so egc install wires EGC into three more agents out of the box. Every native LLM provider client now sets an explicit HTTP timeout, and non-streaming providers raise a clear error instead of hanging on stream=True. A French README brings EGC to nine languages. The dashboard serves static files added after startup without a restart and preserves multi-byte UTF-8 split across TCP chunks. High-severity fast-uri and linkify-it advisories patched.',
     link: 'https://github.com/Fmarzochi/EGC/releases/tag/v1.1.15',
   },
   {

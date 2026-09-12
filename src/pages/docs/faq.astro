@@ -23,23 +23,31 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
         },
         {
           q: 'Does the AI need to call get_state manually?',
-          a: 'No. The cognitive bootstrap injected by install.sh writes the protocol into each tool\'s global instruction file. The AI is instructed to call get_state at the start of each session automatically. For tools where the AI instruction file isn\'t read automatically (varies by tool version), you may need to add the project\'s CLAUDE.md or equivalent to the session context manually.',
+          a: 'No. The cognitive bootstrap injected by the installer (egc install, then egc init in each project) writes the protocol into each tool\'s global instruction file. The AI is instructed to call get_state at the start of each session automatically. For tools where the AI instruction file isn\'t read automatically (varies by tool version), you may need to add the project\'s CLAUDE.md or equivalent to the session context manually.',
         },
         {
           q: 'Can I use EGC with multiple projects?',
-          a: 'Yes. State is stored per-project, derived from the absolute path of the project directory. Open different projects in different sessions and each gets its own memory.',
+          a: 'Yes. State is stored per project and per git branch: the project slug comes from the absolute path of the directory, and each branch gets its own state document. Open different projects in different sessions and each gets its own memory.',
         },
         {
           q: 'What happens if the state file gets corrupted?',
-          a: 'Run egc repair to restore managed files. State files are Markdown encrypted at rest; the memory server reads and writes them for you, and its GCM authentication detects corruption on read. You can delete a state file manually to reset a project. The SQLite database is separate from the state files.',
+          a: 'Run egc repair to restore managed files. State files are Markdown encrypted at rest; the memory server reads and writes them for you, and its GCM authentication detects corruption on read. Use egc export to read what is stored. You can delete a state file manually to reset a project. The SQLite database is separate from the state files.',
         },
         {
           q: 'Is the prompt library required?',
-          a: 'No. It\'s optional, off by default, and asked during installation. The MCP servers (memory and guardian) work independently of the prompt library.',
+          a: 'No. It\'s optional and off by default: the installer asks, and from v1.1.22 egc install --prompt-library adds it without the question. The MCP servers (memory and guardian) work independently of the prompt library.',
         },
         {
           q: 'How is state different from a CLAUDE.md or .cursorrules file?',
           a: 'Those files are static and committed to the repo. EGC\'s state is dynamic and project-local: the AI writes to it every session, accumulating decisions and preferences over time. They complement each other: static rules for repo conventions, EGC state for session continuity.',
+        },
+        {
+          q: 'Is EGC free?',
+          a: 'Yes. The engine is Apache-2.0 and stays free. If EGC ever offers something paid, it will be a team layer on top of the engine, never the memory on your machine. The direction is written down in docs/VISION.md.',
+        },
+        {
+          q: 'What do core-supported and community-supported mean?',
+          a: 'Every tool gets the same install path, MCP registration and memory protocol. Core-supported tools (Claude Code, Antigravity, Cursor, Codex CLI, OpenCode) are run daily by the maintainer or a steward, and a regression caused by a vendor change is fixed before the next release. Community-supported tools are installed and tested in CI like the rest, but a vendor change waits for a report or a pull request. The list and the criteria live in docs/governance/support-levels.md, and each tool has its own page under Integrations.',
         },
         {
           q: 'Can I contribute?',

@@ -23,7 +23,7 @@ import DocsLayout from '../layouts/DocsLayout.astro';
         { title: 'Bidirectional sync', desc: 'update_state propagates context to all 11 tool config files automatically. Run egc watch to also sync changes you make directly in any tool file back to state and to all other tools in real time.', icon: '🔄' },
         { title: 'Multi-tool', desc: 'Works with 20 AI coding tools. Install once and EGC registers itself in every tool you have installed.', icon: '🔌' },
         { title: 'Local-first', desc: 'All state stays on your machine at ~/.egc/, encrypted at rest with AES-256-GCM. Nothing is sent externally.', icon: '🔒' },
-        { title: 'Zero config', desc: 'sh scripts/install.sh handles everything. Detects your tools, builds the servers, bootstraps the protocol.', icon: '⚡' },
+        { title: 'Zero config', desc: 'npm install -g @egchq/egc && egc install handles everything: detects your tools, registers the servers, bootstraps the protocol. The prompt library stays opt-in.', icon: '⚡' },
         { title: 'Guardian layer', desc: 'egc-guardian enforces safety at the harness level: every shell command and file write is validated before execution. UserPromptSubmit and PreToolUse hooks block dangerous patterns without AI behavioral calls.', icon: '🛡️' },
         { title: 'EGC Scrubber', desc: 'Content you own is cleaned of AI provenance marks automatically at write time: invisible Unicode carriers and long dashes are stripped, and AI co-authorship is removed from commit messages. An opt-in pass also strips provenance metadata from Markdown, HTML and SVG, from PNG and JPEG images, and from PDF Document Info dictionaries. Deterministic and fail-open, so a crash or binary input never blocks or corrupts a write. An opt-in statistical layer rewrites the prose to reduce token-sampling watermarks and measures how far the text moved: honestly best-effort, never claimed undetectable.', icon: '🧽' },
         { title: 'Decision history', desc: 'Every architectural decision is stored in SQLite with a timestamp. Query by date or tag.', icon: '📋' },
@@ -42,7 +42,7 @@ import DocsLayout from '../layouts/DocsLayout.astro';
   <!-- Prompt library -->
   <section class="mb-10">
     <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Prompt library</h2>
-    <p class="text-sm text-gray-600 dark:text-gray-400 mb-5">Optional and off by default: the installer asks, and the engine works exactly the same without it. Written from real experience, not generated.</p>
+    <p class="text-sm text-gray-600 dark:text-gray-400 mb-5">Optional and off by default: the installer asks (default no), egc install --prompt-library adds it later, and the engine works exactly the same without it. Written from real experience, not generated.</p>
     <!-- Desktop table -->
     <div class="hidden sm:block rounded-xl border border-gray-200 dark:border-gray-800 overflow-x-auto w-full mb-5">
       <table class="w-full text-sm min-w-[500px]">
@@ -108,7 +108,7 @@ import DocsLayout from '../layouts/DocsLayout.astro';
             { tool: 'Antigravity CLI', mcp: true, bootstrap: '~/.gemini/GEMINI.md' },
             { tool: 'Cursor', mcp: true, bootstrap: 'global cursor.rules' },
             { tool: 'Codex CLI', mcp: true, bootstrap: '~/.codex/config.toml' },
-            { tool: 'OpenCode', mcp: true, bootstrap: '~/.opencode/instructions/EGC_MEMORY.md' },
+            { tool: 'OpenCode', mcp: true, bootstrap: '~/.config/opencode/ (plugin, instructions, skills)' },
             { tool: 'Windsurf', mcp: true, bootstrap: '~/.codeium/windsurf/' },
             { tool: 'Amp', mcp: true, bootstrap: '~/.amp/' },
             { tool: 'VS Code Copilot', mcp: true, bootstrap: '~/.github/' },
@@ -146,7 +146,7 @@ import DocsLayout from '../layouts/DocsLayout.astro';
         { tool: 'Antigravity CLI', mcp: true, bootstrap: '~/.gemini/GEMINI.md' },
         { tool: 'Cursor', mcp: true, bootstrap: 'global cursor.rules' },
         { tool: 'Codex CLI', mcp: true, bootstrap: '~/.codex/config.toml' },
-        { tool: 'OpenCode', mcp: true, bootstrap: '~/.opencode/instructions/EGC_MEMORY.md' },
+        { tool: 'OpenCode', mcp: true, bootstrap: '~/.config/opencode/ (plugin, instructions, skills)' },
         { tool: 'Windsurf', mcp: true, bootstrap: '~/.codeium/windsurf/' },
         { tool: 'Amp', mcp: true, bootstrap: '~/.amp/' },
         { tool: 'VS Code Copilot', mcp: true, bootstrap: '~/.github/' },
@@ -160,6 +160,8 @@ import DocsLayout from '../layouts/DocsLayout.astro';
         { tool: 'OpenHands', mcp: false, bootstrap: '~/.agents/skills/' },
         { tool: 'Aider', mcp: false, bootstrap: '.aider/skills/ + .aider.conf.yml' },
         { tool: 'Warp', mcp: false, bootstrap: '.warp/skills/ + AGENTS.md index' },
+        { tool: 'Cline', mcp: false, bootstrap: '.clinerules/' },
+        { tool: 'Qwen Code', mcp: false, bootstrap: '.qwen/skills/' },
       ].map(row => (
         <div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4 bg-white dark:bg-gray-950">
           <div class="flex items-center justify-between mb-1.5">
@@ -192,8 +194,13 @@ import DocsLayout from '../layouts/DocsLayout.astro';
             { provider: 'Google Gemini', models: 'Gemini 2.5 Pro / Flash / Flash-Lite, 2.0 Flash, 1.5 Pro / Flash' },
             { provider: 'Anthropic Claude', models: 'Opus 4.5, Sonnet 4.7, Haiku 4.7' },
             { provider: 'OpenAI', models: 'GPT-4o, GPT-4o-mini' },
+            { provider: 'DeepSeek', models: 'deepseek-chat, deepseek-reasoner' },
+            { provider: 'Mistral AI', models: 'mistral-large-latest' },
+            { provider: 'Groq', models: 'gpt-oss-120b' },
+            { provider: 'Cohere', models: 'Command A' },
+            { provider: 'Vertex AI', models: 'Gemini through Google Cloud' },
             { provider: 'OpenRouter', models: 'DeepSeek R1, DeepSeek Chat V3, Qwen3 235B, Qwen3 32B, Llama 4 Maverick, Llama 4 Scout, Llama 3.3 70B, Gemini 2.5 via OR, GPT-4o via OR, and more' },
-            { provider: 'Ollama', models: 'Llama 3.2 (local, offline)' },
+            { provider: 'Ollama', models: 'Llama 3.2, Mistral, CodeLlama (local, offline)' },
           ].map(row => (
             <tr class="bg-white dark:bg-gray-950">
               <td class="px-5 py-3 font-medium text-gray-900 dark:text-white whitespace-nowrap">{row.provider}</td>
@@ -208,8 +215,13 @@ import DocsLayout from '../layouts/DocsLayout.astro';
         { provider: 'Google Gemini', models: 'Gemini 2.5 Pro / Flash / Flash-Lite, 2.0 Flash, 1.5 Pro / Flash' },
         { provider: 'Anthropic Claude', models: 'Opus 4.5, Sonnet 4.7, Haiku 4.7' },
         { provider: 'OpenAI', models: 'GPT-4o, GPT-4o-mini' },
+        { provider: 'DeepSeek', models: 'deepseek-chat, deepseek-reasoner' },
+        { provider: 'Mistral AI', models: 'mistral-large-latest' },
+        { provider: 'Groq', models: 'gpt-oss-120b' },
+        { provider: 'Cohere', models: 'Command A' },
+        { provider: 'Vertex AI', models: 'Gemini through Google Cloud' },
         { provider: 'OpenRouter', models: 'DeepSeek R1, DeepSeek Chat V3, Qwen3 235B, Qwen3 32B, Llama 4 Maverick, Llama 4 Scout, Llama 3.3 70B, and more' },
-        { provider: 'Ollama', models: 'Llama 3.2 (local, offline)' },
+        { provider: 'Ollama', models: 'Llama 3.2, Mistral, CodeLlama (local, offline)' },
       ].map(row => (
         <div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4 bg-white dark:bg-gray-950">
           <p class="font-medium text-sm text-gray-900 dark:text-white mb-1">{row.provider}</p>

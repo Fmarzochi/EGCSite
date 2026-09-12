@@ -8,7 +8,7 @@ import Icon from '../components/Icon.astro';
 const base = getBase();
 ---
 
-<Base title="EGC - Extended Global Context" description="Stop re-explaining your codebase every session. EGC gives every AI coding tool persistent memory of your project -- install once, works everywhere.">
+<Base title="EGC - Extended Global Context" description="Stop re-explaining your codebase every session. EGC gives every AI coding tool persistent memory of your project: install once, works everywhere.">
   <Navbar />
 
   <main id="main-content">
@@ -45,7 +45,7 @@ const base = getBase();
         </p>
 
         <div class="mx-auto max-w-lg mb-6 sm:mb-8 rounded-xl glass border border-red-500/20 px-4 py-3 text-left animate-fade-in-up animate-fade-in-up-delay-1">
-          <p class="text-[10px] font-semibold uppercase tracking-widest text-red-400 mb-2">Without EGC -- every session</p>
+          <p class="text-[10px] font-semibold uppercase tracking-widest text-red-400 mb-2">Without EGC, every session</p>
           <div class="space-y-1 font-mono text-xs text-red-400/60 dark:text-red-400/50">
             <div class="line-through">"We use PostgreSQL with row-level security..."</div>
             <div class="line-through">"I prefer functional components, no classes..."</div>
@@ -170,7 +170,7 @@ const base = getBase();
         <div class="text-center mb-10 sm:mb-12">
           <p class="text-xs font-semibold uppercase tracking-widest text-egc-600 dark:text-egc-400 mb-3">The Solution</p>
           <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-4">One install. Every tool. Permanent memory.</h2>
-          <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">sh scripts/install.sh detects which AI tools you have and registers the MCP servers in all of them. The AI reads your project state at the start of every session and saves decisions at the end.</p>
+          <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">egc install detects which AI tools you have and registers the MCP servers in all of them. The AI reads your project state at the start of every session and saves decisions at the end.</p>
         </div>
 
         <div class="rounded-2xl overflow-hidden mb-8 glass">
@@ -190,7 +190,7 @@ const base = getBase();
             <div class="text-gray-300 ml-2">• branch-aware state: switching branches restores branch context</div>
             <div class="text-gray-300 ml-2">• update_state propagates context to 11 tool config files automatically</div>
             <div class="text-gray-300 ml-2">• egc watch: bidirectional sync - edit any tool file, all others update</div>
-            <div class="text-gray-300 ml-2">• egc dashboard, egc replay, egc budget, egc plugin -- all available</div>
+            <div class="text-gray-300 ml-2">• egc dashboard, egc replay, egc budget, egc plugin, all available</div>
             <div class="text-gray-300 ml-2">• 20 tools: JetBrains Junie native, AES-256-GCM state encryption</div>
             <div class="text-gray-300 ml-2">• global memory across projects, session bus for parallel sessions</div>
             <div class="text-gray-300 ml-2">• Token Crusher active: egc run compresses noisy output, egc gain / egc saved report savings</div>
@@ -338,6 +338,7 @@ const base = getBase();
                 { tool: 'session_peers', desc: 'Lists live sessions and active path locks' },
                 { tool: 'session_send', desc: 'Sends an event to another session, or broadcasts to the whole project' },
                 { tool: 'session_events', desc: 'Reads events addressed to this session, delivered exactly once' },
+                { tool: 'session_wait', desc: 'Parks the session until an event arrives, wake-on-write' },
                 { tool: 'claim_path', desc: 'Cooperatively locks a path before editing; fails fast if another session holds it' },
                 { tool: 'release_path', desc: 'Releases a path lock held by this session' },
                 { tool: 'team_init', desc: 'Sets up a git-backed sync destination for team memory sharing' },
@@ -372,6 +373,7 @@ const base = getBase();
               {[
                 { tool: 'validate_command', desc: 'Blocks shell injection and unsafe binaries' },
                 { tool: 'validate_write', desc: 'Blocks writes to sensitive paths (~/.ssh, /etc)' },
+                { tool: 'validate_content', desc: 'Flags prompt-injection patterns in untrusted content, advisory only' },
                 { tool: 'reduce_context', desc: 'Deduplicates and trims Markdown payloads' },
                 { tool: 'orchestrate_task', desc: 'Routes prompts to relevant agents and skills' },
                 { tool: 'auto_learn', desc: 'Mines session failures and propagates lessons to all AI tool config files in the project' },
@@ -466,7 +468,7 @@ const base = getBase();
     <section class="border-t border-gray-100 dark:border-gray-800 py-14">
       <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
         <p class="text-xs font-semibold uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-3">Security</p>
-        <p class="text-sm text-gray-400 dark:text-gray-300 mb-6">Stores decisions and preferences in local SQLite. Never in your source code. Never in the cloud.</p>
+        <p class="text-sm text-gray-400 dark:text-gray-300 mb-6">Stores memory encrypted on your machine. Never in your source code. Never in the cloud.</p>
         <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
           <a href="https://www.bestpractices.dev/projects/13099" target="_blank" rel="noopener noreferrer" aria-label="OpenSSF Best Practices badge (opens in new tab)" class="inline-flex items-center focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500 rounded">
             <img src="https://www.bestpractices.dev/projects/13099/badge" alt="OpenSSF Best Practices" class="h-5 sm:h-6" width="160" height="20" loading="lazy" />
@@ -541,7 +543,7 @@ const base = getBase();
             </svg>
             <span class="text-sm font-bold text-gray-900 dark:text-white">Sponsor EGC</span>
           </div>
-          <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 max-w-sm">EGC is free and open source. If it saves you time and tokens, consider sponsoring. It helps keep the project maintained and moving forward.</p>
+          <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 max-w-sm">EGC is free and open source, and the engine stays free. If it saves you time and tokens, consider sponsoring. It helps keep the project maintained and moving forward.</p>
         </div>
         <div class="flex flex-col items-center sm:items-end gap-2 shrink-0 w-full sm:w-auto">
           <a
@@ -588,7 +590,7 @@ const base = getBase();
                 href="https://www.pincushion.io/"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Pincushion -- AI feedback tool (opens in new tab)"
+                aria-label="Pincushion, AI feedback tool (opens in new tab)"
                 class="group relative focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500 rounded-full"
               >
                 <div class="w-[80px] h-[80px] rounded-full overflow-hidden ring-2 ring-transparent group-hover:ring-egc-400 dark:group-hover:ring-egc-500 transition-all duration-200">

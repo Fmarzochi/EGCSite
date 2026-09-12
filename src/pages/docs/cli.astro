@@ -14,6 +14,19 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
     <div class="space-y-4">
       {[
         {
+          cmd: 'egc init',
+          desc: 'Run once in each project you want EGC to manage. Bootstraps the cognitive protocol in every detected tool, registers the MCP servers, prepares the state store, configures the commit-privacy filter for the repository and ends with a compact install check. Each step prints one check line; the full report is one egc doctor away.',
+          example: `$ egc init
+
+✓  cognitive protocol  6 tools up to date (v6)
+✓  MCP registration  7 tools already registered
+✓  memory  state store ready (6 migrations); loads on your first session
+✓  commit-privacy filter  already configured; populated memory is stripped from staged blobs (local repo only)
+✓  token crusher  shim installed and on PATH
+✓  install check  12 targets healthy
+Installation complete.`,
+        },
+        {
           cmd: 'egc doctor',
           desc: 'Verify both servers are built, the database is accessible, and all detected tools have EGC registered. The first command to run after installation.',
           example: `$ egc doctor
@@ -83,10 +96,10 @@ $ egc export --scope global`,
           desc: 'List available profiles and components in the prompt library, and search the whole catalog by keyword with ranked results.',
           example: `$ egc catalog
 
-agents    63
-skills   230
+agents    61
+skills   232
 commands  77
-rules    111
+rules    109
 
 $ egc catalog search memory session
 
@@ -250,6 +263,54 @@ Reinstalling targets...
 
 # Update against a local development checkout instead of the installed package:
 $ egc auto-update --repo-root /path/to/EGC`,
+        },
+        {
+          cmd: 'egc plan',
+          desc: 'Inspect the selective-install manifests and the resolved plan for a target and profile before anything is written.',
+          example: `$ egc plan --profile core --target cursor`,
+        },
+        {
+          cmd: 'egc consult',
+          desc: 'Recommend EGC components and profiles from a natural-language description of what you are building.',
+          example: `$ egc consult "a Django API with Celery workers"`,
+        },
+        {
+          cmd: 'egc list-installed',
+          desc: 'Inspect the install-state files for the current context: which target, which profile, which files.',
+          example: `$ egc list-installed`,
+        },
+        {
+          cmd: 'egc overview',
+          desc: 'Aggregated, read-only view of every per-project memory state on this machine.',
+          example: `$ egc overview`,
+        },
+        {
+          cmd: 'egc verify',
+          desc: 'Run the project verification command and record a receipt for the commit gate.',
+          example: `$ egc verify`,
+        },
+        {
+          cmd: 'egc team',
+          desc: 'Team memory sync over a git remote: init once per workstation, sync to pull and push lessons, status for health.',
+          example: `$ egc team init <remote>
+$ egc team sync
+$ egc team status`,
+        },
+        {
+          cmd: 'egc telemetry',
+          desc: 'Anonymous usage telemetry, asked once on the first install, doctor or init run: status, on, off.',
+          example: `$ egc telemetry status
+$ egc telemetry off`,
+        },
+        {
+          cmd: 'egc session-inspect',
+          desc: 'Emit canonical EGC session snapshots from dmux or Gemini history targets.',
+          example: `$ egc session-inspect`,
+        },
+        {
+          cmd: 'egc loop-status',
+          desc: 'Inspect transcripts for stale loop wakeups and pending tool results.',
+          example: `$ egc loop-status`,
         },
       ].map(item => (
         <div class="rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden">

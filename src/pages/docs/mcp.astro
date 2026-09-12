@@ -9,7 +9,7 @@ const base = getBase();
   <div class="pb-2 mb-8 border-b border-gray-200 dark:border-gray-800">
     <p class="text-xs font-semibold uppercase tracking-widest text-egc-600 dark:text-egc-400 mb-2">MCP Servers</p>
     <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-3">MCP Overview</h1>
-    <p class="text-gray-600 dark:text-gray-400">EGC runs two local MCP servers over stdio. Both are compiled from TypeScript and installed to your machine.</p>
+    <p class="text-gray-600 dark:text-gray-400">EGC runs two local MCP servers over stdio. Both ship prebuilt inside the npm package and are registered in each tool by egc init and the installers.</p>
   </div>
 
   <section class="mb-10">
@@ -27,7 +27,7 @@ const base = getBase();
           </div>
         </div>
         <div class="space-y-1.5 mb-4">
-          {['get_state', 'update_state', 'store_decision', 'query_history', 'search_history', 'working_memory_set', 'working_memory_get', 'working_memory_list', 'lesson_save', 'lesson_recall', 'lesson_reinforce', 'detect_patterns', 'compress_observations', 'get_project_state', 'session_announce', 'session_peers', 'session_send', 'session_events', 'claim_path', 'release_path', 'team_init', 'team_sync', 'team_status'].map(t => (
+          {['get_state', 'update_state', 'store_decision', 'query_history', 'search_history', 'working_memory_set', 'working_memory_get', 'working_memory_list', 'lesson_save', 'lesson_recall', 'lesson_reinforce', 'detect_patterns', 'compress_observations', 'get_project_state', 'session_announce', 'session_peers', 'session_send', 'session_events', 'session_wait', 'claim_path', 'release_path', 'team_init', 'team_sync', 'team_status'].map(t => (
             <div class="flex items-center gap-2">
               <span class="w-1.5 h-1.5 rounded-full bg-egc-500 shrink-0"></span>
               <code class="text-xs font-mono text-gray-700 dark:text-gray-300">{t}</code>
@@ -50,7 +50,7 @@ const base = getBase();
           </div>
         </div>
         <div class="space-y-1.5 mb-4">
-          {['validate_command', 'validate_write', 'reduce_context', 'orchestrate_task', 'auto_learn'].map(t => (
+          {['validate_command', 'validate_write', 'validate_content', 'reduce_context', 'orchestrate_task', 'auto_learn'].map(t => (
             <div class="flex items-center gap-2">
               <span class="w-1.5 h-1.5 rounded-full bg-gray-400 dark:bg-gray-600"></span>
               <code class="text-xs font-mono text-gray-700 dark:text-gray-300">{t}</code>
@@ -66,16 +66,16 @@ const base = getBase();
     <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Transport</h2>
     <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Both servers communicate over <strong class="text-gray-900 dark:text-white">stdio</strong>. Each AI tool spawns them as child processes when a session starts. No daemon, no ports, no network exposure.</p>
     <div class="rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden">
-      <pre class="bg-gray-900 p-5 text-sm font-mono text-gray-300 overflow-x-auto m-0 rounded-none"><code><span class="text-gray-400">// .mcp.json (Claude Code / Cursor)</span>
+      <pre class="bg-gray-900 p-5 text-sm font-mono text-gray-300 overflow-x-auto m-0 rounded-none"><code><span class="text-gray-400">// mcp.json as written by egc init (Cursor shown; Claude Code is registered through its own CLI)</span>
 &#123;
   "mcpServers": &#123;
     "egc-memory": &#123;
       "command": "node",
-      "args": ["/home/user/.egc/servers/egc-memory/dist/index.js"]
+      "args": ["<npm global prefix>/node_modules/@egchq/egc/mcp/servers/egc-memory/build/index.js"]
     &#125;,
     "egc-guardian": &#123;
       "command": "node",
-      "args": ["/home/user/.egc/servers/egc-guardian/dist/index.js"]
+      "args": ["<npm global prefix>/node_modules/@egchq/egc/mcp/servers/egc-guardian/build/index.js"]
     &#125;
   &#125;
 &#125;</code></pre>
@@ -87,7 +87,7 @@ const base = getBase();
     <div class="grid sm:grid-cols-3 gap-4">
       {[
         { icon: '🔒', title: 'No cloud', desc: 'All state stays on your machine. Nothing is sent to external servers.' },
-        { icon: '📁', title: 'Plain files', desc: 'State is Markdown. You can read, edit, or delete it with any text editor.' },
+        { icon: '📁', title: 'Yours to read', desc: 'State is Markdown, encrypted at rest and owned by the server: egc export prints it decrypted, and deleting a state file resets that project.' },
         { icon: '⚡', title: 'Fast startup', desc: 'Stdio transport means near-zero latency. Both servers start in under 100ms.' },
       ].map(card => (
         <div class="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5">

@@ -137,7 +137,7 @@ const base = getBase();
             </span>
           </div>
           <p class="text-sm text-gray-600 dark:text-gray-400">Works on <strong class="text-gray-900 dark:text-white">Linux, macOS, and Windows</strong>. No git clone needed.</p>
-          <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Using <strong class="text-gray-700 dark:text-gray-300">mise, nvm, asdf, or fnm</strong>? Install EGC under your <em>default</em> Node version -- the one active outside any project directory -- to avoid version conflicts.</p>
+          <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Using <strong class="text-gray-700 dark:text-gray-300">mise, nvm, asdf, or fnm</strong>? Install EGC under your <em>default</em> Node version, the one active outside any project directory, to avoid version conflicts.</p>
         </div>
         <div class="flex items-center gap-1.5 px-4 py-2.5 bg-gray-900 border-b border-gray-700">
           <span class="w-2.5 h-2.5 rounded-full bg-red-500"></span>
@@ -212,8 +212,8 @@ const base = getBase();
     <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">What the installer does</h2>
     <div class="space-y-3">
       {[
-        { n: '1', title: 'Compiles MCP servers', desc: 'Builds egc-guardian and egc-memory from TypeScript source.' },
-        { n: '2', title: 'Initializes the database', desc: 'Creates the local SQLite database at ~/.egc/ for persistent memory.' },
+        { n: '1', title: 'Prepares the MCP servers', desc: 'The npm package ships egc-guardian and egc-memory prebuilt; a clone from source builds them from TypeScript.' },
+        { n: '2', title: 'Initializes the store', desc: 'Creates the local SQLite store under ~/.egc/ for decisions, lessons and the session bus. State documents live under ~/.egc/state/, one per project branch, encrypted at rest.' },
         { n: '3', title: 'Cognitive bootstrap', desc: 'Writes the memory protocol into the global instruction files for each detected tool (CLAUDE.md, GEMINI.md, cursor.rules, etc.).' },
         { n: '4', title: 'Registers MCP servers and hooks', desc: 'Adds both servers to every detected tool\'s MCP config. For Claude Code, also installs a SessionStart hook (loads state automatically) and a Stop hook (saves state automatically at session end). Runs once per tool, idempotent.' },
         { n: '5', title: 'Prompt library (optional)', desc: 'Asks whether to install 232 skills, 77 commands, and 61 agents; the default is no. From v1.1.22, egc install --prompt-library answers yes without asking and --no-prompt-library skips the question. Skipped automatically in CI.' },
@@ -275,7 +275,7 @@ database      <span class="text-green-400">ok</span>
 claude code   <span class="text-green-400">registered</span>
 cursor        <span class="text-green-400">registered</span></code></pre>
     </div>
-    <p class="text-sm text-gray-600 dark:text-gray-400">If a tool shows <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">not found</code>, it either isn't installed or wasn't detected. You can re-run <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">sh scripts/install.sh</code> after installing the tool.</p>
+    <p class="text-sm text-gray-600 dark:text-gray-400">If a tool shows <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">not found</code>, it either isn't installed or wasn't detected. You can re-run <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">egc install</code> (or <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">egc init</code> inside a project) after installing the tool.</p>
   </section>
 
   <!-- Next steps -->

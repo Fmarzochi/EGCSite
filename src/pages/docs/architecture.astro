@@ -29,8 +29,10 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
    │           │    │                │
    │ get_state │    │validate_command│
    │update_state    │ validate_write │
-   │store_decis│    │ reduce_context │
-   │query_hist │    │orchestrate_task│
+   │store_decis│    │validate_content│
+   │query_hist │    │ reduce_context │
+   │session bus│    │orchestrate_task│
+   │lessons    │    │   auto_learn   │
    └────┬──────┘    └────────────────┘
         │
    ┌────▼──────────────────────────┐
@@ -39,7 +41,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
    │  │   └── project/branch.md    │
    │  ├── metrics/crusher.jsonl    │
    │  ├── encryption.key           │
-   │  └── db.sqlite                │
+   │  └── egc/state.db             │
    └───────────────────────────────┘
       </code></pre>
     </div>
@@ -68,7 +70,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
         {
           n: '4',
           title: 'egc-guardian',
-          desc: 'Validates commands and file writes before execution and provides context utilities (reduce_context, orchestrate_task, auto_learn). Enforcement is wired at the harness level too: prompt routing and pre-tool hooks run on every session, and the Token Crusher compresses shell output before it reaches the model, with savings tracked in a local ledger (egc gain).',
+          desc: 'Validates commands and file writes before execution, scans untrusted content for prompt-injection patterns (validate_content, advisory only) and provides context utilities (reduce_context, orchestrate_task, auto_learn). Enforcement is wired at the harness level too: prompt routing and pre-tool hooks run on every session, and the Token Crusher compresses shell output before it reaches the model, with savings tracked in a local ledger (egc gain).',
         },
         {
           n: '5',

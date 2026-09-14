@@ -53,8 +53,8 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
         {
           name: 'orchestrate_task',
           signature: 'orchestrate_task({ prompt: string, context?: string })',
-          description: 'Analyzes a prompt and returns a routing suggestion: which agents, skills, and commands are most relevant. Does not execute anything. Returns a plan for the AI to follow.',
-          returns: 'Object with suggested agents, skills, and commands.',
+          description: 'Analyzes a prompt and returns a routing suggestion: which agents and skills are most relevant, scored locally against the catalog with no API key. Only components the tool has installed are offered; matching components that are not installed are listed apart with the command that adds them, so the AI never invokes something missing. Does not execute anything. The decision stays with the AI, by intent.',
+          returns: 'Object with installed agents and skills, a not_installed list with an install_hint, and whether the installation is known.',
           tag: 'Utility',
         },
         {

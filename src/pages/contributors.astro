@@ -15,7 +15,7 @@ import {
 
 const base = getBase();
 
-let contributors: Contributor[] = [];
+let contributors: Contributor[];
 let monthlyChampion: MonthlyChampion | null = null;
 try {
   const result = await fetchContributors(import.meta.env.GITHUB_TOKEN);

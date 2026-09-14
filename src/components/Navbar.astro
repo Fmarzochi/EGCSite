@@ -2,7 +2,6 @@
 import { getBase } from '../utils/base.ts';
 import Icon from './Icon.astro';
 const base = getBase();
-const currentPath = Astro.url.pathname;
 
 const navLinks = [
   { href: `${base}`, label: 'Home' },
@@ -139,7 +138,6 @@ const navLinks = [
       </div>
     </nav>
   </div>
-</div>
 
 <script>
   const mobileMenuBtn = document.getElementById('mobile-menu-btn');

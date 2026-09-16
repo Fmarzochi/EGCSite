@@ -3,6 +3,13 @@ import type { APIContext } from 'astro';
 
 const releases = [
   {
+    title: 'EGC v1.1.22',
+    pubDate: new Date('2026-09-16'),
+    description:
+      'The field round: thirty-four entries since v1.1.21, most of them found by the people testing EGC on real machines. Routing on this machine without an API key (the prompt router and orchestrate_task never offer a component the tool has not installed), the prompt library opt-in on a bare install, the CLI event store under the shared .egc directory whatever tool runs EGC with memory protocol v6 reaching existing installs, egc export for the decrypted memory document, the OpenCode install shipping only what OpenCode reads and the plugin loading again on OpenCode 1.18, retirements of renamed components on every install target, the DCO check skipping the merge commits GitHub creates, hardening rounds on the Guardian git checks and the branch detector, five advisories cleared in the three lockfiles, and the first area steward.',
+    link: 'https://github.com/Fmarzochi/EGC/releases/tag/v1.1.22',
+  },
+  {
     title: 'EGC v1.1.21',
     pubDate: new Date('2026-09-05'),
     description:

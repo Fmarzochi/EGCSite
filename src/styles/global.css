@@ -112,7 +112,7 @@
 }
 
 /* ==========================================================================
-   RESPONSIVE CODE BLOCKS — No horizontal page scroll
+   RESPONSIVE CODE BLOCKS: No horizontal page scroll
    ========================================================================== */
 
 pre,
@@ -142,7 +142,7 @@ pre {
 }
 
 /* ==========================================================================
-   RESPONSIVE TABLES — Horizontal scroll wrapper + card fallback
+   RESPONSIVE TABLES: Horizontal scroll wrapper + card fallback
    ========================================================================== */
 
 /* Tables inside responsive wrappers get smooth scroll on touch */
@@ -177,7 +177,7 @@ pre {
 }
 
 /* ==========================================================================
-   ANIMATIONS & EFFECTS — EGCSite Premium Visual Layer
+   ANIMATIONS & EFFECTS: EGCSite Premium Visual Layer
    Managed dynamically via tailwind.config.mjs; all motion supports reduced motion.
    ========================================================================== */
 
@@ -300,7 +300,7 @@ pre {
    MOBILE-SPECIFIC ENHANCEMENTS
    ========================================================================== */
 
-/* Touch-friendly tap targets — links in nav, badges, etc. */
+/* Touch-friendly tap targets: links in nav, badges, etc. */
 @media (max-width: 639px) {
   /* Ensure all interactive elements meet 44x44 minimum */
   a, button {
@@ -331,7 +331,7 @@ pre {
 }
 
 /* ==========================================================================
-   ACCESSIBILITY — Focus Visibility
+   ACCESSIBILITY: Focus Visibility
    ========================================================================== */
 
 :focus-visible {
@@ -341,7 +341,7 @@ pre {
 }
 
 /* ==========================================================================
-   ACCESSIBILITY — Reduced Motion
+   ACCESSIBILITY: Reduced Motion
    ========================================================================== */
 
 @media (prefers-reduced-motion: reduce) {

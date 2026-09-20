@@ -26,11 +26,11 @@ const faculties = [
     name: 'Session Mesh',
     text: integration.meshSignal
       ? `Open sessions announce themselves, claim the files they edit and exchange events on a local bus. ${integration.meshSignal}`
-      : `Open sessions announce themselves, claim the files they edit and exchange events on a local bus; ${integration.name} reads the bus through the MCP tools and the memory protocol.`,
+      : `Open sessions announce themselves, claim the files they edit and exchange events on a local bus; ${integration.name} reads the bus through the memory protocol, and through the MCP tools where they are registered.`,
   },
   {
     name: 'Guardian',
-    text: `Command validation and write gating through the egc-guardian MCP tools. ${integration.hooks}`,
+    text: `Command validation and write gating by egc-guardian: through its MCP tools where they are registered, and through the tool's own hooks where it has them. ${integration.hooks}`,
   },
   {
     name: 'Token Crusher',

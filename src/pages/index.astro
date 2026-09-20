@@ -124,7 +124,7 @@ const base = getBase();
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 text-center" data-animate>
           {[
             { value: '20', label: 'Supported Tools' },
-            { value: '232+', label: 'Skills' },
+            { value: '232', label: 'Skills' },
             { value: '77', label: 'Commands' },
             { value: '100%', label: 'Open Source' },
           ].map(stat => (
@@ -170,7 +170,7 @@ const base = getBase();
         <div class="text-center mb-10 sm:mb-12">
           <p class="text-xs font-semibold uppercase tracking-widest text-egc-600 dark:text-egc-400 mb-3">The Solution</p>
           <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-4">One install. Every tool. Permanent memory.</h2>
-          <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">egc install detects which AI tools you have and registers the MCP servers in all of them. The AI reads your project state at the start of every session and saves decisions at the end.</p>
+          <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">egc install detects which AI tools you have and sets each one up with what it can read: skills, rules and hooks everywhere, and the two MCP servers in the seven tools that support MCP registration today. The AI reads your project state at the start of every session and saves decisions at the end.</p>
         </div>
 
         <div class="rounded-2xl overflow-hidden mb-8 glass">
@@ -188,7 +188,7 @@ const base = getBase();
             <div class="text-green-400">Ready to pick up:</div>
             <div class="text-gray-300 ml-2">• working_memory, lessons, detect_patterns, compress_observations added</div>
             <div class="text-gray-300 ml-2">• branch-aware state: switching branches restores branch context</div>
-            <div class="text-gray-300 ml-2">• update_state propagates context to 11 tool config files automatically</div>
+            <div class="text-gray-300 ml-2">• update_state propagates context to 14 tool config files automatically</div>
             <div class="text-gray-300 ml-2">• egc watch: bidirectional sync - edit any tool file, all others update</div>
             <div class="text-gray-300 ml-2">• egc dashboard, egc replay, egc budget, egc plugin, all available</div>
             <div class="text-gray-300 ml-2">• 20 tools: JetBrains Junie native, AES-256-GCM state encryption</div>
@@ -240,9 +240,9 @@ const base = getBase();
           { name: 'Cursor',         slug: 'cursor', badge: 'MCP + Bootstrap', icon: `${base}tools/cursor.svg` },
           { name: 'Codex CLI',      slug: 'codex-cli', badge: 'MCP + Skills', icon: `${base}tools/openai.svg` },
           { name: 'OpenCode',       slug: 'opencode', badge: 'MCP + Skills', icon: `${base}tools/opencode.svg` },
-          { name: 'Windsurf',       slug: 'windsurf', badge: 'MCP + Skills', icon: `${base}tools/windsurf.svg` },
-          { name: 'Amp',            slug: 'amp', badge: 'MCP + Skills', icon: `${base}tools/amp.svg` },
-          { name: 'VS Code Copilot',slug: 'vs-code-copilot', badge: 'MCP + Skills', icon: `${base}tools/githubcopilot.svg` },
+          { name: 'Windsurf',       slug: 'windsurf', badge: 'Skills + Hooks', icon: `${base}tools/windsurf.svg` },
+          { name: 'Amp',            slug: 'amp', badge: 'Skills + Hooks', icon: `${base}tools/amp.svg` },
+          { name: 'VS Code Copilot',slug: 'vs-code-copilot', badge: 'Skills + Hooks', icon: `${base}tools/githubcopilot.svg` },
           { name: 'Kiro',           slug: 'kiro', badge: 'MCP + Bootstrap', icon: `${base}tools/kiro.svg` },
           { name: 'Trae',           slug: 'trae', badge: 'Context + Bootstrap', icon: `${base}tools/trae.svg` },
           { name: 'CodeBuddy',      slug: 'codebuddy', badge: 'Context + Skills', icon: `${base}tools/codebuddy.svg` },
@@ -429,14 +429,14 @@ const base = getBase();
             <tr class="transition-colors hover:bg-white/5">
               <td class="px-6 py-4 text-gray-700 dark:text-gray-300">Shell output entering the model</td>
               <td class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">full command output</td>
-              <td class="px-6 py-4 text-center text-egc-600 dark:text-egc-400 font-semibold">crushed up to 99.7%</td>
+              <td class="px-6 py-4 text-center text-egc-600 dark:text-egc-400 font-semibold">crushed up to 90%</td>
             </tr>
           </tbody>
         </table>
       </div>
 
       <p class="text-center text-sm text-gray-600 dark:text-gray-400 mt-6 max-w-2xl mx-auto">
-        The built-in <span class="font-semibold text-egc-600 dark:text-egc-400">Token Crusher</span> compresses shell output before it ever reaches the model and records every saving in a local ledger. One giant git log went from 545 KB to 1.6 KB in a single crush. Run <code class="text-xs bg-gray-100 dark:bg-white/10 px-1.5 py-0.5 rounded font-mono">egc gain</code> to see your own numbers.
+        The built-in <span class="font-semibold text-egc-600 dark:text-egc-400">Token Crusher</span> compresses shell output before it ever reaches the model and records every saving in a local ledger. One giant git log went from 637 KB to 31 KB in a single crush. Run <code class="text-xs bg-gray-100 dark:bg-white/10 px-1.5 py-0.5 rounded font-mono">egc gain</code> to see your own numbers.
       </p>
 
       <!-- Mobile: card layout -->
@@ -445,7 +445,7 @@ const base = getBase();
           { metric: 'Context overhead per session', without: '~1,500 tokens', withEgc: '~200 tokens' },
           { metric: 'Cost for 20 sessions/month', without: '~$0.08-0.09', withEgc: '~$0.011-0.012' },
           { metric: 'Time re-explaining context', without: '10 min/session', withEgc: '0' },
-          { metric: 'Shell output entering the model', without: 'full command output', withEgc: 'crushed up to 99.7%' },
+          { metric: 'Shell output entering the model', without: 'full command output', withEgc: 'crushed up to 90%' },
         ].map(row => (
           <div class="rounded-xl p-4 glass hover-lift hover-glow">
             <div class="text-sm font-semibold text-gray-900 dark:text-white mb-3">{row.metric}</div>

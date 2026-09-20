@@ -24,14 +24,14 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
       {[
         {
           name: 'validate_command',
-          signature: 'validate_command({ command: string, cwd?: string })',
+          signature: 'validate_command({ command: string })',
           description: 'Validates a shell command before execution. Blocks shell injection patterns (semicolons, pipes to bash, backtick execution), known dangerous binaries, inline eval even when the flag is glued to its value, grep pattern files pointed at protected paths, paths smuggled inside flag=value forms, and commands targeting protected paths. Secret redaction also covers Google-style API keys.',
           returns: '{ allowed: boolean, reason?: string }',
           tag: 'Security',
         },
         {
           name: 'validate_write',
-          signature: 'validate_write({ path: string, content?: string })',
+          signature: 'validate_write({ filepath: string })',
           description: 'Validates a file write operation. Blocks writes to sensitive system paths (~/.ssh/, /etc/, /usr/, /bin/) and paths outside the project directory.',
           returns: '{ allowed: boolean, reason?: string }',
           tag: 'Security',
@@ -45,14 +45,14 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
         },
         {
           name: 'reduce_context',
-          signature: 'reduce_context({ content: string, max_tokens?: number })',
+          signature: 'reduce_context({ filepaths: string[], mode?: \'FAST_RESPONSE\' | \'DEEP_COGNITION\' })',
           description: 'Deduplicates and trims a Markdown payload to reduce token count. Removes repeated headers, collapses whitespace, and truncates to the token limit if specified.',
           returns: 'Trimmed Markdown string.',
           tag: 'Utility',
         },
         {
           name: 'orchestrate_task',
-          signature: 'orchestrate_task({ prompt: string, context?: string })',
+          signature: 'orchestrate_task({ prompt: string, filepaths?: string[] })',
           description: 'Analyzes a prompt and returns a routing suggestion: which agents and skills are most relevant, scored locally against the catalog with no API key. Only components the tool has installed are offered; matching components that are not installed are listed apart with the command that adds them, so the AI never invokes something missing. Does not execute anything. The decision stays with the AI, by intent.',
           returns: 'Object with installed agents and skills, a not_installed list with an install_hint, and whether the installation is known.',
           tag: 'Utility',

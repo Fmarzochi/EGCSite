@@ -39,7 +39,7 @@ const releases = [
     title: 'EGC v1.1.17',
     pubDate: new Date('2026-07-27'),
     description:
-      'Bug fix: install.sh was writing Git Bash POSIX-style paths into the MCP config JSON on Windows, which native Windows MCP clients cannot resolve -- the real cause behind unreliable Windows installs. Now detected via uname -s and rewritten through pwd -W. install.ps1 is resynced with install.sh after drifting for several releases: Node version floor, lockfile-aware dependency install, a data-loss bug where a malformed existing MCP config was silently overwritten, Codex CLI TOML path escaping, and a src/ build guard. This release also carries an apology: v1.1.16 shipped with a changelog covering only 2 of the ~25 pull requests actually released, corrected in #1044.',
+      'Bug fix: install.sh was writing Git Bash POSIX-style paths into the MCP config JSON on Windows, which native Windows MCP clients cannot resolve: the real cause behind unreliable Windows installs. Now detected via uname -s and rewritten through pwd -W. install.ps1 is resynced with install.sh after drifting for several releases: Node version floor, lockfile-aware dependency install, a data-loss bug where a malformed existing MCP config was silently overwritten, Codex CLI TOML path escaping, and a src/ build guard. This release also carries an apology: v1.1.16 shipped with a changelog covering only 2 of the ~25 pull requests actually released, corrected in #1044.',
     link: 'https://github.com/Fmarzochi/EGC/releases/tag/v1.1.17',
   },
   {
@@ -81,7 +81,7 @@ const releases = [
     title: 'EGC v1.1.11',
     pubDate: new Date('2026-07-16'),
     description:
-      'Bug fix: dashboard telemetry and cost showing zero in nearly every session, traced to four root causes -- missing PreToolUse/PostToolUse hook wiring for claude.running, the Stop hook not forwarding the model field, Claude Code omitting token usage from the Stop payload (now read from the session transcript instead), and the /stats regexes never matching the real state-file format (now queried directly from SQLite). Also: cyclomatic complexity reduced in resolveInstallPlan and analyzeRecord, the two largest functions flagged by the EGC-128 security audit, each split into focused single-purpose helpers with the full 2825-test suite kept green.',
+      'Bug fix: dashboard telemetry and cost showing zero in nearly every session, traced to four root causes: missing PreToolUse/PostToolUse hook wiring for claude.running, the Stop hook not forwarding the model field, Claude Code omitting token usage from the Stop payload (now read from the session transcript instead), and the /stats regexes never matching the real state-file format (now queried directly from SQLite). Also: cyclomatic complexity reduced in resolveInstallPlan and analyzeRecord, the two largest functions flagged by the EGC-128 security audit, each split into focused single-purpose helpers with the full 2825-test suite kept green.',
     link: 'https://github.com/Fmarzochi/EGC/releases/tag/v1.1.11',
   },
   {
@@ -137,7 +137,7 @@ const releases = [
     title: 'EGC v1.1.3',
     pubDate: new Date('2026-06-24'),
     description:
-      'New: EGC Dashboard (egc dashboard) -- real-time Mission Control at localhost:7890, auto-starts after egc install and egc init, WebSocket live feed of tool calls, memory state, token usage and cost. IDE hook emitters for Cursor, Kiro and OpenCode. Security: XSS escaping, CORS restricted to localhost. Bug fixes: OpenAI tool serialization, async ReActAgent, OpenRouter X-Title header, GeminiProvider null content.',
+      'New: EGC Dashboard (egc dashboard): real-time Mission Control at localhost:7890, auto-starts after egc install and egc init, WebSocket live feed of tool calls, memory state, token usage and cost. IDE hook emitters for Cursor, Kiro and OpenCode. Security: XSS escaping, CORS restricted to localhost. Bug fixes: OpenAI tool serialization, async ReActAgent, OpenRouter X-Title header, GeminiProvider null content.',
     link: 'https://github.com/Fmarzochi/EGC/releases/tag/v1.1.3',
   },
   {

@@ -60,7 +60,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
         {
           name: 'auto_learn',
           signature: 'auto_learn({ project_path: string, target_file?: string, limit?: number })',
-          description: 'Mines recent tool failures from session history and writes actionable recommendations to all AI tool config files found in the project (CLAUDE.md, GEMINI.md, AGENTS.md, Cursor rules, Copilot instructions, Windsurf rules, and others). Only writes to files that already exist. Safe to call at any time; skips gracefully if no failures are found.',
+          description: 'Mines recent tool failures from session history and writes actionable recommendations to all AI tool config files found in the project (CLAUDE.md, GEMINI.md, AGENTS.md, Cursor rules, Copilot instructions, Devin Desktop rules, and others). Only writes to files that already exist. Safe to call at any time; skips gracefully if no failures are found.',
           returns: 'Object with patterns_found, recommendations_written, target_file, propagated_to (list of files written), and skipped.',
           tag: 'Learning',
         },

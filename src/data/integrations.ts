@@ -177,16 +177,6 @@ export const integrations: Integration[] = [
     hooks: 'Guardian through a real PreToolUse hook at ~/.agents/plugins/egc-guardian/; no Token Crusher (allow and deny only).',
     meshSignal: null,
   },
-  {
-    slug: 'amazon-q-developer',
-    name: 'Amazon Q Developer CLI',
-    icon: 'amazonq.svg',
-    level: 'community',
-    targetId: 'amazonq',
-    installs: 'Rules under .amazonq/rules/ (project) and a custom agent at .amazonq/cli-agents/egc-guardian.json (project and home).',
-    mcp: 'Not registered: egc init and the installers write the servers into seven tools, and Amazon Q Developer CLI is not one of them. If it has an MCP config of its own, you can add them by hand.',
-    hooks: 'Guardian through a preToolUse custom-agent hook; activate it once with q settings chat.defaultAgent egc-guardian, or pass --agent egc-guardian; no Token Crusher.',
-    meshSignal: null,
   },
   {
     slug: 'openhands',

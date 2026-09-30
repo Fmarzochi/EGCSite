@@ -97,7 +97,7 @@ export const integrations: Integration[] = [
     targetId: 'windsurf',
     installs: 'Skills installed flat under ~/.codeium/windsurf/skills/<name>/SKILL.md. Windsurf until 2026-06-02: the vendor kept the ~/.codeium/windsurf paths, so the target id stays windsurf.',
     mcp: 'Not registered: egc init and the installers write the servers into seven tools, and Devin Desktop is not one of them. If it has an MCP config of its own, you can add them by hand.',
-    hooks: 'Guardian through the GateGuard hooks its adapter wires; Token Crusher through the PATH-level shim.',
+    hooks: 'Guardian and GateGuard as PreToolUse hooks in Devin Local\'s own config (~/.config/devin/config.json, %APPDATA%\\devin on Windows), with the matchers Devin\'s own migration uses; Token Crusher through the PATH-level shim.',
     meshSignal: null,
   },
   {

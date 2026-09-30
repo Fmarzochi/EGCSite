@@ -207,7 +207,7 @@ export const integrations: Integration[] = [
     targetId: 'cline',
     installs: 'Rules flattened into .clinerules/ in each project with collision-safe namespaced filenames.',
     mcp: 'Not registered: egc init and the installers write the servers into seven tools, and Cline is not one of them. If it has an MCP config of its own, you can add them by hand.',
-    hooks: 'Guardian through a PreToolUse adapter its installer wires; Token Crusher through the PATH-level shim.',
+    hooks: 'Guardian through the PreToolUse hook in .clinerules/hooks, which the VS Code extension and the Cline CLI both run (their shell tools, execute_command and run_commands, are both judged); Token Crusher through the PATH-level shim.',
     meshSignal: null,
   },
   {

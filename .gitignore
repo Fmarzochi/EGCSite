@@ -301,3 +301,9 @@ blob-report/
 .image-cache/
 .astro-image/
 public/_image/
+
+# =========================================================
+# LIGHTHOUSE CI: staged build and local results
+# =========================================================
+lhci-site/
+.lighthouseci/

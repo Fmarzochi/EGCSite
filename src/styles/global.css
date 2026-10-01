@@ -392,3 +392,19 @@ pre {
     scroll-behavior: auto !important;
   }
 }
+
+/* ==========================================================================
+   INDUSTRIAL / EDITORIAL FOUNDATION (PHASE 1A ADDITIONS)
+   ========================================================================== */
+
+:root {
+  --color-graphite-950: #090a0c;
+  --color-graphite-900: #0e0f12;
+  --color-graphite-850: #121316;
+  --color-graphite-800: #18191e;
+  --color-hairline: rgba(255, 255, 255, 0.08);
+}
+
+.border-hairline {
+  border-color: var(--color-hairline);
+}

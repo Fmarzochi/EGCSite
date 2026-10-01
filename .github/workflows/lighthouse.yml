@@ -10,8 +10,10 @@ on:
 permissions:
   contents: read
 
+# A newer push to a pull request replaces its run; on main every commit is
+# its own group, so no commit's run is cancelled or dropped by the next one.
 concurrency:
-  group: lighthouse-${{ github.ref }}
+  group: lighthouse-${{ github.event_name == 'pull_request' && github.ref || github.sha }}
   cancel-in-progress: true
 
 jobs:

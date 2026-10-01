@@ -19,20 +19,26 @@ const OWNER = 'Fmarzochi';
 const REPO = 'EGC';
 const EXCLUDED = new Set([OWNER, 'dependabot[bot]', 'github-actions[bot]']);
 
+// GitHub answers 202 while it computes the stats, and the first request of a
+// month on a repository this size can take minutes. Waits grow from 3 s to
+// 15 s, about two minutes in all; null means the stats are still not ready.
+const STATS_ATTEMPTS = 10;
+const STATS_MAX_WAIT_MS = 15000;
+
 async function fetchStats() {
   const headers = { Accept: 'application/vnd.github+json' };
   if (process.env.GITHUB_TOKEN) headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
 
-  for (let attempt = 0; attempt < 5; attempt++) {
+  for (let attempt = 1; attempt <= STATS_ATTEMPTS; attempt++) {
     const res = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/stats/contributors`, { headers });
     if (res.status === 202) {
-      await new Promise(r => setTimeout(r, 3000));
+      await new Promise(r => setTimeout(r, Math.min(3000 * attempt, STATS_MAX_WAIT_MS)));
       continue;
     }
     if (!res.ok) throw new Error(`GitHub API error ${res.status}`);
     return res.json();
   }
-  throw new Error('GitHub stats API not ready after retries');
+  return null;
 }
 
 function prevMonthWindow(now) {
@@ -79,6 +85,12 @@ async function main() {
   }
 
   const rawStats = await fetchStats();
+  if (!rawStats) {
+    // The archive is not part of the build: skip it rather than block the
+    // deploy, and the next deploy records the month.
+    console.log(`::warning::GitHub is still computing contributor stats; the ${label} champion will be archived on the next deploy.`);
+    return;
+  }
   const champion = computeChampion(rawStats, prevStart, prevEnd);
   if (!champion) {
     console.log(`No qualifying champion found for ${label}. Nothing to do.`);

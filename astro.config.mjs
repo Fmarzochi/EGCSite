@@ -1,10 +1,11 @@
 import { defineConfig } from 'astro/config';
-import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   site: 'https://fmarzochi.github.io',
   base: '/EGCSite',
-  integrations: [tailwind(), sitemap()],
+  integrations: [sitemap()],
   output: 'static',
+  // Astro 7 defaults to 'jsx' whitespace rules; true keeps Astro 5's lossless compression, which preserves how the pages render.
+  compressHTML: true,
 });

@@ -182,113 +182,284 @@ const base = getBase();
       </div>
     </section>
 
-    <!-- Stats -->
-    <section class="border-y border-gray-100/50 dark:border-gray-800/20 bg-gradient-to-b from-transparent via-gray-100/80 to-transparent dark:from-transparent dark:via-gray-900/90 dark:to-transparent py-10 mb-12 sm:mb-20">
-      <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 text-center" data-animate>
-          {[
-            { value: '19', label: 'Supported Tools' },
-            { value: '232', label: 'Skills' },
-            { value: '77', label: 'Commands' },
-            { value: '100%', label: 'Open Source' },
-          ].map(stat => (
-            <div class="hover-lift">
-              <div class="text-2xl sm:text-3xl font-extrabold text-egc-600 dark:text-egc-400 mb-1">{stat.value}</div>
-              <div class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">{stat.label}</div>
+    <!-- Section 01: The Problem -->
+    <section class="relative border-b border-white/[0.08] bg-[#090a0c] py-12 sm:py-16 lg:py-20">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 xl:gap-16 items-start">
+
+          <!-- Editorial Column -->
+          <div class="lg:col-span-5 flex flex-col justify-center">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-sm border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 font-mono text-[11px] uppercase tracking-wider font-medium">
+                01 // THE PROBLEM
+              </span>
             </div>
-          ))}
-        </div>
-      </div>
-    </section>
 
-    <!-- The Problem -->
-    <section class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 mb-12 sm:mb-20" data-animate>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-        <div>
-          <p class="text-xs font-semibold uppercase tracking-widest text-egc-600 dark:text-egc-400 mb-3">The Problem</p>
-          <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-4 leading-tight">Every AI session starts from zero.</h2>
-          <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400 leading-relaxed mb-4">Close the window and the context is gone. Your stack preferences, the architectural decisions you made last week, the approach that failed after three attempts. Next session you spend the first ten minutes re-explaining ground you already covered.</p>
-          <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400 leading-relaxed">It gets worse when you switch tools. Move from Cursor to Claude Code and you start over again. The AI doesn't know you. It never did.</p>
-        </div>
-        <div class="rounded-2xl p-4 sm:p-6 font-mono text-xs sm:text-sm glass overflow-hidden">
-          <div class="text-gray-400 mb-3 text-xs">Without EGC</div>
-          <div class="space-y-2 text-red-400/70 dark:text-red-400/50">
-            <div class="line-through break-words">You: We're using PostgreSQL with row-level security...</div>
-            <div class="line-through break-words">You: I prefer functional components, no classes...</div>
-            <div class="line-through break-words">You: We tried Prisma but moved to Drizzle because...</div>
-            <div class="line-through break-words">You: The auth flow uses sessions, not JWT...</div>
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-[1.05] uppercase">
+              PROJECT CONTEXT<br class="hidden sm:inline" /> GETS FRAGMENTED.
+            </h2>
+
+            <div class="mt-5 sm:mt-6 space-y-3.5 text-base sm:text-lg text-zinc-300 leading-relaxed text-pretty">
+              <p>
+                Modern engineering work can span multiple sessions, supported tools, and Git branches.
+              </p>
+              <p class="text-sm sm:text-base text-zinc-400 leading-relaxed">
+                Without a persistent local reference, useful project decisions and working context can remain isolated inside those boundaries.
+              </p>
+            </div>
           </div>
-          <div class="mt-4 text-gray-400 text-xs">Every. Single. Session.</div>
-        </div>
-      </div>
-    </section>
 
-    <!-- How EGC fixes it -->
-    <section class="relative overflow-hidden bg-gradient-to-b from-transparent via-gray-100 to-transparent dark:from-transparent dark:via-gray-900/90 dark:to-transparent py-12 sm:py-20 mb-12 sm:mb-20">
-      <!-- Glow Orbs for Glassmorphism Refraction -->
-      <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
-        <div class="hidden sm:block absolute left-1/4 top-1/4 w-[280px] h-[280px] sm:w-[400px] sm:h-[400px] bg-egc-500/10 rounded-full blur-[100px] mix-blend-screen dark:bg-egc-500/10"></div>
-        <div class="hidden sm:block absolute right-1/4 bottom-1/4 w-[280px] h-[280px] sm:w-[400px] sm:h-[400px] bg-blue-500/10 rounded-full blur-[80px] mix-blend-screen dark:bg-blue-500/10"></div>
-      </div>
-      <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-10 sm:mb-12">
-          <p class="text-xs font-semibold uppercase tracking-widest text-egc-600 dark:text-egc-400 mb-3">The Solution</p>
-          <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-4">One install. Every tool. Permanent memory.</h2>
-          <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">egc install detects which AI tools you have and sets each one up with what it can read: skills, rules and hooks everywhere, and the two MCP servers in the seven tools it registers them in today. The AI reads your project state at the start of every session and saves decisions at the end.</p>
-        </div>
+          <!-- Problem Concepts Visualization -->
+          <div class="lg:col-span-7 w-full pt-2 lg:pt-3">
+            <div class="border-t lg:border-t-0 lg:border-l border-white/[0.08] pt-6 lg:pt-0 lg:pl-8 xl:pl-12">
 
-        <div class="rounded-2xl overflow-hidden mb-8 glass">
-          <div class="flex items-center gap-1.5 px-4 py-3 bg-gray-900 border-b border-gray-700">
-            <span class="w-3 h-3 rounded-full bg-red-500"></span>
-            <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
-            <span class="w-3 h-3 rounded-full bg-green-500"></span>
-            <span class="ml-2 text-xs text-gray-400 font-mono">With EGC</span>
-          </div>
-          <div class="bg-gray-900 p-3 sm:p-5 font-mono text-xs sm:text-sm text-gray-100 overflow-x-auto" tabindex="0" role="region" aria-label="EGC state restoration session simulation">
-            <div class="text-gray-400 break-words"># You open Claude Code on a project you haven't touched in 2 weeks.</div>
-            <div class="text-gray-400"># Without typing anything:</div>
-            <div class="mt-3 text-egc-400">State loaded from egc-memory</div>
-            <div class="text-green-400 mt-1">Context and preferences acknowledged (terse responses).</div>
-            <div class="text-green-400">Ready to pick up:</div>
-            <div class="text-gray-300 ml-2">• working_memory, lessons, detect_patterns, compress_observations added</div>
-            <div class="text-gray-300 ml-2">• branch-aware state: switching branches restores branch context</div>
-            <div class="text-gray-300 ml-2">• update_state propagates context to 12 tool config files automatically</div>
-            <div class="text-gray-300 ml-2">• egc watch: bidirectional sync - edit any tool file, all others update</div>
-            <div class="text-gray-300 ml-2">• egc dashboard, egc replay, egc budget, egc plugin, all available</div>
-            <div class="text-gray-300 ml-2">• 19 tools: JetBrains Junie native, AES-256-GCM state encryption</div>
-            <div class="text-gray-300 ml-2">• global memory across projects, session bus for parallel sessions</div>
-            <div class="text-gray-300 ml-2">• Token Crusher active: egc run compresses noisy output, egc gain / egc saved report savings</div>
-          </div>
-        </div>
+              <!-- 3 Concepts: Vertical on mobile, 3-column on tablet/desktop -->
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-4 lg:gap-6">
+                <!-- Concept 01: Session -->
+                <div class="pb-5 sm:pb-0 border-b sm:border-b-0 sm:border-r border-white/[0.08] sm:pr-4 lg:pr-6">
+                  <div class="font-mono text-[10px] text-zinc-500 uppercase tracking-wider">
+                    01 // SESSION
+                  </div>
+                  <div class="text-zinc-200 font-mono text-sm font-semibold mt-1 uppercase">
+                    SESSION
+                  </div>
+                  <div class="text-xs text-zinc-400 mt-1.5 leading-relaxed break-words">
+                    Working context can remain scoped to a session.
+                  </div>
+                </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
-          {[
-            {
-              icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>',
-              title: 'Open any session',
-              description: 'AI reads your project state and picks up where you left off.',
-            },
-            {
-              icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/>',
-              title: 'Close any session',
-              description: 'AI saves decisions, preferences, and next steps automatically.',
-            },
-            {
-              icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>',
-              title: 'Switch any tool',
-              description: 'Same state file, same context. No re-explaining.',
-            },
-          ].map(card => (
-            <div class="rounded-2xl p-5 sm:p-6 hover-lift hover-glow glass relative group">
-              <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-egc-500/20 to-egc-600/5 border border-egc-500/30 flex items-center justify-center mb-5 relative overflow-hidden group-hover:border-egc-400/50 transition-colors">
-                <div class="absolute inset-0 bg-egc-500/20 blur-md"></div>
-                <svg class="w-6 h-6 text-egc-600 dark:text-egc-300 relative z-10 filter drop-shadow-[0_0_8px_rgba(34,197,94,0.6)]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" set:html={card.icon.replace(/stroke-width="2"/g, 'stroke-width="2.5"')}></svg>
+                <!-- Concept 02: Tool -->
+                <div class="pb-5 sm:pb-0 border-b sm:border-b-0 sm:border-r border-white/[0.08] sm:pr-4 lg:pr-6">
+                  <div class="font-mono text-[10px] text-zinc-500 uppercase tracking-wider">
+                    02 // TOOL
+                  </div>
+                  <div class="text-zinc-200 font-mono text-sm font-semibold mt-1 uppercase">
+                    TOOL
+                  </div>
+                  <div class="text-xs text-zinc-400 mt-1.5 leading-relaxed break-words">
+                    Supported tools expose different context mechanisms.
+                  </div>
+                </div>
+
+                <!-- Concept 03: Branch -->
+                <div>
+                  <div class="font-mono text-[10px] text-zinc-500 uppercase tracking-wider">
+                    03 // BRANCH
+                  </div>
+                  <div class="text-zinc-200 font-mono text-sm font-semibold mt-1 uppercase">
+                    BRANCH
+                  </div>
+                  <div class="text-xs text-zinc-400 mt-1.5 leading-relaxed break-words">
+                    Working state can differ across Git branches.
+                  </div>
+                </div>
               </div>
-              <h3 class="font-semibold text-gray-900 dark:text-white mb-2">{card.title}</h3>
-              <p class="text-sm text-gray-600 dark:text-gray-400">{card.description}</p>
+
+              <!-- Concluding Row: Project Context Bridge -->
+              <div class="pt-5 border-t border-white/[0.08] mt-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-4 font-mono">
+                  <div class="flex items-center gap-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 select-none"></span>
+                    <span class="text-xs font-semibold text-zinc-200 uppercase tracking-wider">PROJECT CONTEXT</span>
+                  </div>
+                  <div class="text-xs text-zinc-400">
+                    A persistent local reference connects the workflow.
+                  </div>
+                </div>
+              </div>
+
             </div>
-          ))}
+          </div>
+
         </div>
+      </div>
+    </section>
+
+    <!-- Section 02: Product Workflow -->
+    <section class="relative border-b border-white/[0.08] bg-[#0c0d10] py-12 sm:py-16 lg:py-20">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+        <!-- Section Header / Editorial -->
+        <div class="max-w-3xl mb-10 sm:mb-12">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-sm border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 font-mono text-[11px] uppercase tracking-wider font-medium">
+              02 // PRODUCT WORKFLOW
+            </span>
+          </div>
+
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-[1.05] uppercase">
+            PROJECT CONTEXT,<br class="hidden sm:inline" /> AVAILABLE WHEN THE WORK CONTINUES.
+          </h2>
+
+          <p class="mt-4 sm:mt-5 text-base sm:text-lg text-zinc-300 leading-relaxed text-pretty">
+            EGC establishes local, branch-aware project state that supported integrations can retrieve across engineering sessions. Decisions recorded in one workflow become retrievable context when work resumes on the repository.
+          </p>
+        </div>
+
+        <!-- Engineering Workflow Viewport Frame -->
+        <div class="w-full rounded-sm border border-white/[0.12] bg-[#0d0e12] overflow-hidden shadow-2xl">
+          <!-- Viewport Header / Spec Meta -->
+          <div class="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 border-b border-white/[0.08] bg-[#131418]">
+            <div class="flex items-center gap-2 font-mono text-[11px] uppercase tracking-wider text-zinc-300">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              <span>WORKFLOW VIEWPORT // PERSISTENCE PIPELINE</span>
+            </div>
+            <span class="font-mono text-[10px] text-zinc-500 uppercase tracking-widest">SPEC: CONTEXT RETRIEVAL</span>
+          </div>
+
+          <!-- Viewport Stage Sequence -->
+          <div class="p-4 sm:p-6 lg:p-8">
+            <div class="grid grid-cols-1 lg:grid-cols-11 gap-4 lg:gap-2 items-stretch">
+
+              <!-- Stage 01: Session A -->
+              <div class="lg:col-span-3 flex flex-col justify-between p-4 rounded-sm border border-white/[0.06] bg-[#090a0c]">
+                <div>
+                  <div class="flex items-center justify-between font-mono text-[10px] text-zinc-500 uppercase tracking-wider mb-2">
+                    <span>STAGE 01</span>
+                    <span class="text-emerald-400/80 font-mono">ORIGIN</span>
+                  </div>
+                  <h3 class="text-zinc-100 font-mono text-sm font-bold uppercase tracking-wider">
+                    SESSION A
+                  </h3>
+                  <div class="text-[11px] font-mono text-zinc-400 mt-0.5">
+                    Active Development
+                  </div>
+                  <ul class="mt-3.5 space-y-1.5 font-mono text-xs text-zinc-400">
+                    <li class="flex items-start gap-2">
+                      <span class="text-zinc-600 select-none">//</span>
+                      <span>Project decisions</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span class="text-zinc-600 select-none">//</span>
+                      <span>Architecture constraints</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span class="text-zinc-600 select-none">//</span>
+                      <span>Working context formulated</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="mt-4 pt-3 border-t border-white/[0.06] font-mono text-[10px] text-zinc-500 uppercase tracking-wider">
+                  ACTION // RECORD DECISIONS
+                </div>
+              </div>
+
+              <!-- Transition Connector 1: PERSIST -->
+              <div class="lg:col-span-1 flex flex-col items-center justify-center py-2 lg:py-0">
+                <div class="flex lg:flex-col items-center justify-center gap-1.5 text-center">
+                  <span class="font-mono text-[10px] font-semibold uppercase tracking-wider text-emerald-400 px-2 py-0.5 rounded-sm bg-emerald-500/10 border border-emerald-500/20">
+                    PERSIST
+                  </span>
+                  <svg class="w-4 h-4 text-emerald-400 hidden lg:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                  </svg>
+                  <svg class="w-4 h-4 text-emerald-400 lg:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+                  </svg>
+                </div>
+              </div>
+
+              <!-- Stage 02: Local Project State (Center Anchor) -->
+              <div class="lg:col-span-3 flex flex-col justify-between p-4 rounded-sm border border-emerald-500/30 bg-[#090a0c] relative">
+                <div>
+                  <div class="flex items-center justify-between font-mono text-[10px] text-emerald-400 uppercase tracking-wider mb-2">
+                    <span>STAGE 02</span>
+                    <span class="font-semibold">LOCAL REPOSITORY STATE</span>
+                  </div>
+                  <h3 class="text-white font-mono text-sm font-bold uppercase tracking-wider">
+                    PROJECT STATE
+                  </h3>
+                  <div class="text-[11px] font-mono text-zinc-300 mt-0.5">
+                    Branch-Aware Local Persistence
+                  </div>
+                  <ul class="mt-3.5 space-y-1.5 font-mono text-xs text-zinc-300">
+                    <li class="flex items-start gap-2">
+                      <span class="text-emerald-500 select-none">&bull;</span>
+                      <span>Scoped to workspace root</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span class="text-emerald-500 select-none">&bull;</span>
+                      <span>Branch-aware state</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span class="text-emerald-500 select-none">&bull;</span>
+                      <span>Encrypted local store (AES-256)</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="mt-4 pt-3 border-t border-emerald-500/20 flex flex-wrap items-center gap-1.5">
+                  <span class="font-mono text-[10px] px-1.5 py-0.5 rounded-sm bg-white/[0.04] text-zinc-400">LOCAL MEMORY</span>
+                  <span class="font-mono text-[10px] px-1.5 py-0.5 rounded-sm bg-white/[0.04] text-zinc-400">BRANCH-AWARE</span>
+                </div>
+              </div>
+
+              <!-- Transition Connector 2: RETRIEVE -->
+              <div class="lg:col-span-1 flex flex-col items-center justify-center py-2 lg:py-0">
+                <div class="flex lg:flex-col items-center justify-center gap-1.5 text-center">
+                  <span class="font-mono text-[10px] font-semibold uppercase tracking-wider text-emerald-400 px-2 py-0.5 rounded-sm bg-emerald-500/10 border border-emerald-500/20">
+                    RETRIEVE
+                  </span>
+                  <svg class="w-4 h-4 text-emerald-400 hidden lg:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                  </svg>
+                  <svg class="w-4 h-4 text-emerald-400 lg:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+                  </svg>
+                </div>
+              </div>
+
+              <!-- Stage 03: Session B -->
+              <div class="lg:col-span-3 flex flex-col justify-between p-4 rounded-sm border border-white/[0.06] bg-[#090a0c]">
+                <div>
+                  <div class="flex items-center justify-between font-mono text-[10px] text-zinc-500 uppercase tracking-wider mb-2">
+                    <span>STAGE 03</span>
+                    <span class="text-zinc-400 font-mono">CONTINUATION</span>
+                  </div>
+                  <h3 class="text-zinc-100 font-mono text-sm font-bold uppercase tracking-wider">
+                    SESSION B
+                  </h3>
+                  <div class="text-[11px] font-mono text-zinc-400 mt-0.5">
+                    Subsequent Task or Tool
+                  </div>
+                  <ul class="mt-3.5 space-y-1.5 font-mono text-xs text-zinc-400">
+                    <li class="flex items-start gap-2">
+                      <span class="text-zinc-600 select-none">//</span>
+                      <span>Context requested via MCP</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span class="text-zinc-600 select-none">//</span>
+                      <span>Branch context retrieved</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span class="text-zinc-600 select-none">//</span>
+                      <span>Prior project state available</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="mt-4 pt-3 border-t border-white/[0.06] font-mono text-[10px] text-zinc-500 uppercase tracking-wider">
+                  PROTOCOL // MCP GET_STATE
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Viewport Footer Spec Strip -->
+          <div class="px-4 py-2.5 border-t border-white/[0.08] bg-[#111216] flex flex-wrap items-center justify-between gap-2 font-mono text-[10px] text-zinc-400">
+            <div class="flex items-center gap-2">
+              <span class="text-zinc-600">//</span>
+              <span>ARCHITECTURE: PERSISTENCE PIPELINE FOR SUPPORTED INTEGRATIONS</span>
+            </div>
+            <div class="flex items-center gap-3 text-zinc-500">
+              <span>LOCAL MEMORY</span>
+              <span class="text-zinc-700">|</span>
+              <span>BRANCH-AWARE</span>
+              <span class="text-zinc-700">|</span>
+              <span>MCP PROTOCOL</span>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
 

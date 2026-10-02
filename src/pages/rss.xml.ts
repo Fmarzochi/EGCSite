@@ -44,7 +44,7 @@ const releases = [
   },
   {
     title: 'EGC v1.1.16',
-    pubDate: new Date('2026-07-26'),
+    pubDate: new Date('2026-07-27'),
     description:
       'Security: destructive-CLI hard blocks in the Guardian validator for docker/gh/prisma variants, an absolute-path bypass closed, the bash hook dispatcher now fails closed instead of fail-open on its own errors, and all remaining Dependabot/Scorecard advisories cleared. Fixes: Crowdin translation sync corruption fixed at the root (sync is now one-way, Crowdin to repo only), three runtime bugs from a deep source audit fixed, bare egc install fixed on the published npm package, and the fuzz harness actually fuzzing now instead of running blind. Maintenance: CodeRabbit reviews contributor PRs automatically, and Docker images run as a non-root user via a multi-stage build.',
     link: 'https://github.com/Fmarzochi/EGC/releases/tag/v1.1.16',
@@ -163,9 +163,9 @@ const releases = [
   },
   {
     title: 'EGC v1.0.8',
-    pubDate: new Date('2024-12-01'),
+    pubDate: new Date('2026-06-11'),
     description:
-      'Initial public release. npx @egchq/egc install flow, ChatMCP catalog entry, OIDC Trusted Publishing for npm, SessionStart and PreCompact hooks for Claude Code.',
+      'Not the initial public release: v1.0.0 shipped several 1.0.x releases earlier. Titled npx support and mcp.so listing by its own release notes, this release focused on harness reliability and hook stability fixes across Gemini Code, Cursor, OpenCode and Codex, stronger eval-driven workflows and quality gates, better operator UX for autonomous loop execution, session persistence and hook lifecycle fixes, expanded skills and command coverage, and improved release-note generation. First contribution from Kunall7890, in pull request 116.',
     link: 'https://github.com/Fmarzochi/EGC/releases/tag/v1.0.8',
   },
 ];

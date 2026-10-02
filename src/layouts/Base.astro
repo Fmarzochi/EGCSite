@@ -17,6 +17,7 @@ import { getBase } from '../utils/base.ts';
 import '../styles/global.css';
 const base = getBase();
 const canonicalURL = canonical ?? Astro.url.href;
+const ogImageURL = new URL(ogImage, Astro.site!).href;
 ---
 
 <!doctype html>
@@ -36,9 +37,9 @@ const canonicalURL = canonical ?? Astro.url.href;
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={ogImage} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:image:width" content="1729" />
+    <meta property="og:image:height" content="910" />
     <meta property="og:image:alt" content={title} />
     <meta property="og:image:type" content="image/png" />
 
@@ -46,7 +47,7 @@ const canonicalURL = canonical ?? Astro.url.href;
     <meta name="twitter:site" content="@MarzochiFelipe" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image" content={ogImageURL} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

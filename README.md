@@ -15,7 +15,7 @@ Marketing and documentation website for [EGC - Extended Global Context](https://
 
 ## Local development
 
-**Requirements:** Node.js 18+
+**Requirements:** Node.js 22.12+ (the minimum required by Astro 7; CI runs on Node 22)
 
 ```bash
 npm install

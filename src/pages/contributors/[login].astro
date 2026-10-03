@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
 import { getBase } from '../../utils/base.ts';
+import { formatContribution } from '../../utils/format-contributor.ts';
 import {
   fetchContributors,
   highlights,
@@ -34,6 +35,8 @@ const base = getBase();
 if (!info) {
   return Astro.redirect(`${base}contributors`);
 }
+
+const formattedHighlight = formatContribution(info.highlight);
 
 const avatar = `https://github.com/${login}.png`;
 
@@ -154,7 +157,18 @@ const isChampion = championLogin === login;
       <!-- Contribution -->
       <div class="rounded-2xl glass p-6 mb-6">
         <p class="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-3">What they built</p>
-        <p class="text-sm text-gray-300 leading-relaxed mb-4">{info.highlight}</p>
+        {formattedHighlight.isStructured ? (
+          <ul class="space-y-2.5 text-sm text-gray-300 leading-relaxed mb-4">
+            {formattedHighlight.items.map(item => (
+              <li class="flex items-start gap-2.5">
+                <span class="text-egc-400 mt-1 select-none shrink-0 text-xs">✦</span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p class="text-sm text-gray-300 leading-relaxed mb-4">{formattedHighlight.cleanText}</p>
+        )}
         <p class="text-xs text-gray-600">Joined {info.since}</p>
       </div>
 

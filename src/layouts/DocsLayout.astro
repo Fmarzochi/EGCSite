@@ -64,121 +64,175 @@ const sections = [
 ---
 
 <Base title={`${title} - EGC Docs`} description={description}>
-  <Navbar />
+  <div class="bg-[#0C0F0E] text-[#F3F6F4] min-h-screen">
+    <Navbar />
 
-  <!-- Mobile Sidebar Toggle Button (fixed at bottom-right) -->
-  <button
-    id="docs-sidebar-toggle"
-    type="button"
-    aria-label="Open docs menu"
-    aria-expanded="false"
-    class="md:hidden fixed bottom-5 right-5 z-50 w-12 h-12 flex items-center justify-center rounded-full bg-egc-600 text-white shadow-lg shadow-egc-600/30 hover:bg-egc-700 active:scale-90 transition-all duration-150"
-  >
-    <svg id="docs-sidebar-icon-open" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-    </svg>
-    <svg id="docs-sidebar-icon-close" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-    </svg>
-  </button>
+    <!-- Mobile Sidebar Toggle Button -->
+    <button
+      id="docs-sidebar-toggle"
+      type="button"
+      aria-label="Open docs menu"
+      aria-expanded="false"
+      class="md:hidden fixed bottom-6 right-6 z-50 w-12 h-12 flex items-center justify-center rounded-full bg-[#10B866] text-[#04200F] shadow-lg shadow-[#10B866]/30 hover:bg-[#3DF59A] active:scale-95 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3DF59A]"
+    >
+      <svg id="docs-sidebar-icon-open" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+      <svg id="docs-sidebar-icon-close" class="w-5 h-5 hidden" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
 
-  <!-- Mobile Sidebar Backdrop -->
-  <div
-    id="docs-sidebar-backdrop"
-    class="md:hidden fixed inset-0 z-40 bg-black/50 backdrop-blur-sm opacity-0 pointer-events-none invisible transition-all duration-300"
-    aria-hidden="true"
-  ></div>
+    <!-- Mobile Sidebar Backdrop -->
+    <div
+      id="docs-sidebar-backdrop"
+      class="md:hidden fixed inset-0 z-40 bg-black/70 backdrop-blur-sm opacity-0 pointer-events-none invisible transition-all duration-300"
+      aria-hidden="true"
+    ></div>
 
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="flex flex-col md:flex-row gap-0 md:gap-8 py-4 md:py-8 min-h-screen">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row gap-0 md:gap-10 py-6 md:py-10 min-h-[calc(100vh-4rem)]">
 
-      <!-- Sidebar -->
-      <aside
-        id="docs-sidebar"
-        class="fixed md:relative inset-y-0 left-0 z-40 w-72 md:w-56 shrink-0 bg-white dark:bg-gray-950 md:bg-transparent md:dark:bg-transparent border-r md:border-r-0 border-gray-200 dark:border-gray-800 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out overflow-y-auto md:overflow-visible"
-      >
-        <div class="sticky top-0 md:top-20 pt-16 md:pt-0 pb-6 px-4 md:px-0">
-          <!-- Mobile sidebar header -->
-          <div class="md:hidden flex items-center justify-between mb-4 pb-3 border-b border-gray-200 dark:border-gray-800">
-            <span class="text-sm font-semibold text-gray-900 dark:text-white">Documentation</span>
-            <button
-              id="docs-sidebar-close"
-              type="button"
-              aria-label="Close docs menu"
-              class="p-2 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 active:scale-95 transition-all duration-100"
-            >
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
-
-          {sections.map(section => (
-            <div class="mb-6">
-              <p class="mb-1.5 px-3 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">{section.label}</p>
-              <ul class="space-y-1">
-                {section.links.map(link => (
-                  <li>
-                    <a
-                      href={link.href}
-                      target={link.external ? '_blank' : undefined}
-                      rel={link.external ? 'noopener noreferrer' : undefined}
-                      class={`flex items-center justify-between px-3 py-2.5 min-h-[44px] rounded-lg text-sm transition-all duration-100 ${
-                        current === link.id
-                          ? 'text-egc-600 dark:text-egc-400 bg-egc-500/10 dark:bg-egc-500/10 font-semibold border-l-2 border-egc-500 pl-[calc(0.75rem-2px)] active:scale-[0.98]'
-                          : 'text-gray-600 dark:text-gray-400 border-l-2 border-transparent hover:text-egc-600 dark:hover:text-egc-400 hover:bg-gray-500/5 dark:hover:bg-gray-700/50 active:scale-[0.98]'
-                      }`}
-                    >
-                      {link.label}
-                      {link.external && (
-                        <svg class="w-3.5 h-3.5 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-                      )}
-                    </a>
-                  </li>
-                ))}
-              </ul>
+        <!-- Sidebar -->
+        <aside
+          id="docs-sidebar"
+          class="fixed md:relative inset-y-0 left-0 z-40 w-72 md:w-60 shrink-0 bg-[#141816] md:bg-transparent border-r md:border-r border-[#1E2421] md:border-[#1E2421]/60 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out overflow-y-auto md:overflow-visible"
+        >
+          <div class="sticky top-0 md:top-24 pt-16 md:pt-0 pb-8 px-5 md:px-0 md:pr-4">
+            <!-- Mobile sidebar header -->
+            <div class="md:hidden flex items-center justify-between mb-6 pb-3 border-b border-[#1E2421]">
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-[#3DF59A]"></span>
+                <span class="text-sm font-bold text-[#F3F6F4]">Documentation</span>
+              </div>
+              <button
+                id="docs-sidebar-close"
+                type="button"
+                aria-label="Close docs menu"
+                class="p-2 min-w-[40px] min-h-[40px] flex items-center justify-center rounded-lg text-[#A3ADA7] hover:text-[#F3F6F4] hover:bg-white/[0.05] active:scale-95 transition-all"
+              >
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
             </div>
-          ))}
-        </div>
-      </aside>
 
-      <!-- Main Content -->
-      <main id="main-content" class="flex-1 min-w-0 max-w-3xl w-full docs-content">
-        <slot />
-      </main>
+            {sections.map(section => (
+              <div class="mb-6">
+                <p class="mb-2 px-3 font-mono text-[11px] font-semibold uppercase tracking-wider text-[#3DF59A]">{section.label}</p>
+                <ul class="space-y-1">
+                  {section.links.map(link => (
+                    <li>
+                      <a
+                        href={link.href}
+                        target={link.external ? '_blank' : undefined}
+                        rel={link.external ? 'noopener noreferrer' : undefined}
+                        class={`flex items-center justify-between px-3 py-2 min-h-[38px] rounded-lg text-sm transition-all duration-150 ${
+                          current === link.id
+                            ? 'text-[#3DF59A] bg-[#10B866]/15 font-semibold border-l-2 border-[#10B866] pl-[calc(0.75rem-2px)]'
+                            : 'text-[#A3ADA7] border-l-2 border-transparent hover:text-[#F3F6F4] hover:bg-white/[0.04]'
+                        }`}
+                      >
+                        <span>{link.label}</span>
+                        {link.external && (
+                          <svg class="w-3.5 h-3.5 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                          </svg>
+                        )}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </aside>
 
+        <!-- Main Content -->
+        <main id="main-content" class="flex-1 min-w-0 max-w-3xl w-full docs-content py-2">
+          <slot />
+        </main>
+
+      </div>
     </div>
+
+    <Footer />
   </div>
-  <Footer />
 </Base>
 
 <style is:global>
-  /* Docs content: ensure code blocks and tables never overflow */
+  /* Docs content: ensure code blocks and tables match brand identity */
   .docs-content pre {
+    background-color: #141816 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 14px !important;
+    padding: 1.25rem 1.5rem !important;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     max-width: 100%;
+    color: #F3F6F4 !important;
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 0.85rem !important;
+    margin: 1.25rem 0 !important;
   }
 
   .docs-content table {
     width: 100%;
     max-width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+  }
+
+  .docs-content th {
+    background-color: #141816;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: #F3F6F4;
+    font-weight: 600;
+  }
+
+  .docs-content td {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    color: #A3ADA7;
   }
 
   .docs-content img {
     max-width: 100%;
     height: auto;
+    border-radius: 12px;
+  }
+
+  .docs-content h1 {
+    color: #F3F6F4 !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.03em !important;
+  }
+
+  .docs-content h2,
+  .docs-content h3 {
+    color: #F3F6F4 !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.02em !important;
+  }
+
+  .docs-content a:not([class*="btn"]):not([class*="button"]) {
+    color: #3DF59A;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .docs-content a:not([class*="btn"]):not([class*="button"]):hover {
+    color: #B9FFD9;
   }
 
   /* Responsive headings */
   @media (max-width: 767px) {
     .docs-content h1 {
-      font-size: 1.5rem;
-      line-height: 2rem;
+      font-size: 1.75rem;
+      line-height: 2.2rem;
     }
     .docs-content h2 {
-      font-size: 1.25rem;
-      line-height: 1.75rem;
+      font-size: 1.35rem;
+      line-height: 1.8rem;
     }
   }
 
@@ -233,17 +287,14 @@ const sections = [
     closeBtn?.addEventListener('click', closeSidebar);
     backdrop?.addEventListener('click', closeSidebar);
 
-    // Close on Escape key
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && toggleBtn?.getAttribute('aria-expanded') === 'true') {
         closeSidebar();
       }
     });
 
-    // Close sidebar on navigation (for Astro view transitions)
     sidebar?.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
-        // Delay to allow navigation to start
         setTimeout(closeSidebar, 100);
       });
     });

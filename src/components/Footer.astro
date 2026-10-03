@@ -5,6 +5,7 @@ const base = getBase();
 
 const docsLinks = [
   { href: `${base}get-started`, label: 'Get Started' },
+  { href: `${base}features`, label: 'Features' },
   { href: `${base}docs/memory`, label: 'Memory' },
   { href: `${base}docs/guardian`, label: 'Guardian' },
   { href: `${base}docs/mcp`, label: 'MCP Servers' },
@@ -33,28 +34,55 @@ const securityLinks = [
   { href: 'https://github.com/Fmarzochi/EGC/security', label: 'Security Advisories', ariaLabel: 'Security Advisories (opens in new tab)' },
 ];
 
-const linkClass = 'inline-flex items-center min-h-[44px] px-1 -ml-1 text-sm text-gray-600 dark:text-gray-400 hover:text-egc-600 dark:hover:text-egc-400 transition-colors duration-150 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500 rounded';
+const linkClass = 'inline-flex items-center min-h-[36px] py-1 text-sm text-[#A3ADA7] hover:text-[#3DF59A] transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3DF59A] rounded-sm';
 ---
 
-<footer class="border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 mt-24">
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
+<footer class="border-t border-[#1E2421] bg-[#0C0F0E] mt-24">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
 
-    <!-- Footer grid: 1 col mobile → 2 col small → 4 col desktop -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 mb-10">
+    <!-- Footer grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-12 mb-12">
 
       <!-- Brand column -->
       <div class="sm:col-span-2 lg:col-span-1">
-        <a href={base} class="inline-flex items-center gap-2 mb-3 min-h-[44px] focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500 rounded">
-          <img src={`${base}egc-logo.png`} alt="EGC logo" class="h-6 w-6 object-contain shrink-0" />
-          <span class="font-bold text-sm text-gray-900 dark:text-white">EGC</span>
+        <a href={base} class="inline-flex items-center gap-2.5 mb-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3DF59A] rounded-md">
+          <svg width="24" height="24" viewBox="0 0 28 28" fill="#F3F6F4" aria-hidden="true" class="shrink-0">
+            <circle cx="14" cy="8" r="5.5"></circle>
+            <circle cx="20" cy="14" r="5.5"></circle>
+            <circle cx="14" cy="20" r="5.5"></circle>
+            <circle cx="8" cy="14" r="5.5"></circle>
+          </svg>
+          <span class="font-bold text-base tracking-tight text-[#F3F6F4]">EGC</span>
         </a>
-        <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed max-w-xs">Extended Global Context.<br/>Persistent AI memory across sessions and tools.</p>
+        <p class="text-xs text-[#A3ADA7] leading-relaxed max-w-xs mb-4">
+          Extended Global Context.<br/>Your project remembers across sessions, branches and tools.
+        </p>
+        <div class="flex items-center gap-3">
+          <a
+            href="https://github.com/Fmarzochi/EGC"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub repository"
+            class="text-[#A3ADA7] hover:text-[#3DF59A] transition-colors"
+          >
+            <Icon name="github" size={18} />
+          </a>
+          <a
+            href="https://discord.gg/FmXbgUmdmM"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Discord server"
+            class="text-[#A3ADA7] hover:text-[#3DF59A] transition-colors"
+          >
+            <Icon name="discord" size={18} />
+          </a>
+        </div>
       </div>
 
       <!-- Docs column -->
       <div>
-        <h3 class="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-3">Docs</h3>
-        <ul class="space-y-0.5">
+        <h3 class="font-mono text-xs font-semibold uppercase tracking-wider text-[#3DF59A] mb-4">Documentation</h3>
+        <ul class="space-y-1">
           {docsLinks.map(link => (
             <li><a href={link.href} class={linkClass}>{link.label}</a></li>
           ))}
@@ -63,8 +91,8 @@ const linkClass = 'inline-flex items-center min-h-[44px] px-1 -ml-1 text-sm text
 
       <!-- Project column -->
       <div>
-        <h3 class="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-3">Project</h3>
-        <ul class="space-y-0.5">
+        <h3 class="font-mono text-xs font-semibold uppercase tracking-wider text-[#3DF59A] mb-4">Project</h3>
+        <ul class="space-y-1">
           {projectLinks.map(link => (
             <li>
               <a
@@ -83,8 +111,8 @@ const linkClass = 'inline-flex items-center min-h-[44px] px-1 -ml-1 text-sm text
 
       <!-- Security column -->
       <div>
-        <h3 class="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-3">Security</h3>
-        <ul class="space-y-0.5">
+        <h3 class="font-mono text-xs font-semibold uppercase tracking-wider text-[#3DF59A] mb-4">Security</h3>
+        <ul class="space-y-1">
           {securityLinks.map(link => (
             <li>
               <a
@@ -100,62 +128,22 @@ const linkClass = 'inline-flex items-center min-h-[44px] px-1 -ml-1 text-sm text
           ))}
         </ul>
       </div>
+
     </div>
 
-    <!-- Sponsor section -->
-    <div class="border-t border-gray-200 dark:border-gray-800 pt-8 pb-6">
-      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div>
-          <p class="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-1">Sponsors</p>
-          <p class="text-xs text-gray-500 dark:text-gray-400 max-w-sm">EGC is free and open source. Sponsors help keep it maintained.</p>
-        </div>
-        <div class="flex flex-col xs:flex-row sm:flex-row gap-2 w-full sm:w-auto">
-          <a
-            href="https://github.com/sponsors/Fmarzochi"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="GitHub Sponsors (opens in new tab)"
-            class="group inline-flex items-center justify-center gap-2 min-h-[44px] px-4 py-2.5 rounded-lg border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 text-gray-600 dark:text-gray-400 text-xs font-semibold hover:border-pink-300 dark:hover:border-pink-800/80 hover:text-pink-600 dark:hover:text-pink-400 hover:bg-pink-50/30 dark:hover:bg-pink-950/20 active:scale-95 transition-all duration-200 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500"
-          >
-            <svg class="w-4 h-4 text-pink-500/70 dark:text-pink-500/50 group-hover:text-pink-500 dark:group-hover:text-pink-400 transition-colors shrink-0 animate-heartbeat" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M12 21.593c-.317.177-.834.177-1.151 0C9.774 20.57 3 16.259 3 9.5 3 6.462 5.462 4 8.5 4c1.4 0 2.672.536 3.5 1.393C12.828 4.536 14.1 4 15.5 4 18.538 4 21 6.462 21 9.5c0 6.759-6.774 11.07-9 12.093z"/>
-            </svg>
-            GitHub Sponsors
-          </a>
-          <a
-            href="https://www.paypal.com/donate/?business=fmarzochi%40gmail.com&currency_code=USD"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="PayPal donation (opens in new tab)"
-            class="group inline-flex items-center justify-center gap-2 min-h-[44px] px-4 py-2.5 rounded-lg border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 text-gray-600 dark:text-gray-400 text-xs font-semibold hover:border-blue-300 dark:hover:border-blue-800/80 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50/30 dark:hover:bg-blue-950/20 active:scale-95 transition-all duration-200 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500"
-          >
-            <svg class="w-4 h-4 text-blue-500/70 dark:text-blue-500/50 group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors shrink-0" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.541c-.013.076-.026.175-.041.254-.93 4.778-4.005 7.201-9.138 7.201h-2.19a.563.563 0 0 0-.556.479l-1.187 7.527h-.506l-.24 1.516a.56.56 0 0 0 .554.647h3.882c.46 0 .85-.334.922-.788.06-.26.76-4.852.816-5.09a.932.932 0 0 1 .923-.788h.58c3.76 0 6.705-1.528 7.565-5.946.36-1.847.174-3.388-.777-4.471z"/>
-            </svg>
-            PayPal
-          </a>
-        </div>
+    <!-- Bottom sub-footer bar -->
+    <div class="pt-8 border-t border-[#1E2421] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#8C9690]">
+      <div>
+        &copy; {new Date().getFullYear()} EGC Contributors. Apache 2.0 Licensed.
+      </div>
+      <div class="flex items-center gap-6">
+        <a href={`${base}privacy`} class="text-[#8C9690] hover:text-[#3DF59A] transition-colors">Privacy Policy</a>
+        <span>•</span>
+        <a href="https://github.com/Fmarzochi/EGC" target="_blank" rel="noopener noreferrer" class="text-[#8C9690] hover:text-[#3DF59A] transition-colors">Open Source</a>
+        <span>•</span>
+        <span>Local-first</span>
       </div>
     </div>
 
-    <!-- Bottom bar -->
-    <div class="border-t border-gray-200 dark:border-gray-800 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-      <p class="text-xs text-gray-500 dark:text-gray-400 text-center sm:text-left">
-        Released under the <a href="https://github.com/Fmarzochi/EGC/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" aria-label="Apache 2.0 License (opens in new tab)" class="hover:text-gray-700 dark:hover:text-gray-300 transition-colors cursor-pointer focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500 rounded">Apache 2.0 License</a>. &copy; 2026 <a href="https://github.com/Fmarzochi" target="_blank" rel="noopener noreferrer" aria-label="Felipe Marzochi on GitHub (opens in new tab)" class="hover:text-gray-700 dark:hover:text-gray-300 transition-colors cursor-pointer focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500 rounded">Felipe Marzochi</a>.
-        &nbsp;&middot;&nbsp;
-        <a href={`${base}privacy`} class="hover:text-gray-700 dark:hover:text-gray-300 transition-colors focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500 rounded">Privacy</a>
-      </p>
-      <div class="flex items-center gap-1">
-        <a
-          href="https://github.com/Fmarzochi/EGC"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="GitHub (opens in new tab)"
-          class="inline-flex items-center justify-center min-w-[44px] min-h-[44px] rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-150 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500"
-        >
-          <Icon name="github" size={20} />
-        </a>
-      </div>
-    </div>
   </div>
 </footer>

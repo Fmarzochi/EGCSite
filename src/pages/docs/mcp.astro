@@ -14,33 +14,33 @@ const base = getBase();
 
   <section class="mb-10">
     <div class="grid md:grid-cols-2 gap-6">
-      <a href={`${base}docs/memory`} class="block rounded-xl border-2 border-egc-200 dark:border-egc-900 bg-white dark:bg-gray-900 p-6 hover:border-egc-400 dark:hover:border-egc-700 transition-colors">
+      <a href={`${base}docs/memory`} class="block rounded-xl border border-[#10B866]/30 bg-[#141816] p-6 hover:border-[#3DF59A]/60 transition-colors">
         <div class="flex items-center gap-3 mb-4">
-          <div class="w-10 h-10 rounded-xl bg-egc-50 dark:bg-egc-900/50 flex items-center justify-center">
-            <svg class="w-5 h-5 text-egc-600 dark:text-egc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <div class="w-10 h-10 rounded-xl bg-[#10B866]/15 flex items-center justify-center">
+            <svg class="w-5 h-5 text-[#3DF59A]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/>
             </svg>
           </div>
           <div>
-            <h2 class="font-bold text-gray-900 dark:text-white font-mono">egc-memory</h2>
-            <p class="text-xs text-gray-500 dark:text-gray-400">Persistent project memory</p>
+            <h2 class="font-bold text-[#F3F6F4] font-mono">egc-memory</h2>
+            <p class="text-xs text-[#A3ADA7]">Persistent project memory</p>
           </div>
         </div>
         <div class="space-y-1.5 mb-4">
           {['get_state', 'update_state', 'store_decision', 'query_history', 'search_history', 'working_memory_set', 'working_memory_get', 'working_memory_list', 'lesson_save', 'lesson_recall', 'lesson_reinforce', 'detect_patterns', 'compress_observations', 'get_project_state', 'session_announce', 'session_peers', 'session_send', 'session_events', 'session_wait', 'claim_path', 'release_path', 'team_init', 'team_sync', 'team_status'].map(t => (
             <div class="flex items-center gap-2">
-              <span class="w-1.5 h-1.5 rounded-full bg-egc-500 shrink-0"></span>
-              <code class="text-xs font-mono text-gray-700 dark:text-gray-300">{t}</code>
+              <span class="w-1.5 h-1.5 rounded-full bg-[#10B866] shrink-0"></span>
+              <code class="text-xs font-mono text-[#F3F6F4]">{t}</code>
             </div>
           ))}
         </div>
-        <span class="text-xs font-semibold text-egc-600 dark:text-egc-400">Read docs &rarr;</span>
+        <span class="text-xs font-semibold text-[#3DF59A]">Read docs &rarr;</span>
       </a>
 
-      <a href={`${base}docs/guardian`} class="block rounded-xl border-2 border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 hover:border-gray-400 dark:hover:border-gray-600 transition-colors">
+      <a href={`${base}docs/guardian`} class="block rounded-xl border border-[#1E2421] bg-[#141816] p-6 hover:border-white/30 transition-colors">
         <div class="flex items-center gap-3 mb-4">
-          <div class="w-10 h-10 rounded-xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-            <svg class="w-5 h-5 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <div class="w-10 h-10 rounded-xl bg-white/[0.06] flex items-center justify-center">
+            <svg class="w-5 h-5 text-[#A3ADA7]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
             </svg>
           </div>

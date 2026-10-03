@@ -18,10 +18,24 @@ export default {
           900: 'var(--egc-green-900, #14532d)',
           950: 'var(--egc-green-950, #052e16)',
         },
+        brand: {
+          ground: '#0C0F0E',
+          surface: '#141816',
+          forest: '#052818',
+          deep: '#0B7A44',
+          action: '#10B866',
+          glow: '#3DF59A',
+          mint: '#B9FFD9',
+          'on-green': '#04200F',
+          ink: '#F3F6F4',
+          muted: '#A3ADA7',
+          'soft-light': '#E1E7E3',
+          'muted-light': '#48534C',
+        },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-        mono: ['JetBrains Mono', 'Fira Code', 'Consolas', 'monospace'],
+        sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'Fira Code', 'Consolas', 'monospace'],
       },
       typography: {
         DEFAULT: {
@@ -63,6 +77,14 @@ export default {
           '42%': { transform: 'scale(1.15)' },
           '70%': { transform: 'scale(1)' },
         },
+        egcGlow: {
+          '0%, 100%': { filter: 'drop-shadow(0 0 40px rgba(61,245,154,.55))' },
+          '50%': { filter: 'drop-shadow(0 0 80px rgba(61,245,154,.85))' },
+        },
+        egcSpin: {
+          from: { transform: 'rotate(0deg)' },
+          to: { transform: 'rotate(360deg)' },
+        },
       },
       animation: {
         'fade-in-up': 'fadeInUp 0.6s ease-out both',
@@ -71,6 +93,8 @@ export default {
         shimmer: 'shimmer 2s linear infinite',
         'gradient-shift': 'gradientShift 3s ease infinite',
         heartbeat: 'heartbeat 1.5s ease-in-out infinite',
+        'egc-clover': 'egcGlow 5s ease-in-out infinite',
+        'egc-orbit': 'egcSpin 60s linear infinite',
       },
       backgroundImage: {
         'subtle-grid':

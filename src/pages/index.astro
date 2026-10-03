@@ -1,1258 +1,362 @@
 ---
 import Base from '../layouts/Base.astro';
-import Navbar from '../components/Navbar.astro';
-import Footer from '../components/Footer.astro';
-import '../styles/global.css';
 import { getBase } from '../utils/base.ts';
-import Icon from '../components/Icon.astro';
 const base = getBase();
 ---
 
-<Base title="EGC - Extended Global Context" description="Keep useful project context available across coding sessions and supported tools, with local memory designed for developer workflows.">
-  <Navbar />
+<Base
+  title="EGC — Context That Never Resets"
+  description="Your project remembers. So you don't have to. EGC keeps your project's useful context available across tools, sessions and workflows."
+>
+  <div style="font-family: 'Plus Jakarta Sans', 'Helvetica Neue', sans-serif; color: #F3F6F4; background: #0C0F0E; min-height: 100vh">
 
-  <main id="main-content">
-    <!-- Hero -->
-    <section class="relative border-b border-white/[0.08] bg-[#090a0c] pt-10 pb-12 sm:pt-14 sm:pb-14 lg:pt-16 lg:pb-16 xl:pt-16 xl:pb-14">
-      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 xl:gap-10 items-start">
+    <!-- HERO CARD -->
+    <section id="top" style="position: relative; overflow: hidden; border-radius: 0 0 56px 56px; background: radial-gradient(70% 90% at 55% 20%, #12B566 0%, #08633A 36%, #052818 70%, #0C0F0E 100%)">
 
-          <!-- Primary Editorial Column -->
-          <div class="lg:col-span-7 flex flex-col justify-center">
-            <!-- Eyebrow / Technical Specification -->
-            <div class="flex flex-wrap items-center gap-2.5 mb-5 sm:mb-6">
-              <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-sm border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 font-mono text-[11px] uppercase tracking-wider font-medium">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                EXTENDED GLOBAL CONTEXT
-              </span>
-              <a
-                href="https://github.com/Fmarzochi/EGC/releases"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="See release notes (opens in new tab)"
-                class="inline-flex items-center gap-1 font-mono text-[11px] text-zinc-400 hover:text-zinc-200 transition-colors uppercase tracking-wider"
-              >
-                <span class="text-zinc-600">//</span>
-                <span>v1.1.22</span>
-                <span class="underline underline-offset-2">NOTES</span>
-              </a>
-            </div>
-
-            <!-- Headline -->
-            <h1 class="text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold tracking-tight text-white leading-[1.02] uppercase">
-              CONTEXT SHOULDN'T RESET.
-            </h1>
-
-            <!-- Conservative Supporting Copy -->
-            <p class="mt-5 sm:mt-6 text-base sm:text-lg xl:text-lg text-zinc-300 leading-relaxed max-w-xl xl:max-w-2xl text-pretty">
-              Keep useful project context available across coding sessions and supported tools, with local memory designed for developer workflows.
-            </p>
-
-            <!-- Actions Row: CTAs -->
-            <div class="mt-8 flex flex-wrap items-center gap-3">
-              <button
-                id="open-install-modal"
-                type="button"
-                class="inline-flex items-center justify-center gap-2 min-h-[44px] px-5 py-2.5 rounded-sm bg-emerald-500 hover:bg-emerald-400 text-black font-semibold text-sm transition-colors focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400 active:scale-[0.98]"
-              >
-                Install EGC
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-                </svg>
-              </button>
-              <a
-                href="https://github.com/Fmarzochi/EGC"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="View EGC on GitHub (opens in new tab)"
-                class="inline-flex items-center justify-center gap-2 min-h-[44px] px-4 py-2.5 rounded-sm border border-white/15 bg-white/[0.03] text-zinc-200 hover:text-white hover:bg-white/[0.08] hover:border-white/30 text-sm font-medium transition-colors focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400 active:scale-[0.98]"
-              >
-                <Icon name="github" size={16} />
-                GitHub
-              </a>
-            </div>
-
-            <!-- Install Command Interaction Block -->
-            <div class="mt-6 max-w-md xl:max-w-lg">
-              <div
-                id="copy-install-cmd"
-                role="button"
-                tabindex="0"
-                aria-label="Copy install commands"
-                class="group flex items-center justify-between gap-3 px-3.5 py-2.5 rounded-sm border border-white/[0.12] bg-[#121316] hover:border-emerald-500/50 hover:bg-[#16171b] transition-all cursor-pointer select-none focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
-              >
-                <div class="flex items-center gap-2.5 min-w-0 font-mono text-xs">
-                  <span class="text-emerald-400 font-bold select-none">$</span>
-                  <span class="text-zinc-200 select-all truncate">npm install -g @egchq/egc</span>
-                </div>
-                <div class="flex items-center gap-1.5 shrink-0 text-zinc-400 group-hover:text-emerald-400 transition-colors">
-                  <svg id="copy-icon" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
-                  </svg>
-                  <span id="copy-label" class="text-[11px] font-mono uppercase tracking-wider">copy</span>
-                </div>
-              </div>
-              <div class="mt-1.5 flex items-center gap-2 font-mono text-[11px] text-zinc-500 px-1">
-                <span class="text-zinc-600">//</span>
-                <span>followed by: <code class="text-zinc-400 font-mono">egc install</code></span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Secondary Engineering Column: Architectural State Schematic -->
-          <div class="lg:col-span-5 w-full">
-            <div class="rounded-sm border border-white/[0.12] bg-[#0d0e12] overflow-hidden shadow-2xl">
-              <!-- Schematic Header -->
-              <div class="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 border-b border-white/[0.08] bg-[#131418]">
-                <div class="flex items-center gap-2 font-mono text-[11px] uppercase tracking-wider text-zinc-300">
-                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                  <span>CONTEXT ARCHITECTURE</span>
-                </div>
-                <span class="font-mono text-[10px] text-zinc-500 uppercase tracking-widest">SPEC: PERSISTENCE</span>
-              </div>
-
-              <!-- Schematic Content -->
-              <div class="p-4 sm:p-5 xl:p-6">
-                <div class="font-mono text-[10px] uppercase tracking-widest text-zinc-500 mb-2.5">
-                  // CORE CONTEXT
-                </div>
-                <div class="grid grid-cols-1 min-[350px]:grid-cols-2 gap-2 font-mono text-xs">
-                  <div class="p-2.5 xl:p-3 rounded-sm border border-white/[0.06] bg-white/[0.02]">
-                    <div class="text-[10px] text-zinc-500 uppercase tracking-wider">01 // PROJECT</div>
-                    <div class="text-zinc-200 font-semibold mt-1">Repository Root</div>
-                    <div class="text-[11px] text-zinc-400 mt-0.5 leading-snug break-words">Local workspace root</div>
-                  </div>
-                  <div class="p-2.5 xl:p-3 rounded-sm border border-white/[0.06] bg-white/[0.02]">
-                    <div class="text-[10px] text-zinc-500 uppercase tracking-wider">02 // BRANCH</div>
-                    <div class="text-zinc-200 font-semibold mt-1">Git Context</div>
-                    <div class="text-[11px] text-zinc-400 mt-0.5 leading-snug break-words">Branch-aware state</div>
-                  </div>
-                  <div class="p-2.5 xl:p-3 rounded-sm border border-white/[0.06] bg-white/[0.02]">
-                    <div class="text-[10px] text-zinc-500 uppercase tracking-wider">03 // MEMORY</div>
-                    <div class="text-zinc-200 font-semibold mt-1">egc-memory</div>
-                    <div class="text-[11px] text-zinc-400 mt-0.5 leading-snug break-words">Local MCP server</div>
-                  </div>
-                  <div class="p-2.5 xl:p-3 rounded-sm border border-white/[0.06] bg-white/[0.02]">
-                    <div class="text-[10px] text-zinc-500 uppercase tracking-wider">04 // STATE</div>
-                    <div class="text-zinc-200 font-semibold mt-1">Decisions &amp; Stack</div>
-                    <div class="text-[11px] text-zinc-400 mt-0.5 leading-snug break-words">Encrypted local store</div>
-                  </div>
-                </div>
-
-                <!-- Verified CLI Setup Sequence -->
-                <div class="mt-4 pt-4 border-t border-white/[0.08]">
-                  <div class="font-mono text-[10px] uppercase tracking-widest text-zinc-500 mb-2">
-                    // SETUP WORKFLOW
-                  </div>
-                  <div class="space-y-1.5 xl:space-y-2 font-mono text-xs text-zinc-300 bg-[#08090b] p-3 xl:p-3.5 rounded-sm border border-white/[0.06]">
-                    <div class="flex items-center gap-2">
-                      <span class="text-emerald-400 select-none">$</span>
-                      <span>npm install -g @egchq/egc</span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                      <span class="text-emerald-400 select-none">$</span>
-                      <span>egc install</span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                      <span class="text-emerald-400 select-none">$</span>
-                      <span>egc doctor</span>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- MCP Servers Architecture Listing -->
-                <div class="mt-3 pt-3 border-t border-white/[0.08]">
-                  <div class="font-mono text-[10px] uppercase tracking-widest text-zinc-500 mb-2">
-                    MCP SERVERS
-                  </div>
-                  <div class="grid grid-cols-1 min-[350px]:grid-cols-2 gap-2 font-mono text-[11px]">
-                    <div class="px-2.5 py-1.5 xl:py-2 rounded-sm bg-white/[0.02] border border-white/[0.04] text-zinc-300">
-                      egc-memory
-                    </div>
-                    <div class="px-2.5 py-1.5 xl:py-2 rounded-sm bg-white/[0.02] border border-white/[0.04] text-zinc-300">
-                      egc-guardian
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 01: The Problem -->
-    <section class="relative border-b border-white/[0.08] bg-[#090a0c] py-12 sm:py-16 lg:py-20">
-      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 xl:gap-16 items-start">
-
-          <!-- Editorial Column -->
-          <div class="lg:col-span-5 flex flex-col justify-center">
-            <div class="flex items-center gap-2 mb-4">
-              <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-sm border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 font-mono text-[11px] uppercase tracking-wider font-medium">
-                01 // THE PROBLEM
-              </span>
-            </div>
-
-            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-[1.05] uppercase">
-              PROJECT CONTEXT<br class="hidden sm:inline" /> GETS FRAGMENTED.
-            </h2>
-
-            <div class="mt-5 sm:mt-6 space-y-3.5 text-base sm:text-lg text-zinc-300 leading-relaxed text-pretty">
-              <p>
-                Modern engineering work can span multiple sessions, supported tools, and Git branches.
-              </p>
-              <p class="text-sm sm:text-base text-zinc-400 leading-relaxed">
-                Without a persistent local reference, useful project decisions and working context can remain isolated inside those boundaries.
-              </p>
-            </div>
-          </div>
-
-          <!-- Problem Concepts Visualization -->
-          <div class="lg:col-span-7 w-full pt-2 lg:pt-3">
-            <div class="border-t lg:border-t-0 lg:border-l border-white/[0.08] pt-6 lg:pt-0 lg:pl-8 xl:pl-12">
-
-              <!-- 3 Concepts: Vertical on mobile, 3-column on tablet/desktop -->
-              <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-4 lg:gap-6">
-                <!-- Concept 01: Session -->
-                <div class="pb-5 sm:pb-0 border-b sm:border-b-0 sm:border-r border-white/[0.08] sm:pr-4 lg:pr-6">
-                  <div class="font-mono text-[10px] text-zinc-500 uppercase tracking-wider">
-                    01 // SESSION
-                  </div>
-                  <div class="text-zinc-200 font-mono text-sm font-semibold mt-1 uppercase">
-                    SESSION
-                  </div>
-                  <div class="text-xs text-zinc-400 mt-1.5 leading-relaxed break-words">
-                    Working context can remain scoped to a session.
-                  </div>
-                </div>
-
-                <!-- Concept 02: Tool -->
-                <div class="pb-5 sm:pb-0 border-b sm:border-b-0 sm:border-r border-white/[0.08] sm:pr-4 lg:pr-6">
-                  <div class="font-mono text-[10px] text-zinc-500 uppercase tracking-wider">
-                    02 // TOOL
-                  </div>
-                  <div class="text-zinc-200 font-mono text-sm font-semibold mt-1 uppercase">
-                    TOOL
-                  </div>
-                  <div class="text-xs text-zinc-400 mt-1.5 leading-relaxed break-words">
-                    Supported tools expose different context mechanisms.
-                  </div>
-                </div>
-
-                <!-- Concept 03: Branch -->
-                <div>
-                  <div class="font-mono text-[10px] text-zinc-500 uppercase tracking-wider">
-                    03 // BRANCH
-                  </div>
-                  <div class="text-zinc-200 font-mono text-sm font-semibold mt-1 uppercase">
-                    BRANCH
-                  </div>
-                  <div class="text-xs text-zinc-400 mt-1.5 leading-relaxed break-words">
-                    Working state can differ across Git branches.
-                  </div>
-                </div>
-              </div>
-
-              <!-- Concluding Row: Project Context Bridge -->
-              <div class="pt-5 border-t border-white/[0.08] mt-6">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-4 font-mono">
-                  <div class="flex items-center gap-2">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 select-none"></span>
-                    <span class="text-xs font-semibold text-zinc-200 uppercase tracking-wider">PROJECT CONTEXT</span>
-                  </div>
-                  <div class="text-xs text-zinc-400">
-                    A persistent local reference connects the workflow.
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 02: Product Workflow -->
-    <section class="relative border-b border-white/[0.08] bg-[#0c0d10] py-12 sm:py-16 lg:py-20">
-      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-
-        <!-- Section Header / Editorial -->
-        <div class="max-w-3xl mb-10 sm:mb-12">
-          <div class="flex items-center gap-2 mb-4">
-            <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-sm border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 font-mono text-[11px] uppercase tracking-wider font-medium">
-              02 // PRODUCT WORKFLOW
-            </span>
-          </div>
-
-          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-[1.05] uppercase">
-            PROJECT CONTEXT,<br class="hidden sm:inline" /> AVAILABLE WHEN THE WORK CONTINUES.
-          </h2>
-
-          <p class="mt-4 sm:mt-5 text-base sm:text-lg text-zinc-300 leading-relaxed text-pretty">
-            EGC establishes local, branch-aware project state that supported integrations can retrieve across engineering sessions. Decisions recorded in one workflow become retrievable context when work resumes on the repository.
-          </p>
-        </div>
-
-        <!-- Engineering Workflow Viewport Frame -->
-        <div class="w-full rounded-sm border border-white/[0.12] bg-[#0d0e12] overflow-hidden shadow-2xl">
-          <!-- Viewport Header / Spec Meta -->
-          <div class="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 border-b border-white/[0.08] bg-[#131418]">
-            <div class="flex items-center gap-2 font-mono text-[11px] uppercase tracking-wider text-zinc-300">
-              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-              <span>WORKFLOW VIEWPORT // PERSISTENCE PIPELINE</span>
-            </div>
-            <span class="font-mono text-[10px] text-zinc-500 uppercase tracking-widest">SPEC: CONTEXT RETRIEVAL</span>
-          </div>
-
-          <!-- Viewport Stage Sequence -->
-          <div class="p-4 sm:p-6 lg:p-8">
-            <div class="grid grid-cols-1 lg:grid-cols-11 gap-4 lg:gap-2 items-stretch">
-
-              <!-- Stage 01: Session A -->
-              <div class="lg:col-span-3 flex flex-col justify-between p-4 rounded-sm border border-white/[0.06] bg-[#090a0c]">
-                <div>
-                  <div class="flex items-center justify-between font-mono text-[10px] text-zinc-500 uppercase tracking-wider mb-2">
-                    <span>STAGE 01</span>
-                    <span class="text-emerald-400/80 font-mono">ORIGIN</span>
-                  </div>
-                  <h3 class="text-zinc-100 font-mono text-sm font-bold uppercase tracking-wider">
-                    SESSION A
-                  </h3>
-                  <div class="text-[11px] font-mono text-zinc-400 mt-0.5">
-                    Active Development
-                  </div>
-                  <ul class="mt-3.5 space-y-1.5 font-mono text-xs text-zinc-400">
-                    <li class="flex items-start gap-2">
-                      <span class="text-zinc-600 select-none">//</span>
-                      <span>Project decisions</span>
-                    </li>
-                    <li class="flex items-start gap-2">
-                      <span class="text-zinc-600 select-none">//</span>
-                      <span>Architecture constraints</span>
-                    </li>
-                    <li class="flex items-start gap-2">
-                      <span class="text-zinc-600 select-none">//</span>
-                      <span>Working context formulated</span>
-                    </li>
-                  </ul>
-                </div>
-                <div class="mt-4 pt-3 border-t border-white/[0.06] font-mono text-[10px] text-zinc-500 uppercase tracking-wider">
-                  ACTION // RECORD DECISIONS
-                </div>
-              </div>
-
-              <!-- Transition Connector 1: PERSIST -->
-              <div class="lg:col-span-1 flex flex-col items-center justify-center py-2 lg:py-0">
-                <div class="flex lg:flex-col items-center justify-center gap-1.5 text-center">
-                  <span class="font-mono text-[10px] font-semibold uppercase tracking-wider text-emerald-400 px-2 py-0.5 rounded-sm bg-emerald-500/10 border border-emerald-500/20">
-                    PERSIST
-                  </span>
-                  <svg class="w-4 h-4 text-emerald-400 hidden lg:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
-                  </svg>
-                  <svg class="w-4 h-4 text-emerald-400 lg:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
-                  </svg>
-                </div>
-              </div>
-
-              <!-- Stage 02: Local Project State (Center Anchor) -->
-              <div class="lg:col-span-3 flex flex-col justify-between p-4 rounded-sm border border-emerald-500/30 bg-[#090a0c] relative">
-                <div>
-                  <div class="flex items-center justify-between font-mono text-[10px] text-emerald-400 uppercase tracking-wider mb-2">
-                    <span>STAGE 02</span>
-                    <span class="font-semibold">LOCAL REPOSITORY STATE</span>
-                  </div>
-                  <h3 class="text-white font-mono text-sm font-bold uppercase tracking-wider">
-                    PROJECT STATE
-                  </h3>
-                  <div class="text-[11px] font-mono text-zinc-300 mt-0.5">
-                    Branch-Aware Local Persistence
-                  </div>
-                  <ul class="mt-3.5 space-y-1.5 font-mono text-xs text-zinc-300">
-                    <li class="flex items-start gap-2">
-                      <span class="text-emerald-500 select-none">&bull;</span>
-                      <span>Scoped to workspace root</span>
-                    </li>
-                    <li class="flex items-start gap-2">
-                      <span class="text-emerald-500 select-none">&bull;</span>
-                      <span>Branch-aware state</span>
-                    </li>
-                    <li class="flex items-start gap-2">
-                      <span class="text-emerald-500 select-none">&bull;</span>
-                      <span>Encrypted local store (AES-256)</span>
-                    </li>
-                  </ul>
-                </div>
-                <div class="mt-4 pt-3 border-t border-emerald-500/20 flex flex-wrap items-center gap-1.5">
-                  <span class="font-mono text-[10px] px-1.5 py-0.5 rounded-sm bg-white/[0.04] text-zinc-400">LOCAL MEMORY</span>
-                  <span class="font-mono text-[10px] px-1.5 py-0.5 rounded-sm bg-white/[0.04] text-zinc-400">BRANCH-AWARE</span>
-                </div>
-              </div>
-
-              <!-- Transition Connector 2: RETRIEVE -->
-              <div class="lg:col-span-1 flex flex-col items-center justify-center py-2 lg:py-0">
-                <div class="flex lg:flex-col items-center justify-center gap-1.5 text-center">
-                  <span class="font-mono text-[10px] font-semibold uppercase tracking-wider text-emerald-400 px-2 py-0.5 rounded-sm bg-emerald-500/10 border border-emerald-500/20">
-                    RETRIEVE
-                  </span>
-                  <svg class="w-4 h-4 text-emerald-400 hidden lg:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
-                  </svg>
-                  <svg class="w-4 h-4 text-emerald-400 lg:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
-                  </svg>
-                </div>
-              </div>
-
-              <!-- Stage 03: Session B -->
-              <div class="lg:col-span-3 flex flex-col justify-between p-4 rounded-sm border border-white/[0.06] bg-[#090a0c]">
-                <div>
-                  <div class="flex items-center justify-between font-mono text-[10px] text-zinc-500 uppercase tracking-wider mb-2">
-                    <span>STAGE 03</span>
-                    <span class="text-zinc-400 font-mono">CONTINUATION</span>
-                  </div>
-                  <h3 class="text-zinc-100 font-mono text-sm font-bold uppercase tracking-wider">
-                    SESSION B
-                  </h3>
-                  <div class="text-[11px] font-mono text-zinc-400 mt-0.5">
-                    Subsequent Task or Tool
-                  </div>
-                  <ul class="mt-3.5 space-y-1.5 font-mono text-xs text-zinc-400">
-                    <li class="flex items-start gap-2">
-                      <span class="text-zinc-600 select-none">//</span>
-                      <span>Context requested via MCP</span>
-                    </li>
-                    <li class="flex items-start gap-2">
-                      <span class="text-zinc-600 select-none">//</span>
-                      <span>Branch context retrieved</span>
-                    </li>
-                    <li class="flex items-start gap-2">
-                      <span class="text-zinc-600 select-none">//</span>
-                      <span>Prior project state available</span>
-                    </li>
-                  </ul>
-                </div>
-                <div class="mt-4 pt-3 border-t border-white/[0.06] font-mono text-[10px] text-zinc-500 uppercase tracking-wider">
-                  PROTOCOL // MCP GET_STATE
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-          <!-- Viewport Footer Spec Strip -->
-          <div class="px-4 py-2.5 border-t border-white/[0.08] bg-[#111216] flex flex-wrap items-center justify-between gap-2 font-mono text-[10px] text-zinc-400">
-            <div class="flex items-center gap-2">
-              <span class="text-zinc-600">//</span>
-              <span>ARCHITECTURE: PERSISTENCE PIPELINE FOR SUPPORTED INTEGRATIONS</span>
-            </div>
-            <div class="flex items-center gap-3 text-zinc-500">
-              <span>LOCAL MEMORY</span>
-              <span class="text-zinc-700">|</span>
-              <span>BRANCH-AWARE</span>
-              <span class="text-zinc-700">|</span>
-              <span>MCP PROTOCOL</span>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- Section 03: Ecosystem -->
-    <section class="relative border-b border-white/[0.08] bg-[#090a0c] py-12 sm:py-16 lg:py-20">
-      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-
-        <!-- Section Header / Editorial Intro -->
-        <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-8 sm:pb-12 border-b border-white/[0.08]">
-          <div class="max-w-2xl">
-            <div class="flex items-center gap-2 mb-4">
-              <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-sm border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 font-mono text-[11px] uppercase tracking-wider font-medium">
-                03 // ECOSYSTEM
-              </span>
-            </div>
-            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-[1.05] uppercase">
-              WORK WITH THE TOOLS<br class="hidden sm:inline" /> ALREADY IN YOUR WORKFLOW.
-            </h2>
-            <p class="mt-4 sm:mt-5 text-base sm:text-lg text-zinc-300 leading-relaxed text-pretty">
-              Supported integrations adapt to the extension surfaces available in each coding tool.
-            </p>
-          </div>
-
-          <!-- Secondary Architectural Notice -->
-          <div class="lg:max-w-xs text-xs font-mono text-zinc-400 border-l border-white/[0.08] pl-4 py-1 leading-relaxed">
-            EGC operates at the coding-tool integration layer, not as an LLM provider or model router.
-          </div>
-        </div>
-
-        <!-- Core Integrations: 5 items in a hairline grid -->
-        <div class="pt-8 sm:pt-10">
-          <div class="text-[10px] font-mono text-zinc-400 uppercase tracking-widest mb-4">
-            CORE INTEGRATIONS
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-5 border border-white/[0.08] bg-[#0c0d10]">
-            <!-- Claude Code -->
-            <a href={`${base}integrations/claude-code`} aria-label="EGC integration for Claude Code" class="group p-5 sm:p-6 flex flex-col justify-between border-b md:border-b-0 md:border-r border-white/[0.08] hover:bg-white/[0.02] transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-emerald-400 focus-visible:ring-inset">
-              <div>
-                <div class="flex items-center justify-between gap-2 mb-4">
-                  <span class="font-mono text-[10px] text-zinc-500 group-hover:text-emerald-400 transition-colors">01</span>
-                  <img src={`${base}tools/anthropic.svg`} alt="" aria-hidden="true" class="w-4 h-4 opacity-70 group-hover:opacity-100 transition-opacity" />
-                </div>
-                <div class="font-mono text-sm sm:text-base font-semibold text-zinc-100 group-hover:text-white transition-colors">
-                  Claude Code
-                </div>
-              </div>
-              <div class="mt-8 flex items-center gap-1 font-mono text-xs text-zinc-400 group-hover:text-zinc-200 transition-colors">
-                <span>View integration</span>
-                <span class="text-zinc-400 group-hover:text-emerald-400 transition-colors">→</span>
-              </div>
-            </a>
-
-            <!-- Antigravity -->
-            <a href={`${base}integrations/antigravity`} aria-label="EGC integration for Antigravity" class="group p-5 sm:p-6 flex flex-col justify-between border-b md:border-b-0 md:border-r border-white/[0.08] hover:bg-white/[0.02] transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-emerald-400 focus-visible:ring-inset">
-              <div>
-                <div class="flex items-center justify-between gap-2 mb-4">
-                  <span class="font-mono text-[10px] text-zinc-500 group-hover:text-emerald-400 transition-colors">02</span>
-                  <img src={`${base}tools/googlegemini.svg`} alt="" aria-hidden="true" class="w-4 h-4 opacity-70 group-hover:opacity-100 transition-opacity" />
-                </div>
-                <div class="font-mono text-sm sm:text-base font-semibold text-zinc-100 group-hover:text-white transition-colors">
-                  Antigravity
-                </div>
-              </div>
-              <div class="mt-8 flex items-center gap-1 font-mono text-xs text-zinc-400 group-hover:text-zinc-200 transition-colors">
-                <span>View integration</span>
-                <span class="text-zinc-400 group-hover:text-emerald-400 transition-colors">→</span>
-              </div>
-            </a>
-
-            <!-- Cursor -->
-            <a href={`${base}integrations/cursor`} aria-label="EGC integration for Cursor" class="group p-5 sm:p-6 flex flex-col justify-between border-b md:border-b-0 md:border-r border-white/[0.08] hover:bg-white/[0.02] transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-emerald-400 focus-visible:ring-inset">
-              <div>
-                <div class="flex items-center justify-between gap-2 mb-4">
-                  <span class="font-mono text-[10px] text-zinc-500 group-hover:text-emerald-400 transition-colors">03</span>
-                  <img src={`${base}tools/cursor.svg`} alt="" aria-hidden="true" class="w-4 h-4 opacity-70 group-hover:opacity-100 transition-opacity" />
-                </div>
-                <div class="font-mono text-sm sm:text-base font-semibold text-zinc-100 group-hover:text-white transition-colors">
-                  Cursor
-                </div>
-              </div>
-              <div class="mt-8 flex items-center gap-1 font-mono text-xs text-zinc-400 group-hover:text-zinc-200 transition-colors">
-                <span>View integration</span>
-                <span class="text-zinc-400 group-hover:text-emerald-400 transition-colors">→</span>
-              </div>
-            </a>
-
-            <!-- Codex CLI -->
-            <a href={`${base}integrations/codex-cli`} aria-label="EGC integration for Codex CLI" class="group p-5 sm:p-6 flex flex-col justify-between border-b md:border-b-0 md:border-r border-white/[0.08] hover:bg-white/[0.02] transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-emerald-400 focus-visible:ring-inset">
-              <div>
-                <div class="flex items-center justify-between gap-2 mb-4">
-                  <span class="font-mono text-[10px] text-zinc-500 group-hover:text-emerald-400 transition-colors">04</span>
-                  <img src={`${base}tools/openai.svg`} alt="" aria-hidden="true" class="w-4 h-4 opacity-70 group-hover:opacity-100 transition-opacity" />
-                </div>
-                <div class="font-mono text-sm sm:text-base font-semibold text-zinc-100 group-hover:text-white transition-colors">
-                  Codex CLI
-                </div>
-              </div>
-              <div class="mt-8 flex items-center gap-1 font-mono text-xs text-zinc-400 group-hover:text-zinc-200 transition-colors">
-                <span>View integration</span>
-                <span class="text-zinc-400 group-hover:text-emerald-400 transition-colors">→</span>
-              </div>
-            </a>
-
-            <!-- OpenCode -->
-            <a href={`${base}integrations/opencode`} aria-label="EGC integration for OpenCode" class="group p-5 sm:p-6 flex flex-col justify-between hover:bg-white/[0.02] transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-emerald-400 focus-visible:ring-inset">
-              <div>
-                <div class="flex items-center justify-between gap-2 mb-4">
-                  <span class="font-mono text-[10px] text-zinc-500 group-hover:text-emerald-400 transition-colors">05</span>
-                  <img src={`${base}tools/opencode.svg`} alt="" aria-hidden="true" class="w-4 h-4 opacity-70 group-hover:opacity-100 transition-opacity" />
-                </div>
-                <div class="font-mono text-sm sm:text-base font-semibold text-zinc-100 group-hover:text-white transition-colors">
-                  OpenCode
-                </div>
-              </div>
-              <div class="mt-8 flex items-center gap-1 font-mono text-xs text-zinc-400 group-hover:text-zinc-200 transition-colors">
-                <span>View integration</span>
-                <span class="text-zinc-400 group-hover:text-emerald-400 transition-colors">→</span>
-              </div>
-            </a>
-          </div>
-        </div>
-
-        <!-- Community Integrations + Integration Surfaces Row -->
-        <div class="mt-6 pt-5 border-t border-white/[0.08] flex flex-col md:flex-row md:items-center justify-between gap-4 font-mono text-xs">
-          <!-- Community statement + Link -->
-          <div class="flex flex-wrap items-center gap-3">
-            <span class="px-2 py-0.5 rounded-sm bg-white/[0.04] border border-white/[0.08] text-zinc-300 font-semibold uppercase tracking-wider">
-              + 14 COMMUNITY INTEGRATIONS
-            </span>
-            <a href={`${base}integrations`} class="inline-flex items-center gap-1 text-emerald-400 hover:text-emerald-300 font-semibold uppercase tracking-wider transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-emerald-400">
-              EXPLORE ALL INTEGRATIONS →
-            </a>
-          </div>
-
-          <!-- Integration surfaces strip -->
-          <div class="flex flex-wrap items-center gap-2 text-[11px] text-zinc-400">
-            <span class="text-zinc-400 uppercase tracking-wider">SURFACES:</span>
-            <span class="text-zinc-400">MCP</span>
-            <span class="text-zinc-700 select-none">&bull;</span>
-            <span class="text-zinc-400">HOOKS</span>
-            <span class="text-zinc-700 select-none">&bull;</span>
-            <span class="text-zinc-400">RULES</span>
-            <span class="text-zinc-700 select-none">&bull;</span>
-            <span class="text-zinc-400">SKILLS</span>
-            <span class="text-zinc-700 select-none">&bull;</span>
-            <span class="text-zinc-400">CONFIG</span>
-            <span class="text-zinc-400 text-[10px] ml-1">(Integration surfaces vary by tool)</span>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- Section 04: Capabilities -->
-    <section class="relative border-b border-white/[0.08] bg-[#0c0d10] py-12 sm:py-16 lg:py-20">
-      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-
-        <!-- Section Header -->
-        <div class="max-w-2xl mb-8 sm:mb-12">
-          <div class="flex items-center gap-2 mb-4">
-            <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-sm border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 font-mono text-[11px] uppercase tracking-wider font-medium">
-              04 // CAPABILITIES
-            </span>
-          </div>
-          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-[1.05] uppercase">
-            LOCAL INFRASTRUCTURE<br class="hidden sm:inline" /> FOR PROJECT CONTEXT.
-          </h2>
-        </div>
-
-        <!-- Capabilities 2x2 Matrix -->
-        <div class="grid grid-cols-1 md:grid-cols-2 border border-white/[0.08] bg-[#090a0c]">
-          <!-- Capability 01: Project Memory -->
-          <div class="p-6 sm:p-8 lg:p-10 border-b md:border-r border-white/[0.08] flex flex-col justify-between">
-            <div>
-              <div class="font-mono text-[11px] text-emerald-400 uppercase tracking-wider mb-3">
-                01 // PROJECT MEMORY
-              </div>
-              <h3 class="text-xl sm:text-2xl font-bold text-white tracking-tight uppercase font-mono mb-4">
-                PROJECT MEMORY
-              </h3>
-              <ul class="space-y-2.5 font-mono text-xs sm:text-sm text-zinc-300">
-                <li class="flex items-start gap-2.5">
-                  <span class="text-emerald-500 select-none">&bull;</span>
-                  <span>Persistent local project state</span>
-                </li>
-                <li class="flex items-start gap-2.5">
-                  <span class="text-emerald-500 select-none">&bull;</span>
-                  <span>Branch-aware context</span>
-                </li>
-                <li class="flex items-start gap-2.5">
-                  <span class="text-emerald-500 select-none">&bull;</span>
-                  <span>Decision history</span>
-                </li>
-              </ul>
-            </div>
-            <div class="mt-8 pt-4 border-t border-white/[0.06] flex items-center justify-between font-mono text-[10px] text-zinc-400 uppercase tracking-wider">
-              <span>LOCAL STATE</span>
-              <span>BRANCH-SCOPED</span>
-            </div>
-          </div>
-
-          <!-- Capability 02: Context Retrieval -->
-          <div class="p-6 sm:p-8 lg:p-10 border-b border-white/[0.08] flex flex-col justify-between">
-            <div>
-              <div class="font-mono text-[11px] text-emerald-400 uppercase tracking-wider mb-3">
-                02 // CONTEXT RETRIEVAL
-              </div>
-              <h3 class="text-xl sm:text-2xl font-bold text-white tracking-tight uppercase font-mono mb-4">
-                CONTEXT RETRIEVAL
-              </h3>
-              <ul class="space-y-2.5 font-mono text-xs sm:text-sm text-zinc-300">
-                <li class="flex items-start gap-2.5">
-                  <span class="text-emerald-500 select-none">&bull;</span>
-                  <span>Local MCP</span>
-                </li>
-                <li class="flex items-start gap-2.5">
-                  <span class="text-emerald-500 select-none">&bull;</span>
-                  <span>State retrieval / update</span>
-                </li>
-                <li class="flex items-start gap-2.5">
-                  <span class="text-emerald-500 select-none">&bull;</span>
-                  <span>Supported integration mechanisms</span>
-                </li>
-              </ul>
-            </div>
-            <div class="mt-8 pt-4 border-t border-white/[0.06] flex items-center justify-between font-mono text-[10px] text-zinc-400 uppercase tracking-wider">
-              <span>STDIO PROTOCOL</span>
-              <span>LIFECYCLE HOOKS</span>
-            </div>
-          </div>
-
-          <!-- Capability 03: Execution Guardrails -->
-          <div class="p-6 sm:p-8 lg:p-10 border-b md:border-b-0 md:border-r border-white/[0.08] flex flex-col justify-between">
-            <div>
-              <div class="font-mono text-[11px] text-emerald-400 uppercase tracking-wider mb-3">
-                03 // EXECUTION GUARDRAILS
-              </div>
-              <h3 class="text-xl sm:text-2xl font-bold text-white tracking-tight uppercase font-mono mb-4">
-                EXECUTION GUARDRAILS
-              </h3>
-              <ul class="space-y-2.5 font-mono text-xs sm:text-sm text-zinc-300">
-                <li class="flex items-start gap-2.5">
-                  <span class="text-emerald-500 select-none">&bull;</span>
-                  <span>Command validation</span>
-                </li>
-                <li class="flex items-start gap-2.5">
-                  <span class="text-emerald-500 select-none">&bull;</span>
-                  <span>Sensitive path protection</span>
-                </li>
-                <li class="flex items-start gap-2.5">
-                  <span class="text-emerald-500 select-none">&bull;</span>
-                  <span>Content inspection</span>
-                </li>
-              </ul>
-            </div>
-            <div class="mt-8 pt-4 border-t border-white/[0.06] flex items-center justify-between font-mono text-[10px] text-zinc-400 uppercase tracking-wider">
-              <span>SECURITY GATING</span>
-              <span>PATH ENFORCEMENT</span>
-            </div>
-          </div>
-
-          <!-- Capability 04: Session Coordination -->
-          <div class="p-6 sm:p-8 lg:p-10 flex flex-col justify-between">
-            <div>
-              <div class="font-mono text-[11px] text-emerald-400 uppercase tracking-wider mb-3">
-                04 // SESSION COORDINATION
-              </div>
-              <h3 class="text-xl sm:text-2xl font-bold text-white tracking-tight uppercase font-mono mb-4">
-                SESSION COORDINATION
-              </h3>
-              <ul class="space-y-2.5 font-mono text-xs sm:text-sm text-zinc-300">
-                <li class="flex items-start gap-2.5">
-                  <span class="text-emerald-500 select-none">&bull;</span>
-                  <span>Session Bus</span>
-                </li>
-                <li class="flex items-start gap-2.5">
-                  <span class="text-emerald-500 select-none">&bull;</span>
-                  <span>Cooperative path locks</span>
-                </li>
-                <li class="flex items-start gap-2.5">
-                  <span class="text-emerald-500 select-none">&bull;</span>
-                  <span>Local session events</span>
-                </li>
-              </ul>
-            </div>
-            <div class="mt-8 pt-4 border-t border-white/[0.06] flex items-center justify-between font-mono text-[10px] text-zinc-400 uppercase tracking-wider">
-              <span>PEER AWARENESS</span>
-              <span>COOPERATIVE LOCKS</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Spec Footer Strip -->
-        <div class="mt-6 pt-5 border-t border-white/[0.08] flex flex-col sm:flex-row sm:items-center justify-between gap-3 font-mono text-xs text-zinc-400">
-          <div class="flex items-center gap-2">
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 select-none"></span>
-            <span class="text-zinc-300 uppercase tracking-wider font-semibold">LOCAL RUNTIME ARCHITECTURE</span>
-          </div>
-          <div class="flex items-center gap-4 text-xs">
-            <a href={`${base}docs/memory`} class="text-zinc-400 hover:text-emerald-400 uppercase tracking-wider transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-emerald-400">
-              MEMORY DOCS →
-            </a>
-            <span class="text-zinc-700 select-none">|</span>
-            <a href={`${base}docs/guardian`} class="text-zinc-400 hover:text-emerald-400 uppercase tracking-wider transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-emerald-400">
-              GUARDIAN DOCS →
-            </a>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- Token savings -->
-    <section class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 mb-12 sm:mb-20">
-      <div class="text-center mb-10">
-        <p class="text-xs font-semibold uppercase tracking-widest text-egc-600 dark:text-egc-400 mb-3">Efficiency</p>
-        <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">87% fewer tokens to rebuild context</h2>
-      </div>
-
-      <!-- Desktop: table layout -->
-      <div class="hidden sm:block rounded-2xl overflow-x-auto w-full glass" tabindex="0" role="region" aria-label="Tool comparison table">
-        <table class="w-full text-sm">
-          <thead>
-            <tr class="border-b border-gray-200 dark:border-white/10">
-              <th scope="col" class="px-6 py-4 text-left font-semibold text-gray-900 dark:text-white"><span class="sr-only">Metric</span></th>
-              <th scope="col" class="px-6 py-4 text-center font-semibold text-gray-900 dark:text-white">Without EGC</th>
-              <th scope="col" class="px-6 py-4 text-center font-semibold text-egc-600 dark:text-egc-400">With EGC</th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-gray-100 dark:divide-white/5">
-            <tr class="transition-colors hover:bg-white/5">
-              <td class="px-6 py-4 text-gray-700 dark:text-gray-300">Context overhead per session</td>
-              <td class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">~1,500 tokens</td>
-              <td class="px-6 py-4 text-center text-egc-600 dark:text-egc-400 font-semibold">~200 tokens</td>
-            </tr>
-            <tr class="transition-colors hover:bg-white/5">
-              <td class="px-6 py-4 text-gray-700 dark:text-gray-300">Cost for 20 sessions/month</td>
-              <td class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">~$0.08-0.09</td>
-              <td class="px-6 py-4 text-center text-egc-600 dark:text-egc-400 font-semibold">~$0.011-0.012</td>
-            </tr>
-            <tr class="transition-colors hover:bg-white/5">
-              <td class="px-6 py-4 text-gray-700 dark:text-gray-300">Time re-explaining context</td>
-              <td class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">10 min/session</td>
-              <td class="px-6 py-4 text-center text-egc-600 dark:text-egc-400 font-semibold">0</td>
-            </tr>
-            <tr class="transition-colors hover:bg-white/5">
-              <td class="px-6 py-4 text-gray-700 dark:text-gray-300">Shell output entering the model</td>
-              <td class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">full command output</td>
-              <td class="px-6 py-4 text-center text-egc-600 dark:text-egc-400 font-semibold">crushed up to 90%</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <p class="text-center text-sm text-gray-600 dark:text-gray-400 mt-6 max-w-2xl mx-auto">
-        The built-in <span class="font-semibold text-egc-600 dark:text-egc-400">Token Crusher</span> compresses shell output before it ever reaches the model and records every saving in a local ledger. One giant git log went from 637 KB to 31 KB in a single crush. Run <code class="text-xs bg-gray-100 dark:bg-white/10 px-1.5 py-0.5 rounded font-mono">egc gain</code> to see your own numbers.
-      </p>
-
-      <!-- Mobile: card layout -->
-      <div class="sm:hidden space-y-4">
-        {[
-          { metric: 'Context overhead per session', without: '~1,500 tokens', withEgc: '~200 tokens' },
-          { metric: 'Cost for 20 sessions/month', without: '~$0.08-0.09', withEgc: '~$0.011-0.012' },
-          { metric: 'Time re-explaining context', without: '10 min/session', withEgc: '0' },
-          { metric: 'Shell output entering the model', without: 'full command output', withEgc: 'crushed up to 90%' },
-        ].map(row => (
-          <div class="rounded-xl p-4 glass hover-lift hover-glow">
-            <div class="text-sm font-semibold text-gray-900 dark:text-white mb-3">{row.metric}</div>
-            <div class="grid grid-cols-2 gap-3">
-              <div>
-                <div class="text-[10px] uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-1">Without EGC</div>
-                <div class="text-sm text-gray-500 dark:text-gray-400">{row.without}</div>
-              </div>
-              <div>
-                <div class="text-[10px] uppercase tracking-wider text-egc-600 dark:text-egc-400 mb-1">With EGC</div>
-                <div class="text-sm font-semibold text-egc-600 dark:text-egc-400">{row.withEgc}</div>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </section>
-
-    <!-- Security badges -->
-    <section class="border-t border-gray-100 dark:border-gray-800 py-14">
-      <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
-        <p class="text-xs font-semibold uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-3">Security</p>
-        <p class="text-sm text-gray-400 dark:text-gray-300 mb-6">Stores memory encrypted on your machine. Never in your source code. Never in the cloud.</p>
-        <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
-          <a href="https://www.bestpractices.dev/projects/13099" target="_blank" rel="noopener noreferrer" aria-label="OpenSSF Best Practices badge (opens in new tab)" class="inline-flex items-center focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500 rounded">
-            <img src="https://www.bestpractices.dev/projects/13099/badge" alt="OpenSSF Best Practices" class="h-5 sm:h-6" width="160" height="20" loading="lazy" />
-          </a>
-          <a href="https://securityscorecards.dev/viewer/?uri=github.com/Fmarzochi/EGC" target="_blank" rel="noopener noreferrer" aria-label="OpenSSF Scorecard badge (opens in new tab)" class="inline-flex items-center focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500 rounded">
-            <img src="https://img.shields.io/ossf-scorecard/github.com/Fmarzochi/EGC?label=openssf+scorecard&style=flat" alt="OpenSSF Scorecard" class="h-5 sm:h-6" width="160" height="20" loading="lazy" />
-          </a>
-          <a href="https://github.com/Fmarzochi/EGC/actions/workflows/codeql.yml" target="_blank" rel="noopener noreferrer" aria-label="CodeQL workflow status (opens in new tab)" class="inline-flex items-center focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500 rounded">
-            <img src="https://img.shields.io/github/actions/workflow/status/Fmarzochi/EGC/codeql.yml?branch=main&label=CodeQL&logo=github" alt="CodeQL Status" class="h-5 sm:h-6" width="120" height="20" loading="lazy" />
-          </a>
-          <a href="https://github.com/Fmarzochi/EGC" target="_blank" rel="noopener noreferrer" aria-label="Dependabot status (opens in new tab)" class="inline-flex items-center focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500 rounded">
-            <img src="https://img.shields.io/badge/dependabot-active-blue?logo=dependabot&logoColor=white" alt="Dependabot Status" class="h-5 sm:h-6" width="120" height="20" loading="lazy" />
-          </a>
-          <a href="https://github.com/Fmarzochi/EGC/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" aria-label="Apache 2.0 License (opens in new tab)" class="inline-flex items-center focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500 rounded">
-            <img src="https://img.shields.io/badge/license-Apache--2.0-blue" alt="Apache 2.0 License" class="h-5 sm:h-6" width="120" height="20" loading="lazy" />
-          </a>
-          <a href="https://glama.ai/mcp/servers/Fmarzochi/EGC" target="_blank" rel="noopener noreferrer" aria-label="Glama MCP score (opens in new tab)" class="inline-flex items-center focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500 rounded">
-            <img src="https://glama.ai/mcp/servers/Fmarzochi/EGC/badges/score.svg" alt="Glama Score" class="h-5 sm:h-6" width="160" height="20" loading="lazy" />
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Find us on -->
-    <section class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 mb-12 sm:mb-20">
-      <div class="text-center mb-10">
-        <p class="text-xs font-semibold uppercase tracking-widest text-egc-600 dark:text-egc-400 mb-3">Explore</p>
-        <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">Find us on our channels</h2>
-      </div>
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <a href="https://github.com/Fmarzochi/EGC" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center gap-3 rounded-xl p-5 text-center glass hover-lift hover-glow transition-all duration-200 hover:border-gray-400/50 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500">
-          <div class="w-12 h-12 rounded-xl bg-gray-900 dark:bg-white/10 flex items-center justify-center">
-            <Icon name="github" size={24} class="text-white" />
-          </div>
-          <div class="text-sm font-semibold text-gray-900 dark:text-white leading-tight">GitHub</div>
-          <div class="text-xs text-gray-500 dark:text-gray-400">Source code and issues</div>
+      <header style="position: relative; z-index: 2; max-width: 1240px; margin: 0 auto; padding: 1.75rem 2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap">
+        <a href="#top" style="display: flex; align-items: center; gap: 10px; color: #F3F6F4; text-decoration: none">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="#F3F6F4" aria-hidden="true">
+            <circle cx="14" cy="8" r="5.5"></circle>
+            <circle cx="20" cy="14" r="5.5"></circle>
+            <circle cx="14" cy="20" r="5.5"></circle>
+            <circle cx="8" cy="14" r="5.5"></circle>
+          </svg>
+          <span style="font-weight: 800; font-size: 24px; letter-spacing: -0.03em">EGC</span>
         </a>
-        <a href="https://www.npmjs.com/package/@egchq/egc" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center gap-3 rounded-xl p-5 text-center glass hover-lift hover-glow transition-all duration-200 hover:border-red-500/50 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500">
-          <div class="w-12 h-12 rounded-xl bg-red-600/10 flex items-center justify-center">
-            <svg class="w-6 h-6 text-red-500" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M0 7.334v8h11.999v-8zm12 0v8h12v-8zM6 13.334H4v-4h2zm6 0h-2v-4h2zm6 0h-2v-4h2z"/>
-            </svg>
-          </div>
-          <div class="text-sm font-semibold text-gray-900 dark:text-white leading-tight">npm</div>
-          <div class="text-xs text-gray-500 dark:text-gray-400">Install the CLI</div>
-        </a>
-        <a href="https://discord.gg/FmXbgUmdmM" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center gap-3 rounded-xl p-5 text-center glass hover-lift hover-glow transition-all duration-200 hover:border-indigo-500/50 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500">
-          <div class="w-12 h-12 rounded-xl bg-indigo-600/10 flex items-center justify-center">
-            <Icon name="discord" size={24} class="text-indigo-400" />
-          </div>
-          <div class="text-sm font-semibold text-gray-900 dark:text-white leading-tight">Discord</div>
-          <div class="text-xs text-gray-500 dark:text-gray-400">Community and support</div>
-        </a>
-        <a href="https://huggingface.co/spaces/fmarzochi/EGC" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center gap-3 rounded-xl p-5 text-center glass hover-lift hover-glow transition-all duration-200 hover:border-amber-500/50 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500">
-          <div class="w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center text-2xl" aria-hidden="true">🤗</div>
-          <div class="text-sm font-semibold text-gray-900 dark:text-white leading-tight">Hugging Face</div>
-          <div class="text-xs text-gray-500 dark:text-gray-400">The EGC showcase for the AI community</div>
-        </a>
-      </div>
-    </section>
-
-    <!-- Sponsor -->
-    <section class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-12 mb-4 relative">
-      <div class="absolute inset-0 pointer-events-none -z-10" aria-hidden="true">
-        <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[300px] bg-pink-500/10 rounded-full blur-[80px] mix-blend-screen"></div>
-      </div>
-      <div class="rounded-2xl p-5 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 glass hover-glow">
-        <div class="text-center sm:text-left">
-          <div class="flex items-center justify-center sm:justify-start gap-2 mb-2">
-            <svg class="w-5 h-5 text-pink-500 animate-heartbeat" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M12 21.593c-.317.177-.834.177-1.151 0C9.774 20.57 3 16.259 3 9.5 3 6.462 5.462 4 8.5 4c1.4 0 2.672.536 3.5 1.393C12.828 4.536 14.1 4 15.5 4 18.538 4 21 6.462 21 9.5c0 6.759-6.774 11.07-9 12.093z"/>
-            </svg>
-            <span class="text-sm font-bold text-gray-900 dark:text-white">Sponsor EGC</span>
-          </div>
-          <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 max-w-sm">EGC is free and open source, and the engine stays free. If it saves you time and tokens, consider sponsoring. It helps keep the project maintained and moving forward.</p>
-        </div>
-        <div class="flex flex-col items-center sm:items-end gap-2 shrink-0 w-full sm:w-auto">
-          <a
-            href="https://github.com/sponsors/Fmarzochi"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Sponsor on GitHub (opens in new tab)"
-            class="group w-full sm:w-auto inline-flex items-center justify-center gap-2 min-h-[44px] px-5 py-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 text-sm font-semibold hover:border-pink-300 dark:hover:border-pink-800/80 hover:text-pink-600 dark:hover:text-pink-400 hover:bg-pink-50/30 dark:hover:bg-pink-950/20 active:scale-95 transition-all duration-200"
+        <div style="display: flex; align-items: center; gap: 1.75rem; flex-wrap: wrap">
+          <nav style="display: flex; gap: 1.75rem; font-size: 15px; font-weight: 500">
+            <a href={`${base}features`} style="color: #F3F6F4; text-decoration: none">Features</a>
+            <a href="#integrations" style="color: #F3F6F4; text-decoration: none">Integrations</a>
+            <a href="#features" style="color: #F3F6F4; text-decoration: none">Pricing</a>
+            <a href={`${base}docs/memory`} style="color: #F3F6F4; text-decoration: none">Docs</a>
+          </nav>
+          <button
+            type="button"
+            class="open-install-trigger"
+            style="display: inline-flex; align-items: center; gap: 14px; min-height: 48px; padding: 0 6px 0 22px; border-radius: 999px; background: #FFFFFF; color: #06210F; font-weight: 700; font-size: 15px; border: none; cursor: pointer"
           >
-            <svg class="w-4 h-4 text-pink-500/70 dark:text-pink-500/50 group-hover:text-pink-500 dark:group-hover:text-pink-400 transition-colors animate-heartbeat" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M12 21.593c-.317.177-.834.177-1.151 0C9.774 20.57 3 16.259 3 9.5 3 6.462 5.462 4 8.5 4c1.4 0 2.672.536 3.5 1.393C12.828 4.536 14.1 4 15.5 4 18.538 4 21 6.462 21 9.5c0 6.759-6.774 11.07-9 12.093z"/>
-            </svg>
-            Sponsor on GitHub
-          </a>
-          <a
-            href="https://www.paypal.com/donate/?business=fmarzochi%40gmail.com&currency_code=USD"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Donate via PayPal (opens in new tab)"
-            class="group w-full sm:w-auto inline-flex items-center justify-center gap-2 min-h-[44px] px-5 py-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 text-sm font-semibold hover:border-blue-300 dark:hover:border-blue-800/80 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50/30 dark:hover:bg-blue-950/20 active:scale-95 transition-all duration-200"
-          >
-            <svg class="w-4 h-4 text-blue-500/70 dark:text-blue-500/50 group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.541c-.013.076-.026.175-.041.254-.93 4.778-4.005 7.201-9.138 7.201h-2.19a.563.563 0 0 0-.556.479l-1.187 7.527h-.506l-.24 1.516a.56.56 0 0 0 .554.647h3.882c.46 0 .85-.334.922-.788.06-.26.76-4.852.816-5.09a.932.932 0 0 1 .923-.788h.58c3.76 0 6.705-1.528 7.565-5.946.36-1.847.174-3.388-.777-4.471z"/>
-            </svg>
-            Donate via PayPal
-          </a>
-          <span class="text-xs text-gray-500 dark:text-gray-400">No GitHub account needed</span>
+            Get EGC
+            <span style="display: inline-flex; width: 36px; height: 36px; border-radius: 999px; background: #10B866; align-items: center; justify-content: center">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6"></path>
+              </svg>
+            </span>
+          </button>
         </div>
+      </header>
+
+      <!-- Clover visual -->
+      <div aria-hidden="true" style="position: absolute; left: 50%; top: 90px; width: 560px; height: 560px; margin-left: -150px; z-index: 0; pointer-events: none">
+        <svg class="egc-orbit" width="560" height="560" viewBox="0 0 560 560" fill="none" stroke="rgba(255,255,255,0.14)" stroke-width="1" style="position: absolute; inset: 0">
+          <circle cx="280" cy="280" r="270" stroke-dasharray="4 10"></circle>
+          <circle cx="280" cy="280" r="200"></circle>
+        </svg>
+        <svg class="egc-clover" width="360" height="360" viewBox="0 0 28 28" style="position: absolute; left: 100px; top: 100px">
+          <defs>
+            <linearGradient id="egcLeaf" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#B9FFD9"></stop>
+              <stop offset="50%" stop-color="#3DF59A"></stop>
+              <stop offset="100%" stop-color="#0A8F4E"></stop>
+            </linearGradient>
+          </defs>
+          <g fill="url(#egcLeaf)">
+            <circle cx="14" cy="8" r="5.5"></circle>
+            <circle cx="20" cy="14" r="5.5"></circle>
+            <circle cx="14" cy="20" r="5.5"></circle>
+            <circle cx="8" cy="14" r="5.5"></circle>
+          </g>
+          <circle cx="14" cy="14" r="1.6" fill="#07311D"></circle>
+        </svg>
       </div>
-    </section>
 
-    <!-- Sponsors -->
-    <section class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-8 mb-4">
-      <div class="rounded-2xl p-6 sm:p-8 text-center glass hover-glow">
-        <h2 class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-8">Sponsors</h2>
-        <div class="flex flex-col gap-10">
-
-          <!-- Tool Partners -->
-          <div>
-            <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Tool Partners</p>
-            <p class="text-xs text-gray-500 dark:text-gray-400 italic mb-4">Be the first tool partner</p>
-            <div class="flex flex-wrap justify-center gap-3">
-              <a
-                href="https://www.pincushion.io/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Pincushion, AI feedback tool (opens in new tab)"
-                class="group relative focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500 rounded-full"
-              >
-                <div class="w-[80px] h-[80px] rounded-full overflow-hidden ring-2 ring-transparent group-hover:ring-egc-400 dark:group-hover:ring-egc-500 transition-all duration-200">
-                  <img
-                    src="https://www.pincushion.io/logo-icon.png"
-                    alt="Pincushion"
-                    class="w-full h-full object-cover"
-                    loading="lazy"
-                  />
-                </div>
-              </a>
-            </div>
-          </div>
-
-          <!-- Annual Sponsors -->
-          <div>
-            <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">Annual Sponsors</p>
+      <div style="position: relative; z-index: 1; max-width: 1240px; margin: 0 auto; padding: 5rem 2rem 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 3rem; align-items: center; min-height: 460px">
+        <div>
+          <div style="font-size: 1.5rem; font-weight: 500; margin-bottom: 1.25rem">Hey, meet EGC</div>
+          <h1 style="margin: 0; font-weight: 800; font-size: clamp(3.2rem, 7.5vw, 6.4rem); line-height: 0.98; letter-spacing: -0.045em">Context<br>That Never<br>Resets</h1>
+        </div>
+        <div style="justify-self: end; max-width: 330px; display: flex; flex-direction: column; gap: 1rem">
+          <div style="font-size: 1.6rem; font-weight: 700; line-height: 1.25">Your project remembers. So you don't have to.</div>
+          <p style="margin: 0; font-size: 1.05rem; line-height: 1.6; color: rgba(243,246,244,0.82)">EGC keeps your project's useful context available across tools, sessions and workflows.</p>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 0.5rem">
+            <button
+              type="button"
+              class="open-install-trigger"
+              style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 22px; border-radius: 999px; background: #F3F6F4; color: #06210F; font-weight: 700; font-size: 15px; border: none; cursor: pointer"
+            >
+              Install EGC
+            </button>
             <a
-              href="https://github.com/sponsors/Fmarzochi"
+              href="https://github.com/Fmarzochi/EGC"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Become an Annual Sponsor (opens in new tab)"
-              class="group inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-dashed border-gray-600/40 hover:border-egc-500/40 hover:bg-egc-500/5 transition-all duration-200 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500"
+              style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 22px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.4); color: #F3F6F4; font-weight: 600; font-size: 15px; text-decoration: none"
             >
-              <span class="text-gray-600 dark:text-gray-500 group-hover:text-egc-400 transition-colors text-base font-light">+</span>
-              <span class="text-xs text-gray-500 dark:text-gray-400 group-hover:text-egc-400 transition-colors">Be the first annual sponsor</span>
+              View on GitHub
             </a>
           </div>
+        </div>
+      </div>
 
-          <!-- Backers -->
-          <div>
-            <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">Backers</p>
-            <div class="flex flex-wrap justify-center gap-3">
-              <a
-                href="https://github.com/chizormaangel-commits"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="@chizormaangel-commits on GitHub (opens in new tab)"
-                class="group relative focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500 rounded-full"
-              >
-                <img
-                  src="https://avatars.githubusercontent.com/u/291871326?v=4"
-                  alt="@chizormaangel-commits"
-                  width="52"
-                  height="52"
-                  class="rounded-full ring-2 ring-transparent group-hover:ring-pink-400 dark:group-hover:ring-pink-500 transition-all duration-200"
-                  loading="lazy"
-                />
-              </a>
-            </div>
+      <div style="position: relative; z-index: 1; max-width: 1240px; margin: 0 auto; padding: 4.5rem 2rem 3.5rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem">
+        <div><div style="font-weight: 700; font-size: 15px"><span style="color: #3DF59A">#</span>01</div><div style="margin-top: 0.75rem; font-size: 1.05rem">Persistent Context</div></div>
+        <div><div style="font-weight: 700; font-size: 15px"><span style="color: #3DF59A">#</span>02</div><div style="margin-top: 0.75rem; font-size: 1.05rem">Workflows &amp; Tools</div></div>
+        <div><div style="font-weight: 700; font-size: 15px"><span style="color: #3DF59A">#</span>03</div><div style="margin-top: 0.75rem; font-size: 1.05rem">Project Decisions</div></div>
+        <div><div style="font-weight: 700; font-size: 15px"><span style="color: #3DF59A">#</span>04</div><div style="margin-top: 0.75rem; font-size: 1.05rem">Real Dev Environment</div></div>
+      </div>
+    </section>
+
+    <!-- WORKS WITH -->
+    <section id="integrations" style="border-radius: 0 0 56px 56px; background: #141816">
+      <div style="max-width: 1240px; margin: 0 auto; padding: 3.5rem 2rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap">
+        <div style="font-weight: 600; font-size: 15px; line-height: 1.4; max-width: 14ch">Works with the tools you already use</div>
+        <div style="display: flex; gap: 2.75rem; flex-wrap: wrap; align-items: center; font-weight: 700; font-size: 1.5rem; color: #8C9690">
+          <span>VS Code</span><span>JetBrains</span><span>Terminal</span><span>GitHub CLI</span><span>CI / CD</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- APPROACH / HOW IT WORKS -->
+    <section id="features" style="max-width: 1240px; margin: 0 auto; padding: 8rem 2rem 4rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 3rem; align-items: start">
+      <div>
+        <div style="color: #3DF59A; font-weight: 700; font-size: 1.4rem">How it works</div>
+        <h2 style="margin: 1rem 0 0; font-weight: 800; font-size: clamp(2.4rem, 4.6vw, 3.8rem); line-height: 1.06; letter-spacing: -0.035em">New Session<br>Same Project<br>Zero Restart</h2>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 2.5rem; padding-top: 2.75rem">
+        <p style="margin: 0; font-size: 1.6rem; line-height: 1.4; font-weight: 500; max-width: 24ch">EGC preserves and restores project context, so you keep moving without repeating setup.</p>
+        <div style="display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap">
+          <span style="color: #8C9690; font-size: 15px; max-width: 16ch; line-height: 1.4">Open source + commercial license</span>
+          <button
+            type="button"
+            class="open-install-trigger"
+            style="display: inline-flex; align-items: center; gap: 14px; min-height: 48px; padding: 0 6px 0 22px; border-radius: 999px; background: #10B866; color: #04200F; font-weight: 700; font-size: 15px; border: none; cursor: pointer"
+          >
+            Install EGC
+            <span style="display: inline-flex; width: 36px; height: 36px; border-radius: 999px; background: #04200F; align-items: center; justify-content: center">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3DF59A" stroke-width="2.6" stroke-linecap="round" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6"></path>
+              </svg>
+            </span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SESSION CARDS -->
+    <section aria-label="Context across sessions" style="max-width: 1240px; margin: 0 auto; padding: 1rem 2rem 7rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px">
+      <div style="border-radius: 32px; padding: 2rem; min-height: 22rem; background: linear-gradient(170deg, #1B3A2A, #111614 60%); display: flex; flex-direction: column; gap: 1rem">
+        <span style="align-self: flex-start; padding: 6px 14px; border-radius: 999px; background: rgba(255,255,255,0.08); font-size: 13px; font-weight: 600">Session 01 · VS Code</span>
+        <div style="margin-top: auto; font-size: 1.6rem; font-weight: 700; line-height: 1.2">You work on a feature.</div>
+        <div style="color: #A3ADA7; line-height: 1.55">Edited 12 files on <span style="font-family: 'JetBrains Mono', monospace; font-size: 14px">feature/auth</span>. Decisions get made along the way.</div>
+      </div>
+      <div style="border-radius: 32px; padding: 2rem; min-height: 22rem; background: radial-gradient(90% 80% at 50% 0%, #19D47A, #0B6B3C 60%, #0A3A22); display: flex; flex-direction: column; gap: 1rem">
+        <span style="align-self: flex-start; padding: 6px 14px; border-radius: 999px; background: rgba(0,0,0,0.22); font-size: 13px; font-weight: 600">EGC keeps the context</span>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto">
+          <span style="padding: 8px 14px; border-radius: 999px; background: rgba(255,255,255,0.16); font-size: 14px; font-weight: 500">Project structure</span>
+          <span style="padding: 8px 14px; border-radius: 999px; background: rgba(255,255,255,0.16); font-size: 14px; font-weight: 500">Key decisions</span>
+          <span style="padding: 8px 14px; border-radius: 999px; background: rgba(255,255,255,0.16); font-size: 14px; font-weight: 500">Technical context</span>
+          <span style="padding: 8px 14px; border-radius: 999px; background: rgba(255,255,255,0.16); font-size: 14px; font-weight: 500">Conventions</span>
+          <span style="padding: 8px 14px; border-radius: 999px; background: rgba(255,255,255,0.16); font-size: 14px; font-weight: 500">Recent changes</span>
+          <span style="padding: 8px 14px; border-radius: 999px; background: rgba(255,255,255,0.16); font-size: 14px; font-weight: 500">Workflows</span>
+        </div>
+        <div style="font-size: 1.6rem; font-weight: 700; line-height: 1.2">Kept with the project.</div>
+      </div>
+      <div style="border-radius: 32px; padding: 2rem; min-height: 22rem; background: linear-gradient(170deg, #1B3A2A, #111614 60%); display: flex; flex-direction: column; gap: 1rem">
+        <span style="align-self: flex-start; padding: 6px 14px; border-radius: 999px; background: rgba(255,255,255,0.08); font-size: 13px; font-weight: 600">Session 02 · Terminal</span>
+        <div style="margin-top: auto; font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #3DF59A">&gt; egc restore — context ready</div>
+        <div style="font-size: 1.6rem; font-weight: 700; line-height: 1.2">You pick up right where you left off.</div>
+        <div style="color: #A3ADA7; line-height: 1.55">No repeated setup. Focus on what matters.</div>
+      </div>
+    </section>
+
+    <!-- BEFORE / AFTER -->
+    <section style="border-radius: 56px; background: #F3F6F4; color: #0C0F0E; margin: 0 1rem">
+      <div style="max-width: 1240px; margin: 0 auto; padding: 6rem 2rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem">
+        <div>
+          <div style="color: #0B8F4E; font-weight: 700; font-size: 1.4rem">Before &amp; after</div>
+          <h2 style="margin: 1rem 0 0; font-weight: 800; font-size: clamp(2.2rem, 4vw, 3.4rem); line-height: 1.06; letter-spacing: -0.035em">Why start over every time?</h2>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px">
+          <div style="padding: 1.75rem; border-radius: 28px; background: #E1E7E3; display: flex; flex-direction: column; gap: 14px">
+            <span style="font-weight: 800; font-size: 1.2rem">Without EGC</span>
+            <span style="color: #48534C">Repeating context in every session</span>
+            <span style="color: #48534C">Losing important decisions</span>
+            <span style="color: #48534C">Re-explaining project structure</span>
+            <span style="color: #48534C">Slower workflows between tools</span>
           </div>
-
-          <!-- Monthly sponsors -->
-          <div>
-            <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">Monthly sponsors</p>
-            <p class="text-xs text-gray-500 dark:text-gray-400 italic">Be the first</p>
+          <div style="padding: 1.75rem; border-radius: 28px; background: #0B7A44; color: #FFFFFF; display: flex; flex-direction: column; gap: 14px">
+            <span style="font-weight: 800; font-size: 1.2rem">With EGC</span>
+            <span>Context restored in every new session</span>
+            <span>Decisions kept with the project</span>
+            <span>Structure and conventions already known</span>
+            <span>Switch tools, keep going</span>
           </div>
-
         </div>
       </div>
     </section>
 
     <!-- CTA -->
-    <section class="relative overflow-hidden bg-gradient-to-r from-egc-700 via-egc-600 to-egc-500 dark:from-egc-950 dark:via-egc-900 dark:to-egc-800 py-12 sm:py-16 mb-0">
-      <!-- Gradient transition masks to blend colors into the layout -->
-      <div class="absolute top-0 inset-x-0 h-16 sm:h-24 bg-gradient-to-b from-white to-transparent dark:from-gray-950 dark:to-transparent pointer-events-none opacity-90"></div>
-      <div class="absolute bottom-0 inset-x-0 h-16 sm:h-24 bg-gradient-to-t from-white to-transparent dark:from-gray-950 dark:to-transparent pointer-events-none opacity-90"></div>
-      <div class="relative z-10 mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center animate-fade-in-up" data-animate>
-        <h2 class="text-2xl sm:text-3xl font-bold text-white mb-4">Ready to give your AI a memory?</h2>
-        <p class="text-sm sm:text-base text-egc-100 mb-6 sm:mb-8">Install in under 2 minutes. Works with the tools you already use.</p>
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-3 px-4 sm:px-0">
-          <a href={`${base}get-started`} class="w-full sm:w-auto inline-flex items-center justify-center gap-2 min-h-[48px] px-6 py-3 rounded-xl bg-white text-egc-700 font-semibold hover:bg-egc-50 active:scale-95 transition-all duration-100">
-            Get Started
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-            </svg>
-          </a>
-          <a href="https://github.com/Fmarzochi/EGC" target="_blank" rel="noopener noreferrer" aria-label="View EGC on GitHub (opens in new tab)" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 min-h-[48px] px-6 py-3 rounded-xl border border-egc-400 text-white font-semibold hover:bg-egc-700 dark:hover:bg-egc-800 active:scale-95 transition-all duration-100">
-            View on GitHub
-          </a>
-        </div>
-      </div>
+    <section id="install" style="max-width: 1240px; margin: 0 auto; padding: 8rem 2rem 4rem; text-align: center; display: flex; flex-direction: column; align-items: center">
+      <h2 style="margin: 0; font-weight: 800; font-size: clamp(2.6rem, 6vw, 5rem); line-height: 1; letter-spacing: -0.045em; max-width: 14ch">
+        Stop rebuilding context <span style="color: #3DF59A">from zero.</span>
+      </h2>
+      <p style="margin: 1.5rem 0 0; font-size: 1.2rem; color: #A3ADA7">Windows · macOS · Linux — v1.1.0</p>
+      <button
+        type="button"
+        class="open-install-trigger"
+        style="margin-top: 2rem; display: inline-flex; align-items: center; gap: 14px; min-height: 56px; padding: 0 8px 0 28px; border-radius: 999px; background: #10B866; color: #04200F; font-weight: 700; font-size: 17px; border: none; cursor: pointer"
+      >
+        Install EGC
+        <span style="display: inline-flex; width: 42px; height: 42px; border-radius: 999px; background: #04200F; align-items: center; justify-content: center">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3DF59A" stroke-width="2.6" stroke-linecap="round" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6"></path>
+          </svg>
+        </span>
+      </button>
     </section>
-  </main>
 
-  <!-- Install Modal -->
+    <footer style="max-width: 1240px; margin: 0 auto; padding: 2rem 2rem 3rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; font-size: 13px; color: #8C9690; border-top: 1px solid #1E2421">
+      <span>EGC — Extended Global Context</span>
+      <span>MIT Licensed • Open Source</span>
+    </footer>
+
+  </div>
+
+  <!-- MULTI-PLATFORM INSTALL MODAL -->
   <div
     id="install-modal"
+    class="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 opacity-0 pointer-events-none invisible transition-all duration-200"
     role="dialog"
     aria-modal="true"
-    aria-labelledby="install-modal-title"
-    class="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 opacity-0 pointer-events-none invisible transition-opacity duration-300"
+    aria-labelledby="modal-headline"
   >
-    <div id="install-modal-backdrop" class="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
+    <div id="install-modal-backdrop" class="fixed inset-0 bg-black/80 backdrop-blur-sm transition-opacity"></div>
 
     <div
       id="install-modal-panel"
-      class="relative w-full sm:max-w-lg bg-gray-950 border border-gray-800 shadow-2xl rounded-t-2xl sm:rounded-2xl translate-y-full sm:translate-y-6 sm:scale-95 transition-transform duration-300 ease-out max-h-[90vh] overflow-y-auto"
+      class="relative w-full sm:max-w-lg bg-[#141816] rounded-t-2xl sm:rounded-2xl border border-white/10 shadow-2xl overflow-hidden transition-all transform translate-y-full sm:translate-y-0 sm:scale-95"
     >
-      <!-- Header -->
-      <div class="flex items-center justify-between px-5 py-4 border-b border-gray-800 sticky top-0 bg-gray-950 z-10">
-        <div>
-          <p class="text-[10px] font-bold uppercase tracking-widest text-egc-400 mb-0.5">Quick Start</p>
-          <h2 id="install-modal-title" class="text-base font-bold text-white">Install EGC</h2>
+      <div class="flex items-center justify-between px-5 py-4 border-b border-white/10">
+        <div class="flex items-center gap-2.5">
+          <span class="w-2 h-2 rounded-full bg-[#10B866]"></span>
+          <span id="modal-headline" class="font-bold text-sm text-[#F3F6F4]">Install EGC</span>
         </div>
-        <button id="close-install-modal" type="button" aria-label="Close" class="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800 transition-colors focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-egc-500">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <button
+          id="close-install-modal"
+          type="button"
+          aria-label="Close modal"
+          class="text-[#A3ADA7] hover:text-[#F3F6F4] p-1 rounded-md transition-colors focus:outline-none"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
           </svg>
         </button>
       </div>
 
       <!-- Tabs -->
-      <div class="flex border-b border-gray-800 bg-gray-900 overflow-x-auto">
-        <button class="modal-tab active flex items-center gap-1.5 px-4 py-3 text-xs font-semibold whitespace-nowrap min-h-[44px]" data-modal-tab="npm" type="button">
-          <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M1.763 0C.786 0 0 .786 0 1.763v20.474C0 23.214.786 24 1.763 24h20.474c.977 0 1.763-.786 1.763-1.763V1.763C24 .786 23.214 0 22.237 0zM5.13 5.323h13.837v13.629h-3.502V8.69h-3.377v10.262H5.13z"/></svg>
-          npm
-          <span class="text-[9px] font-bold uppercase px-1 py-0.5 rounded-full bg-egc-900/50 text-egc-400">rec</span>
+      <div class="flex border-b border-white/10 bg-[#0C0F0E]" role="tablist">
+        <button
+          type="button"
+          role="tab"
+          aria-selected="true"
+          data-modal-tab="quick"
+          class="modal-tab active px-4 py-2.5 text-xs font-mono font-medium text-[#F3F6F4] border-b-2 border-[#10B866] transition-colors"
+        >
+          Quick (npm)
         </button>
-        <button class="modal-tab flex items-center gap-1.5 px-4 py-3 text-xs font-semibold whitespace-nowrap min-h-[44px]" data-modal-tab="linux" type="button">
-          <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489a.424.424 0 00-.11.135c-.26.268-.45.6-.663.839-.199.199-.485.267-.797.4-.313.136-.658.269-.864.68-.09.189-.136.394-.132.602 0 .199.027.4.055.536.058.399.116.728.04.97-.249.68-.28 1.145-.106 1.484.174.334.535.47.94.601.81.2 1.91.135 2.774.6.926.466 1.866.67 2.616.47.526-.116.97-.464 1.208-.946.587-.003 1.23-.269 2.26-.334.699-.058 1.574.267 2.577.2.025.134.063.198.114.333l.003.003c.391.778 1.113 1.022 1.903 1.395.81.401 1.726.57 2.34.467.307-.065.56-.26.713-.552.512-.882.064-1.547-.12-1.792l-.053-.07a2.551 2.551 0 01-.172-.573c-.015-.131.017-.322.076-.451.336-.717.09-1.384-.272-1.845-.298-.378-.667-.6-.91-.727l-.108-.044a1.95 1.95 0 01-.368-.353c-.267-.359-.465-.799-.725-1.159-.122-.169-.376-.479-.553-.652-.4-.398-.646-.654-.646-1.072 0-.412.163-.855.283-1.267.127-.42.243-.805.217-1.133-.063-.79-.512-1.47-.855-2.012l-.07-.106c-.39-.6-.66-.994-.917-1.78-.264-.812-.363-1.725-.31-2.596.035-.475.095-.787.176-1.134l.01-.042c.03-.122.06-.238.07-.36.01-.12.004-.233-.01-.337C14.078 1.147 13.318 0 12.504 0z"/></svg>
-          Linux
+        <button
+          type="button"
+          role="tab"
+          aria-selected="false"
+          data-modal-tab="unix"
+          class="modal-tab px-4 py-2.5 text-xs font-mono font-medium text-[#A3ADA7] hover:text-[#F3F6F4] border-b-2 border-transparent transition-colors"
+        >
+          macOS / Linux
         </button>
-        <button class="modal-tab flex items-center gap-1.5 px-4 py-3 text-xs font-semibold whitespace-nowrap min-h-[44px]" data-modal-tab="macos" type="button">
-          <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg>
-          macOS
-        </button>
-        <button class="modal-tab flex items-center gap-1.5 px-4 py-3 text-xs font-semibold whitespace-nowrap min-h-[44px]" data-modal-tab="windows" type="button">
-          <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>
+        <button
+          type="button"
+          role="tab"
+          aria-selected="false"
+          data-modal-tab="windows"
+          class="modal-tab px-4 py-2.5 text-xs font-mono font-medium text-[#A3ADA7] hover:text-[#F3F6F4] border-b-2 border-transparent transition-colors"
+        >
           Windows
         </button>
       </div>
 
       <!-- Panels -->
-      <div id="modal-panel-npm" class="modal-panel">
-        <div class="px-5 py-3 bg-gray-950 border-b border-gray-800">
-          <p class="text-xs text-gray-400">Works on <strong class="text-white">Linux, macOS, and Windows</strong>. No git clone needed.</p>
-        </div>
-        <div class="flex items-center gap-1.5 px-4 py-2 bg-gray-900 border-b border-gray-700">
-          <span class="w-2 h-2 rounded-full bg-red-500"></span>
-          <span class="w-2 h-2 rounded-full bg-yellow-500"></span>
-          <span class="w-2 h-2 rounded-full bg-green-500"></span>
-          <span class="ml-2 text-[11px] text-gray-400 font-mono">terminal</span>
-        </div>
-        <pre class="bg-gray-900 px-5 py-4 text-gray-100 text-xs font-mono overflow-x-auto m-0"><code><span class="text-egc-400">$</span> npm install -g @egchq/egc
-<span class="text-egc-400">$</span> egc install</code></pre>
+      <div id="modal-panel-quick" class="modal-panel p-5">
+        <p class="text-xs text-[#A3ADA7] mb-3">Install globally via npm and initialize in your project:</p>
+        <pre class="bg-[#0C0F0E] p-4 rounded-lg text-xs font-mono text-[#F3F6F4] overflow-x-auto border border-white/5"><code><span class="text-[#3DF59A]">$</span> npm install -g @egchq/egc
+<span class="text-[#3DF59A]">$</span> egc init</code></pre>
       </div>
 
-      <div id="modal-panel-linux" class="modal-panel hidden">
-        <div class="px-5 py-3 bg-gray-950 border-b border-gray-800">
-          <p class="text-xs text-gray-400">Requires <a href="https://nodejs.org/en/download" target="_blank" rel="noopener noreferrer" aria-label="Node.js 20+ (opens in new tab)" class="text-egc-400 underline underline-offset-2">Node.js 20+</a> and git.</p>
-        </div>
-        <div class="flex items-center gap-1.5 px-4 py-2 bg-gray-900 border-b border-gray-700">
-          <span class="w-2 h-2 rounded-full bg-red-500"></span>
-          <span class="w-2 h-2 rounded-full bg-yellow-500"></span>
-          <span class="w-2 h-2 rounded-full bg-green-500"></span>
-          <span class="ml-2 text-[11px] text-gray-400 font-mono">bash</span>
-        </div>
-        <pre class="bg-gray-900 px-5 py-4 text-gray-100 text-xs font-mono overflow-x-auto m-0"><code><span class="text-egc-400">$</span> git clone https://github.com/Fmarzochi/EGC.git
-<span class="text-egc-400">$</span> cd EGC && sh scripts/install.sh</code></pre>
+      <div id="modal-panel-unix" class="modal-panel hidden p-5">
+        <p class="text-xs text-[#A3ADA7] mb-3">Install via automated shell script:</p>
+        <pre class="bg-[#0C0F0E] p-4 rounded-lg text-xs font-mono text-[#F3F6F4] overflow-x-auto border border-white/5"><code><span class="text-[#3DF59A]">$</span> git clone https://github.com/Fmarzochi/EGC.git
+<span class="text-[#3DF59A]">$</span> cd EGC &amp;&amp; ./scripts/install.sh</code></pre>
       </div>
 
-      <div id="modal-panel-macos" class="modal-panel hidden">
-        <div class="px-5 py-3 bg-gray-950 border-b border-gray-800">
-          <p class="text-xs text-gray-400">Requires <a href="https://nodejs.org/en/download" target="_blank" rel="noopener noreferrer" aria-label="Node.js 20+ (opens in new tab)" class="text-egc-400 underline underline-offset-2">Node.js 20+</a> and git.</p>
-        </div>
-        <div class="flex items-center gap-1.5 px-4 py-2 bg-gray-900 border-b border-gray-700">
-          <span class="w-2 h-2 rounded-full bg-red-500"></span>
-          <span class="w-2 h-2 rounded-full bg-yellow-500"></span>
-          <span class="w-2 h-2 rounded-full bg-green-500"></span>
-          <span class="ml-2 text-[11px] text-gray-400 font-mono">zsh</span>
-        </div>
-        <pre class="bg-gray-900 px-5 py-4 text-gray-100 text-xs font-mono overflow-x-auto m-0"><code><span class="text-egc-400">$</span> git clone https://github.com/Fmarzochi/EGC.git
-<span class="text-egc-400">$</span> cd EGC && sh scripts/install.sh</code></pre>
+      <div id="modal-panel-windows" class="modal-panel hidden p-5">
+        <p class="text-xs text-[#A3ADA7] mb-3">Install via PowerShell (Node 20+ required):</p>
+        <pre class="bg-[#0C0F0E] p-4 rounded-lg text-xs font-mono text-[#F3F6F4] overflow-x-auto border border-white/5"><code><span class="text-[#3DF59A]">PS&gt;</span> git clone https://github.com/Fmarzochi/EGC.git
+<span class="text-[#3DF59A]">PS&gt;</span> cd EGC; .\scripts\install.ps1</code></pre>
       </div>
 
-      <div id="modal-panel-windows" class="modal-panel hidden">
-        <div class="px-5 py-3 bg-gray-950 border-b border-gray-800">
-          <p class="text-xs text-gray-400">Requires <a href="https://nodejs.org/en/download" target="_blank" rel="noopener noreferrer" aria-label="Node.js 20+ (opens in new tab)" class="text-egc-400 underline underline-offset-2">Node.js 20+</a> and PowerShell.</p>
-        </div>
-        <div class="flex items-center gap-1.5 px-4 py-2 bg-gray-900 border-b border-gray-700">
-          <span class="w-2 h-2 rounded-full bg-red-500"></span>
-          <span class="w-2 h-2 rounded-full bg-yellow-500"></span>
-          <span class="w-2 h-2 rounded-full bg-green-500"></span>
-          <span class="ml-2 text-[11px] text-gray-400 font-mono">powershell</span>
-        </div>
-        <pre class="bg-gray-900 px-5 py-4 text-gray-100 text-xs font-mono overflow-x-auto m-0"><code><span class="text-egc-400">PS&gt;</span> git clone https://github.com/Fmarzochi/EGC.git
-<span class="text-egc-400">PS&gt;</span> cd EGC; .\scripts\install.ps1</code></pre>
-      </div>
-
-      <!-- Footer -->
-      <div class="px-5 py-3 border-t border-gray-800 flex items-center justify-between">
-        <p class="text-[11px] text-gray-500">Works with Claude Code, Cursor, Codex &amp; more.</p>
-        <a href={`${base}get-started`} class="text-xs text-egc-400 hover:text-egc-300 font-semibold flex items-center gap-1 transition-colors">
-          Full guide
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-          </svg>
-        </a>
+      <div class="px-5 py-3 border-t border-white/10 flex items-center justify-between text-xs">
+        <span class="text-[#A3ADA7]">Works with Claude Code, Cursor, Codex &amp; more</span>
+        <a href={`${base}docs/memory`} class="text-[#3DF59A] hover:underline font-medium">Documentation &rarr;</a>
       </div>
     </div>
   </div>
 
-  <Footer />
+  <script>
+    // Modal logic
+    const modal = document.getElementById('install-modal');
+    const panel = document.getElementById('install-modal-panel');
+    const backdrop = document.getElementById('install-modal-backdrop');
+    const openBtns = document.querySelectorAll('.open-install-trigger');
+    const closeBtn = document.getElementById('close-install-modal');
 
-<script>
-  // Intersection Observer for animations
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('animate-fade-in-up');
-        entry.target.classList.remove('opacity-0');
-        observer.unobserve(entry.target);
+    function openModal() {
+      modal?.classList.remove('opacity-0', 'pointer-events-none', 'invisible');
+      modal?.classList.add('opacity-100', 'pointer-events-auto', 'visible');
+      panel?.classList.remove('translate-y-full', 'sm:scale-95');
+      panel?.classList.add('translate-y-0', 'sm:scale-100');
+      document.body.classList.add('overflow-hidden');
+      closeBtn?.focus();
+    }
+
+    function closeModal() {
+      modal?.classList.add('opacity-0', 'pointer-events-none', 'invisible');
+      modal?.classList.remove('opacity-100', 'pointer-events-auto', 'visible');
+      panel?.classList.add('translate-y-full', 'sm:scale-95');
+      panel?.classList.remove('translate-y-0', 'sm:scale-100');
+      document.body.classList.remove('overflow-hidden');
+    }
+
+    openBtns.forEach(btn => btn.addEventListener('click', openModal));
+    closeBtn?.addEventListener('click', closeModal);
+    backdrop?.addEventListener('click', closeModal);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal && !modal.classList.contains('invisible')) {
+        closeModal();
       }
     });
-  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
-  document.querySelectorAll('[data-animate]').forEach(el => {
-    el.classList.add('opacity-0');
-    observer.observe(el);
-  });
+    document.querySelectorAll('.modal-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        const target = (tab as HTMLElement).dataset.modalTab;
+        document.querySelectorAll('.modal-tab').forEach(t => {
+          t.classList.remove('active', 'border-[#10B866]', 'text-[#F3F6F4]');
+          t.classList.add('border-transparent', 'text-[#A3ADA7]');
+        });
+        document.querySelectorAll('.modal-panel').forEach(p => p.classList.add('hidden'));
 
-  // Copy install command
-  const copyBtn = document.getElementById('copy-install-cmd');
-  const copyLabel = document.getElementById('copy-label');
-  const copyIcon = document.getElementById('copy-icon');
-  if (copyBtn) {
-    const activate = () => {
-      navigator.clipboard.writeText('npm install -g @egchq/egc\negc install').then(() => {
-        if (copyLabel) copyLabel.textContent = 'copied!';
-        if (copyIcon) copyIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>';
-        setTimeout(() => {
-          if (copyLabel) copyLabel.textContent = 'copy';
-          if (copyIcon) copyIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>';
-        }, 2000);
-      }).catch(() => {});
-    };
-    copyBtn.addEventListener('click', activate);
-    copyBtn.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') activate(); });
-  }
-
-  // Install Modal
-  const modal = document.getElementById('install-modal');
-  const panel = document.getElementById('install-modal-panel');
-  const backdrop = document.getElementById('install-modal-backdrop');
-  const openBtn = document.getElementById('open-install-modal');
-  const closeBtn = document.getElementById('close-install-modal');
-
-  function openModal() {
-    modal?.classList.remove('opacity-0', 'pointer-events-none', 'invisible');
-    modal?.classList.add('opacity-100', 'pointer-events-auto', 'visible');
-    panel?.classList.remove('translate-y-full', 'sm:translate-y-6', 'sm:scale-95');
-    panel?.classList.add('translate-y-0', 'sm:scale-100');
-    document.body.classList.add('overflow-hidden');
-    closeBtn?.focus();
-  }
-
-  function closeModal() {
-    modal?.classList.add('opacity-0', 'pointer-events-none', 'invisible');
-    modal?.classList.remove('opacity-100', 'pointer-events-auto', 'visible');
-    panel?.classList.add('translate-y-full', 'sm:translate-y-6', 'sm:scale-95');
-    panel?.classList.remove('translate-y-0', 'sm:scale-100');
-    document.body.classList.remove('overflow-hidden');
-    openBtn?.focus();
-  }
-
-  openBtn?.addEventListener('click', openModal);
-  closeBtn?.addEventListener('click', closeModal);
-  backdrop?.addEventListener('click', closeModal);
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal && !modal.classList.contains('invisible')) closeModal();
-  });
-
-  document.querySelectorAll('.modal-tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-      const target = (tab as HTMLElement).dataset.modalTab;
-      document.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
-      document.querySelectorAll('.modal-panel').forEach(p => p.classList.add('hidden'));
-      tab.classList.add('active');
-      document.getElementById(`modal-panel-${target}`)?.classList.remove('hidden');
+        tab.classList.add('active', 'border-[#10B866]', 'text-[#F3F6F4]');
+        tab.classList.remove('border-transparent', 'text-[#A3ADA7]');
+        document.getElementById(`modal-panel-${target}`)?.classList.remove('hidden');
+      });
     });
-  });
-</script>
+  </script>
 </Base>

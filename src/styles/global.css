@@ -30,13 +30,13 @@
     --egc-green-100: #dcfce7;
     --egc-green-200: #bbf7d0;
     --egc-green-300: #86efac;
-    --egc-green-400: #4ade80;
-    --egc-green: #22c55e;
-    --egc-green-dark: #16a34a;
-    --egc-green-700: #15803d;
-    --egc-green-800: #166534;
-    --egc-green-900: #14532d;
-    --egc-green-950: #052e16;
+    --egc-green-400: #3DF59A;
+    --egc-green: #10B866;
+    --egc-green-dark: #0B7A44;
+    --egc-green-700: #08633A;
+    --egc-green-800: #052818;
+    --egc-green-900: #04200F;
+    --egc-green-950: #021208;
   }
 
   html {
@@ -48,7 +48,7 @@
   }
 
   body {
-    @apply bg-white text-gray-900 antialiased dark:bg-gray-950 dark:text-gray-100;
+    @apply bg-[#0C0F0E] text-[#F3F6F4] antialiased dark:bg-[#0C0F0E] dark:text-[#F3F6F4];
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
     /* Ensure minimum readable body text on mobile */
     font-size: 1rem;
@@ -62,38 +62,37 @@
 
 @layer components {
   .nav-link {
-    @apply text-sm font-medium text-gray-600 hover:text-egc-600 transition-colors duration-150 dark:text-gray-400 dark:hover:text-egc-400 focus:outline-none focus:ring-2 focus:ring-egc-500 focus:rounded;
+    @apply text-sm font-medium text-[#A3ADA7] hover:text-[#3DF59A] transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-[#3DF59A] focus:rounded;
   }
 
   .btn-primary {
-    @apply inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-egc-600 text-white text-sm font-semibold hover:bg-egc-700 transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-egc-500 focus:ring-offset-2;
-    /* Ensure minimum touch target */
+    @apply inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#10B866] text-[#04200F] text-sm font-bold hover:bg-[#3DF59A] transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-[#3DF59A] focus:ring-offset-2;
     min-height: 44px;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 bg-white text-gray-700 text-sm font-semibold hover:bg-gray-50 transition-colors duration-150 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-egc-500 focus:ring-offset-2;
+    @apply inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/20 bg-white/[0.04] text-[#F3F6F4] text-sm font-semibold hover:bg-white/[0.08] hover:border-white/30 transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-[#3DF59A];
     min-height: 44px;
   }
 
   .code-block {
-    @apply rounded-xl bg-gray-900 text-gray-100 font-mono text-sm leading-relaxed overflow-x-auto;
+    @apply rounded-xl bg-[#141816] text-[#F3F6F4] font-mono text-sm leading-relaxed overflow-x-auto border border-[#1E2421];
   }
 
   .section-label {
-    @apply text-xs font-semibold uppercase tracking-widest text-egc-600 dark:text-egc-400;
+    @apply text-xs font-mono font-semibold uppercase tracking-widest text-[#3DF59A];
   }
 
   .card {
-    @apply rounded-2xl border border-gray-200 bg-white p-6 transition-shadow hover:shadow-md dark:border-gray-800 dark:bg-gray-900 dark:hover:shadow-gray-900/50;
+    @apply rounded-2xl border border-[#1E2421] bg-[#141816] p-6 transition-all hover:border-[#3DF59A]/30;
   }
 
   .sidebar-link {
-    @apply flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-gray-600 hover:text-egc-600 hover:bg-egc-50 transition-colors duration-150 dark:text-gray-400 dark:hover:text-egc-400 dark:hover:bg-green-950/50 focus:outline-none focus:ring-2 focus:ring-egc-500;
+    @apply flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-[#A3ADA7] hover:text-[#3DF59A] hover:bg-white/[0.04] transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-[#3DF59A];
   }
 
   .sidebar-link.active {
-    @apply text-egc-700 bg-egc-50 font-medium dark:text-egc-400 dark:bg-green-950/50;
+    @apply text-[#3DF59A] bg-[#10B866]/10 font-semibold border-l-2 border-[#10B866];
   }
 }
 
@@ -255,11 +254,10 @@ pre {
 }
 
 .dark .glass {
-  background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-top: 1px solid rgba(255,255,255,0.25);
-  border-left: 1px solid rgba(255,255,255,0.15);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  background: #141816;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 @supports not (backdrop-filter: blur(1px)) {

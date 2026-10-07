@@ -64,23 +64,22 @@ const podiumMeta = [
     <!-- Hero -->
     <section class="relative overflow-hidden py-16 sm:py-24">
       <div class="absolute inset-0 pointer-events-none -z-10" aria-hidden="true">
-        <div class="absolute left-1/4 top-0 w-[600px] h-[400px] bg-yellow-400/6 rounded-full blur-[120px] mix-blend-screen"></div>
-        <div class="absolute right-1/4 bottom-0 w-[400px] h-[300px] bg-egc-500/8 rounded-full blur-[100px] mix-blend-screen"></div>
+        <div class="absolute left-1/2 -translate-x-1/2 top-0 w-[700px] h-[350px] bg-gradient-to-b from-[#18B669]/10 via-[#3DF69B]/5 to-transparent blur-[100px]"></div>
       </div>
 
       <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
         <div class="flex items-center justify-center mb-6">
-          <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl glass shadow-lg">
+          <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#111614] border border-[rgba(226,240,233,0.12)] shadow-xl shadow-black/40">
             <svg class="w-8 h-8 text-yellow-400" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17 5.8 21.3l2.4-7.4L2 9.4h7.6L12 2z"/>
             </svg>
           </div>
         </div>
 
-        <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-4">
+        <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-[#F4F6F5] mb-4 font-sans">
           Hall of Fame
         </h1>
-        <p class="text-base sm:text-lg text-gray-400 max-w-xl mx-auto mb-10">
+        <p class="text-base sm:text-lg text-[#8E9E96] max-w-xl mx-auto mb-10 leading-relaxed">
           Every developer who shipped something real for EGC is here permanently. No bots, no placeholders. Just the people who looked at an open issue and fixed it.
         </p>
 
@@ -92,8 +91,8 @@ const podiumMeta = [
             { value: String(totalPrs), label: 'PRs merged' },
           ].map(s => (
             <div class="text-center">
-              <div class="text-2xl sm:text-3xl font-extrabold text-egc-400">{s.value}</div>
-              <div class="text-xs text-gray-500 uppercase tracking-widest mt-1">{s.label}</div>
+              <div class="text-2xl sm:text-3xl font-extrabold text-[#3DF69B]">{s.value}</div>
+              <div class="font-mono text-[11px] text-[#8E9E96] uppercase tracking-[0.14em] mt-1.5">{s.label}</div>
             </div>
           ))}
         </div>
@@ -103,7 +102,7 @@ const podiumMeta = [
     <!-- Contributor of the Month -->
     {champion && championFormatted && (
       <section class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 mb-12">
-        <div class="relative rounded-2xl overflow-hidden glass border border-yellow-500/20">
+        <div class="relative rounded-2xl overflow-hidden bg-[#0D100F] border border-yellow-400/25 shadow-2xl shadow-black/50">
           <div class="absolute inset-0 pointer-events-none -z-10" aria-hidden="true">
             <div class="absolute inset-0 bg-gradient-to-r from-yellow-400/10 via-transparent to-egc-500/5"></div>
           </div>
@@ -154,8 +153,8 @@ const podiumMeta = [
 
               {/* Formatted Key Highlights */}
               {championFormatted.isStructured ? (
-                <div class="rounded-xl bg-white/[0.02] border border-white/[0.06] p-3.5 sm:p-4 text-left">
-                  <p class="text-[11px] font-semibold uppercase tracking-wider text-gray-400 mb-2">Key Highlights</p>
+                <div class="rounded-xl bg-[#070A09] border border-[rgba(226,240,233,0.08)] p-4 sm:p-5 text-left">
+                  <p class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8E9E96] mb-2.5">Key Highlights</p>
                   <ul class="space-y-2 text-sm text-gray-300 leading-relaxed">
                     {championFormatted.items.slice(0, 4).map(item => (
                       <li class="flex items-start gap-2">
@@ -190,7 +189,7 @@ const podiumMeta = [
     <!-- Past Champions of the Month -->
     {pastChampions.length > 0 && (
       <section class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 mb-12">
-        <p class="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-3 text-center">Past Champions</p>
+        <p class="font-mono text-xs font-semibold uppercase tracking-[0.14em] text-[#8E9E96] mb-3 text-center">Past Champions</p>
         <div class="flex flex-wrap justify-center gap-3">
           {pastChampions.map(h => (
             <a
@@ -217,8 +216,8 @@ const podiumMeta = [
     <!-- Podium -->
     {topThree.length >= 3 && (
       <section class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 mb-4">
-        <p class="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-1 text-center">Leaderboard</p>
-        <p class="text-xs text-gray-600 mb-6 sm:mb-8 text-center">🔥 Hype your favorite contributor, one hype a day</p>
+        <p class="font-mono text-xs font-semibold uppercase tracking-[0.14em] text-[#8E9E96] mb-1 text-center">Leaderboard</p>
+        <p class="text-xs text-[#8E9E96] mb-6 sm:mb-8 text-center">🔥 Hype your favorite contributor, one hype a day</p>
 
         <!-- Mobile: ranked list -->
         <div class="sm:hidden flex flex-col gap-3">
@@ -325,8 +324,8 @@ const podiumMeta = [
 
     <!-- All contributors grid -->
     <section class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 mt-12 mb-10">
-      <p class="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-1">All contributors</p>
-      <p class="text-xs text-gray-600 mb-6">🔥 Hype your favorite contributor, one hype a day</p>
+      <p class="font-mono text-xs font-semibold uppercase tracking-[0.14em] text-[#8E9E96] mb-1">All contributors</p>
+      <p class="text-xs text-[#8E9E96] mb-6">🔥 Hype your favorite contributor, one hype a day</p>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {rest.map(c => {
           const tier = TIER_CONFIG[c.tier];
@@ -335,7 +334,7 @@ const podiumMeta = [
             <button type="button" data-hype={c.login} title="Hype this contributor (1 hype a day)" aria-label={`Hype ${c.name}`} class="hype-btn absolute -top-2 -right-1 z-10 inline-flex items-center gap-1 h-7 px-2 rounded-full text-xs font-semibold backdrop-blur-md bg-white/10 border border-white/15 text-gray-300 hover:text-orange-400 hover:border-orange-400/40 motion-safe:hover:scale-105 motion-safe:active:scale-95 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400">🔥<span class="hype-count tabular-nums"></span></button>
             <a
               href={`${base}contributors/${c.login}`}
-              class="group flex items-center gap-4 rounded-xl p-4 h-full glass hover-lift transition-all duration-200 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500"
+              class="group flex items-center gap-4 rounded-xl p-4 h-full bg-[#0D100F] border border-[rgba(226,240,233,0.09)] hover:border-[#3DF69B]/35 hover:bg-[#111614] hover-lift transition-all duration-200 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500"
             >
               <img
                 src={c.avatar}
@@ -379,7 +378,7 @@ const podiumMeta = [
 
       <!-- Tier legend -->
       <div class="mt-8 rounded-xl p-4 glass">
-        <p class="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-3">Tiers</p>
+        <p class="font-mono text-xs font-semibold uppercase tracking-[0.14em] text-[#8E9E96] mb-3">Tiers</p>
         <div class="flex flex-wrap gap-2 sm:gap-3">
           {(Object.entries(TIER_CONFIG) as [string, typeof TIER_CONFIG[keyof typeof TIER_CONFIG]][]).map(([, t]) => (
             <span class={`inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 rounded-full text-xs font-semibold border ${t.color}`}>
@@ -401,7 +400,7 @@ const podiumMeta = [
           href="https://github.com/Fmarzochi/EGC/issues"
           target="_blank"
           rel="noopener noreferrer"
-          class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-egc-600 hover:bg-egc-500 text-white text-sm font-semibold transition-colors duration-200 active:scale-95"
+          class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#18B669] hover:bg-[#3DF69B] text-[#04200F] text-sm font-bold transition-all duration-200 active:scale-95 shadow-md shadow-[#18B669]/20"
         >
           Browse open issues
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
@@ -431,7 +430,7 @@ const podiumMeta = [
               href="https://github.com/sponsors/Fmarzochi"
               target="_blank"
               rel="noopener noreferrer"
-              class="group inline-flex items-center justify-center gap-2 min-h-[40px] px-4 py-2 rounded-xl border border-gray-700 bg-gray-900 text-gray-300 text-sm font-semibold hover:border-pink-700 hover:text-pink-400 active:scale-95 transition-all duration-200"
+              class="group inline-flex items-center justify-center gap-2 min-h-[40px] px-5 py-2 rounded-full border border-[rgba(226,240,233,0.12)] bg-[#111614] text-[#F4F6F5] text-sm font-semibold hover:border-pink-500/50 hover:text-pink-400 active:scale-95 transition-all duration-200"
             >
               <svg class="w-4 h-4 text-pink-500/70 group-hover:text-pink-400 transition-colors animate-heartbeat" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.593c-.317.177-.834.177-1.151 0C9.774 20.57 3 16.259 3 9.5 3 6.462 5.462 4 8.5 4c1.4 0 2.672.536 3.5 1.393C12.828 4.536 14.1 4 15.5 4 18.538 4 21 6.462 21 9.5c0 6.759-6.774 11.07-9 12.093z"/></svg>
               GitHub Sponsors
@@ -440,7 +439,7 @@ const podiumMeta = [
               href="https://www.paypal.com/donate/?business=fmarzochi%40gmail.com&currency_code=USD"
               target="_blank"
               rel="noopener noreferrer"
-              class="group inline-flex items-center justify-center gap-2 min-h-[40px] px-4 py-2 rounded-xl border border-gray-700 bg-gray-900 text-gray-300 text-sm font-semibold hover:border-blue-700 hover:text-blue-400 active:scale-95 transition-all duration-200"
+              class="group inline-flex items-center justify-center gap-2 min-h-[40px] px-5 py-2 rounded-full border border-[rgba(226,240,233,0.12)] bg-[#111614] text-[#F4F6F5] text-sm font-semibold hover:border-blue-500/50 hover:text-blue-400 active:scale-95 transition-all duration-200"
             >
               <svg class="w-4 h-4 text-blue-500/70 group-hover:text-blue-400 transition-colors" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.541c-.013.076-.026.175-.041.254-.93 4.778-4.005 7.201-9.138 7.201h-2.19a.563.563 0 0 0-.556.479l-1.187 7.527h-.506l-.24 1.516a.56.56 0 0 0 .554.647h3.882c.46 0 .85-.334.922-.788.06-.26.76-4.852.816-5.09a.932.932 0 0 1 .923-.788h.58c3.76 0 6.705-1.528 7.565-5.946.36-1.847.174-3.388-.777-4.471z"/></svg>
               PayPal

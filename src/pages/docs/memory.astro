@@ -1,26 +1,83 @@
 ---
 import DocsLayout from '../../layouts/DocsLayout.astro';
+const toc = [
+  { id: 'overview', label: 'Overview' },
+  { id: 'workflow', label: 'How it works' },
+  { id: 'tools', label: 'Tool reference' },
+  { id: 'state-format', label: 'State format' },
+  { id: 'protocol', label: 'Session protocol' },
+];
 ---
 
-<DocsLayout title="egc-memory" description="The egc-memory MCP server provides persistent cross-session memory for AI coding tools." current="memory">
+<DocsLayout title="egc-memory" description="The egc-memory MCP server provides persistent cross-session memory for AI coding tools." current="memory" toc={toc}>
 
-  <div class="pb-2 mb-8 border-b border-gray-200 dark:border-gray-800">
-    <p class="text-xs font-semibold uppercase tracking-widest text-egc-600 dark:text-egc-400 mb-2">MCP Servers</p>
-    <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-3 font-mono break-all">egc-memory</h1>
-    <p class="text-gray-600 dark:text-gray-400">Persistent cross-session memory for AI coding tools. The one you'll use every session.</p>
+  <div class="hero pb-8 mb-8 border-b border-[rgba(226,240,233,0.09)]">
+    <div class="eyebrow mb-2">MCP SERVERS / MEMORY</div>
+    <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-[#F4F6F5] mb-3 font-sans">
+      Persistent memory across every session.
+    </h1>
+    <p class="lead text-base sm:text-lg text-[#8E9E96] max-w-2xl mb-4 leading-relaxed">
+      egc-memory preserves project context, architectural decisions, and working memory — even when you change branches, tools, or sessions.
+    </p>
+    <div class="pills">
+      <span class="pill">● Local-first</span>
+      <span class="pill">◇ Encrypted at rest</span>
+      <span class="pill">⌘ MCP server</span>
+    </div>
   </div>
 
   <!-- Overview -->
-  <section class="mb-10">
-    <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Overview</h2>
-    <p class="text-gray-600 dark:text-gray-400 mb-4">egc-memory is a local MCP server. It keeps one Markdown state document per project branch under <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">~/.egc/state/</code>, and a SQLite store (<code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">state.db</code> under <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">~/.egc/</code>) for decisions, lessons, working memory and the session bus. The AI reads the state at the start of each session and writes to it at the end; <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">egc export</code> prints it decrypted.</p>
-    <p class="text-gray-600 dark:text-gray-400">State is stored per project branch as Markdown files encrypted at rest (AES-256-GCM). The memory server and session hooks decrypt them transparently; nothing ever leaves your machine.</p>
+  <section class="section mb-12 scroll-mt-24" id="overview">
+    <h2 class="text-xl sm:text-2xl font-bold text-[#F4F6F5] mb-3 tracking-tight">One context. Every session.</h2>
+    <p class="text-sm sm:text-base text-[#8E9E96] leading-relaxed mb-6">
+      The memory server keeps one Markdown state document per project branch under <code class="text-xs bg-[rgba(226,240,233,0.06)] border border-[rgba(226,240,233,0.09)] text-[#3DF69B] px-1.5 py-0.5 rounded font-mono">~/.egc/state/</code> alongside a SQLite store (<code class="text-xs bg-[rgba(226,240,233,0.06)] border border-[rgba(226,240,233,0.09)] text-[#3DF69B] px-1.5 py-0.5 rounded font-mono">state.db</code>) for decisions, lessons, working memory and the session bus. State is encrypted at rest using AES-256-GCM.
+    </p>
+
+    <div class="featuregrid">
+      <article class="feature">
+        <div class="ico">◈</div>
+        <strong>Branch-aware state</strong>
+        <p>Keep relevant decisions aligned with the branch you are working on.</p>
+      </article>
+      <article class="feature">
+        <div class="ico">▣</div>
+        <strong>Local by design</strong>
+        <p>Project context stays on your machine, completely under your control.</p>
+      </article>
+      <article class="feature">
+        <div class="ico">◇</div>
+        <strong>Encrypted at rest</strong>
+        <p>Markdown state is protected locally using AES-256-GCM encryption.</p>
+      </article>
+    </div>
   </section>
 
-  <!-- Tools reference -->
-  <section class="mb-10">
-    <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Tools</h2>
-    <div class="space-y-4">
+  <!-- Workflow -->
+  <section class="section mb-12 scroll-mt-24" id="workflow">
+    <h2 class="text-xl sm:text-2xl font-bold text-[#F4F6F5] mb-3 tracking-tight">How it works</h2>
+    <p class="text-sm sm:text-base text-[#8E9E96] leading-relaxed mb-4">
+      A compact lifecycle that keeps your AI tooling aligned from one session to the next.
+    </p>
+
+    <div class="snippet">
+      <div class="snippettop">
+        <span>SESSION FLOW</span>
+        <button class="copy-btn" type="button" data-copy="01 Session starts → read current project state&#10;02 Work continues → decisions and working memory&#10;03 Session closes → persist relevant updates&#10;04 Next session → resume with the right context">Copy</button>
+      </div>
+      <pre><code><span class="text-[#3DF69B]">01</span>  Session starts        →  read current project state
+<span class="text-[#3DF69B]">02</span>  Work continues       →  decisions and working memory
+<span class="text-[#3DF69B]">03</span>  Session closes       →  persist relevant updates
+<span class="text-[#3DF69B]">04</span>  Next session         →  resume with the right context</code></pre>
+    </div>
+  </section>
+
+  <!-- Tool reference -->
+  <section class="section mb-12 scroll-mt-24" id="tools">
+    <h2 class="text-xl sm:text-2xl font-bold text-[#F4F6F5] mb-3 tracking-tight">Tool reference</h2>
+    <p class="text-sm sm:text-base text-[#8E9E96] leading-relaxed mb-6">
+      Core MCP methods, organized for fast scanning. Click on any method to inspect its signature, parameters, and return types.
+    </p>
+    <div class="tools" id="tool-list">
       {[
         {
           name: 'get_project_state',
@@ -166,23 +223,28 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
           description: 'Shows team sync health so you can verify the backend is connected before or after a team_sync call.',
           returns: 'Object with last sync time, uncommitted changes, conflict count, and remote URL.',
         },
-      ].map(tool => (
-        <div class="rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden">
-          <div class="flex items-center gap-3 px-5 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
-            <code class="text-sm font-mono font-bold text-egc-700 dark:text-egc-400">{tool.name}</code>
+      ].map((tool, idx) => (
+        <details class="tool" open={idx === 0}>
+          <summary>
+            <div>
+              <strong>{tool.signature}</strong>
+              <small>{tool.description.split('.')[0]}.</small>
+            </div>
+            <span class="arrow">⌄</span>
+          </summary>
+          <div class="detail">
+            <p class="mb-3 leading-relaxed text-sm text-[#E2E8E4]">{tool.description}</p>
+            <p class="text-xs text-[#8E9E96]">
+              <span class="font-semibold text-[#F4F6F5]">Returns:</span> {tool.returns}
+            </p>
           </div>
-          <div class="p-5">
-            <pre class="bg-gray-900 text-gray-300 text-xs font-mono p-3 rounded-lg overflow-x-auto mb-4"><code>{tool.signature}</code></pre>
-            <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">{tool.description}</p>
-            <p class="text-xs text-gray-500 dark:text-gray-500"><span class="font-semibold text-gray-700 dark:text-gray-300">Returns:</span> {tool.returns}</p>
-          </div>
-        </div>
+        </details>
       ))}
     </div>
   </section>
 
   <!-- State file format -->
-  <section class="mb-10">
+  <section class="section mb-12 scroll-mt-24" id="state-format">
     <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">State file format</h2>
     <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">State files live at <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">~/.egc/state/&lt;project-slug&gt;/&lt;branch&gt;.md</code>, one per project branch (flat <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">&lt;project-slug&gt;.md</code> files from older versions are still read). The slug is derived from the absolute path of the project directory, and files are encrypted at rest with the key at <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">~/.egc/encryption.key</code>.</p>
     <div class="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-800">
@@ -217,7 +279,7 @@ Auth uses sessions via iron-session, not JWT.
   </section>
 
   <!-- Session protocol -->
-  <section class="mb-10">
+  <section class="section mb-12 scroll-mt-24" id="protocol">
     <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Session protocol</h2>
     <p class="text-sm text-gray-600 dark:text-gray-400 mb-6">The cognitive bootstrap injected by the installer writes this protocol into every tool's global instruction file. For Claude Code, the installer also registers a <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">SessionStart</code> hook that calls <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">get_state</code> automatically when a session opens, and a <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">Stop</code> hook that calls <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">update_state</code> automatically when a session ends. For other tools, the AI is instructed to run the protocol via the global instruction file. The protocol is versioned (v6 today) and upgrades in place on the next <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">egc init</code> or <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">egc auto-update</code>; it also tells the AI to announce itself on the session bus after restoring state, to drain events at the start of every turn, and, when <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">get_state</code> is missing, to say the server is not registered instead of improvising memory on disk.</p>
     <div class="grid sm:grid-cols-2 gap-4">

@@ -8,10 +8,11 @@ export interface Props {
   title: string;
   description?: string;
   current?: string;
+  toc?: { id: string; label: string }[];
 }
 
 import { getBase } from '../utils/base.ts';
-const { title, description, current } = Astro.props;
+const { title, description, current, toc } = Astro.props;
 const base = getBase();
 
 const sections = [
@@ -153,6 +154,31 @@ const sections = [
           <slot />
         </main>
 
+        <!-- On This Page (Table of Contents) -->
+        {toc && toc.length > 0 && (
+          <aside class="hidden xl:block w-48 shrink-0 pl-6 border-l border-[rgba(226,240,233,0.08)]">
+            <div class="sticky top-24 pt-2">
+              <h4 class="font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-[#8E9E96] mb-3">On this page</h4>
+              <nav class="space-y-1">
+                {toc.map(item => (
+                  <a
+                    href={`#${item.id}`}
+                    class="block py-1.5 pl-3 border-l border-[rgba(226,240,233,0.12)] text-xs text-[#8E9E96] hover:text-[#3DF69B] hover:border-[#3DF69B] transition-colors"
+                  >
+                    {item.label}
+                  </a>
+                ))}
+              </nav>
+              <div class="mt-8 p-3.5 rounded-xl bg-[#102018] border border-[#23402d]">
+                <span class="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-[#3DF69B]">QUICK TIP</span>
+                <p class="text-xs text-[#aac7b5] mt-1.5 leading-relaxed">
+                  State is encrypted per project branch at <code>~/.egc</code>.
+                </p>
+              </div>
+            </div>
+          </aside>
+        )}
+
       </div>
     </div>
 
@@ -266,6 +292,193 @@ const sections = [
   body.docs-sidebar-open {
     overflow: hidden;
   }
+
+  /* Visual Lab Components */
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 11px;
+    line-height: 1.6;
+    color: #3DF69B;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+  }
+
+  .pill {
+    border: 1px solid #264d38;
+    background: #10251b;
+    color: #8fe8b4;
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 30px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .featuregrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin: 18px 0;
+  }
+
+  .feature {
+    padding: 20px;
+    background: linear-gradient(140deg, #121a16, #0d1310);
+    border: 1px solid rgba(226, 240, 233, 0.09);
+    border-radius: 14px;
+    transition: transform .22s ease, border-color .22s ease, background .22s ease;
+  }
+
+  .feature:hover {
+    transform: translateY(-3px);
+    border-color: #3a8058;
+    background: #132219;
+  }
+
+  .feature .ico {
+    font-size: 20px;
+    margin-bottom: 8px;
+    color: #3DF69B;
+  }
+
+  .feature strong {
+    display: block;
+    font-size: 14px;
+    color: #F4F6F5;
+  }
+
+  .feature p {
+    color: #8E9E96;
+    font-size: 12px;
+    margin: 6px 0 0;
+    line-height: 1.5;
+  }
+
+  .snippet {
+    background: linear-gradient(140deg, #121a16, #0d1310);
+    border: 1px solid rgba(226, 240, 233, 0.09);
+    border-radius: 14px;
+    overflow: hidden;
+    margin: 18px 0;
+  }
+
+  .snippettop {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 16px;
+    border-bottom: 1px solid rgba(226, 240, 233, 0.09);
+    color: #8E9E96;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+  }
+
+  .copy-btn {
+    background: #19281e;
+    color: #3DF69B;
+    border: 1px solid #31523e;
+    border-radius: 7px;
+    padding: 3px 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all .15s ease;
+  }
+
+  .copy-btn:hover {
+    background: #233b2c;
+    border-color: #3DF69B;
+  }
+
+  .snippet pre {
+    white-space: pre-wrap !important;
+    word-break: break-word !important;
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 12px !important;
+    line-height: 1.9 !important;
+    color: #c5e6ce !important;
+    padding: 15px 18px !important;
+    margin: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+  }
+
+  .tools {
+    display: grid;
+    gap: 11px;
+    margin: 18px 0;
+  }
+
+  .tool {
+    background: linear-gradient(140deg, #121a16, #0d1310);
+    border: 1px solid rgba(226, 240, 233, 0.09);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: transform .22s ease, border-color .22s ease, background .22s ease;
+  }
+
+  .tool:hover {
+    transform: translateY(-2px);
+    border-color: rgba(61, 246, 155, 0.3);
+    background: #132219;
+  }
+
+  .tool summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px 20px;
+    user-select: none;
+  }
+
+  .tool summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .tool summary strong {
+    color: #d6f7e3;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .tool summary small {
+    display: block;
+    color: #8E9E96;
+    font-size: 12px;
+    margin-top: 4px;
+  }
+
+  .tool summary .arrow {
+    color: #3DF69B;
+    transition: transform .2s ease;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .tool[open] summary .arrow {
+    transform: rotate(180deg);
+  }
+
+  .tool .detail {
+    border-top: 1px solid rgba(226, 240, 233, 0.09);
+    padding: 16px 20px;
+    color: #b1c0b6;
+    font-size: 13px;
+    line-height: 1.6;
+    background: rgba(0, 0, 0, 0.2);
+  }
 </style>
 
 <script>
@@ -328,4 +541,18 @@ const sections = [
 
   document.addEventListener('astro:page-load', setupDocsSidebar);
   document.addEventListener('DOMContentLoaded', setupDocsSidebar);
+
+    // Clipboard copy helper
+    document.addEventListener('click', (e) => {
+      const btn = (e.target as HTMLElement).closest('.copy-btn');
+      if (!btn) return;
+      const text = btn.getAttribute('data-copy') || '';
+      if (text && navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          const orig = btn.textContent;
+          btn.textContent = 'Copied ✓';
+          setTimeout(() => { btn.textContent = orig; }, 1500);
+        });
+      }
+    });
 </script>

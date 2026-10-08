@@ -45,25 +45,44 @@ let githubLocation = '';
 let githubFollowers = 0;
 let githubRepos = 0;
 
-try {
-  const headers: Record<string, string> = { Accept: 'application/vnd.github+json' };
-  const token = import.meta.env.GITHUB_TOKEN;
-  if (token) headers['Authorization'] = `Bearer ${token}`;
-  const res = await fetch(`https://api.github.com/users/${login}`, { headers });
-  if (res.ok) {
-    const data = await res.json() as {
-      bio?: string;
-      location?: string;
-      followers?: number;
-      public_repos?: number;
-    };
-    githubBio = data.bio ?? '';
-    githubLocation = data.location ?? '';
-    githubFollowers = data.followers ?? 0;
-    githubRepos = data.public_repos ?? 0;
+const userCache = new Map<string, { bio: string; location: string; followers: number; public_repos: number }>();
+
+const cachedUser = userCache.get(login as string);
+if (cachedUser) {
+  githubBio = cachedUser.bio;
+  githubLocation = cachedUser.location;
+  githubFollowers = cachedUser.followers;
+  githubRepos = cachedUser.public_repos;
+} else {
+  try {
+    const headers: Record<string, string> = { Accept: 'application/vnd.github+json' };
+    const token = import.meta.env.GITHUB_TOKEN;
+    if (token) headers['Authorization'] = `Bearer ${token}`;
+    const res = await fetch(`https://api.github.com/users/${login}`, {
+      headers,
+      signal: AbortSignal.timeout(1500),
+    });
+    if (res.ok) {
+      const data = await res.json() as {
+        bio?: string;
+        location?: string;
+        followers?: number;
+        public_repos?: number;
+      };
+      githubBio = data.bio ?? '';
+      githubLocation = data.location ?? '';
+      githubFollowers = data.followers ?? 0;
+      githubRepos = data.public_repos ?? 0;
+      userCache.set(login as string, {
+        bio: githubBio,
+        location: githubLocation,
+        followers: githubFollowers,
+        public_repos: githubRepos,
+      });
+    }
+  } catch {
+    // static data only
   }
-} catch {
-  // static data only
 }
 
 const isChampion = championLogin === login;

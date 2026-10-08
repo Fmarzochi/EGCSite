@@ -185,78 +185,109 @@ function computeMonthlyChampion(rawStats: RawStat[]): MonthlyChampion | null {
   return { login: topLogin, name, month, reason };
 }
 
+let cachedResult: { contributors: Contributor[]; champion: MonthlyChampion | null } | null = null;
+let inFlightPromise: Promise<{ contributors: Contributor[]; champion: MonthlyChampion | null }> | null = null;
+
 export async function fetchContributors(githubToken?: string): Promise<{
   contributors: Contributor[];
   champion: MonthlyChampion | null;
 }> {
-  const headers: Record<string, string> = { Accept: 'application/vnd.github+json' };
-  if (githubToken) headers['Authorization'] = `Bearer ${githubToken}`;
+  if (cachedResult) return cachedResult;
+  if (inFlightPromise) return inFlightPromise;
 
-  let statsRes: Response | undefined;
-  for (let attempt = 0; attempt < 4; attempt++) {
-    statsRes = await fetch(
-      `https://api.github.com/repos/${OWNER}/${REPO}/stats/contributors`,
-      { headers }
-    );
-    if (statsRes.status !== 202) break;
-    await new Promise(r => setTimeout(r, 3000));
-  }
+  inFlightPromise = (async () => {
+    try {
+      const headers: Record<string, string> = { Accept: 'application/vnd.github+json' };
+      if (githubToken) headers['Authorization'] = `Bearer ${githubToken}`;
 
-  if (!statsRes || statsRes.status === 202 || !statsRes.ok) throw new Error('GitHub API not ready');
+      let statsRes: Response | undefined;
+      // In CI with a token, retry up to 3 times (2s delay).
+      // Locally without a token, don't freeze the dev server/build: try once with timeout.
+      const maxAttempts = githubToken ? 3 : 1;
+      const retryDelay = 2000;
 
-  const statsData = await statsRes.json() as RawStat[];
+      for (let attempt = 0; attempt < maxAttempts; attempt++) {
+        statsRes = await fetch(
+          `https://api.github.com/repos/${OWNER}/${REPO}/stats/contributors`,
+          { headers, signal: AbortSignal.timeout(4000) }
+        ).catch(() => undefined);
 
-  const additionsByLogin = new Map<string, number>();
-  for (const c of statsData) {
-    additionsByLogin.set(c.author.login, c.weeks.reduce((sum, w) => sum + w.a, 0));
-  }
+        if (!statsRes || statsRes.status !== 202) break;
+        if (attempt < maxAttempts - 1) {
+          await new Promise(r => setTimeout(r, retryDelay));
+        }
+      }
 
-  const contributors = statsData
-    .filter(c => !EXCLUDED.has(c.author.login) && !c.author.login.includes('[bot]'))
-    .sort((a, b) => {
-      if (b.total !== a.total) return b.total - a.total;
-      // Tie on commit count: rank ties by total lines added, same rule used for the monthly champion.
-      return (additionsByLogin.get(b.author.login) ?? 0) - (additionsByLogin.get(a.author.login) ?? 0);
-    })
-    .map(c => {
-      const additions = c.weeks.reduce((sum, w) => sum + w.a, 0);
-      const info = highlights[c.author.login];
-      const commits = c.total;
-      return {
-        login: c.author.login,
-        name: info?.name ?? c.author.login,
-        avatar: `https://github.com/${c.author.login}.png`,
-        commits,
-        additions,
-        highlight: info?.highlight ?? 'Contributed to EGC',
-        since: info?.since ?? '',
-        prs: info?.prs ?? 1,
-        badges: info?.badges ?? [],
-        tier: getTier(commits),
+      if (!statsRes || statsRes.status === 202 || !statsRes.ok) throw new Error('GitHub API not ready');
+
+      const statsData = await statsRes.json() as RawStat[];
+
+      const additionsByLogin = new Map<string, number>();
+      for (const c of statsData) {
+        additionsByLogin.set(c.author.login, c.weeks.reduce((sum, w) => sum + w.a, 0));
+      }
+
+      const contributors = statsData
+        .filter(c => !EXCLUDED.has(c.author.login) && !c.author.login.includes('[bot]'))
+        .sort((a, b) => {
+          if (b.total !== a.total) return b.total - a.total;
+          // Tie on commit count: rank ties by total lines added, same rule used for the monthly champion.
+          return (additionsByLogin.get(b.author.login) ?? 0) - (additionsByLogin.get(a.author.login) ?? 0);
+        })
+        .map(c => {
+          const additions = c.weeks.reduce((sum, w) => sum + w.a, 0);
+          const info = highlights[c.author.login];
+          const commits = c.total;
+          return {
+            login: c.author.login,
+            name: info?.name ?? c.author.login,
+            avatar: `https://github.com/${c.author.login}.png`,
+            commits,
+            additions,
+            highlight: info?.highlight ?? 'Contributed to EGC',
+            since: info?.since ?? '',
+            prs: info?.prs ?? 1,
+            badges: info?.badges ?? [],
+            tier: getTier(commits),
+          };
+        });
+
+      // Testers and reporters credited before their first merged commit: present in
+      // highlights, absent from the commit stats, listed after everyone with commits.
+      const listed = new Set(contributors.map(c => c.login));
+      for (const [login, info] of Object.entries(highlights)) {
+        if (listed.has(login)) continue;
+        contributors.push({
+          login,
+          name: info.name,
+          avatar: `https://github.com/${login}.png`,
+          commits: info.commits,
+          additions: info.additions ?? 0,
+          highlight: info.highlight,
+          since: info.since,
+          prs: info.prs,
+          badges: info.badges,
+          tier: getTier(info.commits),
+        });
+      }
+      if (contributors.length === 0) throw new Error('Empty contributor list');
+
+      cachedResult = { contributors, champion: computeMonthlyChampion(statsData) };
+      return cachedResult;
+    } catch {
+      // In dev or offline, cache fallback result for the session so it returns immediately
+      const fallback = {
+        contributors: buildFallback(),
+        champion: getChampionHistory()[0] ?? null,
       };
-    });
+      cachedResult = fallback;
+      return fallback;
+    } finally {
+      inFlightPromise = null;
+    }
+  })();
 
-  // Testers and reporters credited before their first merged commit: present in
-  // highlights, absent from the commit stats, listed after everyone with commits.
-  const listed = new Set(contributors.map(c => c.login));
-  for (const [login, info] of Object.entries(highlights)) {
-    if (listed.has(login)) continue;
-    contributors.push({
-      login,
-      name: info.name,
-      avatar: `https://github.com/${login}.png`,
-      commits: info.commits,
-      additions: info.additions ?? 0,
-      highlight: info.highlight,
-      since: info.since,
-      prs: info.prs,
-      badges: info.badges,
-      tier: getTier(info.commits),
-    });
-  }
-  if (contributors.length === 0) throw new Error('Empty contributor list');
-
-  return { contributors, champion: computeMonthlyChampion(statsData) };
+  return inFlightPromise;
 }
 
 export function buildFallback(): Contributor[] {

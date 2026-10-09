@@ -181,12 +181,19 @@ const isChampion = championLogin === login;
             {formattedHighlight.items.map(item => (
               <li class="flex items-start gap-2.5">
                 <span class="text-[#3DF69B] mt-1 select-none shrink-0 text-xs">✦</span>
-                <span>{item}</span>
+                <span class="whitespace-pre-line">{item}</span>
               </li>
             ))}
           </ul>
         ) : (
-          <p class="text-sm text-[#E2E8E4] leading-relaxed mb-4">{formattedHighlight.cleanText}</p>
+          <p class="text-sm text-[#E2E8E4] leading-relaxed mb-4 whitespace-pre-line">{formattedHighlight.cleanText}</p>
+        )}
+        {formattedHighlight.stats && (
+          <p class="text-xs text-[#8E9E96]">
+            {formattedHighlight.stats.commits} commit{formattedHighlight.stats.commits === 1 ? '' : 's'}
+            {formattedHighlight.stats.additions !== undefined && ` · +${formattedHighlight.stats.additions.toLocaleString('en')} lines`}
+            {formattedHighlight.stats.period && ` · ${formattedHighlight.stats.period}`}
+          </p>
         )}
         <p class="text-xs text-[#8E9E96] mt-4 pt-3 border-t border-[rgba(226,240,233,0.06)]">Joined {info.since}</p>
       </div>

@@ -74,6 +74,7 @@ const sections = [
       type="button"
       aria-label="Open docs menu"
       aria-expanded="false"
+      aria-controls="docs-sidebar"
       class="md:hidden fixed bottom-6 right-6 z-50 w-12 h-12 flex items-center justify-center rounded-full bg-[#18B669] text-[#04200F] shadow-lg shadow-[#18B669]/25 hover:bg-[#3DF69B] active:scale-95 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3DF69B]"
     >
       <svg id="docs-sidebar-icon-open" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
@@ -97,7 +98,8 @@ const sections = [
         <!-- Sidebar -->
         <aside
           id="docs-sidebar"
-          class="fixed md:relative inset-y-0 left-0 z-40 w-72 md:w-60 shrink-0 bg-[#0D100F] md:bg-transparent border-r md:border-r border-[rgba(226,240,233,0.09)] md:border-[rgba(226,240,233,0.09)] transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out overflow-y-auto md:overflow-visible"
+          tabindex="-1"
+          class="fixed md:relative inset-y-0 left-0 z-40 w-72 md:w-60 shrink-0 bg-[#0D100F] md:bg-transparent border-r md:border-r border-[rgba(226,240,233,0.09)] md:border-[rgba(226,240,233,0.09)] transform -translate-x-full md:translate-x-0 invisible md:visible pointer-events-none md:pointer-events-auto transition-transform duration-300 ease-in-out overflow-y-auto md:overflow-visible"
         >
           <div class="sticky top-0 md:top-24 pt-16 md:pt-0 pb-8 px-5 md:px-0 md:pr-4">
             <!-- Mobile sidebar header -->
@@ -128,6 +130,8 @@ const sections = [
                         href={link.href}
                         target={link.external ? '_blank' : undefined}
                         rel={link.external ? 'noopener noreferrer' : undefined}
+                        aria-label={link.external ? `${link.label} (opens in new tab)` : undefined}
+                        aria-current={current === link.id ? 'page' : undefined}
                         class={`flex items-center justify-between px-3 py-2 min-h-[38px] rounded-lg text-sm transition-all duration-150 ${
                           current === link.id
                             ? 'text-[#3DF69B] bg-[#18B669]/10 border border-[#3DF69B]/30 font-semibold shadow-[0_0_12px_rgba(61,246,155,0.08)]'
@@ -159,7 +163,7 @@ const sections = [
           <aside class="hidden xl:block w-48 shrink-0 pl-6 border-l border-[rgba(226,240,233,0.08)]">
             <div class="sticky top-24 pt-2">
               <h4 class="font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-[#8E9E96] mb-3">On this page</h4>
-              <nav class="space-y-1">
+              <nav class="space-y-1" aria-label="On this page">
                 {toc.map(item => (
                   <a
                     href={`#${item.id}`}
@@ -398,8 +402,9 @@ const sections = [
   }
 
   .snippet pre {
-    white-space: pre-wrap !important;
-    word-break: break-word !important;
+    white-space: pre !important;
+    word-break: normal !important;
+    overflow-x: auto;
     font-family: 'JetBrains Mono', monospace !important;
     font-size: 12px !important;
     line-height: 1.9 !important;
@@ -489,10 +494,45 @@ const sections = [
     const backdrop = document.getElementById('docs-sidebar-backdrop');
     const iconOpen = document.getElementById('docs-sidebar-icon-open');
     const iconClose = document.getElementById('docs-sidebar-icon-close');
+    if (!toggleBtn || !sidebar || toggleBtn.dataset.sidebarInitialized === 'true') return;
+    toggleBtn.dataset.sidebarInitialized = 'true';
+    let backgroundState: { element: HTMLElement; inert: string | null; ariaHidden: string | null }[] = [];
+
+    function isolateBackground() {
+      const allowed = [sidebar, toggleBtn, backdrop].filter((element): element is HTMLElement => element instanceof HTMLElement);
+      function isolate(parent: Element) {
+        for (const child of parent.children) {
+          if (!(child instanceof HTMLElement) || child.tagName === 'SCRIPT' || child.tagName === 'STYLE' || allowed.includes(child)) continue;
+          if (allowed.some(element => child.contains(element))) {
+            isolate(child);
+          } else {
+            backgroundState.push({ element: child, inert: child.getAttribute('inert'), ariaHidden: child.getAttribute('aria-hidden') });
+            child.setAttribute('inert', '');
+            child.setAttribute('aria-hidden', 'true');
+          }
+        }
+      }
+      isolate(document.body);
+    }
+
+    function restoreBackground() {
+      for (const { element, inert, ariaHidden } of backgroundState) {
+        if (inert === null) element.removeAttribute('inert');
+        else element.setAttribute('inert', inert);
+        if (ariaHidden === null) element.removeAttribute('aria-hidden');
+        else element.setAttribute('aria-hidden', ariaHidden);
+      }
+      backgroundState = [];
+    }
 
     function openSidebar() {
       sidebar?.classList.remove('-translate-x-full');
       sidebar?.classList.add('translate-x-0');
+      sidebar?.classList.remove('invisible', 'pointer-events-none');
+      sidebar?.classList.add('visible', 'pointer-events-auto');
+      sidebar?.setAttribute('role', 'dialog');
+      sidebar?.setAttribute('aria-modal', 'true');
+      sidebar?.setAttribute('aria-label', 'Documentation navigation');
       backdrop?.classList.remove('opacity-0', 'pointer-events-none', 'invisible');
       backdrop?.classList.add('opacity-100', 'pointer-events-auto', 'visible');
       iconOpen?.classList.add('hidden');
@@ -500,11 +540,24 @@ const sections = [
       toggleBtn?.setAttribute('aria-expanded', 'true');
       toggleBtn?.setAttribute('aria-label', 'Close docs menu');
       document.body.classList.add('docs-sidebar-open');
+      sidebar?.focus();
+      isolateBackground();
+      setTimeout(() => {
+        if (toggleBtn?.getAttribute('aria-expanded') === 'true' && document.activeElement === sidebar) {
+          sidebar?.querySelector<HTMLElement>('a')?.focus();
+        }
+      }, 0);
     }
 
-    function closeSidebar() {
+    function closeSidebar(restoreFocus = false) {
+      restoreBackground();
       sidebar?.classList.add('-translate-x-full');
       sidebar?.classList.remove('translate-x-0');
+      sidebar?.classList.add('invisible', 'pointer-events-none');
+      sidebar?.classList.remove('visible', 'pointer-events-auto');
+      sidebar?.removeAttribute('role');
+      sidebar?.removeAttribute('aria-modal');
+      sidebar?.removeAttribute('aria-label');
       backdrop?.classList.add('opacity-0', 'pointer-events-none', 'invisible');
       backdrop?.classList.remove('opacity-100', 'pointer-events-auto', 'visible');
       iconOpen?.classList.remove('hidden');
@@ -512,30 +565,53 @@ const sections = [
       toggleBtn?.setAttribute('aria-expanded', 'false');
       toggleBtn?.setAttribute('aria-label', 'Open docs menu');
       document.body.classList.remove('docs-sidebar-open');
+      if (restoreFocus) toggleBtn?.focus();
     }
 
     toggleBtn?.addEventListener('click', () => {
       const isOpen = toggleBtn.getAttribute('aria-expanded') === 'true';
       if (isOpen) {
-        closeSidebar();
+        closeSidebar(true);
       } else {
         openSidebar();
       }
     });
 
-    closeBtn?.addEventListener('click', closeSidebar);
-    backdrop?.addEventListener('click', closeSidebar);
+    closeBtn?.addEventListener('click', () => closeSidebar(true));
+    backdrop?.addEventListener('click', () => closeSidebar(true));
 
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && toggleBtn?.getAttribute('aria-expanded') === 'true') {
-        closeSidebar();
+        closeSidebar(true);
+      }
+      if (e.key === 'Tab' && toggleBtn?.getAttribute('aria-expanded') === 'true') {
+        const focusables = Array.from(sidebar?.querySelectorAll<HTMLElement>('button, a') ?? []);
+        if (focusables.length === 0) return;
+        if (document.activeElement === sidebar) {
+          e.preventDefault();
+          (e.shiftKey ? focusables[focusables.length - 1] : focusables[0]).focus();
+        } else if (e.shiftKey && document.activeElement === focusables[0]) {
+          e.preventDefault();
+          focusables[focusables.length - 1].focus();
+        } else if (!e.shiftKey && document.activeElement === focusables[focusables.length - 1]) {
+          e.preventDefault();
+          focusables[0].focus();
+        }
       }
     });
 
     sidebar?.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
-        setTimeout(closeSidebar, 100);
+        closeSidebar(true);
       });
+    });
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth >= 768 && toggleBtn?.getAttribute('aria-expanded') === 'true') {
+        closeSidebar();
+      } else if (window.innerWidth < 768 && sidebar?.contains(document.activeElement) && toggleBtn?.getAttribute('aria-expanded') === 'false') {
+        toggleBtn?.focus();
+      }
     });
   }
 
@@ -548,9 +624,12 @@ const sections = [
       if (!btn) return;
       const text = btn.getAttribute('data-copy') || '';
       if (text && navigator.clipboard && navigator.clipboard.writeText) {
+        const orig = btn.textContent;
         navigator.clipboard.writeText(text).then(() => {
-          const orig = btn.textContent;
           btn.textContent = 'Copied ✓';
+          setTimeout(() => { btn.textContent = orig; }, 1500);
+        }).catch(() => {
+          btn.textContent = 'Copy failed';
           setTimeout(() => { btn.textContent = orig; }, 1500);
         });
       }

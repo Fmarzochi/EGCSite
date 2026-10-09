@@ -10,11 +10,16 @@ import {
   getChampionHistory,
   BADGE_DEFS,
   TIER_CONFIG,
+  highlights,
   type MonthlyChampion,
   type Contributor,
 } from '../data/contributors.ts';
 
 const base = getBase();
+const profileHref = (login: string) => Object.hasOwn(highlights, login)
+  ? `${base}contributors/${encodeURIComponent(login)}`
+  : `https://github.com/${encodeURIComponent(login)}`;
+const isExternalProfile = (login: string) => !Object.hasOwn(highlights, login);
 
 let contributors: Contributor[];
 let monthlyChampion: MonthlyChampion | null = null;
@@ -60,6 +65,7 @@ const podiumMeta = [
   <Navbar />
 
   <main id="main-content" class="hall max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+    <p id="hype-status" class="sr-only" role="status" aria-live="polite"></p>
 
     <!-- Hero -->
     <div class="hallHero">
@@ -156,7 +162,10 @@ const podiumMeta = [
               🔥 <span>Hype</span> <span class="hype-count tabular-nums ml-1"></span>
             </button>
             <a
-              href={`${base}contributors/${champion.login}`}
+              href={profileHref(champion.login)}
+              target={isExternalProfile(champion.login) ? '_blank' : undefined}
+              rel={isExternalProfile(champion.login) ? 'noopener noreferrer' : undefined}
+              aria-label={isExternalProfile(champion.login) ? `View profile: ${champion.name} on GitHub (opens in new tab)` : undefined}
               class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-semibold bg-[#111614] hover:bg-[#151D19] text-[#c1ecd1] border border-[rgba(226,240,233,0.14)] hover:border-[#3DF69B]/40 transition-all duration-150"
             >
               View profile &rarr;
@@ -173,12 +182,12 @@ const podiumMeta = [
               {championFormatted.items.map(item => (
                 <li class="flex items-start gap-2">
                   <span class="text-yellow-400 mt-1 select-none shrink-0 text-xs">✦</span>
-                  <span class="leading-snug">{item}</span>
+                  <span class="leading-snug whitespace-pre-line">{item}</span>
                 </li>
               ))}
             </ul>
           ) : (
-            <p class="text-sm text-[#bdc8bb] leading-relaxed">{championFormatted.cleanText}</p>
+            <p class="text-sm text-[#bdc8bb] leading-relaxed whitespace-pre-line">{championFormatted.cleanText}</p>
           )}
 
           <div class="mt-4 pt-3 border-t border-[rgba(226,240,233,0.08)] text-xs text-[#829587]">
@@ -190,7 +199,7 @@ const podiumMeta = [
 
     <!-- Podium -->
     {topThree.length >= 3 && (
-      <section class="mb-14">
+      <section id="ranking-section" class="mb-14">
         <div class="sectionhead">
           <div>
             <div class="eyebrow">RECOGNITION</div>
@@ -227,7 +236,7 @@ const podiumMeta = [
                     loading="lazy"
                   />
                 </div>
-                <a href={`${base}contributors/${c.login}`} class="text-white font-bold text-sm hover:text-[#3DF69B] transition-colors truncate max-w-full">
+                <a href={profileHref(c.login)} target={isExternalProfile(c.login) ? '_blank' : undefined} rel={isExternalProfile(c.login) ? 'noopener noreferrer' : undefined} aria-label={isExternalProfile(c.login) ? `View ${c.name} on GitHub (opens in new tab)` : undefined} class="text-white font-bold text-sm hover:text-[#3DF69B] transition-colors truncate max-w-full">
                   {c.name}
                 </a>
                 <small class="text-xs text-[#8E9E96] mb-2">@{c.login}</small>
@@ -237,7 +246,7 @@ const podiumMeta = [
                 <div class="flex flex-wrap justify-center gap-1 mb-2">
                   {c.badges.slice(0, 2).map(key => {
                     const b = BADGE_DEFS[key];
-                    return b ? <span class="text-sm" title={b.label}>{b.icon}</span> : null;
+                    return b ? <span class="text-sm" title={b.label} role="img" aria-label={b.label}>{b.icon}</span> : null;
                   })}
                 </div>
                 <div class="mt-auto pt-2 text-xs font-mono font-bold text-[#3DF69B]">
@@ -276,10 +285,10 @@ const podiumMeta = [
                     loading="lazy"
                   />
                   <div class="min-w-0 flex-1 pr-12">
-                    <a href={`${base}contributors/${c.login}`} class="font-bold text-white text-sm hover:text-[#3DF69B] truncate block">
+                    <a href={profileHref(c.login)} target={isExternalProfile(c.login) ? '_blank' : undefined} rel={isExternalProfile(c.login) ? 'noopener noreferrer' : undefined} aria-label={isExternalProfile(c.login) ? `View ${c.name} on GitHub (opens in new tab)` : undefined} class="font-bold text-white text-sm hover:text-[#3DF69B] truncate block">
                       {c.name}
                     </a>
-                    <p class="text-xs text-gray-500 mb-1">@{c.login}</p>
+                    <p class="text-xs text-gray-400 mb-1">@{c.login}</p>
                     <span class={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[11px] font-semibold border ${tier.color}`}>
                       {tier.icon} {tier.label}
                     </span>
@@ -307,14 +316,41 @@ const podiumMeta = [
           <p>Find contributors without losing the visual rhythm of the page.</p>
         </div>
         <input
+          type="search"
           class="search"
           id="personsearch"
           placeholder="Search contributors..."
           aria-label="Search contributors"
+          aria-controls="people"
         />
       </div>
 
       <div id="people" class="people">
+        {topThree.map(c => {
+          const tier = TIER_CONFIG[c.tier];
+          return (
+            <div class="box mini person-card group hover-lift relative" data-podium-result data-search={`${c.name.toLowerCase()} ${c.login.toLowerCase()}`} hidden>
+              <img src={c.avatar} alt={c.name} width="38" height="38" class="face rounded-full object-cover shrink-0 ring-1 ring-gray-700" loading="lazy" />
+              <div class="min-w-0 flex-1">
+                <a href={profileHref(c.login)} target={isExternalProfile(c.login) ? '_blank' : undefined} rel={isExternalProfile(c.login) ? 'noopener noreferrer' : undefined} aria-label={isExternalProfile(c.login) ? `View ${c.name} on GitHub (opens in new tab)` : undefined} class="font-semibold text-white text-xs sm:text-sm hover:text-[#3DF69B] transition-colors truncate block">{c.name}</a>
+                <small class="text-[11px] text-gray-400 truncate block">@{c.login}</small>
+                <span class={`inline-flex items-center gap-0.5 px-1.5 py-0.2 rounded-full text-[10px] font-semibold border ${tier.color}`}>{tier.icon} {tier.label}</span>
+              </div>
+              <div class="shrink-0 flex flex-col items-end gap-1.5">
+                <button
+                  type="button"
+                  data-hype={c.login}
+                  title="Hype this contributor (1 vote a day)"
+                  aria-label={`Hype ${c.name}`}
+                  class="hype-btn inline-flex items-center gap-1 h-6 px-1.5 rounded-full text-[11px] font-semibold backdrop-blur-md bg-white/10 border border-white/15 text-gray-300 hover:text-orange-400 hover:border-orange-400/40 motion-safe:hover:scale-105 motion-safe:active:scale-95 transition-all duration-150"
+                >
+                  🔥<span class="hype-count tabular-nums"></span>
+                </button>
+                <span class="commits font-mono text-[11px] text-[#3DF69B] font-bold">{c.commits > 0 ? `${c.commits}c` : `${c.prs}pr`}</span>
+              </div>
+            </div>
+          );
+        })}
         {rest.map(c => {
           const tier = TIER_CONFIG[c.tier];
           return (
@@ -332,7 +368,10 @@ const podiumMeta = [
               />
               <div class="min-w-0 flex-1">
                 <a
-                  href={`${base}contributors/${c.login}`}
+                  href={profileHref(c.login)}
+                  target={isExternalProfile(c.login) ? '_blank' : undefined}
+                  rel={isExternalProfile(c.login) ? 'noopener noreferrer' : undefined}
+                  aria-label={isExternalProfile(c.login) ? `View ${c.name} on GitHub (opens in new tab)` : undefined}
                   class="font-semibold text-white text-xs sm:text-sm hover:text-[#3DF69B] transition-colors truncate block"
                 >
                   {c.name}
@@ -344,7 +383,7 @@ const podiumMeta = [
                   </span>
                   {c.badges.slice(0, 2).map(key => {
                     const b = BADGE_DEFS[key];
-                    return b ? <span class="text-xs" title={b.label}>{b.icon}</span> : null;
+                    return b ? <span class="text-xs" title={b.label} role="img" aria-label={b.label}>{b.icon}</span> : null;
                   })}
                 </div>
               </div>
@@ -368,6 +407,7 @@ const podiumMeta = [
       </div>
 
       <!-- Empty state when search yields no matches -->
+      <p id="search-result-status" class="sr-only" role="status" aria-live="polite"></p>
       <div id="no-search-results" class="hidden text-center py-12 text-[#8E9E96]">
         <p class="text-sm">No contributors found matching your search.</p>
       </div>
@@ -398,25 +438,32 @@ const podiumMeta = [
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
           {pastChampions.map(h => (
-            <a
-              href={`${base}contributors/${h.login}`}
-              class="box mini group hover-lift p-3 flex items-center gap-3 transition-all"
-              title={h.reason}
-            >
-              <img
-                src={`https://github.com/${h.login}.png`}
-                alt={h.name}
-                width="36"
-                height="36"
-                class="rounded-full ring-1 ring-yellow-400/50 shrink-0"
-                loading="lazy"
-              />
-              <div class="min-w-0 flex-1">
-                <span class="text-xs font-semibold text-gray-200 group-hover:text-white truncate block">{h.name}</span>
-                <span class="text-[11px] text-gray-500 font-mono">@{h.login}</span>
-              </div>
-              <span class="tag text-[10px] shrink-0">{h.month}</span>
-            </a>
+            <div>
+              <a
+                href={profileHref(h.login)}
+                target={isExternalProfile(h.login) ? '_blank' : undefined}
+                rel={isExternalProfile(h.login) ? 'noopener noreferrer' : undefined}
+                aria-label={isExternalProfile(h.login) ? `View ${h.name} on GitHub (opens in new tab)` : undefined}
+                class="box mini group hover-lift p-3 flex items-center gap-3 transition-all"
+                title={h.reason}
+                aria-describedby={`recognition-${h.login}-${h.month.replace(/\W/g, '-')}`}
+              >
+                <img
+                  src={`https://github.com/${h.login}.png`}
+                  alt=""
+                  width="36"
+                  height="36"
+                  class="rounded-full ring-1 ring-yellow-400/50 shrink-0"
+                  loading="lazy"
+                />
+                <div class="min-w-0 flex-1">
+                  <span class="text-xs font-semibold text-gray-200 group-hover:text-white truncate block">{h.name}</span>
+                  <span class="text-[11px] text-gray-400 font-mono">@{h.login}</span>
+                </div>
+                <span class="tag text-[10px] shrink-0">{h.month}</span>
+              </a>
+              <span id={`recognition-${h.login}-${h.month.replace(/\W/g, '-')}`} hidden>Recognition: {h.reason}</span>
+            </div>
           ))}
         </div>
       </section>
@@ -455,7 +502,7 @@ const podiumMeta = [
               </svg>
               <h2 class="text-lg font-bold text-white">Sponsors</h2>
             </div>
-            <p class="text-xs text-gray-500 max-w-xs">EGC is free and open source. Sponsors keep it alive and moving forward.</p>
+            <p class="text-xs text-gray-400 max-w-xs">EGC is free and open source. Sponsors keep it alive and moving forward.</p>
           </div>
           <div class="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
             <a
@@ -480,8 +527,8 @@ const podiumMeta = [
         </div>
 
         <div class="mb-8">
-          <p class="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-2">Tool Partners</p>
-          <p class="text-xs text-gray-600 italic mb-4">Be the first tool partner.</p>
+          <p class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-2">Tool Partners</p>
+          <p class="text-xs text-gray-400 italic mb-4">Be the first tool partner.</p>
           <div class="flex flex-wrap gap-3">
             <a
               href="https://www.pincushion.io/"
@@ -503,12 +550,12 @@ const podiumMeta = [
         </div>
 
         <div class="mb-8">
-          <p class="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-4">Monthly sponsors</p>
-          <p class="text-xs text-gray-600 italic">Be the first monthly sponsor.</p>
+          <p class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-4">Monthly sponsors</p>
+          <p class="text-xs text-gray-400 italic">Be the first monthly sponsor.</p>
         </div>
 
         <div>
-          <p class="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-4">Backers</p>
+          <p class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-4">Backers</p>
           <div class="flex flex-wrap gap-3">
             <a
               href="https://github.com/chizormaangel-commits"
@@ -647,7 +694,6 @@ const podiumMeta = [
       font-size: 13px;
     }
     .podium {
-      display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 14px;
       align-items: end;
@@ -741,8 +787,8 @@ const podiumMeta = [
       border-color: var(--green);
       box-shadow: 0 0 0 2px rgba(61, 246, 155, 0.15);
     }
-    .hidden {
-      display: none !important;
+    .hall .person-card[hidden], .hall .ranking-search-hidden {
+      display: none;
     }
 
     .hype-btn.hype-voted {
@@ -784,19 +830,25 @@ const podiumMeta = [
     // Search filter for all contributors
     const personSearch = document.getElementById('personsearch') as HTMLInputElement | null;
     const noResults = document.getElementById('no-search-results');
+    const resultStatus = document.getElementById('search-result-status');
+    const rankingSection = document.getElementById('ranking-section');
     if (personSearch) {
       personSearch.addEventListener('input', () => {
         const q = personSearch.value.toLowerCase().trim();
         let matchedCount = 0;
+        rankingSection?.classList.toggle('ranking-search-hidden', q.length > 0);
         document.querySelectorAll<HTMLElement>('.person-card').forEach(el => {
           const text = (el.dataset.search || el.textContent || '').toLowerCase();
           const matches = !q || text.includes(q);
-          el.classList.toggle('hidden', !matches);
-          if (matches) matchedCount++;
+          el.hidden = !matches || (!q && el.hasAttribute('data-podium-result'));
+          if (q && matches) matchedCount++;
         });
         if (noResults) {
-          noResults.classList.toggle('hidden', matchedCount > 0);
+          noResults.classList.toggle('hidden', !q || matchedCount > 0);
         }
+        if (resultStatus) resultStatus.textContent = q
+          ? `${matchedCount} contributor${matchedCount === 1 ? '' : 's'} found.`
+          : '';
       });
     }
 
@@ -805,6 +857,7 @@ const podiumMeta = [
     const NS = 'egc-halloffame-v2';
     const API = 'https://abacus.jasoncameron.dev';
     const DAILY_KEY = 'hype-daily';
+    const hypeStatus = document.getElementById('hype-status');
     const btns = Array.from(document.querySelectorAll('.hype-btn')) as HTMLButtonElement[];
     const today = new Date().toISOString().slice(0, 10);
 
@@ -847,14 +900,28 @@ const podiumMeta = [
         e.stopPropagation();
         if (getDailyVote() !== null) return;
         const login = b.dataset.hype || '';
-        localStorage.setItem(DAILY_KEY, JSON.stringify({ date: today, vote: login }));
+        try {
+          localStorage.setItem(DAILY_KEY, JSON.stringify({ date: today, vote: login }));
+        } catch {
+          if (hypeStatus) hypeStatus.textContent = 'Hype could not be saved on this device. Please try again.';
+          return;
+        }
         paintStates();
         const el = b.querySelector('.hype-count');
         const cur = parseInt(el?.textContent || '0', 10) || 0;
         setCount(login, cur + 1);
+        if (hypeStatus) hypeStatus.textContent = `Your hype for ${login} is saved on this device for today.`;
         // Fire-and-forget: o Abacus grava o voto global; keepalive garante o envio
         // mesmo se a aba fechar. Sem rollback: o contador global nunca regride.
-        try { fetch(`${API}/hit/${NS}/${encodeURIComponent(login)}`, { keepalive: true }); } catch { /* offline: voto local mantido */ }
+        try {
+          fetch(`${API}/hit/${NS}/${encodeURIComponent(login)}`, { keepalive: true })
+            .then(response => { if (!response.ok) throw new Error('Hype service unavailable'); })
+            .catch(() => {
+              if (hypeStatus) hypeStatus.textContent = 'Hype was saved on this device, but the server could not confirm it.';
+            });
+        } catch {
+          if (hypeStatus) hypeStatus.textContent = 'Hype was saved on this device, but the server could not confirm it.';
+        }
       });
     }
     paintStates();

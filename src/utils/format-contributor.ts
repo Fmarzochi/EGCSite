@@ -17,7 +17,7 @@ export interface FormattedContribution {
   rawText: string;
 }
 
-const STATS_REGEX = /(?:^|[.;,\s]+)(\d+)\s+commits?(?:\s+and\s+\+?([\d,]+)\s+lines)?(?:\s+in\s+([A-Za-z]+\s+\d{4}))?\.\s*$/i;
+const STATS_REGEX = /(?:^|\s+)(\d+)\s+commits?(?:\s+and\s+\+?([\d,]+)\s+lines)?(?:\s+in\s+([A-Za-z]+\s+\d{4}))?\.\s*$/i;
 
 /**
  * Extracts trailing commit and lines statistics (e.g. "4 commits and +2,394 lines in September 2026.")
@@ -34,7 +34,7 @@ export function parseStats(text: string): { stats: ContributorStats | null; text
   const additions = match[2] ? parseInt(match[2].replace(/,/g, ''), 10) : undefined;
   const period = match[3] || undefined;
 
-  const textWithoutStats = text.slice(0, match.index).trim().replace(/[.;,]+$/, '');
+  const textWithoutStats = text.slice(0, match.index).trim();
   return {
     stats: { commits, additions, period },
     textWithoutStats,
@@ -42,65 +42,34 @@ export function parseStats(text: string): { stats: ContributorStats | null; text
 }
 
 /**
- * Splits text into high-level accomplishment items while preserving nested parentheses
- * (preventing accidental splits inside tool lists, PR notes, or functions).
+ * Only explicit top-level semicolons separate accomplishments. Commas and conjunctions
+ * may be part of a single fact, so splitting them would change the author's meaning.
  */
 export function splitTopLevelItems(text: string): string[] {
   if (!text) return [];
-
-  // If text has semicolons, they are deliberate high-level separators
-  if (text.includes(';')) {
-    return text
-      .split(/;\s+/)
-      .map(p => p.trim().replace(/^(?:and|also|then)\s+/i, '').replace(/[.;]+$/, ''))
-      .filter(p => p.length > 0);
-  }
-
-  // Parse respecting parentheses depth
   const items: string[] = [];
   let current = '';
   let parenDepth = 0;
+  let inUrl = false;
 
   for (let i = 0; i < text.length; i++) {
     const char = text[i];
+    if (!inUrl && /^https?:\/\//i.test(text.slice(i))) inUrl = true;
+    if (inUrl && /\s/.test(char)) inUrl = false;
     if (char === '(' || char === '[' || char === '{') {
       parenDepth++;
-      current += char;
     } else if (char === ')' || char === ']' || char === '}') {
       if (parenDepth > 0) parenDepth--;
-      current += char;
-    } else if (parenDepth === 0) {
-      // Check for ", and ", ", then ", or ", also "
-      const rest = text.slice(i);
-      const andMatch = rest.match(/^,\s+(?:and|then|also)\s+/i);
-      if (andMatch) {
-        if (current.trim()) items.push(current.trim());
-        current = '';
-        i += andMatch[0].length - 1;
-        continue;
-      }
-
-      // Check for top-level comma
-      if (char === ',') {
-        if (current.trim().length >= 15) {
-          items.push(current.trim());
-          current = '';
-          continue;
-        }
-      }
-      current += char;
-    } else {
-      current += char;
+    }
+    current += char;
+    if (char === ';' && parenDepth === 0 && !inUrl && /\s/.test(text[i + 1] ?? '')) {
+      items.push(current.trim());
+      current = '';
     }
   }
 
-  if (current.trim()) {
-    items.push(current.trim());
-  }
-
-  return items
-    .map(item => item.replace(/^(?:and|then|also)\s+/i, '').trim().replace(/[.;]+$/, ''))
-    .filter(item => item.length > 0);
+  if (current.trim()) items.push(current.trim());
+  return items;
 }
 
 /**

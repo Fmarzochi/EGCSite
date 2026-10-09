@@ -119,7 +119,13 @@ const navLinks = [
 <!-- Mobile menu panel -->
 <div
   id="mobile-menu"
-  class="md:hidden fixed inset-0 top-[64px] border-t border-[rgba(226,240,233,0.09)] bg-[#0A0D0C] overflow-y-auto transition-all duration-300 ease-in-out opacity-0 pointer-events-none invisible z-40"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Site navigation"
+  tabindex="-1"
+  aria-hidden="true"
+  inert
+  class="md:hidden fixed inset-0 top-[64px] border-t border-[rgba(226,240,233,0.09)] bg-[#0A0D0C] overflow-y-auto transition-[opacity,transform] duration-300 ease-in-out opacity-0 pointer-events-none invisible z-40"
 >
   <nav class="flex flex-col gap-2 px-6 py-8" aria-label="Mobile navigation">
     {navLinks.map((link, i) => (
@@ -172,18 +178,58 @@ const navLinks = [
   const mobileMenuBtn = document.getElementById('mobile-menu-btn');
   const mobileMenu = document.getElementById('mobile-menu');
   const backdrop = document.getElementById('mobile-backdrop');
+  let backgroundState: { element: HTMLElement; inert: string | null; ariaHidden: string | null }[] = [];
+
+  function isolateBackground() {
+    const allowed = [mobileMenu, mobileMenuBtn, backdrop].filter((element): element is HTMLElement => element instanceof HTMLElement);
+    function isolate(parent: Element) {
+      for (const child of parent.children) {
+        if (!(child instanceof HTMLElement) || child.tagName === 'SCRIPT' || child.tagName === 'STYLE' || allowed.includes(child)) continue;
+        if (allowed.some(element => child.contains(element))) {
+          isolate(child);
+        } else {
+          backgroundState.push({ element: child, inert: child.getAttribute('inert'), ariaHidden: child.getAttribute('aria-hidden') });
+          child.setAttribute('inert', '');
+          child.setAttribute('aria-hidden', 'true');
+        }
+      }
+    }
+    isolate(document.body);
+  }
+
+  function restoreBackground() {
+    for (const { element, inert, ariaHidden } of backgroundState) {
+      if (inert === null) element.removeAttribute('inert');
+      else element.setAttribute('inert', inert);
+      if (ariaHidden === null) element.removeAttribute('aria-hidden');
+      else element.setAttribute('aria-hidden', ariaHidden);
+    }
+    backgroundState = [];
+  }
 
   function openMenu() {
     mobileMenuBtn?.setAttribute('aria-expanded', 'true');
     mobileMenuBtn?.setAttribute('aria-label', 'Close menu');
     mobileMenu?.classList.remove('opacity-0', 'pointer-events-none', 'invisible');
     mobileMenu?.classList.add('opacity-100', 'pointer-events-auto', 'visible');
+    mobileMenu?.removeAttribute('inert');
+    mobileMenu?.setAttribute('aria-hidden', 'false');
     backdrop?.classList.remove('opacity-0', 'pointer-events-none', 'invisible');
     backdrop?.classList.add('opacity-100', 'pointer-events-auto', 'visible');
     document.body.style.overflow = 'hidden';
 
     const links = mobileMenu?.querySelectorAll('.mobile-nav-link');
+    const firstLink = links?.[0] as HTMLElement | undefined;
+    firstLink?.style.removeProperty('opacity');
+    firstLink?.style.removeProperty('transform');
+    mobileMenu?.focus();
+    isolateBackground();
+    setTimeout(() => {
+      if (isMenuOpen() && document.activeElement === mobileMenu) firstLink?.focus();
+    }, 0);
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     links?.forEach((link, i) => {
+      if (i === 0) return;
       const el = link as HTMLElement;
       el.style.opacity = '0';
       el.style.transform = 'translateY(-8px)';
@@ -195,14 +241,18 @@ const navLinks = [
     });
   }
 
-  function closeMenu() {
+  function closeMenu(restoreFocus = false) {
+    restoreBackground();
     mobileMenuBtn?.setAttribute('aria-expanded', 'false');
     mobileMenuBtn?.setAttribute('aria-label', 'Open menu');
     mobileMenu?.classList.add('opacity-0', 'pointer-events-none', 'invisible');
     mobileMenu?.classList.remove('opacity-100', 'pointer-events-auto', 'visible');
+    mobileMenu?.setAttribute('inert', '');
+    mobileMenu?.setAttribute('aria-hidden', 'true');
     backdrop?.classList.add('opacity-0', 'pointer-events-none', 'invisible');
     backdrop?.classList.remove('opacity-100', 'pointer-events-auto', 'visible');
     document.body.style.overflow = '';
+    if (restoreFocus) mobileMenuBtn?.focus();
   }
 
   function isMenuOpen(): boolean {
@@ -211,30 +261,45 @@ const navLinks = [
 
   mobileMenuBtn?.addEventListener('click', () => {
     if (isMenuOpen()) {
-      closeMenu();
+      closeMenu(true);
     } else {
       openMenu();
     }
   });
 
-  backdrop?.addEventListener('click', closeMenu);
+  backdrop?.addEventListener('click', () => closeMenu(true));
 
   mobileMenu?.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
-      closeMenu();
+      closeMenu(true);
     });
   });
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && isMenuOpen()) {
-      closeMenu();
-      mobileMenuBtn?.focus();
+      closeMenu(true);
+    }
+    if (e.key === 'Tab' && isMenuOpen()) {
+      const links = Array.from(mobileMenu?.querySelectorAll<HTMLElement>('a') ?? []);
+      if (links.length === 0) return;
+      if (document.activeElement === mobileMenu) {
+        e.preventDefault();
+        (e.shiftKey ? links[links.length - 1] : links[0]).focus();
+      } else if (e.shiftKey && document.activeElement === links[0]) {
+        e.preventDefault();
+        links[links.length - 1].focus();
+      } else if (!e.shiftKey && document.activeElement === links[links.length - 1]) {
+        e.preventDefault();
+        links[0].focus();
+      }
     }
   });
 
   window.addEventListener('resize', () => {
     if (window.innerWidth >= 768 && isMenuOpen()) {
+      const focusWasInMenu = mobileMenu?.contains(document.activeElement);
       closeMenu();
+      if (focusWasInMenu) document.querySelector<HTMLElement>('#site-header a')?.focus();
     }
   });
 

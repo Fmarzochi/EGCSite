@@ -43,7 +43,7 @@ export const integrations: Integration[] = [
     installs: 'Skills, agents, rules and commands under .agents/ in each project; the home install under ~/.gemini through the egc target.',
     mcp: 'Registered by egc init and the installers.',
     hooks: 'Guardian hooks (GateGuard) registered per project.',
-    meshSignal: 'Hooks at .agents/hooks.json (project) and ~/.gemini/antigravity-cli/hooks.json (global).',
+    meshSignal: 'The egc-mesh-notice named hook on PreInvocation, in .agents/hooks.json (project) and ~/.gemini/config/hooks.json (global): it injects one ephemeral message when the bus store moved, since Antigravity has no UserPromptSubmit.',
   },
   {
     slug: 'cursor',

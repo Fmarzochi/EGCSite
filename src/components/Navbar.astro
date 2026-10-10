@@ -48,7 +48,7 @@ const navLinks = [
       </div>
 
       <!-- Desktop nav -->
-      <nav class="hidden md:flex items-center gap-2" aria-label="Main navigation">
+      <nav class="hidden lg:flex items-center gap-2" aria-label="Main navigation">
         {navLinks.map(link => (
           <a
             href={link.href}
@@ -73,7 +73,7 @@ const navLinks = [
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Discord (opens in new tab)"
-          class="hidden md:inline-flex items-center justify-center w-8 h-8 rounded-full border border-white/[0.08] bg-white/[0.02] text-[#8E9E96] hover:text-[#F4F6F5] hover:border-white/20 hover:bg-white/[0.06] transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3DF69B]"
+          class="hidden lg:inline-flex items-center justify-center w-8 h-8 rounded-full border border-white/[0.08] bg-white/[0.02] text-[#8E9E96] hover:text-[#F4F6F5] hover:border-white/20 hover:bg-white/[0.06] transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3DF69B]"
         >
           <Icon name="discord" size={15} />
         </a>
@@ -98,7 +98,7 @@ const navLinks = [
           aria-label="Open menu"
           aria-expanded="false"
           aria-controls="mobile-menu"
-          class="md:hidden p-2.5 min-w-[44px] min-h-[44px] flex flex-col items-center justify-center gap-[5px] rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3DF69B] active:scale-95 transition-all duration-150"
+          class="lg:hidden p-2.5 min-w-[44px] min-h-[44px] flex flex-col items-center justify-center gap-[5px] rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3DF69B] active:scale-95 transition-all duration-150"
         >
           <span class="block w-6 h-[2px] bg-[#F4F6F5] rounded-full transition-all duration-300 origin-center line-1"></span>
           <span class="block w-6 h-[2px] bg-[#F4F6F5] rounded-full transition-all duration-300 line-2"></span>
@@ -112,7 +112,7 @@ const navLinks = [
 <!-- Backdrop overlay -->
 <div
   id="mobile-backdrop"
-  class="fixed inset-0 bg-black/70 backdrop-blur-sm z-[-1] opacity-0 pointer-events-none invisible transition-opacity duration-300 md:hidden"
+  class="fixed inset-0 bg-black/70 backdrop-blur-sm z-[-1] opacity-0 pointer-events-none invisible transition-opacity duration-300 lg:hidden"
   aria-hidden="true"
 ></div>
 
@@ -125,7 +125,7 @@ const navLinks = [
   tabindex="-1"
   aria-hidden="true"
   inert
-  class="md:hidden fixed inset-0 top-[64px] border-t border-[rgba(226,240,233,0.09)] bg-[#0A0D0C] overflow-y-auto transition-[opacity,transform] duration-300 ease-in-out opacity-0 pointer-events-none invisible z-40"
+  class="lg:hidden fixed inset-0 top-[64px] border-t border-[rgba(226,240,233,0.09)] bg-[#0A0D0C] overflow-y-auto transition-[opacity,transform] duration-300 ease-in-out opacity-0 pointer-events-none invisible z-40"
 >
   <nav class="flex flex-col gap-2 px-6 py-8" aria-label="Mobile navigation">
     {navLinks.map((link, i) => (
@@ -296,7 +296,7 @@ const navLinks = [
   });
 
   window.addEventListener('resize', () => {
-    if (window.innerWidth >= 768 && isMenuOpen()) {
+    if (window.innerWidth >= 1024 && isMenuOpen()) {
       const focusWasInMenu = mobileMenu?.contains(document.activeElement);
       closeMenu();
       if (focusWasInMenu) document.querySelector<HTMLElement>('#site-header a')?.focus();

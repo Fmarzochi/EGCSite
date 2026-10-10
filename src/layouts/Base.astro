@@ -9,15 +9,15 @@ export interface Props {
 const {
   title,
   description = 'EGC - Extended Global Context. Your AI remembers your project across sessions and tools.',
-  ogImage = '/EGCSite/og.png',
+  ogImage,
   canonical,
 } = Astro.props;
 
-import { getBase } from '../utils/base.ts';
+import { getBase, getCanonicalUrl, PRODUCTION_BASE } from '../utils/base.ts';
 import '../styles/global.css';
 const base = getBase();
-const canonicalURL = canonical ?? Astro.url.href;
-const ogImageURL = new URL(ogImage, Astro.site!).href;
+const canonicalURL = canonical ?? getCanonicalUrl(Astro.url);
+const ogImageURL = ogImage ? new URL(ogImage, Astro.site!).href : new URL('og.png', PRODUCTION_BASE).href;
 ---
 
 <!doctype html>

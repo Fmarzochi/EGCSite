@@ -1,6 +1,8 @@
 ---
-import { getBase } from "../utils/base.ts";
+import { getBase, getCanonicalUrl, PRODUCTION_BASE } from "../utils/base.ts";
 const base = getBase();
+const canonicalUrl = getCanonicalUrl(Astro.url);
+const ogUrl = new URL('og.png', PRODUCTION_BASE).href;
 ---
 <!doctype html>
 <html lang="pt-BR">
@@ -11,17 +13,18 @@ const base = getBase();
 <meta name="description" data-i18n-attr="content:meta.desc" content="O EGC é um runtime local e open source que dá às 21 ferramentas de IA para programação da sua máquina a mesma memória do projeto, em toda sessão.">
 <meta name="theme-color" content="#06221A">
 <meta property="og:type" content="website">
+<meta property="og:url" content={canonicalUrl}>
 <meta property="og:title" data-i18n-attr="content:meta.title" content="EGC — Contexto que nunca zera · memória persistente para ferramentas de IA">
 <meta property="og:description" data-i18n-attr="content:meta.desc" content="O EGC é um runtime local e open source que dá às 21 ferramentas de IA para programação da sua máquina a mesma memória do projeto, em toda sessão.">
-<meta property="og:image" content="https://fmarzochi.github.io/EGCSite/og.png">
-<link rel="canonical" href="https://fmarzochi.github.io/EGCSite/">
+<meta property="og:image" content={ogUrl}>
+<link rel="canonical" href={canonicalUrl}>
 <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`}>
 <link rel="alternate" type="application/rss+xml" title="EGC Releases" href={`${base}rss.xml`}>
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@MarzochiFelipe">
 <meta name="twitter:title" content="EGC — Contexto que nunca zera">
 <meta name="twitter:description" content="O EGC é um runtime local e open source que dá às 21 ferramentas de IA para programação da sua máquina a mesma memória do projeto, em toda sessão.">
-<meta name="twitter:image" content="https://fmarzochi.github.io/EGCSite/og.png">
+<meta name="twitter:image" content={ogUrl}>
 <script data-goatcounter="https://egc.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -788,7 +791,7 @@ code { font-family: var(--f-mono); font-size: .88em; padding: .1em .4em; border-
 .channels { width: 100%; }
 .channels li { min-width: 0; }
 </style>
-<script type="application/ld+json" is:inline>{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "EGC - Extended Global Context", "operatingSystem": "macOS, Windows, Linux", "applicationCategory": "DeveloperApplication", "softwareVersion": "1.1.22", "license": "https://www.apache.org/licenses/LICENSE-2.0", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "downloadUrl": "https://www.npmjs.com/package/@egchq/egc", "url": "https://fmarzochi.github.io/EGCSite/", "sameAs": ["https://github.com/Fmarzochi/EGC", "https://www.npmjs.com/package/@egchq/egc"]}</script>
+<script type="application/ld+json" set:html={JSON.stringify({"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "EGC - Extended Global Context", "operatingSystem": "macOS, Windows, Linux", "applicationCategory": "DeveloperApplication", "softwareVersion": "1.1.22", "license": "https://www.apache.org/licenses/LICENSE-2.0", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "downloadUrl": "https://www.npmjs.com/package/@egchq/egc", "url": canonicalUrl, "sameAs": ["https://github.com/Fmarzochi/EGC", "https://www.npmjs.com/package/@egchq/egc"]})} />
 <script type="application/ld+json" id="ld-faq" is:inline>{"@context": "https://schema.org", "@type": "FAQPage", "inLanguage": "pt-BR", "mainEntity": [{"@type": "Question", "name": "O EGC envia os dados do meu projeto para algum lugar?", "acceptedAnswer": {"@type": "Answer", "text": "Não. Todo o estado fica salvo localmente em ~/.egc. Nada é enviado para servidores externos: os servidores MCP se comunicam por stdio apenas com a ferramenta de IA da sua máquina."}}, {"@type": "Question", "name": "Quais ferramentas são compatíveis?", "acceptedAnswer": {"@type": "Answer", "text": "21 ferramentas: Claude Code, Cursor, Codex CLI, Antigravity, OpenCode, Devin Desktop, Amp, VS Code Copilot, Zed, Kiro, Trae, CodeBuddy, JetBrains Junie, Goose, OpenHands, Aider, Warp, Cline, Qwen Code, Kimi Code CLI e Crush. O instalador detecta automaticamente quais estão na sua máquina."}}, {"@type": "Question", "name": "Preciso pedir para a IA carregar o contexto?", "acceptedAnswer": {"@type": "Answer", "text": "Não. O egc install escreve o protocolo de memória no arquivo de instruções global de cada ferramenta, e a IA é orientada a carregar o estado no início de cada sessão. Em versões de ferramentas que não leem esse arquivo automaticamente, pode ser preciso adicioná-lo ao contexto manualmente."}}, {"@type": "Question", "name": "Qual a diferença para um CLAUDE.md ou .cursorrules?", "acceptedAnswer": {"@type": "Answer", "text": "Esses arquivos são estáticos e versionados no repositório. O estado do EGC é dinâmico e local: a IA escreve nele a cada sessão, acumulando decisões e preferências. Os dois se complementam."}}, {"@type": "Question", "name": "Funciona com vários projetos?", "acceptedAnswer": {"@type": "Answer", "text": "Sim. O estado é guardado por projeto e por branch do git. Cada projeto tem sua própria memória."}}, {"@type": "Question", "name": "O EGC é gratuito?", "acceptedAnswer": {"@type": "Answer", "text": "Sim. O motor é Apache-2.0 e continua gratuito. Se um dia houver algo pago, será uma camada para equipes por cima do motor, nunca a memória na sua máquina."}}, {"@type": "Question", "name": "A biblioteca de prompts é obrigatória?", "acceptedAnswer": {"@type": "Answer", "text": "Não. Ela é opcional e vem desligada por padrão: o instalador pergunta, e o motor (memória e Guardian) funciona do mesmo jeito sem ela."}}]}</script>
 </head>
 <body data-base={base}>
@@ -1660,7 +1663,7 @@ code { font-family: var(--f-mono); font-size: .88em; padding: .1em .4em; border-
       '<span class="idetail__flag" data-kind="' + (x.core ? 'core' : 'community') + '">' + t(x.core ? 'int.core' : 'int.community') + '</span></div>' +
       '<p class="idetail__note" style="margin-top:10px">' + t(x.core ? 'int.coreNote' : 'int.communityNote') + '</p></div>' +
       '<div><p class="eyebrow" style="margin-bottom:10px"><b>' + t('int.support') + '</b> ' + esc(x.badge) + '</p><ul class="idetail__kinds">' + kinds + '</ul>' +
-      '<a class="link-arrow" href="' + (document.body.getAttribute("data-base") || "/EGCSite/") + "integrations/" + x.slug + '"><span>' + t('int.page') + '</span>' + ARROW + '</a></div>';
+      '<a class="link-arrow" href="' + (document.body.getAttribute("data-base") || "/") + "integrations/" + x.slug + '"><span>' + t('int.page') + '</span>' + ARROW + '</a></div>';
     if (anim && !reduce) { detail.classList.remove('is-swap'); void detail.offsetWidth; detail.classList.add('is-swap'); }
   }
   tiles.forEach(function (b) {

@@ -1,5 +1,7 @@
 ---
 import DocsLayout from '../layouts/DocsLayout.astro';
+import { getBase } from '../utils/base.ts';
+const base = getBase();
 ---
 
 <DocsLayout
@@ -60,7 +62,7 @@ import DocsLayout from '../layouts/DocsLayout.astro';
 
     <h2 class="text-lg font-bold text-gray-900 dark:text-white mb-3">RSS feed</h2>
     <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
-      This site provides an <a href="/EGCSite/rss.xml" class="text-egc-600 dark:text-egc-400 hover:underline">RSS feed</a> for release announcements.
+      This site provides an <a href={`${base}rss.xml`} class="text-egc-600 dark:text-egc-400 hover:underline">RSS feed</a> for release announcements.
       Subscribing to the RSS feed does not send any data to us. Your RSS reader fetches the feed file directly from GitHub Pages.
     </p>
 

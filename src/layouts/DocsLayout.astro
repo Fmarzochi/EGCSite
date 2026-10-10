@@ -62,28 +62,26 @@ const sections = [
     ],
   },
 ];
+const docOrder = [
+  { id: 'get-started', label: 'Installation', href: 'get-started' },
+  { id: 'features', label: 'Features', href: 'features' },
+  { id: 'memory', label: 'egc-memory', href: 'docs/memory' },
+  { id: 'guardian', label: 'egc-guardian', href: 'docs/guardian' },
+  { id: 'mcp', label: 'MCP Servers', href: 'docs/mcp' },
+  { id: 'integrations', label: 'Integrations', href: 'integrations' },
+  { id: 'architecture', label: 'Architecture', href: 'docs/architecture' },
+  { id: 'security', label: 'Security', href: 'docs/security' },
+  { id: 'cli', label: 'CLI Reference', href: 'docs/cli' },
+  { id: 'faq', label: 'FAQ', href: 'docs/faq' },
+];
+const currentIndex = docOrder.findIndex(page => page.id === current);
+const previous = currentIndex > 0 ? docOrder[currentIndex - 1] : null;
+const next = currentIndex >= 0 ? docOrder[currentIndex + 1] : null;
 ---
 
 <Base title={`${title} - EGC Docs`} description={description}>
   <div class="bg-[#0A0D0C] text-[#F4F6F5] min-h-screen">
     <Navbar />
-
-    <!-- Mobile Sidebar Toggle Button -->
-    <button
-      id="docs-sidebar-toggle"
-      type="button"
-      aria-label="Open docs menu"
-      aria-expanded="false"
-      aria-controls="docs-sidebar"
-      class="md:hidden fixed bottom-6 right-6 z-50 w-12 h-12 flex items-center justify-center rounded-full bg-[#18B669] text-[#04200F] shadow-lg shadow-[#18B669]/25 hover:bg-[#3DF69B] active:scale-95 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3DF69B]"
-    >
-      <svg id="docs-sidebar-icon-open" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-      </svg>
-      <svg id="docs-sidebar-icon-close" class="w-5 h-5 hidden" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-      </svg>
-    </button>
 
     <!-- Mobile Sidebar Backdrop -->
     <div
@@ -92,8 +90,25 @@ const sections = [
       aria-hidden="true"
     ></div>
 
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="flex flex-col md:flex-row gap-0 md:gap-10 py-6 md:py-10 min-h-[calc(100vh-4rem)]">
+    <div class="docs-shell mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="docs-mobile-bar md:hidden">
+        <button
+          id="docs-sidebar-toggle"
+          type="button"
+          aria-label="Open docs menu"
+          aria-expanded="false"
+          aria-controls="docs-sidebar"
+          class="docs-mobile-toggle"
+        >
+          <svg id="docs-sidebar-icon-open" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" /></svg>
+          <svg id="docs-sidebar-icon-close" class="w-4 h-4 hidden" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+          <span>Topics</span>
+        </button>
+        <nav class="docs-mobile-links" aria-label="Documentation quick navigation">
+          {docOrder.map(page => <a href={`${base}${page.href}`} aria-current={current === page.id ? 'page' : undefined}>{page.label}</a>)}
+        </nav>
+      </div>
+      <div class="docs-grid flex flex-col md:flex-row gap-0 md:gap-10 py-6 md:py-10 min-h-[calc(100vh-4rem)]">
 
         <!-- Sidebar -->
         <aside
@@ -156,15 +171,18 @@ const sections = [
         <!-- Main Content -->
         <main id="main-content" class="flex-1 min-w-0 max-w-3xl w-full docs-content py-2">
           <slot />
+          {(previous || next) && <nav class="docs-pagination" aria-label="Documentation pages">
+            {previous && <a href={`${base}${previous.href}`} rel="prev"><span>← Previous</span><strong>{previous.label}</strong></a>}
+            {next && <a href={`${base}${next.href}`} rel="next"><span>Next →</span><strong>{next.label}</strong></a>}
+          </nav>}
         </main>
 
         <!-- On This Page (Table of Contents) -->
-        {toc && toc.length > 0 && (
-          <aside class="hidden xl:block w-48 shrink-0 pl-6 border-l border-[rgba(226,240,233,0.08)]">
+          <aside class="docs-toc hidden xl:block w-48 shrink-0 pl-6 border-l border-[rgba(226,240,233,0.08)]">
             <div class="sticky top-24 pt-2">
               <h4 class="font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-[#8E9E96] mb-3">On this page</h4>
-              <nav class="space-y-1" aria-label="On this page">
-                {toc.map(item => (
+              <nav class="space-y-1" aria-label="On this page" data-generated={toc?.length ? undefined : 'true'}>
+                {toc?.map(item => (
                   <a
                     href={`#${item.id}`}
                     class="block py-1.5 pl-3 border-l border-[rgba(226,240,233,0.12)] text-xs text-[#8E9E96] hover:text-[#3DF69B] hover:border-[#3DF69B] transition-colors"
@@ -173,15 +191,14 @@ const sections = [
                   </a>
                 ))}
               </nav>
-              <div class="mt-8 p-3.5 rounded-xl bg-[#102018] border border-[#23402d]">
+              {current === 'memory' && <div class="mt-8 p-3.5 rounded-xl bg-[#102018] border border-[#23402d]">
                 <span class="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-[#3DF69B]">QUICK TIP</span>
                 <p class="text-xs text-[#aac7b5] mt-1.5 leading-relaxed">
                   State is encrypted per project branch at <code>~/.egc</code>.
                 </p>
-              </div>
+              </div>}
             </div>
           </aside>
-        )}
 
       </div>
     </div>
@@ -191,6 +208,37 @@ const sections = [
 </Base>
 
 <style is:global>
+  .docs-shell { max-width: 1320px; font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+  .docs-shell a[aria-current="page"] { background: #103322; color: #3df69b; border-color: transparent; box-shadow: inset 2px 0 #3df69b; border-radius: 8px; }
+  .docs-mobile-bar { display: flex; align-items: center; gap: 8px; padding-top: 18px; min-width: 0; }
+  .docs-mobile-toggle { display: inline-flex; align-items: center; justify-content: center; gap: 6px; flex: none; min-height: 40px; padding: 0 12px; border: 1px solid #31523e; border-radius: 8px; background: #123527; color: #3df69b; font: 600 12px Inter, sans-serif; cursor: pointer; }
+  .docs-mobile-links { display: flex; gap: 5px; min-width: 0; overflow-x: auto; scrollbar-width: thin; }
+  .docs-mobile-links a { flex: none; display: inline-flex; align-items: center; min-height: 40px; padding: 0 12px; border-radius: 8px; color: #92a49a; font-size: 12px; white-space: nowrap; }
+  .docs-mobile-links a:hover { background: #17241c; color: #e4f4e8; }
+  @media (min-width: 768px) { .docs-mobile-bar { display: none; } }
+  .docs-content h1, .docs-content h2, .docs-content h3 { font-family: Inter, ui-sans-serif, system-ui, sans-serif !important; }
+  .docs-grid { gap: 44px; }
+  .docs-content { max-width: 780px; }
+  .docs-content .hero { padding: 9px 0 30px; margin-bottom: 0; border-bottom: 1px solid #25312b; }
+  .docs-content .hero h1 { font-size: clamp(32px, 3.5vw, 49px) !important; letter-spacing: -.055em !important; line-height: 1.15 !important; }
+  .docs-content .hero .lead { color: #a8b9ad; max-width: 720px; }
+  .docs-content .section { padding-top: 40px; scroll-margin-top: 100px; }
+  .docs-content .section h2 { font-size: 22px !important; letter-spacing: -.035em !important; }
+  .docs-content .feature, .docs-content .tool, .docs-content .snippet { border-color: #25312b; }
+  .docs-content .tool[open] { border-color: #3a8058; }
+  .docs-toc a { border-left-color: #253a2d; }
+  .docs-pagination { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 64px; padding-top: 24px; border-top: 1px solid #25312b; }
+  .docs-pagination a { display: flex; flex-direction: column; gap: 5px; min-height: 82px; padding: 14px 18px; border: 1px solid #25312b; border-radius: 12px; background: #101715; text-decoration: none !important; }
+  .docs-pagination a[rel="next"] { grid-column: 2; text-align: right; }
+  .docs-pagination a:hover { border-color: #3a8058; background: #132219; }
+  .docs-pagination span { color: #92a49a; font: 11px 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: .08em; }
+  .docs-pagination strong { color: #edf5ef; font-size: 14px; }
+  .docs-code-wrapper { position: relative; min-width: 0; margin: 1.25rem 0; }
+  .docs-code-wrapper pre { margin: 0 !important; padding-top: 3.1rem !important; }
+  .docs-copy-code { position: absolute; top: 10px; right: 12px; z-index: 1; background: #19281e; color: #3df69b; border: 1px solid #31523e; border-radius: 7px; padding: 4px 10px; font: 11px 'JetBrains Mono', monospace; cursor: pointer; }
+  .docs-copy-code:hover { border-color: #3df69b; }
+  @media (max-width: 1020px) { .docs-grid { gap: 22px; } }
+  @media (max-width: 767px) { .docs-pagination { margin-top: 40px; } .docs-content { max-width: 100%; } }
   /* Docs content: ensure code blocks, tables and cards match brand identity */
   .docs-content pre {
     background-color: #070A09 !important;
@@ -487,6 +535,49 @@ const sections = [
 </style>
 
 <script>
+  function setupDocsContent() {
+    const content = document.querySelector<HTMLElement>('.docs-content');
+    if (!content || content.dataset.enhanced === 'true') return;
+    content.dataset.enhanced = 'true';
+    document.querySelector<HTMLElement>('.docs-mobile-links [aria-current="page"]')?.scrollIntoView({ block: 'nearest', inline: 'center' });
+    const toc = document.querySelector<HTMLElement>('.docs-toc');
+    const tocNav = toc?.querySelector<HTMLElement>('nav[data-generated="true"]');
+    if (tocNav) {
+      const headings = Array.from(content.querySelectorAll<HTMLElement>('h2'));
+      if (headings.length < 2 && toc) toc.style.display = 'none';
+      else {
+        for (const heading of headings) {
+          if (!heading.id) {
+            const slug = heading.textContent?.trim().toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'section';
+            let id = slug;
+            let suffix = 2;
+            while (document.getElementById(id)) id = `${slug}-${suffix++}`;
+            heading.id = id;
+          }
+          const link = document.createElement('a');
+          link.href = `#${heading.id}`;
+          link.className = 'block py-1.5 pl-3 border-l border-[rgba(226,240,233,0.12)] text-xs text-[#8E9E96] hover:text-[#3DF69B] hover:border-[#3DF69B] transition-colors';
+          link.textContent = heading.textContent?.trim() || heading.id;
+          tocNav.appendChild(link);
+        }
+      }
+    }
+    for (const pre of content.querySelectorAll<HTMLPreElement>('pre')) {
+      if (pre.closest('.snippet') || pre.closest('.docs-code-wrapper')) continue;
+      const wrapper = document.createElement('div');
+      wrapper.className = 'docs-code-wrapper';
+      pre.parentNode?.insertBefore(wrapper, pre);
+      wrapper.appendChild(pre);
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'docs-copy-code';
+      button.textContent = 'Copy';
+      button.setAttribute('aria-label', 'Copy code');
+      wrapper.appendChild(button);
+    }
+  }
+  document.addEventListener('astro:page-load', setupDocsContent);
+  document.addEventListener('DOMContentLoaded', setupDocsContent);
   function setupDocsSidebar() {
     const toggleBtn = document.getElementById('docs-sidebar-toggle');
     const closeBtn = document.getElementById('docs-sidebar-close');
@@ -619,19 +710,29 @@ const sections = [
   document.addEventListener('DOMContentLoaded', setupDocsSidebar);
 
     // Clipboard copy helper
-    document.addEventListener('click', (e) => {
-      const btn = (e.target as HTMLElement).closest('.copy-btn');
+    document.addEventListener('click', async (e) => {
+      const btn = (e.target as HTMLElement).closest('.copy-btn, .docs-copy-code');
       if (!btn) return;
-      const text = btn.getAttribute('data-copy') || '';
-      if (text && navigator.clipboard && navigator.clipboard.writeText) {
-        const orig = btn.textContent;
-        navigator.clipboard.writeText(text).then(() => {
-          btn.textContent = 'Copied ✓';
-          setTimeout(() => { btn.textContent = orig; }, 1500);
-        }).catch(() => {
-          btn.textContent = 'Copy failed';
-          setTimeout(() => { btn.textContent = orig; }, 1500);
-        });
+      const text = btn.getAttribute('data-copy') || btn.parentElement?.querySelector('pre')?.textContent || '';
+      if (!text) return;
+      const orig = btn.textContent;
+      try {
+        if (navigator.clipboard?.writeText) await navigator.clipboard.writeText(text);
+        else {
+          const field = document.createElement('textarea');
+          field.value = text;
+          field.style.position = 'fixed';
+          field.style.opacity = '0';
+          document.body.appendChild(field);
+          field.select();
+          const copied = document.execCommand('copy');
+          field.remove();
+          if (!copied) throw new Error('Clipboard unavailable');
+        }
+        btn.textContent = 'Copied ✓';
+      } catch {
+        btn.textContent = 'Copy failed';
       }
+      setTimeout(() => { btn.textContent = orig; }, 1500);
     });
 </script>

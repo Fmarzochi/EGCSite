@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
 import { getBase } from '../../utils/base.ts';
+import { formatContribution } from '../../utils/format-contributor.ts';
 import {
   fetchContributors,
   highlights,
@@ -35,6 +36,8 @@ if (!info) {
   return Astro.redirect(`${base}contributors`);
 }
 
+const formattedHighlight = formatContribution(info.highlight);
+
 const avatar = `https://github.com/${login}.png`;
 
 let githubBio = '';
@@ -42,25 +45,44 @@ let githubLocation = '';
 let githubFollowers = 0;
 let githubRepos = 0;
 
-try {
-  const headers: Record<string, string> = { Accept: 'application/vnd.github+json' };
-  const token = import.meta.env.GITHUB_TOKEN;
-  if (token) headers['Authorization'] = `Bearer ${token}`;
-  const res = await fetch(`https://api.github.com/users/${login}`, { headers });
-  if (res.ok) {
-    const data = await res.json() as {
-      bio?: string;
-      location?: string;
-      followers?: number;
-      public_repos?: number;
-    };
-    githubBio = data.bio ?? '';
-    githubLocation = data.location ?? '';
-    githubFollowers = data.followers ?? 0;
-    githubRepos = data.public_repos ?? 0;
+const userCache = new Map<string, { bio: string; location: string; followers: number; public_repos: number }>();
+
+const cachedUser = userCache.get(login as string);
+if (cachedUser) {
+  githubBio = cachedUser.bio;
+  githubLocation = cachedUser.location;
+  githubFollowers = cachedUser.followers;
+  githubRepos = cachedUser.public_repos;
+} else {
+  try {
+    const headers: Record<string, string> = { Accept: 'application/vnd.github+json' };
+    const token = import.meta.env.GITHUB_TOKEN;
+    if (token) headers['Authorization'] = `Bearer ${token}`;
+    const res = await fetch(`https://api.github.com/users/${login}`, {
+      headers,
+      signal: AbortSignal.timeout(1500),
+    });
+    if (res.ok) {
+      const data = await res.json() as {
+        bio?: string;
+        location?: string;
+        followers?: number;
+        public_repos?: number;
+      };
+      githubBio = data.bio ?? '';
+      githubLocation = data.location ?? '';
+      githubFollowers = data.followers ?? 0;
+      githubRepos = data.public_repos ?? 0;
+      userCache.set(login as string, {
+        bio: githubBio,
+        location: githubLocation,
+        followers: githubFollowers,
+        public_repos: githubRepos,
+      });
+    }
+  } catch {
+    // static data only
   }
-} catch {
-  // static data only
 }
 
 const isChampion = championLogin === login;
@@ -78,7 +100,7 @@ const isChampion = championLogin === login;
       <!-- Back link -->
       <a
         href={`${base}contributors`}
-        class="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-egc-400 transition-colors duration-200 mb-8"
+        class="inline-flex items-center gap-1.5 text-sm text-[#8E9E96] hover:text-[#3DF69B] transition-colors duration-200 mb-8 font-medium"
       >
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M11 17l-5-5m0 0l5-5m-5 5h12"/></svg>
         Hall of Fame
@@ -96,16 +118,16 @@ const isChampion = championLogin === login;
       )}
 
       <!-- Profile card -->
-      <div class="rounded-2xl glass overflow-hidden mb-6">
+      <div class="rounded-2xl bg-[#0D100F] border border-[rgba(226,240,233,0.09)] overflow-hidden mb-6 shadow-xl shadow-black/40">
         <div class="relative">
-          <div class="h-24 bg-gradient-to-r from-egc-900/40 via-gray-900 to-yellow-900/20"></div>
+          <div class="h-24 bg-gradient-to-r from-[#06221A] via-[#0D100F] to-[#0A3D27]"></div>
           <div class="absolute left-6 -bottom-10">
             <img
               src={avatar}
               alt={info.name}
               width="80"
               height="80"
-              class={`rounded-full ring-4 ring-gray-900 ${isChampion ? 'ring-yellow-400/60' : ''}`}
+              class={`rounded-full ring-4 ring-[#0D100F] ${isChampion ? 'ring-yellow-400/60' : ''}`}
             />
           </div>
         </div>
@@ -113,11 +135,11 @@ const isChampion = championLogin === login;
         <div class="pt-14 px-6 pb-6">
           <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
             <div>
-              <h1 class="text-xl font-bold text-white">{info.name}</h1>
-              <p class="text-sm text-gray-500 mb-3">@{login}</p>
-              {githubBio && <p class="text-sm text-gray-400 mb-2">{githubBio}</p>}
+              <h1 class="text-xl sm:text-2xl font-bold text-[#F4F6F5] font-sans">{info.name}</h1>
+              <p class="text-sm text-[#8E9E96] mb-3">@{login}</p>
+              {githubBio && <p class="text-sm text-[#E2E8E4] mb-2 leading-relaxed">{githubBio}</p>}
               {githubLocation && (
-                <p class="flex items-center gap-1 text-xs text-gray-600">
+                <p class="flex items-center gap-1 text-xs text-[#8E9E96]">
                   <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                   {githubLocation}
                 </p>
@@ -127,7 +149,7 @@ const isChampion = championLogin === login;
               href={`https://github.com/${login}`}
               target="_blank"
               rel="noopener noreferrer"
-              class="shrink-0 inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-gray-700 bg-gray-900 text-gray-300 text-sm font-semibold hover:border-egc-500 hover:text-egc-400 active:scale-95 transition-all duration-200"
+              class="shrink-0 inline-flex items-center gap-2 px-5 py-2 rounded-full border border-[rgba(226,240,233,0.12)] bg-[#111614] text-[#F4F6F5] text-sm font-semibold hover:border-[#3DF69B]/40 hover:text-[#3DF69B] active:scale-95 transition-all duration-200"
             >
               <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12"/></svg>
               GitHub
@@ -144,24 +166,35 @@ const isChampion = championLogin === login;
           { label: 'GitHub repos', value: githubRepos || '--' },
           { label: 'Followers', value: githubFollowers || '--' },
         ].map(s => (
-          <div class="rounded-xl p-4 glass text-center">
-            <div class="text-xl font-extrabold text-egc-400">{s.value}</div>
-            <div class="text-xs text-gray-500 mt-1">{s.label}</div>
+          <div class="rounded-xl p-4 bg-[#0D100F] border border-[rgba(226,240,233,0.09)] text-center">
+            <div class="text-xl sm:text-2xl font-extrabold text-[#3DF69B]">{s.value}</div>
+            <div class="font-mono text-[11px] text-[#8E9E96] uppercase tracking-[0.12em] mt-1">{s.label}</div>
           </div>
         ))}
       </div>
 
       <!-- Contribution -->
-      <div class="rounded-2xl glass p-6 mb-6">
-        <p class="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-3">What they built</p>
-        <p class="text-sm text-gray-300 leading-relaxed mb-4">{info.highlight}</p>
-        <p class="text-xs text-gray-600">Joined {info.since}</p>
+      <div class="rounded-2xl bg-[#0D100F] border border-[rgba(226,240,233,0.09)] p-6 mb-6">
+        <p class="font-mono text-xs font-semibold uppercase tracking-[0.14em] text-[#8E9E96] mb-3">What they built</p>
+        {formattedHighlight.isStructured ? (
+          <ul class="space-y-2.5 text-sm text-[#E2E8E4] leading-relaxed mb-4">
+            {formattedHighlight.items.map(item => (
+              <li class="flex items-start gap-2.5">
+                <span class="text-[#3DF69B] mt-1 select-none shrink-0 text-xs">✦</span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p class="text-sm text-[#E2E8E4] leading-relaxed mb-4">{formattedHighlight.cleanText}</p>
+        )}
+        <p class="text-xs text-[#8E9E96] mt-4 pt-3 border-t border-[rgba(226,240,233,0.06)]">Joined {info.since}</p>
       </div>
 
       <!-- Badges -->
       {info.badges.length > 0 && (
-        <div class="rounded-2xl glass p-6 mb-6">
-          <p class="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-4">Badges</p>
+        <div class="rounded-2xl bg-[#0D100F] border border-[rgba(226,240,233,0.09)] p-6 mb-6">
+          <p class="font-mono text-xs font-semibold uppercase tracking-[0.14em] text-[#8E9E96] mb-4">Badges</p>
           <div class="flex flex-wrap gap-2">
             {info.badges.map(key => {
               const b = BADGE_DEFS[key];

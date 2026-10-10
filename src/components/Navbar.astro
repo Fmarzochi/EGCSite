@@ -5,73 +5,90 @@ const base = getBase();
 
 const navLinks = [
   { href: `${base}`, label: 'Home' },
-  { href: `${base}get-started`, label: 'Get Started' },
   { href: `${base}features`, label: 'Features' },
+  { href: `${base}integrations`, label: 'Integrations' },
   { href: `${base}docs/memory`, label: 'Docs' },
   { href: `${base}contributors`, label: 'Hall of Fame' },
   { href: 'https://github.com/Fmarzochi/EGC', label: 'GitHub', external: true },
 ];
 ---
 
-<header id="site-header" class="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-gray-800 bg-white/90 dark:bg-gray-950/90 backdrop-blur-md transition-transform duration-300 transform translate-y-0">
+<header id="site-header" class="sticky top-0 z-50 w-full border-b border-[rgba(226,240,233,0.09)] bg-[#0A0D0C]/90 backdrop-blur-md transition-transform duration-300 transform translate-y-0">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <div class="flex h-16 items-center justify-between">
 
       <!-- Logo + brand -->
-      <div class="flex items-center gap-2 shrink-0">
-        <a href={base} class="flex items-center gap-2.5 min-h-[44px] group">
-          <img src={`${base}egc-logo.png`} alt="EGC Logo" class="h-8 w-8 sm:h-10 sm:w-10 object-contain shrink-0 drop-shadow-md group-hover:scale-110 transition-transform duration-200" />
-          <span class="font-extrabold text-lg sm:text-2xl tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 whitespace-nowrap">EGC</span>
+      <div class="flex items-center gap-3 shrink-0">
+        <a href={base} class="flex items-center gap-2.5 min-h-[44px] group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3DF69B] rounded-md">
+          <svg class="shrink-0" viewBox="0 0 480 480" width="28" height="28" aria-hidden="true" focusable="false">
+            <defs>
+              <linearGradient id="m-nav-p" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#B4F8D6"/>
+                <stop offset=".46" stop-color="#4FF3A3"/>
+                <stop offset="1" stop-color="#17A862"/>
+              </linearGradient>
+              <filter id="m-nav-e" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="0" dy="0" stdDeviation="7" flood-color="#04361F" flood-opacity=".42"/>
+              </filter>
+              <clipPath id="m-nav-q">
+                <rect x="0" y="0" width="240" height="240"/>
+              </clipPath>
+            </defs>
+            <g filter="url(#m-nav-e)">
+              <circle cx="240" cy="130" r="100" fill="url(#m-nav-p)"/>
+              <circle cx="350" cy="240" r="100" fill="url(#m-nav-p)"/>
+              <circle cx="240" cy="350" r="100" fill="url(#m-nav-p)"/>
+              <circle cx="130" cy="240" r="100" fill="url(#m-nav-p)"/>
+              <g clip-path="url(#m-nav-q)"><circle cx="240" cy="130" r="100" fill="url(#m-nav-p)"/></g>
+            </g>
+            <circle cx="240" cy="240" r="29" fill="#05231A"/>
+          </svg>
+          <span class="font-extrabold text-xl tracking-tight text-[#F4F6F5] whitespace-nowrap">EGC</span>
         </a>
       </div>
 
       <!-- Desktop nav -->
-      <nav class="hidden md:flex items-center gap-1">
+      <nav class="hidden md:flex items-center gap-2" aria-label="Main navigation">
         {navLinks.map(link => (
           <a
             href={link.href}
             target={link.external ? '_blank' : undefined}
             rel={link.external ? 'noopener noreferrer' : undefined}
             aria-label={link.external ? `${link.label} (opens in new tab)` : undefined}
-            class="px-3 py-1.5 rounded-md text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-egc-600 dark:hover:text-egc-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-150 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500"
+            class="px-3.5 py-1.5 rounded-full text-sm font-medium text-[#8E9E96] hover:text-[#3DF69B] hover:bg-white/[0.04] transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3DF69B]"
           >
             {link.label}
             {link.external && (
-              <Icon name="external" size={12} class="inline-block ml-0.5 opacity-60" />
+              <Icon name="external" size={12} class="inline-block ml-1 opacity-60" />
             )}
           </a>
         ))}
       </nav>
 
-      <!-- Right side: desktop CTA + mobile hamburger -->
-      <div class="flex items-center gap-2">
-        <a
-          href="https://huggingface.co/spaces/fmarzochi/EGC"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Hugging Face Space (opens in new tab)"
-          class="hidden md:inline-flex items-center justify-center w-9 h-9 rounded-lg text-base hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-150 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500"
-        >
-          <span aria-hidden="true">🤗</span>
-        </a>
+      <!-- Right side: CTA button + mobile hamburger -->
+      <div class="flex items-center gap-3">
+        <!-- Community links (desktop) -->
         <a
           href="https://discord.gg/FmXbgUmdmM"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Discord (opens in new tab)"
-          class="hidden md:inline-flex items-center justify-center w-9 h-9 rounded-lg text-gray-500 dark:text-gray-400 hover:text-indigo-500 dark:hover:text-indigo-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-150 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500"
+          class="hidden md:inline-flex items-center justify-center w-8 h-8 rounded-full border border-white/[0.08] bg-white/[0.02] text-[#8E9E96] hover:text-[#F4F6F5] hover:border-white/20 hover:bg-white/[0.06] transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3DF69B]"
         >
-          <Icon name="discord" size={18} />
+          <Icon name="discord" size={15} />
         </a>
+
+        <!-- Official Brand CTA Button (Pill) -->
         <a
-          href="https://github.com/Fmarzochi/EGC"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="GitHub (opens in new tab)"
-          class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-xs font-semibold hover:bg-gray-700 dark:hover:bg-gray-100 transition-colors duration-150 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500"
+          href={`${base}get-started`}
+          class="hidden sm:inline-flex items-center gap-2.5 min-h-[40px] pl-4 pr-1 rounded-full bg-[#FFFFFF] hover:bg-[#F4F6F5] text-[#06210F] font-bold text-xs transition-transform active:scale-[0.98] shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3DF69B]"
         >
-          <Icon name="github" size={14} />
-          GitHub
+          <span>Get EGC</span>
+          <span class="w-7 h-7 rounded-full bg-[#18B669] inline-flex items-center justify-center shrink-0">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6"></path>
+            </svg>
+          </span>
         </a>
 
         <!-- Hamburger button (mobile only) -->
@@ -81,11 +98,11 @@ const navLinks = [
           aria-label="Open menu"
           aria-expanded="false"
           aria-controls="mobile-menu"
-          class="md:hidden p-2.5 min-w-[44px] min-h-[44px] flex flex-col items-center justify-center gap-[5px] rounded-lg focus:outline-none focus:ring-2 focus:ring-egc-500 focus:ring-offset-1 dark:focus:ring-offset-gray-950 active:scale-95 transition-all duration-150"
+          class="md:hidden p-2.5 min-w-[44px] min-h-[44px] flex flex-col items-center justify-center gap-[5px] rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3DF69B] active:scale-95 transition-all duration-150"
         >
-          <span class="block w-6 h-[2px] bg-gray-600 dark:bg-gray-400 rounded-full transition-all duration-300 origin-center line-1"></span>
-          <span class="block w-6 h-[2px] bg-gray-600 dark:bg-gray-400 rounded-full transition-all duration-300 line-2"></span>
-          <span class="block w-6 h-[2px] bg-gray-600 dark:bg-gray-400 rounded-full transition-all duration-300 origin-center line-3"></span>
+          <span class="block w-6 h-[2px] bg-[#F4F6F5] rounded-full transition-all duration-300 origin-center line-1"></span>
+          <span class="block w-6 h-[2px] bg-[#F4F6F5] rounded-full transition-all duration-300 line-2"></span>
+          <span class="block w-6 h-[2px] bg-[#F4F6F5] rounded-full transition-all duration-300 origin-center line-3"></span>
         </button>
       </div>
     </div>
@@ -95,49 +112,61 @@ const navLinks = [
 <!-- Backdrop overlay -->
 <div
   id="mobile-backdrop"
-    class="fixed inset-0 bg-black/20 dark:bg-black/40 backdrop-blur-sm z-[-1] opacity-0 pointer-events-none invisible transition-opacity duration-300 md:hidden"
-    aria-hidden="true"
-  ></div>
+  class="fixed inset-0 bg-black/70 backdrop-blur-sm z-[-1] opacity-0 pointer-events-none invisible transition-opacity duration-300 md:hidden"
+  aria-hidden="true"
+></div>
 
-  <!-- Mobile menu panel -->
-  <div
-    id="mobile-menu"
-    class="md:hidden fixed inset-0 top-[64px] border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 overflow-y-auto transition-all duration-300 ease-in-out opacity-0 pointer-events-none invisible z-40"
-  >
-    <nav class="flex flex-col gap-3 px-6 py-8">
-      {navLinks.map((link, i) => (
-        <a
-          href={link.href}
-          target={link.external ? '_blank' : undefined}
-          rel={link.external ? 'noopener noreferrer' : undefined}
-          aria-label={link.external ? `${link.label} (opens in new tab)` : undefined}
-          class:list={[
-            'mobile-nav-link flex items-center min-h-[56px] px-4 py-3 rounded-xl text-xl font-semibold text-gray-700 dark:text-gray-300 hover:text-egc-600 dark:hover:text-egc-400 hover:bg-gray-50 dark:hover:bg-gray-900 active:scale-[0.98] active:bg-gray-100 dark:active:bg-gray-800 transition-all duration-150 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500',
-            `mobile-nav-link-${i}`,
-          ]}
-        >
-          {link.label}
-          {link.external && (
-            <Icon name="external" size={16} class="ml-1.5 opacity-50" />
-          )}
-        </a>
-      ))}
+<!-- Mobile menu panel -->
+<div
+  id="mobile-menu"
+  class="md:hidden fixed inset-0 top-[64px] border-t border-[rgba(226,240,233,0.09)] bg-[#0A0D0C] overflow-y-auto transition-all duration-300 ease-in-out opacity-0 pointer-events-none invisible z-40"
+>
+  <nav class="flex flex-col gap-2 px-6 py-8" aria-label="Mobile navigation">
+    {navLinks.map((link, i) => (
+      <a
+        href={link.href}
+        target={link.external ? '_blank' : undefined}
+        rel={link.external ? 'noopener noreferrer' : undefined}
+        aria-label={link.external ? `${link.label} (opens in new tab)` : undefined}
+        class:list={[
+          'mobile-nav-link flex items-center justify-between min-h-[48px] px-4 py-3 rounded-lg text-base font-medium text-[#F4F6F5] hover:text-[#3DF69B] hover:bg-white/[0.04] active:scale-[0.98] transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3DF69B]',
+          `mobile-nav-link-${i}`,
+        ]}
+      >
+        <span>{link.label}</span>
+        {link.external && (
+          <Icon name="external" size={16} class="opacity-50" />
+        )}
+      </a>
+    ))}
 
-      <!-- GitHub CTA in mobile menu -->
-      <div class="mt-2 pt-2 border-t border-gray-100 dark:border-gray-800">
-        <a
-          href="https://github.com/Fmarzochi/EGC"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Star on GitHub (opens in new tab)"
-          class="mobile-nav-link flex items-center justify-center gap-2 min-h-[44px] px-4 py-2.5 rounded-lg bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-sm font-semibold hover:bg-gray-700 dark:hover:bg-gray-100 active:scale-[0.98] transition-all duration-150 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500"
-        >
-          <Icon name="github" size={16} />
-          Star on GitHub
-        </a>
-      </div>
-    </nav>
-  </div>
+    <!-- Get EGC CTA in mobile menu -->
+    <div class="mt-6 pt-6 border-t border-[rgba(226,240,233,0.09)] flex flex-col gap-3">
+      <a
+        href={`${base}get-started`}
+        class="mobile-nav-link flex items-center justify-between min-h-[48px] px-6 py-2.5 rounded-full bg-[#FFFFFF] text-[#06210F] text-sm font-bold active:scale-[0.98] transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3DF69B]"
+      >
+        <span>Get EGC</span>
+        <span class="w-7 h-7 rounded-full bg-[#18B669] inline-flex items-center justify-center shrink-0">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6"></path>
+          </svg>
+        </span>
+      </a>
+
+      <a
+        href="https://github.com/Fmarzochi/EGC"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Star on GitHub (opens in new tab)"
+        class="mobile-nav-link flex items-center justify-center gap-2 min-h-[44px] px-4 py-2.5 rounded-full border border-white/20 bg-white/[0.04] text-[#F4F6F5] text-sm font-semibold hover:bg-white/10 active:scale-[0.98] transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3DF69B]"
+      >
+        <Icon name="github" size={16} />
+        GitHub
+      </a>
+    </div>
+  </nav>
+</div>
 
 <script>
   const mobileMenuBtn = document.getElementById('mobile-menu-btn');
@@ -153,7 +182,6 @@ const navLinks = [
     backdrop?.classList.add('opacity-100', 'pointer-events-auto', 'visible');
     document.body.style.overflow = 'hidden';
 
-    // Staggered link entrance
     const links = mobileMenu?.querySelectorAll('.mobile-nav-link');
     links?.forEach((link, i) => {
       const el = link as HTMLElement;
@@ -181,7 +209,6 @@ const navLinks = [
     return mobileMenuBtn?.getAttribute('aria-expanded') === 'true';
   }
 
-  // Toggle on hamburger click
   mobileMenuBtn?.addEventListener('click', () => {
     if (isMenuOpen()) {
       closeMenu();
@@ -190,17 +217,14 @@ const navLinks = [
     }
   });
 
-  // Close on backdrop click
   backdrop?.addEventListener('click', closeMenu);
 
-  // Close on link click (for same-page navigation)
   mobileMenu?.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
       closeMenu();
     });
   });
 
-  // Close on Escape key
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && isMenuOpen()) {
       closeMenu();
@@ -208,14 +232,12 @@ const navLinks = [
     }
   });
 
-  // Close menu on resize to desktop
   window.addEventListener('resize', () => {
     if (window.innerWidth >= 768 && isMenuOpen()) {
       closeMenu();
     }
   });
 
-  // Scroll dynamics (hide/show header on scroll)
   let lastScrollY = window.scrollY;
   let scrollTimeout: ReturnType<typeof setTimeout> | undefined;
   const header = document.getElementById('site-header');
@@ -226,7 +248,6 @@ const navLinks = [
 
       if (scrollTimeout) clearTimeout(scrollTimeout);
 
-      // Don't hide header while mobile menu is open
       if (isMenuOpen()) {
         lastScrollY = currentScrollY;
         return;
@@ -256,7 +277,6 @@ const navLinks = [
 </script>
 
 <style>
-  /* Hamburger → X animation */
   #mobile-menu-btn[aria-expanded="true"] .line-1 {
     transform: translateY(7px) rotate(45deg);
   }
@@ -267,7 +287,6 @@ const navLinks = [
     transform: translateY(-7px) rotate(-45deg);
   }
 
-  /* Ensure mobile menu is on top of page content */
   #mobile-menu {
     z-index: 40;
   }

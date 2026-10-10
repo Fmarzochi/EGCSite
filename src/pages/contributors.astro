@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import { getBase } from '../utils/base.ts';
+import { formatContribution } from '../utils/format-contributor.ts';
 import {
   fetchContributors,
   buildFallback,
@@ -20,9 +21,10 @@ let monthlyChampion: MonthlyChampion | null = null;
 try {
   const result = await fetchContributors(import.meta.env.GITHUB_TOKEN);
   contributors = result.contributors;
-  monthlyChampion = result.champion;
+  monthlyChampion = result.champion ?? getChampionHistory()[0] ?? null;
 } catch {
   contributors = buildFallback();
+  monthlyChampion = getChampionHistory()[0] ?? null;
 }
 
 const topThree = contributors.slice(0, 3);
@@ -36,6 +38,8 @@ const champion = monthlyChampion
   ? (contributors.find(c => c.login === monthlyChampion!.login) ?? null)
   : null;
 
+const championFormatted = monthlyChampion ? formatContribution(monthlyChampion.reason) : null;
+
 // Past champions, most recent first. The current month's champion (rendered above in its own
 // spotlight card) is excluded here so it isn't shown twice while it's still the reigning title.
 const pastChampions = getChampionHistory().filter(h => h.month !== monthlyChampion?.month);
@@ -43,230 +47,249 @@ const pastChampions = getChampionHistory().filter(h => h.month !== monthlyChampi
 // Desktop podium order: 2nd left, 1st center, 3rd right
 const podiumOrder = [topThree[1], topThree[0], topThree[2]].filter(Boolean) as Contributor[];
 const podiumMeta = [
-  { rank: 2, badge: 'bg-slate-400 text-slate-900', pedestalH: 'h-20' },
-  { rank: 1, badge: 'bg-yellow-400 text-gray-900', pedestalH: 'h-36' },
-  { rank: 3, badge: 'bg-amber-600 text-white',     pedestalH: 'h-12' },
+  { rank: 2, label: '#02 · SILVER', badge: 'bg-slate-400 text-slate-900', pedestalH: 'h-20', isWinner: false },
+  { rank: 1, label: '★ #01 · GOLD', badge: 'bg-yellow-400 text-gray-900', pedestalH: 'h-36', isWinner: true },
+  { rank: 3, label: '#03 · BRONZE', badge: 'bg-amber-600 text-white',     pedestalH: 'h-12', isWinner: false },
 ];
 ---
 
 <Base
-  title="Hall of Fame: EGC"
+  title="Hall of Fame · EGC"
   description="The developers who shaped EGC. Every commit, every bug fix, every translation, permanently recognized."
 >
   <Navbar />
 
-  <main id="main-content">
+  <main id="main-content" class="hall max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
 
     <!-- Hero -->
-    <section class="relative overflow-hidden py-16 sm:py-24">
-      <div class="absolute inset-0 pointer-events-none -z-10" aria-hidden="true">
-        <div class="absolute left-1/4 top-0 w-[600px] h-[400px] bg-yellow-400/6 rounded-full blur-[120px] mix-blend-screen"></div>
-        <div class="absolute right-1/4 bottom-0 w-[400px] h-[300px] bg-egc-500/8 rounded-full blur-[100px] mix-blend-screen"></div>
-      </div>
+    <div class="hallHero">
+      <div class="star" aria-hidden="true">★</div>
+      <div class="eyebrow mb-2">THE PEOPLE BEHIND THE PROJECT</div>
+      <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#F4F6F5] mb-4">
+        Built by people.<br />
+        <span class="text-[#3DF69B]">Remembered by EGC.</span>
+      </h1>
+      <p class="text-base sm:text-lg text-[#8E9E96] max-w-xl mx-auto mb-10 leading-relaxed">
+        A permanent place for the contributors who turn ideas into working software — one issue, review, and pull request at a time.
+      </p>
 
-      <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
-        <div class="flex items-center justify-center mb-6">
-          <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl glass shadow-lg">
-            <svg class="w-8 h-8 text-yellow-400" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17 5.8 21.3l2.4-7.4L2 9.4h7.6L12 2z"/>
-            </svg>
-          </div>
+      <div class="stats">
+        <div class="stat text-center">
+          <strong>{contributors.length}</strong>
+          <small>Contributors</small>
         </div>
-
-        <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-4">
-          Hall of Fame
-        </h1>
-        <p class="text-base sm:text-lg text-gray-400 max-w-xl mx-auto mb-10">
-          Every developer who shipped something real for EGC is here permanently. No bots, no placeholders. Just the people who looked at an open issue and fixed it.
-        </p>
-
-        <div class="flex flex-wrap items-center justify-center gap-8 sm:gap-14">
-          {[
-            { value: String(contributors.length), label: 'Contributors' },
-            { value: String(totalCommits || '--'), label: 'Commits' },
-            { value: totalAdditions > 0 ? `+${totalAdditions.toLocaleString('en')}` : '--', label: 'Lines added' },
-            { value: String(totalPrs), label: 'PRs merged' },
-          ].map(s => (
-            <div class="text-center">
-              <div class="text-2xl sm:text-3xl font-extrabold text-egc-400">{s.value}</div>
-              <div class="text-xs text-gray-500 uppercase tracking-widest mt-1">{s.label}</div>
-            </div>
-          ))}
+        <div class="stat text-center">
+          <strong>{totalCommits || '--'}</strong>
+          <small>Commits</small>
+        </div>
+        <div class="stat text-center">
+          <strong>{totalAdditions > 0 ? `+${totalAdditions.toLocaleString('en')}` : '--'}</strong>
+          <small>Lines added</small>
+        </div>
+        <div class="stat text-center">
+          <strong>{totalPrs}</strong>
+          <small>PRs merged</small>
         </div>
       </div>
-    </section>
+    </div>
 
     <!-- Contributor of the Month -->
-    {champion && (
-      <section class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 mb-12">
-        <div class="relative rounded-2xl overflow-hidden glass">
-          <div class="absolute inset-0 pointer-events-none -z-10" aria-hidden="true">
-            <div class="absolute inset-0 bg-gradient-to-r from-yellow-400/5 via-transparent to-egc-500/5"></div>
+    {champion && championFormatted && (
+      <section class="spotlight relative mb-14" aria-label="Contributor of the month">
+        <div>
+          <div class="tag mb-3">✦ CONTRIBUTOR OF THE MONTH · {monthlyChampion!.month}</div>
+          <div class="profile">
+            <div class="relative shrink-0">
+              <img
+                src={champion.avatar}
+                alt={champion.name}
+                width="64"
+                height="64"
+                class="rounded-2xl ring-2 ring-yellow-400/60 shadow-lg shadow-yellow-500/10 object-cover"
+                loading="lazy"
+              />
+              <span class="absolute -bottom-1 -right-1 text-base leading-none">🏅</span>
+            </div>
+            <div class="min-w-0">
+              <strong class="text-xl font-bold text-white truncate block">{champion.name}</strong>
+              <small class="text-xs text-gray-400">@{champion.login} · Monthly champion</small>
+            </div>
           </div>
-          <button type="button" data-hype={champion.login} title="Hype this contributor (1 vote a day)" aria-label={`Hype ${champion.name}`} class="hype-btn absolute top-3 right-3 z-10 inline-flex items-center gap-1 h-7 px-2 rounded-full text-xs font-semibold backdrop-blur-md bg-white/10 border border-white/15 text-gray-300 hover:text-orange-400 hover:border-orange-400/40 motion-safe:hover:scale-105 motion-safe:active:scale-95 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400">🔥<span class="hype-count tabular-nums"></span></button>
-          <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 p-5 sm:p-8">
-            <div class="shrink-0">
-              <div class="relative">
-                <img
-                  src={champion.avatar}
-                  alt={champion.name}
-                  width="72"
-                  height="72"
-                  class="rounded-full ring-2 ring-yellow-400/60"
-                  loading="lazy"
-                />
-                <span class="absolute -bottom-1 -right-1 text-lg leading-none">🏅</span>
-              </div>
+
+          <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-white mb-2">
+            More than commits.<br /><span class="text-[#3DF69B]">Real impact.</span>
+          </h2>
+          <p class="text-sm text-[#8E9E96] leading-relaxed mb-4">
+            A dedicated editorial space recognizing the contributor whose work elevated the EGC ecosystem this month.
+          </p>
+
+          {/* Stats metric badges */}
+          {championFormatted.stats && (
+            <div class="flex flex-wrap items-center gap-2 mb-5">
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-yellow-400/10 text-yellow-300 border border-yellow-400/25">
+                <span>⚡</span>
+                <span>{championFormatted.stats.commits} commit{championFormatted.stats.commits !== 1 ? 's' : ''}</span>
+              </span>
+              {championFormatted.stats.additions !== undefined && (
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/25">
+                  <span>📈</span>
+                  <span>+{championFormatted.stats.additions.toLocaleString('en')} lines</span>
+                </span>
+              )}
+              {championFormatted.stats.period && (
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium bg-white/5 text-gray-400 border border-white/10">
+                  <span>🗓️</span>
+                  <span>{championFormatted.stats.period}</span>
+                </span>
+              )}
             </div>
-            <div class="flex-1 text-center sm:text-left">
-              <div class="flex items-center justify-center sm:justify-start gap-2 mb-1">
-                <span class="text-xs font-bold uppercase tracking-widest text-yellow-400">Contributor of the Month</span>
-                <span class="text-xs text-gray-600">{monthlyChampion!.month}</span>
-              </div>
-              <p class="font-bold text-white text-base sm:text-lg">{champion.name}</p>
-              <p class="text-xs text-gray-500 mb-2">@{champion.login}</p>
-              <p class="text-sm text-gray-400 leading-relaxed">{monthlyChampion!.reason}</p>
-            </div>
+          )}
+
+          <div class="actions">
+            <button
+              type="button"
+              data-hype={champion.login}
+              title="Hype this contributor (1 vote a day)"
+              aria-label={`Hype ${champion.name}`}
+              class="hype-btn inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-bold bg-[#18B669] hover:bg-[#3DF69B] text-[#04200F] transition-all duration-150 active:scale-95 shadow-md shadow-[#18B669]/20"
+            >
+              🔥 <span>Hype</span> <span class="hype-count tabular-nums ml-1"></span>
+            </button>
             <a
               href={`${base}contributors/${champion.login}`}
-              class="shrink-0 inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-yellow-400/10 hover:bg-yellow-400/20 text-yellow-300 text-sm font-semibold border border-yellow-400/30 transition-colors duration-200 active:scale-95"
+              class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-semibold bg-[#111614] hover:bg-[#151D19] text-[#c1ecd1] border border-[rgba(226,240,233,0.14)] hover:border-[#3DF69B]/40 transition-all duration-150"
             >
-              View profile
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+              View profile &rarr;
             </a>
           </div>
         </div>
-      </section>
-    )}
 
-    <!-- Past Champions of the Month -->
-    {pastChampions.length > 0 && (
-      <section class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 mb-12">
-        <p class="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-3 text-center">Past Champions</p>
-        <div class="flex flex-wrap justify-center gap-3">
-          {pastChampions.map(h => (
-            <a
-              href={`${base}contributors/${h.login}`}
-              class="group flex items-center gap-2 rounded-full pl-1.5 pr-3 py-1.5 glass hover-lift transition-all duration-200 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500"
-              title={h.reason}
-            >
-              <img
-                src={`https://github.com/${h.login}.png`}
-                alt={h.name}
-                width="24"
-                height="24"
-                class="rounded-full ring-1 ring-yellow-400/50"
-                loading="lazy"
-              />
-              <span class="text-xs font-semibold text-gray-300 group-hover:text-white">{h.name}</span>
-              <span class="text-xs text-gray-600">{h.month}</span>
-            </a>
-          ))}
+        <div id="reason" class="quote">
+          <span class="tag">WHY THIS CONTRIBUTION MATTERS</span>
+          <p class="mt-2 mb-3"><strong class="text-white text-sm font-bold">Contribution highlights</strong></p>
+
+          {championFormatted.isStructured ? (
+            <ul class="space-y-2 text-sm text-[#bdc8bb] leading-relaxed">
+              {championFormatted.items.map(item => (
+                <li class="flex items-start gap-2">
+                  <span class="text-yellow-400 mt-1 select-none shrink-0 text-xs">✦</span>
+                  <span class="leading-snug">{item}</span>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p class="text-sm text-[#bdc8bb] leading-relaxed">{championFormatted.cleanText}</p>
+          )}
+
+          <div class="mt-4 pt-3 border-t border-[rgba(226,240,233,0.08)] text-xs text-[#829587]">
+            Readable summaries · preserved facts · no generated achievements
+          </div>
         </div>
       </section>
     )}
 
     <!-- Podium -->
     {topThree.length >= 3 && (
-      <section class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 mb-4">
-        <p class="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-1 text-center">Leaderboard</p>
-        <p class="text-xs text-gray-600 mb-6 sm:mb-8 text-center">🔥 Hype your favorite contributor, one hype a day</p>
+      <section class="mb-14">
+        <div class="sectionhead">
+          <div>
+            <div class="eyebrow">RECOGNITION</div>
+            <h2>Top contributors</h2>
+            <p>A clearer podium with consistent spacing and accessible ranking.</p>
+          </div>
+        </div>
 
-        <!-- Mobile: ranked list -->
-        <div class="sm:hidden flex flex-col gap-3">
-          {topThree.map((c, i) => {
-            const rankBadge = ['bg-yellow-400 text-gray-900', 'bg-slate-400 text-slate-900', 'bg-amber-600 text-white'][i];
+        <!-- Desktop podium (2nd, 1st, 3rd) -->
+        <div class="podium hidden sm:grid">
+          {podiumOrder.map((c, idx) => {
+            const meta = podiumMeta[idx];
             const tier = TIER_CONFIG[c.tier];
+            const isWinner = meta.isWinner;
             return (
-              <div class="relative">
-              <button type="button" data-hype={c.login} title="Hype this contributor (1 vote a day)" aria-label={`Hype ${c.name}`} class="hype-btn absolute -top-2 -right-1 z-10 inline-flex items-center gap-1 h-7 px-2 rounded-full text-xs font-semibold backdrop-blur-md bg-white/10 border border-white/15 text-gray-300 hover:text-orange-400 hover:border-orange-400/40 motion-safe:hover:scale-105 motion-safe:active:scale-95 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400">🔥<span class="hype-count tabular-nums"></span></button>
-              <a
-                href={`${base}contributors/${c.login}`}
-                class={`group flex items-center gap-3 rounded-2xl p-4 glass hover-lift transition-all duration-200 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500 ${i === 0 ? 'ring-2 ring-yellow-400/30' : ''}`}
-              >
-                <div class={`shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold shadow ${rankBadge}`}>{i + 1}</div>
-                <img
-                  src={c.avatar}
-                  alt={c.name}
-                  width={i === 0 ? '52' : '44'}
-                  height={i === 0 ? '52' : '44'}
-                  class={`rounded-full ring-2 shrink-0 ${i === 0 ? 'ring-yellow-400/60' : 'ring-gray-700'}`}
-                  loading="lazy"
-                />
-                <div class="min-w-0 flex-1">
-                  <p class="font-bold text-white text-sm truncate">{c.name}</p>
-                  <p class="text-xs text-gray-500 mb-1">@{c.login}</p>
-                  <div class="flex items-center gap-1 flex-wrap">
-                    <span class={`inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full text-xs font-semibold border ${tier.color}`}>{tier.icon}</span>
-                    {c.badges.slice(0, 3).map(key => {
-                      const b = BADGE_DEFS[key];
-                      return b ? <span title={b.label}>{b.icon}</span> : null;
-                    })}
-                  </div>
+              <div class={`box person relative group ${isWinner ? 'winner' : ''}`}>
+                <button
+                  type="button"
+                  data-hype={c.login}
+                  title="Hype this contributor (1 vote a day)"
+                  aria-label={`Hype ${c.name}`}
+                  class="hype-btn absolute top-3 right-3 z-10 inline-flex items-center gap-1 h-7 px-2 rounded-full text-xs font-semibold backdrop-blur-md bg-white/10 border border-white/15 text-gray-300 hover:text-orange-400 hover:border-orange-400/40 motion-safe:hover:scale-105 motion-safe:active:scale-95 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"
+                >
+                  🔥<span class="hype-count tabular-nums"></span>
+                </button>
+                <div class="rank">{meta.label}</div>
+                <div class="face relative overflow-hidden my-3">
+                  <img
+                    src={c.avatar}
+                    alt={c.name}
+                    width="60"
+                    height="60"
+                    class="w-full h-full object-cover rounded-full"
+                    loading="lazy"
+                  />
                 </div>
-                <div class="shrink-0 text-right">
-                  <span class="block text-sm font-bold text-egc-400">{c.commits > 0 ? c.commits : c.prs}</span>
-                  <span class="block text-xs text-gray-600">{c.commits > 0 ? 'commits' : 'PRs'}</span>
+                <a href={`${base}contributors/${c.login}`} class="text-white font-bold text-sm hover:text-[#3DF69B] transition-colors truncate max-w-full">
+                  {c.name}
+                </a>
+                <small class="text-xs text-[#8E9E96] mb-2">@{c.login}</small>
+                <span class={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold border ${tier.color} mb-2`}>
+                  {tier.icon} {tier.label}
+                </span>
+                <div class="flex flex-wrap justify-center gap-1 mb-2">
+                  {c.badges.slice(0, 2).map(key => {
+                    const b = BADGE_DEFS[key];
+                    return b ? <span class="text-sm" title={b.label}>{b.icon}</span> : null;
+                  })}
                 </div>
-              </a>
+                <div class="mt-auto pt-2 text-xs font-mono font-bold text-[#3DF69B]">
+                  {c.commits > 0 ? `${c.commits} commit${c.commits !== 1 ? 's' : ''}` : `${c.prs} PR${c.prs !== 1 ? 's' : ''}`}
+                </div>
               </div>
             );
           })}
         </div>
 
-        <!-- Desktop: visual podium (2nd, 1st, 3rd) -->
-        <div class="hidden sm:flex items-end justify-center gap-2">
-          {podiumOrder.map((c, idx) => {
-            const meta = podiumMeta[idx];
+        <!-- Mobile podium list -->
+        <div class="sm:hidden flex flex-col gap-3">
+          {topThree.map((c, i) => {
+            const rankLabel = ['★ #01 · GOLD', '#02 · SILVER', '#03 · BRONZE'][i];
+            const isWinner = i === 0;
             const tier = TIER_CONFIG[c.tier];
             return (
-              <div class="relative flex flex-col items-center flex-1 max-w-[210px]">
-                <button type="button" data-hype={c.login} title="Hype this contributor (1 vote a day)" aria-label={`Hype ${c.name}`} class="hype-btn absolute top-2 right-2 z-10 inline-flex items-center gap-1 h-7 px-2 rounded-full text-xs font-semibold backdrop-blur-md bg-white/10 border border-white/15 text-gray-300 hover:text-orange-400 hover:border-orange-400/40 motion-safe:hover:scale-105 motion-safe:active:scale-95 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400">🔥<span class="hype-count tabular-nums"></span></button>
-                <a
-                  href={`${base}contributors/${c.login}`}
-                  class={`group w-full flex flex-col items-center glass hover-lift rounded-t-2xl px-5 pt-6 pb-4 transition-all duration-300 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500 ${meta.rank === 1 ? 'ring-2 ring-yellow-400/40' : ''}`}
+              <div class={`box p-4 relative ${isWinner ? 'winner' : ''}`}>
+                <button
+                  type="button"
+                  data-hype={c.login}
+                  title="Hype this contributor (1 vote a day)"
+                  aria-label={`Hype ${c.name}`}
+                  class="hype-btn absolute top-3 right-3 z-10 inline-flex items-center gap-1 h-7 px-2 rounded-full text-xs font-semibold backdrop-blur-md bg-white/10 border border-white/15 text-gray-300 hover:text-orange-400 hover:border-orange-400/40 motion-safe:hover:scale-105 motion-safe:active:scale-95 transition-all duration-150"
                 >
-                  <div class="relative mb-3">
-                    <img
-                      src={c.avatar}
-                      alt={c.name}
-                      width={meta.rank === 1 ? '72' : '56'}
-                      height={meta.rank === 1 ? '72' : '56'}
-                      class={`rounded-full ring-2 transition-all duration-200 block ${meta.rank === 1 ? 'ring-yellow-400/60 group-hover:ring-yellow-400' : 'ring-gray-700 group-hover:ring-egc-500'}`}
-                      loading="lazy"
-                    />
-                    <div class={`absolute -bottom-1 -right-1 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold shadow-lg ${meta.badge}`}>
-                      {meta.rank}
-                    </div>
+                  🔥<span class="hype-count tabular-nums"></span>
+                </button>
+                <div class="rank mb-2 text-xs">{rankLabel}</div>
+                <div class="flex items-center gap-3">
+                  <img
+                    src={c.avatar}
+                    alt={c.name}
+                    width="48"
+                    height="48"
+                    class="rounded-full ring-2 ring-gray-700 shrink-0"
+                    loading="lazy"
+                  />
+                  <div class="min-w-0 flex-1 pr-12">
+                    <a href={`${base}contributors/${c.login}`} class="font-bold text-white text-sm hover:text-[#3DF69B] truncate block">
+                      {c.name}
+                    </a>
+                    <p class="text-xs text-gray-500 mb-1">@{c.login}</p>
+                    <span class={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[11px] font-semibold border ${tier.color}`}>
+                      {tier.icon} {tier.label}
+                    </span>
                   </div>
-                  <p class="font-bold text-white text-sm text-center leading-tight mb-0.5">{c.name}</p>
-                  <p class="text-xs text-gray-500 mb-2">@{c.login}</p>
-                  <span class={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold border ${tier.color} mb-2`}>
-                    {tier.icon} {tier.label}
+                </div>
+                <div class="mt-3 pt-2 border-t border-[rgba(226,240,233,0.06)] flex justify-between items-center text-xs">
+                  <span class="text-gray-400">Contribution</span>
+                  <span class="font-mono font-bold text-[#3DF69B]">
+                    {c.commits > 0 ? `${c.commits} commits` : `${c.prs} PRs`}
                   </span>
-                  <div class="flex flex-wrap justify-center gap-1 mb-2">
-                    {c.badges.slice(0, 2).map(key => {
-                      const b = BADGE_DEFS[key];
-                      return b ? <span class="text-sm" title={b.label}>{b.icon}</span> : null;
-                    })}
-                  </div>
-                  <span class="text-xs font-bold text-egc-400">
-                    {c.commits > 0 ? `${c.commits} commit${c.commits !== 1 ? 's' : ''}` : `${c.prs} PR${c.prs !== 1 ? 's' : ''}`}
-                  </span>
-                </a>
-                <!-- Pedestal step -->
-                <div class={`w-full ${meta.pedestalH} rounded-b-xl relative overflow-hidden flex items-center justify-center
-                  ${meta.rank === 1 ? 'bg-gradient-to-b from-yellow-400/25 to-yellow-400/8'
-                  : meta.rank === 2 ? 'bg-gradient-to-b from-slate-400/20 to-slate-400/6'
-                  : 'bg-gradient-to-b from-amber-600/20 to-amber-600/6'}`}>
-                  <div class={`absolute top-0 left-0 right-0 h-0.5
-                    ${meta.rank === 1 ? 'bg-yellow-400/70'
-                    : meta.rank === 2 ? 'bg-slate-400/55'
-                    : 'bg-amber-600/50'}`}></div>
-                  <span class={`font-black select-none leading-none opacity-40
-                    ${meta.rank === 1 ? 'text-6xl text-yellow-400'
-                    : meta.rank === 2 ? 'text-5xl text-slate-400'
-                    : 'text-4xl text-amber-600'}`}>{meta.rank}</span>
                 </div>
               </div>
             );
@@ -275,63 +298,83 @@ const podiumMeta = [
       </section>
     )}
 
-    <!-- All contributors grid -->
-    <section class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 mt-12 mb-10">
-      <p class="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-1">All contributors</p>
-      <p class="text-xs text-gray-600 mb-6">🔥 Hype your favorite contributor, one hype a day</p>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+    <!-- All Contributors with Search Filter -->
+    <section class="mb-14">
+      <div class="sectionhead">
+        <div>
+          <div class="eyebrow">COMMUNITY</div>
+          <h2>Every contribution counts.</h2>
+          <p>Find contributors without losing the visual rhythm of the page.</p>
+        </div>
+        <input
+          class="search"
+          id="personsearch"
+          placeholder="Search contributors..."
+          aria-label="Search contributors"
+        />
+      </div>
+
+      <div id="people" class="people">
         {rest.map(c => {
           const tier = TIER_CONFIG[c.tier];
           return (
-            <div class="relative h-full">
-            <button type="button" data-hype={c.login} title="Hype this contributor (1 hype a day)" aria-label={`Hype ${c.name}`} class="hype-btn absolute -top-2 -right-1 z-10 inline-flex items-center gap-1 h-7 px-2 rounded-full text-xs font-semibold backdrop-blur-md bg-white/10 border border-white/15 text-gray-300 hover:text-orange-400 hover:border-orange-400/40 motion-safe:hover:scale-105 motion-safe:active:scale-95 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400">🔥<span class="hype-count tabular-nums"></span></button>
-            <a
-              href={`${base}contributors/${c.login}`}
-              class="group flex items-center gap-4 rounded-xl p-4 h-full glass hover-lift transition-all duration-200 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-egc-500"
+            <div
+              class="box mini person-card group hover-lift relative"
+              data-search={`${c.name.toLowerCase()} ${c.login.toLowerCase()}`}
             >
               <img
                 src={c.avatar}
                 alt={c.name}
-                width="48"
-                height="48"
-                class="rounded-full ring-2 ring-transparent group-hover:ring-egc-500 transition-all duration-200 shrink-0"
+                width="38"
+                height="38"
+                class="face rounded-full object-cover shrink-0 ring-1 ring-gray-700 group-hover:ring-[#3DF69B] transition-all"
                 loading="lazy"
               />
               <div class="min-w-0 flex-1">
-                <div class="flex items-center gap-2 mb-0.5">
-                  <p class="font-semibold text-white text-sm truncate">{c.name}</p>
-                  <span class={`shrink-0 inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-xs font-semibold border ${tier.color}`}>
+                <a
+                  href={`${base}contributors/${c.login}`}
+                  class="font-semibold text-white text-xs sm:text-sm hover:text-[#3DF69B] transition-colors truncate block"
+                >
+                  {c.name}
+                </a>
+                <small class="text-[11px] text-gray-400 truncate block">@{c.login}</small>
+                <div class="flex items-center gap-1 mt-1 flex-wrap">
+                  <span class={`inline-flex items-center gap-0.5 px-1.5 py-0.2 rounded-full text-[10px] font-semibold border ${tier.color}`}>
                     {tier.icon}
                   </span>
-                </div>
-                <p class="text-xs text-gray-500 mb-1">@{c.login}</p>
-                <div class="flex items-center gap-1.5 flex-wrap">
-                  {c.badges.map(key => {
+                  {c.badges.slice(0, 2).map(key => {
                     const b = BADGE_DEFS[key];
-                    return b ? (
-                      <span class={`inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full text-xs font-medium ${b.color}`}>
-                        {b.icon} {b.label}
-                      </span>
-                    ) : null;
+                    return b ? <span class="text-xs" title={b.label}>{b.icon}</span> : null;
                   })}
                 </div>
               </div>
-              <div class="ml-auto shrink-0 text-right">
-                <span class="block text-xs font-bold text-egc-400">
-                  {c.commits > 0 ? `${c.commits} commit${c.commits !== 1 ? 's' : ''}` : 'co-author'}
+              <div class="shrink-0 flex flex-col items-end gap-1.5">
+                <button
+                  type="button"
+                  data-hype={c.login}
+                  title="Hype this contributor (1 vote a day)"
+                  aria-label={`Hype ${c.name}`}
+                  class="hype-btn inline-flex items-center gap-1 h-6 px-1.5 rounded-full text-[11px] font-semibold backdrop-blur-md bg-white/10 border border-white/15 text-gray-300 hover:text-orange-400 hover:border-orange-400/40 motion-safe:hover:scale-105 motion-safe:active:scale-95 transition-all duration-150"
+                >
+                  🔥<span class="hype-count tabular-nums"></span>
+                </button>
+                <span class="commits font-mono text-[11px] text-[#3DF69B] font-bold">
+                  {c.commits > 0 ? `${c.commits}c` : `${c.prs}pr`}
                 </span>
-                <span class="block text-xs text-gray-600">{c.prs} PR{c.prs !== 1 ? 's' : ''}</span>
-                {c.additions > 0 && <span class="block text-xs text-gray-700">+{c.additions.toLocaleString('en')}</span>}
               </div>
-            </a>
             </div>
           );
         })}
       </div>
 
+      <!-- Empty state when search yields no matches -->
+      <div id="no-search-results" class="hidden text-center py-12 text-[#8E9E96]">
+        <p class="text-sm">No contributors found matching your search.</p>
+      </div>
+
       <!-- Tier legend -->
       <div class="mt-8 rounded-xl p-4 glass">
-        <p class="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-3">Tiers</p>
+        <p class="font-mono text-xs font-semibold uppercase tracking-[0.14em] text-[#8E9E96] mb-3">Tiers</p>
         <div class="flex flex-wrap gap-2 sm:gap-3">
           {(Object.entries(TIER_CONFIG) as [string, typeof TIER_CONFIG[keyof typeof TIER_CONFIG]][]).map(([, t]) => (
             <span class={`inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 rounded-full text-xs font-semibold border ${t.color}`}>
@@ -343,8 +386,44 @@ const podiumMeta = [
       </div>
     </section>
 
+    <!-- Past Champions of the Month -->
+    {pastChampions.length > 0 && (
+      <section class="mb-14">
+        <div class="sectionhead">
+          <div>
+            <div class="eyebrow">A LIVING ARCHIVE</div>
+            <h2>Past champions</h2>
+            <p>Recognition remains discoverable beyond the current month.</p>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+          {pastChampions.map(h => (
+            <a
+              href={`${base}contributors/${h.login}`}
+              class="box mini group hover-lift p-3 flex items-center gap-3 transition-all"
+              title={h.reason}
+            >
+              <img
+                src={`https://github.com/${h.login}.png`}
+                alt={h.name}
+                width="36"
+                height="36"
+                class="rounded-full ring-1 ring-yellow-400/50 shrink-0"
+                loading="lazy"
+              />
+              <div class="min-w-0 flex-1">
+                <span class="text-xs font-semibold text-gray-200 group-hover:text-white truncate block">{h.name}</span>
+                <span class="text-[11px] text-gray-500 font-mono">@{h.login}</span>
+              </div>
+              <span class="tag text-[10px] shrink-0">{h.month}</span>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+
     <!-- CTA -->
-    <section class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 mb-16">
+    <section class="mb-16">
       <div class="rounded-2xl p-6 sm:p-8 text-center glass hover-glow">
         <p class="text-sm text-gray-400 mb-4">
           Want your name on this page? Find an open issue and ship a fix.
@@ -353,7 +432,7 @@ const podiumMeta = [
           href="https://github.com/Fmarzochi/EGC/issues"
           target="_blank"
           rel="noopener noreferrer"
-          class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-egc-600 hover:bg-egc-500 text-white text-sm font-semibold transition-colors duration-200 active:scale-95"
+          class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#18B669] hover:bg-[#3DF69B] text-[#04200F] text-sm font-bold transition-all duration-200 active:scale-95 shadow-md shadow-[#18B669]/20"
         >
           Browse open issues
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
@@ -362,7 +441,7 @@ const podiumMeta = [
     </section>
 
     <!-- Sponsors -->
-    <section class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 pb-20">
+    <section class="pb-20">
       <div class="relative rounded-2xl p-6 sm:p-10 glass hover-glow overflow-hidden">
         <div class="absolute inset-0 pointer-events-none -z-10" aria-hidden="true">
           <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[300px] bg-pink-500/10 rounded-full blur-[80px] mix-blend-screen"></div>
@@ -383,7 +462,7 @@ const podiumMeta = [
               href="https://github.com/sponsors/Fmarzochi"
               target="_blank"
               rel="noopener noreferrer"
-              class="group inline-flex items-center justify-center gap-2 min-h-[40px] px-4 py-2 rounded-xl border border-gray-700 bg-gray-900 text-gray-300 text-sm font-semibold hover:border-pink-700 hover:text-pink-400 active:scale-95 transition-all duration-200"
+              class="group inline-flex items-center justify-center gap-2 min-h-[40px] px-5 py-2 rounded-full border border-[rgba(226,240,233,0.12)] bg-[#111614] text-[#F4F6F5] text-sm font-semibold hover:border-pink-500/50 hover:text-pink-400 active:scale-95 transition-all duration-200"
             >
               <svg class="w-4 h-4 text-pink-500/70 group-hover:text-pink-400 transition-colors animate-heartbeat" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.593c-.317.177-.834.177-1.151 0C9.774 20.57 3 16.259 3 9.5 3 6.462 5.462 4 8.5 4c1.4 0 2.672.536 3.5 1.393C12.828 4.536 14.1 4 15.5 4 18.538 4 21 6.462 21 9.5c0 6.759-6.774 11.07-9 12.093z"/></svg>
               GitHub Sponsors
@@ -392,7 +471,7 @@ const podiumMeta = [
               href="https://www.paypal.com/donate/?business=fmarzochi%40gmail.com&currency_code=USD"
               target="_blank"
               rel="noopener noreferrer"
-              class="group inline-flex items-center justify-center gap-2 min-h-[40px] px-4 py-2 rounded-xl border border-gray-700 bg-gray-900 text-gray-300 text-sm font-semibold hover:border-blue-700 hover:text-blue-400 active:scale-95 transition-all duration-200"
+              class="group inline-flex items-center justify-center gap-2 min-h-[40px] px-5 py-2 rounded-full border border-[rgba(226,240,233,0.12)] bg-[#111614] text-[#F4F6F5] text-sm font-semibold hover:border-blue-500/50 hover:text-blue-400 active:scale-95 transition-all duration-200"
             >
               <svg class="w-4 h-4 text-blue-500/70 group-hover:text-blue-400 transition-colors" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.541c-.013.076-.026.175-.041.254-.93 4.778-4.005 7.201-9.138 7.201h-2.19a.563.563 0 0 0-.556.479l-1.187 7.527h-.506l-.24 1.516a.56.56 0 0 0 .554.647h3.882c.46 0 .85-.334.922-.788.06-.26.76-4.852.816-5.09a.932.932 0 0 1 .923-.788h.58c3.76 0 6.705-1.528 7.565-5.946.36-1.847.174-3.388-.777-4.471z"/></svg>
               PayPal
@@ -458,6 +537,214 @@ const podiumMeta = [
   <Footer />
 
   <style is:global>
+    :root {
+      --gold: #f3c96a;
+      --green: #3df69b;
+    }
+    .hallHero {
+      text-align: center;
+      position: relative;
+      padding: 40px 15px 56px;
+    }
+    .hallHero:before {
+      content: '';
+      position: absolute;
+      z-index: -1;
+      width: 640px;
+      max-width: 95%;
+      height: 270px;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      background: radial-gradient(ellipse, rgba(26, 76, 48, 0.22), transparent 70%);
+      pointer-events: none;
+    }
+    .star {
+      color: var(--gold);
+      background: #211e11;
+      border: 1px solid #54451d;
+      border-radius: 18px;
+      font-size: 32px;
+      width: 66px;
+      height: 66px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 21px;
+    }
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 36px;
+      justify-content: center;
+      margin-top: 32px;
+    }
+    .stat strong {
+      font-size: 29px;
+      letter-spacing: -.045em;
+      color: var(--green);
+      display: block;
+    }
+    .stat small {
+      font: 10px ui-monospace, monospace;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+      color: #84978b;
+    }
+    .spotlight {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 30px;
+      padding: 32px;
+      border-radius: 20px;
+      border: 1px solid #66552a;
+      background: radial-gradient(ellipse at 2% 0, rgba(53, 43, 20, 0.28), transparent 70%), #101612;
+    }
+    .tag {
+      font: 600 11px ui-monospace, monospace;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: var(--gold);
+    }
+    .profile {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      margin: 18px 0;
+    }
+    .quote {
+      background: #0b100e;
+      border: 1px solid #2d3328;
+      border-radius: 12px;
+      padding: 21px;
+      color: #bdc8bb;
+      max-height: 380px;
+      overflow-y: auto;
+      line-height: 1.8;
+    }
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 18px;
+      flex-wrap: wrap;
+    }
+    .sectionhead {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      align-items: flex-end;
+      margin: 48px 0 20px;
+    }
+    .sectionhead h2 {
+      font-size: 25px;
+      margin: 0;
+      letter-spacing: -.035em;
+      color: #F4F6F5;
+      font-weight: 700;
+    }
+    .sectionhead p {
+      color: #8E9E96;
+      margin: 3px 0 0;
+      font-size: 13px;
+    }
+    .podium {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      align-items: end;
+    }
+    .box {
+      background: linear-gradient(140deg, #121a16, #0d1310);
+      border: 1px solid rgba(226, 240, 233, 0.09);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .person {
+      padding: 25px 15px;
+      text-align: center;
+      min-height: 245px;
+      transition: transform .2s, border-color .2s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .person.winner {
+      border-color: #826e31;
+      background: linear-gradient(180deg, #292314, #101612);
+      min-height: 275px;
+    }
+    .person:hover, .mini:hover {
+      transform: translateY(-3px);
+      border-color: #3a8058;
+    }
+    .rank {
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .06em;
+    }
+    .face {
+      width: 60px;
+      height: 60px;
+      margin: 12px auto;
+      background: #193a2a;
+      border: 1px solid #387653;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+    }
+    .people {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+    .mini {
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: transform .2s, border-color .2s;
+    }
+    .mini .face {
+      width: 38px;
+      height: 38px;
+      margin: 0;
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+    .mini strong {
+      font-size: 13px;
+      display: block;
+      color: #F4F6F5;
+    }
+    .mini small {
+      font-size: 11px;
+      color: #8E9E96;
+    }
+    .mini .commits {
+      margin-left: auto;
+      color: var(--green);
+      font: 11px ui-monospace, monospace;
+    }
+    .search {
+      border: 1px solid rgba(226, 240, 233, 0.12);
+      background: #121b15;
+      padding: 10px 14px;
+      border-radius: 9px;
+      color: #F4F6F5;
+      width: 250px;
+      max-width: 100%;
+      font-size: 13px;
+      outline: none;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .search:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 2px rgba(61, 246, 155, 0.15);
+    }
+    .hidden {
+      display: none !important;
+    }
+
     .hype-btn.hype-voted {
       color: #fb923c;
       border-color: rgba(251, 146, 60, 0.4);
@@ -470,9 +757,49 @@ const podiumMeta = [
       cursor: not-allowed;
     }
     .hype-btn.hype-spent:hover { transform: none; color: inherit; border-color: rgba(255, 255, 255, 0.15); }
+
+    @media (max-width: 1020px) {
+      .people {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 680px) {
+      .people, .podium, .spotlight {
+        grid-template-columns: 1fr;
+      }
+      .spotlight {
+        padding: 20px;
+      }
+      .sectionhead {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+      .search {
+        width: 100%;
+      }
+    }
   </style>
 
   <script>
+    // Search filter for all contributors
+    const personSearch = document.getElementById('personsearch') as HTMLInputElement | null;
+    const noResults = document.getElementById('no-search-results');
+    if (personSearch) {
+      personSearch.addEventListener('input', () => {
+        const q = personSearch.value.toLowerCase().trim();
+        let matchedCount = 0;
+        document.querySelectorAll<HTMLElement>('.person-card').forEach(el => {
+          const text = (el.dataset.search || el.textContent || '').toLowerCase();
+          const matches = !q || text.includes(q);
+          el.classList.toggle('hidden', !matches);
+          if (matches) matchedCount++;
+        });
+        if (noResults) {
+          noResults.classList.toggle('hidden', matchedCount > 0);
+        }
+      });
+    }
+
     // Namespace v2: contadores zerados em 18/07/2026 (votos de teste do v1 abandonados).
     // Regra: 1 hype por visitante POR DIA no total; o contador global nunca regride.
     const NS = 'egc-halloffame-v2';

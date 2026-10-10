@@ -150,36 +150,42 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 
   <!-- Scope -->
   <section class="mb-10">
-    <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Scope</h2>
+    <h2 class="text-xl font-bold text-[#F3F6F4] mb-4">Scope</h2>
     <div class="grid sm:grid-cols-2 gap-4">
-      <div class="rounded-xl border border-egc-200 dark:border-egc-900 bg-egc-50 dark:bg-egc-950/20 p-5">
-        <h3 class="text-sm font-semibold text-egc-800 dark:text-egc-300 mb-3 flex items-center gap-2">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <div class="rounded-xl border border-[#10B866]/30 bg-[#141816] p-5">
+        <h3 class="text-sm font-semibold text-[#3DF59A] mb-3 flex items-center gap-2">
+          <svg class="w-4 h-4 text-[#3DF59A]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
           </svg>
           In scope
         </h3>
-        <ul class="space-y-1.5 text-xs text-egc-700 dark:text-egc-400">
+        <ul class="space-y-2 text-xs">
           {['scripts/', 'mcp/servers/', 'scripts/install.sh, scripts/install.ps1', 'hooks/, skills/'].map(s => (
-            <li class="font-mono">{s}</li>
+            <li class="font-mono text-[#F3F6F4] flex items-center gap-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#3DF59A] shrink-0"></span>
+              <span>{s}</span>
+            </li>
           ))}
         </ul>
       </div>
-      <div class="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5">
-        <h3 class="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-3 flex items-center gap-2">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <div class="rounded-xl border border-[#1E2421] bg-[#141816] p-5">
+        <h3 class="text-sm font-semibold text-[#A3ADA7] mb-3 flex items-center gap-2">
+          <svg class="w-4 h-4 text-[#8C9690]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
           </svg>
           Out of scope
         </h3>
-        <ul class="space-y-1.5 text-xs text-gray-500 dark:text-gray-500">
+        <ul class="space-y-2 text-xs">
           {[
             'Third-party dependency vulnerabilities',
             'Issues requiring physical machine access',
             'DoS against local-only runtime',
             'Behaviors requiring write access to host',
           ].map(s => (
-            <li>{s}</li>
+            <li class="text-[#8C9690] flex items-center gap-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#8C9690]/40 shrink-0"></span>
+              <span>{s}</span>
+            </li>
           ))}
         </ul>
       </div>

@@ -8,10 +8,11 @@ export interface Props {
   title: string;
   description?: string;
   current?: string;
+  toc?: { id: string; label: string }[];
 }
 
 import { getBase } from '../utils/base.ts';
-const { title, description, current } = Astro.props;
+const { title, description, current, toc } = Astro.props;
 const base = getBase();
 
 const sections = [
@@ -64,127 +65,424 @@ const sections = [
 ---
 
 <Base title={`${title} - EGC Docs`} description={description}>
-  <Navbar />
+  <div class="bg-[#0A0D0C] text-[#F4F6F5] min-h-screen">
+    <Navbar />
 
-  <!-- Mobile Sidebar Toggle Button (fixed at bottom-right) -->
-  <button
-    id="docs-sidebar-toggle"
-    type="button"
-    aria-label="Open docs menu"
-    aria-expanded="false"
-    class="md:hidden fixed bottom-5 right-5 z-50 w-12 h-12 flex items-center justify-center rounded-full bg-egc-600 text-white shadow-lg shadow-egc-600/30 hover:bg-egc-700 active:scale-90 transition-all duration-150"
-  >
-    <svg id="docs-sidebar-icon-open" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-    </svg>
-    <svg id="docs-sidebar-icon-close" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-    </svg>
-  </button>
+    <!-- Mobile Sidebar Toggle Button -->
+    <button
+      id="docs-sidebar-toggle"
+      type="button"
+      aria-label="Open docs menu"
+      aria-expanded="false"
+      aria-controls="docs-sidebar"
+      class="md:hidden fixed bottom-6 right-6 z-50 w-12 h-12 flex items-center justify-center rounded-full bg-[#18B669] text-[#04200F] shadow-lg shadow-[#18B669]/25 hover:bg-[#3DF69B] active:scale-95 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3DF69B]"
+    >
+      <svg id="docs-sidebar-icon-open" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+      <svg id="docs-sidebar-icon-close" class="w-5 h-5 hidden" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
 
-  <!-- Mobile Sidebar Backdrop -->
-  <div
-    id="docs-sidebar-backdrop"
-    class="md:hidden fixed inset-0 z-40 bg-black/50 backdrop-blur-sm opacity-0 pointer-events-none invisible transition-all duration-300"
-    aria-hidden="true"
-  ></div>
+    <!-- Mobile Sidebar Backdrop -->
+    <div
+      id="docs-sidebar-backdrop"
+      class="md:hidden fixed inset-0 z-40 bg-black/70 backdrop-blur-sm opacity-0 pointer-events-none invisible transition-all duration-300"
+      aria-hidden="true"
+    ></div>
 
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="flex flex-col md:flex-row gap-0 md:gap-8 py-4 md:py-8 min-h-screen">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row gap-0 md:gap-10 py-6 md:py-10 min-h-[calc(100vh-4rem)]">
 
-      <!-- Sidebar -->
-      <aside
-        id="docs-sidebar"
-        class="fixed md:relative inset-y-0 left-0 z-40 w-72 md:w-56 shrink-0 bg-white dark:bg-gray-950 md:bg-transparent md:dark:bg-transparent border-r md:border-r-0 border-gray-200 dark:border-gray-800 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out overflow-y-auto md:overflow-visible"
-      >
-        <div class="sticky top-0 md:top-20 pt-16 md:pt-0 pb-6 px-4 md:px-0">
-          <!-- Mobile sidebar header -->
-          <div class="md:hidden flex items-center justify-between mb-4 pb-3 border-b border-gray-200 dark:border-gray-800">
-            <span class="text-sm font-semibold text-gray-900 dark:text-white">Documentation</span>
-            <button
-              id="docs-sidebar-close"
-              type="button"
-              aria-label="Close docs menu"
-              class="p-2 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 active:scale-95 transition-all duration-100"
-            >
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
-
-          {sections.map(section => (
-            <div class="mb-6">
-              <p class="mb-1.5 px-3 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">{section.label}</p>
-              <ul class="space-y-1">
-                {section.links.map(link => (
-                  <li>
-                    <a
-                      href={link.href}
-                      target={link.external ? '_blank' : undefined}
-                      rel={link.external ? 'noopener noreferrer' : undefined}
-                      class={`flex items-center justify-between px-3 py-2.5 min-h-[44px] rounded-lg text-sm transition-all duration-100 ${
-                        current === link.id
-                          ? 'text-egc-600 dark:text-egc-400 bg-egc-500/10 dark:bg-egc-500/10 font-semibold border-l-2 border-egc-500 pl-[calc(0.75rem-2px)] active:scale-[0.98]'
-                          : 'text-gray-600 dark:text-gray-400 border-l-2 border-transparent hover:text-egc-600 dark:hover:text-egc-400 hover:bg-gray-500/5 dark:hover:bg-gray-700/50 active:scale-[0.98]'
-                      }`}
-                    >
-                      {link.label}
-                      {link.external && (
-                        <svg class="w-3.5 h-3.5 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-                      )}
-                    </a>
-                  </li>
-                ))}
-              </ul>
+        <!-- Sidebar -->
+        <aside
+          id="docs-sidebar"
+          tabindex="-1"
+          class="fixed md:relative inset-y-0 left-0 z-40 w-72 md:w-60 shrink-0 bg-[#0D100F] md:bg-transparent border-r md:border-r border-[rgba(226,240,233,0.09)] md:border-[rgba(226,240,233,0.09)] transform -translate-x-full md:translate-x-0 invisible md:visible pointer-events-none md:pointer-events-auto transition-transform duration-300 ease-in-out overflow-y-auto md:overflow-visible"
+        >
+          <div class="sticky top-0 md:top-24 pt-16 md:pt-0 pb-8 px-5 md:px-0 md:pr-4">
+            <!-- Mobile sidebar header -->
+            <div class="md:hidden flex items-center justify-between mb-6 pb-3 border-b border-[rgba(226,240,233,0.09)]">
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-[#3DF69B]"></span>
+                <span class="text-sm font-bold text-[#F4F6F5]">Documentation</span>
+              </div>
+              <button
+                id="docs-sidebar-close"
+                type="button"
+                aria-label="Close docs menu"
+                class="p-2 min-w-[40px] min-h-[40px] flex items-center justify-center rounded-lg text-[#8E9E96] hover:text-[#F4F6F5] hover:bg-white/[0.05] active:scale-95 transition-all"
+              >
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
             </div>
-          ))}
-        </div>
-      </aside>
 
-      <!-- Main Content -->
-      <main id="main-content" class="flex-1 min-w-0 max-w-3xl w-full docs-content">
-        <slot />
-      </main>
+            {sections.map(section => (
+              <div class="mb-6">
+                <p class="mb-2 px-3 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8E9E96]">{section.label}</p>
+                <ul class="space-y-1">
+                  {section.links.map(link => (
+                    <li>
+                      <a
+                        href={link.href}
+                        target={link.external ? '_blank' : undefined}
+                        rel={link.external ? 'noopener noreferrer' : undefined}
+                        aria-label={link.external ? `${link.label} (opens in new tab)` : undefined}
+                        aria-current={current === link.id ? 'page' : undefined}
+                        class={`flex items-center justify-between px-3 py-2 min-h-[38px] rounded-lg text-sm transition-all duration-150 ${
+                          current === link.id
+                            ? 'text-[#3DF69B] bg-[#18B669]/10 border border-[#3DF69B]/30 font-semibold shadow-[0_0_12px_rgba(61,246,155,0.08)]'
+                            : 'text-[#8E9E96] border border-transparent hover:text-[#F4F6F5] hover:bg-white/[0.04]'
+                        }`}
+                      >
+                        <span>{link.label}</span>
+                        {link.external && (
+                          <svg class="w-3.5 h-3.5 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                          </svg>
+                        )}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </aside>
 
+        <!-- Main Content -->
+        <main id="main-content" class="flex-1 min-w-0 max-w-3xl w-full docs-content py-2">
+          <slot />
+        </main>
+
+        <!-- On This Page (Table of Contents) -->
+        {toc && toc.length > 0 && (
+          <aside class="hidden xl:block w-48 shrink-0 pl-6 border-l border-[rgba(226,240,233,0.08)]">
+            <div class="sticky top-24 pt-2">
+              <h4 class="font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-[#8E9E96] mb-3">On this page</h4>
+              <nav class="space-y-1" aria-label="On this page">
+                {toc.map(item => (
+                  <a
+                    href={`#${item.id}`}
+                    class="block py-1.5 pl-3 border-l border-[rgba(226,240,233,0.12)] text-xs text-[#8E9E96] hover:text-[#3DF69B] hover:border-[#3DF69B] transition-colors"
+                  >
+                    {item.label}
+                  </a>
+                ))}
+              </nav>
+              <div class="mt-8 p-3.5 rounded-xl bg-[#102018] border border-[#23402d]">
+                <span class="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-[#3DF69B]">QUICK TIP</span>
+                <p class="text-xs text-[#aac7b5] mt-1.5 leading-relaxed">
+                  State is encrypted per project branch at <code>~/.egc</code>.
+                </p>
+              </div>
+            </div>
+          </aside>
+        )}
+
+      </div>
     </div>
+
+    <Footer />
   </div>
-  <Footer />
 </Base>
 
 <style is:global>
-  /* Docs content: ensure code blocks and tables never overflow */
+  /* Docs content: ensure code blocks, tables and cards match brand identity */
   .docs-content pre {
+    background-color: #070A09 !important;
+    border: 1px solid rgba(226, 240, 233, 0.09) !important;
+    border-radius: 14px !important;
+    padding: 1.25rem 1.5rem !important;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     max-width: 100%;
+    color: #E2E8E4 !important;
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 0.85rem !important;
+    margin: 1.25rem 0 !important;
   }
 
   .docs-content table {
     width: 100%;
     max-width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    border: 1px solid rgba(226, 240, 233, 0.09);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .docs-content th {
+    background-color: #0D100F;
+    border-bottom: 1px solid rgba(226, 240, 233, 0.12);
+    color: #F4F6F5;
+    font-weight: 600;
+    padding: 0.75rem 1rem;
+  }
+
+  .docs-content td {
+    border-bottom: 1px solid rgba(226, 240, 233, 0.06);
+    color: #8E9E96;
+    padding: 0.75rem 1rem;
   }
 
   .docs-content img {
     max-width: 100%;
     height: auto;
+    border-radius: 12px;
+  }
+
+  .docs-content h1 {
+    color: #F4F6F5 !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.03em !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+  }
+
+  .docs-content h2,
+  .docs-content h3 {
+    color: #F4F6F5 !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.02em !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+  }
+
+  .docs-content a:not([class*="btn"]):not([class*="button"]):not([class*="tile"]) {
+    color: #3DF69B;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color 0.15s ease;
+  }
+
+  .docs-content a:not([class*="btn"]):not([class*="button"]):not([class*="tile"]):hover {
+    color: #72F7B6;
+  }
+
+  /* Cards in docs pages (e.g. tool reference cards in docs/memory) */
+  .docs-content .rounded-xl {
+    background-color: #0D100F !important;
+    border: 1px solid rgba(226, 240, 233, 0.09) !important;
+    border-radius: 16px !important;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .docs-content .rounded-xl:hover {
+    border-color: rgba(61, 246, 155, 0.25) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .docs-content .rounded-xl > div:first-child {
+    background-color: #111614 !important;
+    border-bottom: 1px solid rgba(226, 240, 233, 0.08) !important;
   }
 
   /* Responsive headings */
   @media (max-width: 767px) {
     .docs-content h1 {
-      font-size: 1.5rem;
-      line-height: 2rem;
+      font-size: 1.75rem;
+      line-height: 2.2rem;
     }
     .docs-content h2 {
-      font-size: 1.25rem;
-      line-height: 1.75rem;
+      font-size: 1.35rem;
+      line-height: 1.8rem;
     }
   }
 
   /* Lock body scroll when sidebar is open on mobile */
   body.docs-sidebar-open {
     overflow: hidden;
+  }
+
+  /* Visual Lab Components */
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 11px;
+    line-height: 1.6;
+    color: #3DF69B;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+  }
+
+  .pill {
+    border: 1px solid #264d38;
+    background: #10251b;
+    color: #8fe8b4;
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 30px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .featuregrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin: 18px 0;
+  }
+
+  .feature {
+    padding: 20px;
+    background: linear-gradient(140deg, #121a16, #0d1310);
+    border: 1px solid rgba(226, 240, 233, 0.09);
+    border-radius: 14px;
+    transition: transform .22s ease, border-color .22s ease, background .22s ease;
+  }
+
+  .feature:hover {
+    transform: translateY(-3px);
+    border-color: #3a8058;
+    background: #132219;
+  }
+
+  .feature .ico {
+    font-size: 20px;
+    margin-bottom: 8px;
+    color: #3DF69B;
+  }
+
+  .feature strong {
+    display: block;
+    font-size: 14px;
+    color: #F4F6F5;
+  }
+
+  .feature p {
+    color: #8E9E96;
+    font-size: 12px;
+    margin: 6px 0 0;
+    line-height: 1.5;
+  }
+
+  .snippet {
+    background: linear-gradient(140deg, #121a16, #0d1310);
+    border: 1px solid rgba(226, 240, 233, 0.09);
+    border-radius: 14px;
+    overflow: hidden;
+    margin: 18px 0;
+  }
+
+  .snippettop {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 16px;
+    border-bottom: 1px solid rgba(226, 240, 233, 0.09);
+    color: #8E9E96;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+  }
+
+  .copy-btn {
+    background: #19281e;
+    color: #3DF69B;
+    border: 1px solid #31523e;
+    border-radius: 7px;
+    padding: 3px 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all .15s ease;
+  }
+
+  .copy-btn:hover {
+    background: #233b2c;
+    border-color: #3DF69B;
+  }
+
+  .snippet pre {
+    white-space: pre !important;
+    word-break: normal !important;
+    overflow-x: auto;
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 12px !important;
+    line-height: 1.9 !important;
+    color: #c5e6ce !important;
+    padding: 15px 18px !important;
+    margin: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+  }
+
+  .tools {
+    display: grid;
+    gap: 11px;
+    margin: 18px 0;
+  }
+
+  .tool {
+    background: linear-gradient(140deg, #121a16, #0d1310);
+    border: 1px solid rgba(226, 240, 233, 0.09);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: transform .22s ease, border-color .22s ease, background .22s ease;
+  }
+
+  .tool:hover {
+    transform: translateY(-2px);
+    border-color: rgba(61, 246, 155, 0.3);
+    background: #132219;
+  }
+
+  .tool summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px 20px;
+    user-select: none;
+  }
+
+  .tool summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .tool summary strong {
+    color: #d6f7e3;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .tool summary small {
+    display: block;
+    color: #8E9E96;
+    font-size: 12px;
+    margin-top: 4px;
+  }
+
+  .tool summary .arrow {
+    color: #3DF69B;
+    transition: transform .2s ease;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .tool[open] summary .arrow {
+    transform: rotate(180deg);
+  }
+
+  .tool .detail {
+    border-top: 1px solid rgba(226, 240, 233, 0.09);
+    padding: 16px 20px;
+    color: #b1c0b6;
+    font-size: 13px;
+    line-height: 1.6;
+    background: rgba(0, 0, 0, 0.2);
   }
 </style>
 
@@ -196,10 +494,45 @@ const sections = [
     const backdrop = document.getElementById('docs-sidebar-backdrop');
     const iconOpen = document.getElementById('docs-sidebar-icon-open');
     const iconClose = document.getElementById('docs-sidebar-icon-close');
+    if (!toggleBtn || !sidebar || toggleBtn.dataset.sidebarInitialized === 'true') return;
+    toggleBtn.dataset.sidebarInitialized = 'true';
+    let backgroundState: { element: HTMLElement; inert: string | null; ariaHidden: string | null }[] = [];
+
+    function isolateBackground() {
+      const allowed = [sidebar, toggleBtn, backdrop].filter((element): element is HTMLElement => element instanceof HTMLElement);
+      function isolate(parent: Element) {
+        for (const child of parent.children) {
+          if (!(child instanceof HTMLElement) || child.tagName === 'SCRIPT' || child.tagName === 'STYLE' || allowed.includes(child)) continue;
+          if (allowed.some(element => child.contains(element))) {
+            isolate(child);
+          } else {
+            backgroundState.push({ element: child, inert: child.getAttribute('inert'), ariaHidden: child.getAttribute('aria-hidden') });
+            child.setAttribute('inert', '');
+            child.setAttribute('aria-hidden', 'true');
+          }
+        }
+      }
+      isolate(document.body);
+    }
+
+    function restoreBackground() {
+      for (const { element, inert, ariaHidden } of backgroundState) {
+        if (inert === null) element.removeAttribute('inert');
+        else element.setAttribute('inert', inert);
+        if (ariaHidden === null) element.removeAttribute('aria-hidden');
+        else element.setAttribute('aria-hidden', ariaHidden);
+      }
+      backgroundState = [];
+    }
 
     function openSidebar() {
       sidebar?.classList.remove('-translate-x-full');
       sidebar?.classList.add('translate-x-0');
+      sidebar?.classList.remove('invisible', 'pointer-events-none');
+      sidebar?.classList.add('visible', 'pointer-events-auto');
+      sidebar?.setAttribute('role', 'dialog');
+      sidebar?.setAttribute('aria-modal', 'true');
+      sidebar?.setAttribute('aria-label', 'Documentation navigation');
       backdrop?.classList.remove('opacity-0', 'pointer-events-none', 'invisible');
       backdrop?.classList.add('opacity-100', 'pointer-events-auto', 'visible');
       iconOpen?.classList.add('hidden');
@@ -207,11 +540,24 @@ const sections = [
       toggleBtn?.setAttribute('aria-expanded', 'true');
       toggleBtn?.setAttribute('aria-label', 'Close docs menu');
       document.body.classList.add('docs-sidebar-open');
+      sidebar?.focus();
+      isolateBackground();
+      setTimeout(() => {
+        if (toggleBtn?.getAttribute('aria-expanded') === 'true' && document.activeElement === sidebar) {
+          sidebar?.querySelector<HTMLElement>('a')?.focus();
+        }
+      }, 0);
     }
 
-    function closeSidebar() {
+    function closeSidebar(restoreFocus = false) {
+      restoreBackground();
       sidebar?.classList.add('-translate-x-full');
       sidebar?.classList.remove('translate-x-0');
+      sidebar?.classList.add('invisible', 'pointer-events-none');
+      sidebar?.classList.remove('visible', 'pointer-events-auto');
+      sidebar?.removeAttribute('role');
+      sidebar?.removeAttribute('aria-modal');
+      sidebar?.removeAttribute('aria-label');
       backdrop?.classList.add('opacity-0', 'pointer-events-none', 'invisible');
       backdrop?.classList.remove('opacity-100', 'pointer-events-auto', 'visible');
       iconOpen?.classList.remove('hidden');
@@ -219,36 +565,73 @@ const sections = [
       toggleBtn?.setAttribute('aria-expanded', 'false');
       toggleBtn?.setAttribute('aria-label', 'Open docs menu');
       document.body.classList.remove('docs-sidebar-open');
+      if (restoreFocus) toggleBtn?.focus();
     }
 
     toggleBtn?.addEventListener('click', () => {
       const isOpen = toggleBtn.getAttribute('aria-expanded') === 'true';
       if (isOpen) {
-        closeSidebar();
+        closeSidebar(true);
       } else {
         openSidebar();
       }
     });
 
-    closeBtn?.addEventListener('click', closeSidebar);
-    backdrop?.addEventListener('click', closeSidebar);
+    closeBtn?.addEventListener('click', () => closeSidebar(true));
+    backdrop?.addEventListener('click', () => closeSidebar(true));
 
-    // Close on Escape key
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && toggleBtn?.getAttribute('aria-expanded') === 'true') {
-        closeSidebar();
+        closeSidebar(true);
+      }
+      if (e.key === 'Tab' && toggleBtn?.getAttribute('aria-expanded') === 'true') {
+        const focusables = Array.from(sidebar?.querySelectorAll<HTMLElement>('button, a') ?? []);
+        if (focusables.length === 0) return;
+        if (document.activeElement === sidebar) {
+          e.preventDefault();
+          (e.shiftKey ? focusables[focusables.length - 1] : focusables[0]).focus();
+        } else if (e.shiftKey && document.activeElement === focusables[0]) {
+          e.preventDefault();
+          focusables[focusables.length - 1].focus();
+        } else if (!e.shiftKey && document.activeElement === focusables[focusables.length - 1]) {
+          e.preventDefault();
+          focusables[0].focus();
+        }
       }
     });
 
-    // Close sidebar on navigation (for Astro view transitions)
     sidebar?.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
-        // Delay to allow navigation to start
-        setTimeout(closeSidebar, 100);
+        closeSidebar(true);
       });
+    });
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth >= 768 && toggleBtn?.getAttribute('aria-expanded') === 'true') {
+        closeSidebar();
+      } else if (window.innerWidth < 768 && sidebar?.contains(document.activeElement) && toggleBtn?.getAttribute('aria-expanded') === 'false') {
+        toggleBtn?.focus();
+      }
     });
   }
 
   document.addEventListener('astro:page-load', setupDocsSidebar);
   document.addEventListener('DOMContentLoaded', setupDocsSidebar);
+
+    // Clipboard copy helper
+    document.addEventListener('click', (e) => {
+      const btn = (e.target as HTMLElement).closest('.copy-btn');
+      if (!btn) return;
+      const text = btn.getAttribute('data-copy') || '';
+      if (text && navigator.clipboard && navigator.clipboard.writeText) {
+        const orig = btn.textContent;
+        navigator.clipboard.writeText(text).then(() => {
+          btn.textContent = 'Copied ✓';
+          setTimeout(() => { btn.textContent = orig; }, 1500);
+        }).catch(() => {
+          btn.textContent = 'Copy failed';
+          setTimeout(() => { btn.textContent = orig; }, 1500);
+        });
+      }
+    });
 </script>

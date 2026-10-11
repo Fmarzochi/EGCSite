@@ -265,4 +265,15 @@ export const integrations: Integration[] = [
     hooks: 'No hooks: Auggie documents no hook or plugin API with an allow/deny decision, so the Guardian is out of scope there; Token Crusher through the PATH-level shim.',
     meshSignal: null,
   },
+  {
+    slug: 'vibe',
+    name: 'Mistral Vibe',
+    icon: 'vibe.svg',
+    level: 'community',
+    targetId: 'vibe',
+    installs: 'Skills installed flat under ~/.vibe/skills/<name>/SKILL.md, where Vibe discovers them (VIBE_HOME moves the root; vibe-project writes .vibe/skills/ for a trusted folder); agents, commands and rules ship as a library under egc/library/ in the same root, out of the agents/ directory Vibe reads TOML profiles from; the root AGENTS.md installs as ~/.vibe/AGENTS.md, the user-level instructions file Vibe reads for every project, where the cognitive bootstrap keeps the memory protocol.',
+    mcp: 'Registered by egc init in config.toml under VIBE_HOME or ~/.vibe as [[mcp_servers]] tables with transport = "stdio", the shape vibe mcp add writes.',
+    hooks: 'Guardian and Token Crusher as [[hooks]] entries of type pre_tool in hooks.toml: the Guardian strict on the shell tools and edit, answering {decision: "deny", reason} through vibe-guardian-adapter.js; the Crusher on the shell tools, returning the command rewritten through egc run in hook_specific_output.tool_input.',
+    meshSignal: null,
+  },
 ];

@@ -108,6 +108,22 @@
     @apply flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-[#8E9E96] hover:text-[#F4F6F5] hover:bg-white/[0.04] transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-[#3DF69B];
   }
 
+  /* Card grid whose incomplete last row is centered. Set --cols per breakpoint,
+     e.g. class="balanced-grid sm:[--cols:2] lg:[--cols:3]". */
+  .balanced-grid {
+    --cols: 1;
+    --gap: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--gap);
+  }
+
+  .balanced-grid > * {
+    flex: 0 0 calc((100% - (var(--cols) - 1) * var(--gap)) / var(--cols));
+    min-width: 0;
+  }
+
   .sidebar-link.active {
     @apply text-[#3DF69B] bg-[#18B669]/10 font-semibold border border-[#3DF69B]/30 shadow-[0_0_12px_rgba(61,246,155,0.08)];
   }

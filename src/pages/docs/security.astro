@@ -13,7 +13,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
   <!-- Badges -->
   <section class="mb-10">
     <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Security posture</h2>
-    <div class="flex flex-wrap gap-3 mb-6">
+    <div class="flex flex-wrap justify-center gap-3 mb-6">
       <a href="https://www.bestpractices.dev/projects/13099" target="_blank" rel="noopener noreferrer" aria-label="OpenSSF Best Practices (opens in new tab)">
         <img src="https://www.bestpractices.dev/projects/13099/badge" alt="OpenSSF Best Practices" class="h-6" />
       </a>
@@ -31,7 +31,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
       </a>
     </div>
 
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div class="balanced-grid sm:[--cols:2] lg:[--cols:3]">
       {[
         {
           title: 'CodeQL',

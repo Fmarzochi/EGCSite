@@ -57,7 +57,7 @@ const featuredIntegrations = featuredSlugs.map(slug => integrations.find(entry =
   --f-sans: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --f-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Consolas, monospace;
   --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 24px; --s-6: 32px; --s-7: 48px; --s-8: 64px; --s-9: 96px; --s-10: 144px;
-  --section-y: clamp(88px, 10vw, 160px);
+  --section-y: clamp(88px, 7vw, 104px); /* applied top and bottom, so the gap between sections is twice this */
   --max: 1360px; --gutter: 16px;
   --ease-out: cubic-bezier(.16, 1, .3, 1); --ease-in-out: cubic-bezier(.65, 0, .35, 1);
   --d-fast: 180ms; --d-base: 420ms; --d-slow: 900ms;
@@ -283,7 +283,7 @@ code { font-family: var(--f-mono); font-size: .88em; padding: .1em .4em; border-
    Sections
    ========================================================================== */
 .sec { position: relative; padding-block: var(--section-y); isolation: isolate; }
-.sec__head { display: grid; gap: var(--s-5); margin-bottom: clamp(40px, 5vw, 80px); }
+.sec__head { display: grid; gap: var(--s-5); margin-bottom: clamp(40px, 4vw, 56px); }
 @media (min-width: 1024px) { .sec__head--split { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); align-items: end; column-gap: var(--s-8); } }
 
 /* ---------- benefit -------------------------------------------------------- */
@@ -542,7 +542,12 @@ code { font-family: var(--f-mono); font-size: .88em; padding: .1em .4em; border-
 .tgrid--prov .tile { cursor: default; min-height: 54px; }
 .tgrid--prov .tile:hover { background: transparent; }
 .tgrid--prov > li[aria-hidden] { display: none; }
-@media (min-width: 1024px) { .tgrid--prov { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+/* flex instead of grid so an incomplete last row is centered; the grid lines move from the
+   container to each item (inset left/top + outset right/bottom) so centered rows stay outlined */
+.tgrid--prov { --cols: 2; display: flex; flex-wrap: wrap; justify-content: center; border: 0; }
+.tgrid--prov > li { flex: 0 0 calc(100% / var(--cols)); min-width: 0; border: 0; box-shadow: inset 1px 0 0 var(--line), inset 0 1px 0 var(--line), 1px 0 0 var(--line), 0 1px 0 var(--line); }
+@media (min-width: 768px) { .tgrid--prov { --cols: 4; } }
+@media (min-width: 1024px) { .tgrid--prov { --cols: 5; } }
 .int__more { margin-top: var(--s-4); display: flex; flex-wrap: wrap; gap: var(--s-3); align-items: center; }
 
 /* ---------- efficiency ------------------------------------------------------ */
@@ -587,7 +592,7 @@ code { font-family: var(--f-mono); font-size: .88em; padding: .1em .4em; border-
 .specs .k { font: 500 12px var(--f-mono); color: #5E6964; letter-spacing: .06em; text-transform: uppercase; }
 .specs .v { font-size: 18px; font-weight: 600; letter-spacing: -.015em; }
 .specs .v small { display: block; margin-top: 2px; font-size: 15px; font-weight: 400; color: #4D5853; letter-spacing: 0; }
-.proofs { margin-top: var(--s-5); display: flex; flex-wrap: wrap; gap: 8px; }
+.proofs { margin-top: var(--s-5); display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
 .proofs a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px; border-radius: 999px; box-shadow: inset 0 0 0 1px rgba(13, 16, 15, .2); font-size: 14px; font-weight: 600; transition: background-color var(--d-fast), box-shadow var(--d-fast); }
 .proofs a::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--green-600); }
 .proofs a:hover { background: #fff; box-shadow: inset 0 0 0 1px rgba(13, 16, 15, .45); }
@@ -642,7 +647,7 @@ code { font-family: var(--f-mono); font-size: .88em; padding: .1em .4em; border-
 @media (max-width: 559px) { .faq .ans p { padding-right: 0; } }
 
 /* ---------- closing --------------------------------------------------------- */
-.closing { position: relative; overflow: hidden; padding-block: clamp(104px, 13vw, 200px); background: radial-gradient(60% 80% at 72% 50%, rgba(18, 163, 95, .48), rgba(10, 13, 12, 0) 70%), var(--green-950); }
+.closing { position: relative; overflow: hidden; padding-block: clamp(104px, 9vw, 144px); background: radial-gradient(60% 80% at 72% 50%, rgba(18, 163, 95, .48), rgba(10, 13, 12, 0) 70%), var(--green-950); }
 .closing__mark { position: absolute; z-index: 0; width: min(46vw, 660px); right: -12vw; top: 50%; translate: 0 -50%; }
 .closing__mark .egc-mark { width: 100%; height: auto; }
 .closing h2 { position: relative; z-index: 1; font-weight: 800; letter-spacing: -.055em; line-height: .9; font-size: clamp(52px, 8.4vw, 144px); }
@@ -1577,8 +1582,27 @@ code { font-family: var(--f-mono); font-size: .88em; padding: .1em .4em; border-
     if (fxName) { fxName.setAttribute('data-i18n', 'f' + n + '.name'); fxName.innerHTML = t('f' + n + '.name'); }
   }
   if ('IntersectionObserver' in window) {
-    var fio = new IntersectionObserver(function (en) { en.forEach(function (e) { if (e.isIntersecting) activate(e.target); }); }, { rootMargin: '-42% 0px -52% 0px' });
-    items.forEach(function (x) { fio.observe(x); });
+    // Entries can arrive out of order after a jump (anchor, scrollIntoView) while the .rv reveal is
+    // still moving items, so pick the item that is actually at the reading line instead.
+    var activateAtLine = function () {
+      var line = window.innerHeight * 0.45, best = null, bestD = Infinity;
+      items.forEach(function (x) {
+        var r = x.getBoundingClientRect(), d = r.top > line ? r.top - line : (r.bottom < line ? line - r.bottom : 0);
+        if (d < bestD) { bestD = d; best = x; }
+      });
+      if (best && bestD < window.innerHeight * 0.1) activate(best);
+    };
+    // Re-check on scroll (one frame at most) and when a reveal transition settles, only while the
+    // features section is on screen; intersection events alone miss items that move into place.
+    var fxSec = $('.fx'), fxVisible = false, fxTick = false;
+    var queueFx = function () {
+      if (!fxVisible || fxTick) return;
+      fxTick = true;
+      requestAnimationFrame(function () { fxTick = false; activateAtLine(); });
+    };
+    if (fxSec) new IntersectionObserver(function (en) { fxVisible = en[0].isIntersecting; queueFx(); }).observe(fxSec);
+    window.addEventListener('scroll', queueFx, { passive: true });
+    items.forEach(function (x) { x.addEventListener('transitionend', queueFx); });
     var vio = new IntersectionObserver(function (en) { en.forEach(function (e) { e.target.classList.toggle('in-view', e.isIntersecting); }); }, { threshold: 0.25 });
     $$('.viz').forEach(function (v) { vio.observe(v); });
   } else { $$('.viz').forEach(function (v) { v.classList.add('in-view'); }); }

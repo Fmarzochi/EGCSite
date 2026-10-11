@@ -59,12 +59,20 @@
   }
 
   html {
-    scroll-behavior: smooth;
+    /* One offset for every in-page anchor: the 64px sticky header plus breathing room.
+       Targets must not add their own scroll-margin-top or the two would stack. */
+    scroll-padding-top: 80px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     /* Prevent horizontal overflow at the root level. `clip` (not `hidden`) keeps
        html/body from becoming scroll containers, which would break position: sticky. */
     overflow-x: clip;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
   }
 
   body {

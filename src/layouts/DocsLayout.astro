@@ -220,9 +220,10 @@ const next = currentIndex >= 0 ? docOrder[currentIndex + 1] : null;
   .docs-mobile-links a:hover { background: #17241c; color: #e4f4e8; }
   @media (min-width: 768px) { .docs-mobile-bar { display: none; } }
   .docs-content h1, .docs-content h2, .docs-content h3 { font-family: Inter, ui-sans-serif, system-ui, sans-serif !important; }
-  .docs-content { max-width: 76ch; margin-inline: auto; font-size: 1rem; line-height: 1.7; }
+  /* rem, not ch: ch changes when the web font swaps in, which shifted the whole column (CLS ~0.2) */
+  .docs-content { max-width: 48rem; margin-inline: auto; font-size: 1rem; line-height: 1.7; }
   .docs-content > :first-child { margin-top: 0; }
-  .docs-content > section { margin-bottom: 3.75rem; scroll-margin-top: 6rem; }
+  .docs-content > section { margin-bottom: 3.75rem; }
   .docs-content > section:last-of-type { margin-bottom: 0; }
   .docs-content > section + section { padding-top: 1rem; }
   .docs-content > section h2 { font-size: clamp(1.35rem, 2vw, 1.65rem) !important; line-height: 1.3; margin-bottom: 1rem; }
@@ -233,7 +234,7 @@ const next = currentIndex >= 0 ? docOrder[currentIndex + 1] : null;
   .docs-content .hero { padding: 9px 0 30px; margin-bottom: 0; border-bottom: 1px solid #25312b; }
   .docs-content .hero h1 { font-size: clamp(32px, 3.5vw, 46px) !important; letter-spacing: -.045em !important; line-height: 1.15 !important; }
   .docs-content .hero .lead { color: #a8b9ad; max-width: 720px; }
-  .docs-content .section { padding-top: 28px; scroll-margin-top: 100px; }
+  .docs-content .section { padding-top: 28px; }
   .docs-content .section h2 { font-size: 22px !important; letter-spacing: -.035em !important; }
   .docs-content .feature, .docs-content .tool, .docs-content .snippet { border-color: #25312b; }
   .docs-content .tool[open] { border-color: #3a8058; }
@@ -332,6 +333,9 @@ const next = currentIndex >= 0 ? docOrder[currentIndex + 1] : null;
   .docs-content .editorial-list p { margin-top: .35rem; color: #b9c8be; }
   .docs-content .install-step { position: relative; }
   .docs-content .install-step::before { content: attr(data-step); color: #3df69b; font: 600 .78rem 'JetBrains Mono', monospace; display: block; margin-bottom: .6rem; letter-spacing: .08em; }
+  /* The step label sits above the heading the TOC links to; this deliberately adds to the global
+     scroll-padding-top so the label is not left under the sticky header. */
+  .docs-content .install-step > h2 { scroll-margin-top: 2rem; }
   /* Flex + container queries reproduce the old auto-fit(205px) columns but center an incomplete last row. */
   .docs-content .integrations-list { container-type: inline-size; display: flex; flex-wrap: wrap; justify-content: center; column-gap: 22px; border-top: 1px solid #25312b; }
   .docs-content .integrations-list a { flex: 0 0 100%; min-width: 0; border-bottom: 1px solid #25312b; min-height: 64px; }
@@ -341,7 +345,7 @@ const next = currentIndex >= 0 ? docOrder[currentIndex + 1] : null;
   .docs-content .integrations-list a:hover { background: #101a14; }
   .docs-content .method-jump { display: flex; flex-wrap: wrap; gap: .45rem 1rem; padding: .7rem 0 1.3rem; border-top: 1px solid #25312b; border-bottom: 1px solid #25312b; }
   .docs-content .method-jump a { font-size: .875rem; }
-  .docs-content .method-group-heading { margin: 2.1rem 0 .65rem; padding-bottom: .55rem; border-bottom: 1px solid #25312b; font-size: 1rem !important; scroll-margin-top: 6rem; }
+  .docs-content .method-group-heading { margin: 2.1rem 0 .65rem; padding-bottom: .55rem; border-bottom: 1px solid #25312b; font-size: 1rem !important; }
   .docs-content .method-group-heading:first-child { margin-top: .5rem; }
   .docs-content .architecture-figure { margin: 1.5rem 0 0; }
   .docs-content .architecture-scroll { overflow-x: auto; padding: 1rem; background: #0d1611; border: 1px solid #294331; border-radius: 12px; }

@@ -36,7 +36,7 @@ const methodGroups: Record<number, { id: string; label: string }> = {
   </div>
 
   <!-- Overview -->
-  <section class="section mb-12 scroll-mt-24" id="overview">
+  <section class="section mb-12" id="overview">
     <h2 class="text-xl sm:text-2xl font-bold text-[#F4F6F5] mb-3 tracking-tight">One context. Every session.</h2>
     <p class="text-sm sm:text-base text-[#8E9E96] leading-relaxed mb-6">
       The memory server keeps one Markdown state document per project branch under <code class="text-xs bg-[rgba(226,240,233,0.06)] border border-[rgba(226,240,233,0.09)] text-[#3DF69B] px-1.5 py-0.5 rounded font-mono">~/.egc/state/</code> alongside a SQLite store (<code class="text-xs bg-[rgba(226,240,233,0.06)] border border-[rgba(226,240,233,0.09)] text-[#3DF69B] px-1.5 py-0.5 rounded font-mono">state.db</code>) for decisions, lessons, working memory and the session bus. State is encrypted at rest using AES-256-GCM.
@@ -62,7 +62,7 @@ const methodGroups: Record<number, { id: string; label: string }> = {
   </section>
 
   <!-- Workflow -->
-  <section class="section mb-12 scroll-mt-24" id="workflow">
+  <section class="section mb-12" id="workflow">
     <h2 class="text-xl sm:text-2xl font-bold text-[#F4F6F5] mb-3 tracking-tight">How it works</h2>
     <p class="text-sm sm:text-base text-[#8E9E96] leading-relaxed mb-4">
       A compact lifecycle that keeps your AI tooling aligned from one session to the next.
@@ -81,7 +81,7 @@ const methodGroups: Record<number, { id: string; label: string }> = {
   </section>
 
   <!-- Tool reference -->
-  <section class="section mb-12 scroll-mt-24" id="tools">
+  <section class="section mb-12" id="tools">
     <h2 class="text-xl sm:text-2xl font-bold text-[#F4F6F5] mb-3 tracking-tight">Tool reference</h2>
     <p class="text-sm sm:text-base text-[#8E9E96] leading-relaxed mb-6">
       Browse by responsibility. Each method shows its signature and a short summary; expand it for the full description and return type.
@@ -257,7 +257,7 @@ const methodGroups: Record<number, { id: string; label: string }> = {
   </section>
 
   <!-- State file format -->
-  <section class="section mb-12 scroll-mt-24" id="state-format">
+  <section class="section mb-12" id="state-format">
     <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">State file format</h2>
     <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">State files live at <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">~/.egc/state/&lt;project-slug&gt;/&lt;branch&gt;.md</code>, one per project branch (flat <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">&lt;project-slug&gt;.md</code> files from older versions are still read). The slug is derived from the absolute path of the project directory, and files are encrypted at rest with the key at <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">~/.egc/encryption.key</code>.</p>
     <div class="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-800">
@@ -292,7 +292,7 @@ Auth uses sessions via iron-session, not JWT.
   </section>
 
   <!-- Session protocol -->
-  <section class="section mb-12 scroll-mt-24" id="protocol">
+  <section class="section mb-12" id="protocol">
     <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Session protocol</h2>
     <p class="text-sm text-gray-600 dark:text-gray-400 mb-6">The cognitive bootstrap injected by the installer writes this protocol into every tool's global instruction file. For Claude Code, the installer also registers a <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">SessionStart</code> hook that calls <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">get_state</code> automatically when a session opens, and a <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">Stop</code> hook that calls <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">update_state</code> automatically when a session ends. For other tools, the AI is instructed to run the protocol via the global instruction file. The protocol is versioned (v6 today) and upgrades in place on the next <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">egc init</code> or <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">egc auto-update</code>; it also tells the AI to announce itself on the session bus after restoring state, to drain events at the start of every turn, and, when <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">get_state</code> is missing, to say the server is not registered instead of improvising memory on disk.</p>
     <div class="grid sm:grid-cols-2 gap-4">

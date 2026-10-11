@@ -172,7 +172,7 @@ code { font-family: var(--f-mono); font-size: .88em; padding: .1em .4em; border-
    Header
    ========================================================================== */
 .hdr { position: fixed; inset: 0 0 auto 0; z-index: 100; padding-top: env(safe-area-inset-top, 0px); transition: background-color var(--d-base), box-shadow var(--d-base); }
-.hdr[data-scrolled='true'] { background: rgba(10, 13, 12, .8); backdrop-filter: blur(16px) saturate(140%); -webkit-backdrop-filter: blur(16px) saturate(140%); box-shadow: 0 1px 0 var(--line); }
+.hdr[data-scrolled='true'] { background: rgba(10, 13, 12, .8); backdrop-filter: blur(8px) saturate(140%); -webkit-backdrop-filter: blur(8px) saturate(140%); box-shadow: 0 1px 0 var(--line); }
 .hdr__bar { display: flex; align-items: center; justify-content: space-between; height: var(--hdr-h); gap: var(--s-4); }
 .brand { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; font-weight: 800; font-size: 22px; letter-spacing: -.03em; }
 .brand .egc-mark { width: 30px; height: 30px; transition: transform var(--d-slow) var(--ease-out); }
@@ -240,7 +240,10 @@ code { font-family: var(--f-mono); font-size: .88em; padding: .1em .4em; border-
   right: -5vw;
 }
 .hero__stage-inner { position: absolute; inset: 0; translate: calc(var(--mx, 0) * 18px) calc(var(--my, 0) * 14px); }
-.hero__mark { position: absolute; inset: 15%; filter: drop-shadow(0 40px 60px rgba(2, 30, 18, .55)); }
+.hero__mark { position: absolute; inset: 15%; isolation: isolate; }
+/* Static stand-in for drop-shadow(0 40px 60px rgba(2,30,18,.55)): a filter on the parent of the spinning
+   mark is recomputed every frame, this layer is painted once. */
+.hero__mark::before { content: ''; position: absolute; inset: -12%; z-index: -1; translate: 0 40px; border-radius: 50%; background: radial-gradient(closest-side, rgba(2, 30, 18, .55) 70%, rgba(2, 30, 18, 0)); pointer-events: none; }
 .hero__mark .egc-mark { width: 100%; height: 100%; }
 .hero__orbits { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; translate: calc(var(--mx, 0) * 30px) calc(var(--my, 0) * 22px); }
 .hero__orbits circle { fill: none; stroke: rgba(180, 248, 214, .2); stroke-width: 1; vector-effect: non-scaling-stroke; }
@@ -729,6 +732,7 @@ code { font-family: var(--f-mono); font-size: .88em; padding: .1em .4em; border-
   html.js .hero__orbits circle { stroke-dasharray: var(--len) var(--len); animation: drawRing 1.8s var(--ease-in-out) .7s both; }
   html.js .hero__orbits .o-dash { stroke-dasharray: 2 9; animation: fadeIn 1.4s ease 1.1s both; }
   html.js .hero__orbits .o-spin { transform-box: view-box; transform-origin: 50% 50%; animation: spin 160s linear infinite reverse; }
+  html.js [data-hero][data-offscreen] .egc-mark__body, html.js [data-hero][data-offscreen] .o-spin { animation-play-state: paused; }
 
   /* reveals: visible by default; JS marks only below-the-fold elements as pending */
   html.js .rv { transition: opacity .9s var(--ease-out), transform .9s var(--ease-out); transition-delay: var(--rd, 0s); }
@@ -1504,6 +1508,10 @@ code { font-family: var(--f-mono); font-size: .88em; padding: .1em .4em; border-
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(measureTitle);
 
   var hero = $('[data-hero]');
+  // The hero mark and orbits spin forever; stop them while the hero is scrolled out of view.
+  if (hero && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (en) { hero.toggleAttribute('data-offscreen', !en[0].isIntersecting); }).observe(hero);
+  }
   if (hero && !reduce && window.matchMedia('(pointer: fine) and (min-width: 1024px)').matches) {
     var tx = 0, ty = 0, cx = 0, cy = 0, raf = 0;
     var loop = function () {

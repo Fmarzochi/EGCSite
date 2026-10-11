@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -64,8 +62,9 @@
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    /* Prevent horizontal overflow at the root level */
-    overflow-x: hidden;
+    /* Prevent horizontal overflow at the root level. `clip` (not `hidden`) keeps
+       html/body from becoming scroll containers, which would break position: sticky. */
+    overflow-x: clip;
   }
 
   body {
@@ -74,7 +73,7 @@
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
     font-size: 1rem;
     line-height: 1.6;
-    overflow-x: hidden;
+    overflow-x: clip;
   }
 }
 
@@ -425,6 +424,14 @@ pre {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  /* The near-zero duration above still transitions inherited visibility (default
+     transition-property is all), so links in a just-opened menu would stay hidden
+     for a frame and refuse focus. Menus must switch state instantly. */
+  #mobile-menu,
+  #mobile-menu * {
+    transition: none !important;
   }
 }
 

@@ -7,6 +7,15 @@ const toc = [
   { id: 'state-format', label: 'State format' },
   { id: 'protocol', label: 'Session protocol' },
 ];
+const methodGroups: Record<number, { id: string; label: string }> = {
+  0: { id: 'methods-state', label: 'Project state' },
+  3: { id: 'methods-history', label: 'Decision history' },
+  6: { id: 'methods-working', label: 'Working memory' },
+  9: { id: 'methods-lessons', label: 'Lessons' },
+  12: { id: 'methods-observations', label: 'Observations' },
+  14: { id: 'methods-sessions', label: 'Session coordination' },
+  21: { id: 'methods-team', label: 'Team sync' },
+};
 ---
 
 <DocsLayout title="egc-memory" description="The egc-memory MCP server provides persistent cross-session memory for AI coding tools." current="memory" toc={toc}>
@@ -75,8 +84,11 @@ const toc = [
   <section class="section mb-12 scroll-mt-24" id="tools">
     <h2 class="text-xl sm:text-2xl font-bold text-[#F4F6F5] mb-3 tracking-tight">Tool reference</h2>
     <p class="text-sm sm:text-base text-[#8E9E96] leading-relaxed mb-6">
-      Core MCP methods, organized for fast scanning. Click on any method to inspect its signature, parameters, and return types.
+      Browse by responsibility. Each method shows its signature and a short summary; expand it for the full description and return type.
     </p>
+    <nav class="method-jump" aria-label="Memory method groups">
+      {Object.values(methodGroups).map(group => <a href={`#${group.id}`}>{group.label}</a>)}
+    </nav>
     <div class="tools" id="tool-list">
       {[
         {
@@ -223,7 +235,8 @@ const toc = [
           description: 'Shows team sync health so you can verify the backend is connected before or after a team_sync call.',
           returns: 'Object with last sync time, uncommitted changes, conflict count, and remote URL.',
         },
-      ].map((tool, idx) => (
+      ].map((tool, idx) => (<>
+        {methodGroups[idx] && <h3 id={methodGroups[idx].id} class="method-group-heading">{methodGroups[idx].label}</h3>}
         <details class="tool" open={idx === 0}>
           <summary>
             <div>
@@ -239,7 +252,7 @@ const toc = [
             </p>
           </div>
         </details>
-      ))}
+      </>))}
     </div>
   </section>
 

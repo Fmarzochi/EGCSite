@@ -1,5 +1,7 @@
 ---
 import DocsLayout from '../../layouts/DocsLayout.astro';
+import { getBase } from '../../utils/base.ts';
+const base = getBase();
 ---
 
 <DocsLayout title="Architecture" description="How EGC works internally: two MCP servers, local SQLite, encrypted Markdown state files, one install command." current="architecture">
@@ -13,44 +15,19 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
   <!-- Diagram -->
   <section class="mb-10">
     <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Overview</h2>
-    <div class="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 font-mono text-sm overflow-x-auto">
-      <pre class="text-gray-700 dark:text-gray-300 text-[10px] sm:text-xs leading-relaxed"><code>
-  ┌─────────────────────────────────────────────────────┐
-  │                  AI Tool (Claude, Cursor…)           │
-  │                                                     │
-  │  session start: get_state()                         │
-  │  session end:   update_state()                      │
-  └──────────────┬──────────────────────────────────────┘
-                 │ stdio (MCP)
-        ┌────────┴──────────┐
-        │                   │
-   ┌────▼──────┐    ┌───────▼────────┐
-   │egc-memory │    │  egc-guardian  │
-   │           │    │                │
-   │ get_state │    │validate_command│
-   │update_state    │ validate_write │
-   │store_decis│    │validate_content│
-   │query_hist │    │ reduce_context │
-   │session bus│    │orchestrate_task│
-   │lessons    │    │   auto_learn   │
-   └────┬──────┘    └────────────────┘
-        │
-   ┌────▼──────────────────────────┐
-   │  ~/.egc/                      │
-   │  ├── state/                   │
-   │  │   └── project/branch.md    │
-   │  ├── metrics/crusher.jsonl    │
-   │  ├── encryption.key           │
-   │  └── egc/state.db             │
-   └───────────────────────────────┘
-      </code></pre>
-    </div>
+    <figure class="architecture-figure">
+      <p class="architecture-scroll-hint" id="architecture-scroll-hint">Scroll the diagram horizontally, or focus it and use the arrow keys.</p>
+      <div class="architecture-scroll" role="region" aria-label="EGC architecture diagram" aria-describedby="architecture-scroll-hint architecture-diagram-caption" tabindex="0">
+        <img src={`${base}architecture.svg`} alt="AI coding tools read the memory protocol from tool instruction files. Where MCP is registered, tools connect over stdio to egc-memory and egc-guardian. egc-memory reads and writes encrypted branch-scoped Markdown state and a local SQLite decision and session store." width="880" height="560" />
+      </div>
+      <figcaption id="architecture-diagram-caption">Tools use the installed memory protocol. Where registered, they also connect to the two local MCP servers over stdio. <a href={`${base}architecture.svg`} target="_blank" rel="noopener noreferrer">Open the full-size diagram (new tab)</a> to zoom.</figcaption>
+    </figure>
   </section>
 
   <!-- Layers -->
   <section class="mb-10">
     <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Layers</h2>
-    <div class="space-y-4">
+    <div class="editorial-list">
       {[
         {
           n: '1',
@@ -83,10 +60,10 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
           desc: 'Real-time mission control launched right after install: live tool calls, token usage, provider comparison, session replay, and export to CSV/JSON. IDE hook emitters stream events from Cursor, Kiro, OpenCode, and CodeBuddy.',
         },
       ].map(step => (
-        <div class="flex gap-4 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5">
-          <div class="shrink-0 w-7 h-7 rounded-full bg-egc-100 dark:bg-egc-900/30 text-egc-700 dark:text-egc-400 flex items-center justify-center text-sm font-bold">{step.n}</div>
+        <div class="flex gap-4">
+          <div class="shrink-0 w-7 text-egc-400 font-mono text-sm font-bold">{step.n.padStart(2, '0')}</div>
           <div>
-            <p class="font-semibold text-gray-900 dark:text-white text-sm mb-1">{step.title}</p>
+            <h3 class="font-semibold text-gray-900 dark:text-white text-base mb-1">{step.title}</h3>
             <p class="text-sm text-gray-600 dark:text-gray-400">{step.desc}</p>
           </div>
         </div>

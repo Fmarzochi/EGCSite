@@ -23,13 +23,13 @@ const groups = [
     <section class="mb-10">
       <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-1">{group.label}</h2>
       <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">{group.note}</p>
-      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+      <div class="integrations-list">
         {group.entries.map(entry => (
-          <a href={`${base}integrations/${entry.slug}`} class="flex items-center gap-3 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-3 hover:border-egc-500/60 transition-colors">
-            <div class="w-8 h-8 rounded-lg bg-white shadow shadow-black/5 flex items-center justify-center shrink-0">
-              <img src={`${base}tools/${entry.icon}`} alt="" aria-hidden="true" class="w-5 h-5 object-contain" loading="lazy" />
+          <a href={`${base}integrations/${entry.slug}`} class="flex items-center gap-3 px-2 py-3 transition-colors">
+            <div class="w-9 h-9 rounded-md bg-white flex items-center justify-center shrink-0">
+              <img src={`${base}tools/${entry.icon}`} alt="" aria-hidden="true" class="w-6 h-6 object-contain" loading="lazy" />
             </div>
-            <span class="text-sm font-medium text-gray-900 dark:text-gray-100 leading-tight">{entry.name}</span>
+            <span class="text-sm font-medium text-gray-900 dark:text-gray-100 leading-tight">{entry.name}<span class="sr-only">, {group.label}</span></span>
           </a>
         ))}
       </div>

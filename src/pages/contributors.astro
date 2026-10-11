@@ -3,8 +3,7 @@ import Base from '../layouts/Base.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import { getBase } from '../utils/base.ts';
-import { formatContribution } from '../utils/format-contributor.ts';
-import { fetchContributors, buildFallback, getChampionHistory, BADGE_DEFS, TIER_CONFIG, highlights, type Contributor, type MonthlyChampion } from '../data/contributors.ts';
+import { fetchContributors, buildFallback, getChampionHistory, BADGE_DEFS, TIER_CONFIG, highlights, type Contributor } from '../data/contributors.ts';
 
 const base = getBase();
 const profileHref = (login: string) => Object.hasOwn(highlights, login) ? `${base}contributors/${encodeURIComponent(login)}` : `https://github.com/${encodeURIComponent(login)}`;
@@ -17,27 +16,24 @@ const initials = (name: string) => {
   return ((words[0]?.[0] ?? '?') + (words[1]?.[0] ?? words[0]?.[1] ?? '')).toUpperCase();
 };
 let contributors: Contributor[];
-let monthlyChampion: MonthlyChampion | null;
 try {
   const result = await fetchContributors(import.meta.env.GITHUB_TOKEN);
   contributors = result.contributors;
-  monthlyChampion = result.champion ?? getChampionHistory()[0] ?? null;
 } catch {
   contributors = buildFallback();
-  monthlyChampion = getChampionHistory()[0] ?? null;
 }
-const champion = monthlyChampion ? contributors.find(c => c.login === monthlyChampion.login) : undefined;
-const formatted = monthlyChampion ? formatContribution(monthlyChampion.reason) : null;
-const pastChampions = getChampionHistory().filter(h => h.month !== monthlyChampion?.month);
+const pastChampions = getChampionHistory();
 const rankedContributors = [...contributors].sort((a, b) => b.commits - a.commits || b.additions - a.additions);
-const podium = [rankedContributors[1], rankedContributors[0], rankedContributors[2]].filter((c): c is Contributor => Boolean(c));
+const podium = rankedContributors.slice(0, 3);
 const podiumRank = (login: string) => rankedContributors.findIndex(c => c.login === login) + 1;
 const medal = (rank: number) => rank === 1 ? 'Gold' : rank === 2 ? 'Silver' : 'Bronze';
+const position = (rank: number) => `${rank}${rank === 1 ? 'st' : rank === 2 ? 'nd' : 'rd'} place`;
 const totalCommits = contributors.reduce((sum, c) => sum + c.commits, 0);
 const totalAdditions = contributors.reduce((sum, c) => sum + c.additions, 0);
 const totalPrs = contributors.reduce((sum, c) => sum + c.prs, 0);
 const allPrsKnown = contributors.every(c => Object.hasOwn(highlights, c.login));
 const tiers = Object.entries(TIER_CONFIG) as [keyof typeof TIER_CONFIG, typeof TIER_CONFIG[keyof typeof TIER_CONFIG]][];
+const PAGE_SIZE = 10;
 ---
 <Base title="Hall of Fame · EGC" description="The developers who shaped EGC. Every commit, every bug fix, every translation, permanently recognized.">
   <Navbar />
@@ -55,43 +51,21 @@ const tiers = Object.entries(TIER_CONFIG) as [keyof typeof TIER_CONFIG, typeof T
         <div class="stat" role="listitem"><b>{allPrsKnown ? totalPrs : '—'}</b><span>Pull requests merged</span></div>
       </div>
     </div>
-    {monthlyChampion && champion && formatted && (
-      <section class="wrap" aria-labelledby="spot-title">
-        <div class="sec-head"><div><div class="kicker">Contributor of the month</div><h2 id="spot-title">{monthlyChampion.month}</h2></div></div>
-        <article class="spot hall-spotlight">
-          <div class="spot-side">
-            <span class="av spot-avatar" data-i={initials(champion.name)}><img src={champion.avatar} alt="" width="120" height="120" /></span>
-            <div><div class="month">{monthlyChampion.month}</div><h3>{champion.name}</h3><div class="handle">@{champion.login}</div></div>
-            {formatted.stats && <ul class="facts">
-              <li><b>{formatted.stats.commits}</b><span>commits {formatted.stats.period ? `in ${formatted.stats.period}` : 'in the recognized month'}</span></li>
-              {formatted.stats.additions !== undefined && <li><b>+{formatted.stats.additions.toLocaleString('en-US')}</b><span>lines in the recognized month</span></li>}
-            </ul>}
-          </div>
-          <div class="spot-main">
-            {areas(champion) && <span class="role"><i aria-hidden="true"></i>{areas(champion)}</span>}
-            <p class="summary">{champion.highlight}</p>
-            <details><summary>Read the full story</summary><div class="story">{monthlyChampion.reason}</div></details>
-            <div class="spot-actions">
-              <a class="btn btn-primary" href={profileHref(champion.login)} target={target(champion.login)} rel={rel(champion.login)}>View profile{external(champion.login) && <span class="sr-only"> on GitHub (opens in new tab)</span>}</a>
-              <a class="btn btn-ghost" href={`https://github.com/${encodeURIComponent(champion.login)}`} target="_blank" rel="noopener noreferrer">GitHub <span class="sr-only">(opens in new tab)</span></a>
-              <button type="button" class="hype-btn" data-hype={champion.login} data-name={champion.name} aria-label={`Hype ${champion.name}`} title="Hype this contributor (1 hype a day)">Hype <span class="hype-count" aria-hidden="true">—</span></button>
-            </div>
-          </div>
-        </article>
-      </section>
-    )}
     {podium.length > 0 && <section class="wrap podium-section" aria-labelledby="podium-title">
       <div class="sec-head"><div><div class="kicker">Recognition</div><h2 id="podium-title">Top contributors</h2></div><p>Ranked by merged commits, then lines added.</p></div>
       <div class="podium">{podium.map(c => {
         const rank = podiumRank(c.login);
-        return <article class={`podium-person podium-${medal(rank).toLowerCase()}`} aria-label={`${rank}${rank === 1 ? 'st' : rank === 2 ? 'nd' : 'rd'} place: ${c.name}, ${medal(rank)} medal`}>
-          <div class="podium-rank"><span aria-hidden="true">{rank === 1 ? '★' : '●'}</span> #{String(rank).padStart(2, '0')} · {medal(rank).toUpperCase()}</div>
-          <span class="av podium-avatar" data-i={initials(c.name)}><img src={c.avatar} alt="" width="64" height="64" loading="lazy" /></span>
-          <a class="podium-name" href={profileHref(c.login)} target={target(c.login)} rel={rel(c.login)}>{c.name}</a>
+        return <div class={`podium-entry podium-${medal(rank).toLowerCase()}`} data-rank={rank}><article class="podium-person" aria-label={`${position(rank)}: ${c.name}, ${medal(rank)} medal`}>
+          <div class="podium-medal" aria-hidden="true">{rank}</div>
+          <p class="podium-rank">{position(rank)} <span aria-hidden="true">·</span> {medal(rank)}</p>
+          <span class="av podium-avatar" data-i={initials(c.name)}><img src={c.avatar} alt="" width="80" height="80" loading="lazy" /></span>
+          <h3 class="podium-name"><a class="podium-link" href={profileHref(c.login)} target={target(c.login)} rel={rel(c.login)}><span class="sr-only">{position(rank)}, {medal(rank)} medal: </span>{c.name}<span class="sr-only">, view contributor profile{external(c.login) ? ' on GitHub (opens in new tab)' : ''}</span></a></h3>
           <span class="podium-handle">@{c.login}</span>
-          <span class="podium-award"><span aria-hidden="true">◈</span> {medal(rank)} medal · {c.commits} commits</span>
-          <div class="podium-hype"><button type="button" class="hype-btn" data-hype={c.login} data-name={c.name} aria-label={`Hype ${c.name}`} title="Hype this contributor (1 hype a day)">Hype <span class="hype-count" aria-hidden="true">—</span></button></div>
-        </article>;
+          <span class={`podium-tier t-${c.tier}`}>{TIER_CONFIG[c.tier].label}</span>
+          {c.badges.length > 0 && <div class="podium-badges" aria-label="Specialty badges">{c.badges.map(key => BADGE_DEFS[key] && <span class="podium-badge">{BADGE_DEFS[key].icon} {BADGE_DEFS[key].label}</span>)}</div>}
+          <span class="podium-profile-cue" aria-hidden="true">View contributor profile ↗</span>
+          <div class="podium-bottom"><span class="podium-commits"><strong>{c.commits}</strong> commits</span><button type="button" class="hype-btn" data-hype={c.login} data-name={c.name} aria-label={`Hype ${c.name}`} title="Hype this contributor (1 hype a day)">Hype <span class="hype-count" aria-hidden="true">—</span></button></div>
+        </article><div class="podium-step" aria-hidden="true">{rank}</div></div>;
       })}</div>
     </section>}
     <section class="wrap" aria-labelledby="all-title">
@@ -138,6 +112,11 @@ const tiers = Object.entries(TIER_CONFIG) as [keyof typeof TIER_CONFIG, typeof T
           <tr id="empty-row" hidden><td colspan="7" class="empty">No contributor matches this search.</td></tr>
         </tbody>
       </table>
+      <nav class="contributor-pagination" id="contributor-pagination" data-page-size={PAGE_SIZE} aria-label="Contributor pagination" hidden>
+        <button type="button" id="page-previous" aria-controls="contributor-rows" disabled>Previous</button>
+        <div class="pagination-pages">{Array.from({ length: Math.ceil(contributors.length / PAGE_SIZE) }, (_, index) => <button type="button" data-page={index + 1} aria-label={`Page ${index + 1}`} aria-controls="contributor-rows">{index + 1}</button>)}</div>
+        <button type="button" id="page-next" aria-controls="contributor-rows">Next</button>
+      </nav>
       <div class="legend">{tiers.map(([key, config]) => <div><b class={`tier t-${key}`}>{config.label}</b><p>{key === 'community' ? 'Fewer than two commits.' : `${config.minCommits} or more commits.`}</p></div>)}</div>
     </section>
     {pastChampions.length > 0 && <section class="wrap past" aria-labelledby="past-title">
@@ -284,6 +263,13 @@ td.rk{font-family:var(--mono);font-size:13px;color:var(--subtle);width:48px}
 .legend{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:40px;padding-top:28px;border-top:1px solid var(--line)}
 .legend b{display:block;font-size:15px}
 .legend p{margin:4px 0 0;font-size:14px;color:var(--muted)}
+.contributor-pagination{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;margin-top:26px}
+.contributor-pagination[hidden],.pagination-pages button[hidden]{display:none}
+.pagination-pages{display:flex;justify-content:center;flex-wrap:wrap;gap:6px}
+.contributor-pagination button{min-width:44px;min-height:44px;padding:0 12px;border:1px solid var(--line-strong);border-radius:8px;background:var(--surface);color:var(--ink);font:600 14px var(--sans);cursor:pointer}
+.contributor-pagination button:hover:not(:disabled){border-color:var(--signal)}
+.contributor-pagination button[aria-current="page"]{border-color:var(--signal);font-weight:800;text-decoration:underline;text-underline-offset:4px}
+.contributor-pagination button:disabled{opacity:.48;cursor:not-allowed}
 
 /* cta */
 .cta{border-radius:36px;background:radial-gradient(70% 120% at 80% 0%,#12B566 0%,#08633A 40%,var(--forest) 100%);padding:64px;display:grid;grid-template-columns:1.3fr 1fr;gap:40px;align-items:end}
@@ -386,35 +372,49 @@ footer a:hover{color:var(--ink)}
 .hall .hall-spotlight .story{max-height:330px}
 .hall .hall-spotlight .role{border-color:#66552a;color:#f3c96a}
 .hall .hall-spotlight .spot-actions{margin-top:6px}
-.hall .podium{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;align-items:end}
-.hall .podium-person{display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0;min-height:266px;padding:24px 15px;text-align:center;border:1px solid #25312b;border-radius:14px;background:#101715}
-.hall .podium-gold{min-height:302px;border-color:#826e31;background:linear-gradient(180deg,#292314,#101612)}
-.hall .podium-silver{border-color:#66716d}
-.hall .podium-bronze{border-color:#795b46}
-.hall .podium-rank{font:700 13px var(--mono);letter-spacing:.04em;color:#f3c96a}
-.hall .podium-silver .podium-rank{color:#c8d0cc}
-.hall .podium-bronze .podium-rank{color:#d6a77c}
-.hall .podium-avatar{width:60px;height:60px;margin:8px 0 4px;border-radius:50%;border:1px solid #387653;font-size:19px;color:#b9f8d0}
-.hall .podium-gold .podium-avatar{width:70px;height:70px;border-color:#826e31}
+.hall .podium{display:grid;grid-template-columns:minmax(0,260px) minmax(0,290px) minmax(0,260px);justify-content:center;gap:16px;align-items:end;max-width:900px;margin:0 auto;padding-top:34px}
+.hall .podium-entry{--medal:#d6aa67;--medal-line:#80623b;display:flex;flex-direction:column;min-width:0}
+.hall .podium-gold{--medal:#e9c879;--medal-line:#8d743e;order:2}
+.hall .podium-silver{--medal:#c9d3d3;--medal-line:#718080;order:1}
+.hall .podium-bronze{order:3}
+.hall .podium-person{position:relative;display:flex;flex-direction:column;align-items:center;min-width:0;min-height:420px;padding:44px 14px 12px;text-align:center;border:1px solid var(--medal-line);border-radius:16px 16px 4px 4px;background:#131a16;cursor:pointer;transition:transform .18s ease,border-color .18s ease,background-color .18s ease}
+.hall .podium-gold .podium-person{min-height:480px;background:#1b1c15}
+.hall .podium-silver .podium-person{min-height:450px;background:#151b1b}
+.hall .podium-step{display:grid;place-items:center;height:58px;margin-top:-1px;border:1px solid var(--medal-line);border-radius:0 0 12px 12px;background:#20231c;color:var(--medal);font:800 24px var(--mono)}
+.hall .podium-silver .podium-step{background:#1a2222}
+.hall .podium-bronze .podium-step{background:#211d19}
+.hall .podium-person:hover,.hall .podium-person:focus-within{transform:translateY(-4px);border-color:var(--medal);background-color:#1b2520}
+.hall .podium-person:focus-within{outline:2px solid var(--signal);outline-offset:4px}
+.hall .podium-medal{position:absolute;top:0;left:50%;display:grid;place-items:center;width:54px;height:54px;transform:translate(-50%,-50%);border:3px solid var(--ground);border-radius:50%;background:var(--medal-line);color:#111714;font:800 22px var(--sans);box-shadow:0 0 0 1px var(--medal)}
+.hall .podium-gold .podium-medal{width:62px;height:62px;font-size:26px}
+.hall .podium-rank{margin:0 0 12px;color:var(--medal);font:700 12px var(--mono);letter-spacing:.035em;text-transform:uppercase}
+.hall .podium-avatar{width:66px;height:66px;margin-bottom:12px;border-radius:50%;border:2px solid var(--medal-line);font-size:21px;color:var(--ink)}
+.hall .podium-gold .podium-avatar{width:76px;height:76px}
 .hall .podium-avatar img{width:100%;height:100%;border-radius:50%}
-.hall .podium-name{font-weight:700;overflow-wrap:anywhere}
-.hall .podium-name:hover{color:var(--signal)}
-.hall .podium-handle{font:12px var(--mono);color:var(--muted);overflow-wrap:anywhere}
-.hall .podium-award{font:11px var(--mono);color:var(--muted);margin-top:4px}
-.hall .podium-award span{color:#f3c96a}
-.hall .podium-silver .podium-award span{color:#c8d0cc}
-.hall .podium-bronze .podium-award span{color:#d6a77c}
-.hall .podium-hype{margin-top:auto;display:flex;align-items:center;justify-content:center;min-height:44px}
-.hall .podium-hype .hype-btn{display:inline-flex;align-items:center;gap:8px;color:var(--signal);border:1px solid #31523e;border-radius:8px;padding:7px 12px}
-.hall .podium-hype .hype-count:empty{display:none}
-.hall .podium-hype .hype-count:not(:empty){border-left:1px solid #31523e;padding-left:8px}
-@media(max-width:680px){
+.hall .podium-name{margin:0;font-size:18px;font-weight:750;line-height:1.3;overflow-wrap:anywhere}
+.hall .podium-link::after{content:"";position:absolute;inset:0;z-index:1;border-radius:18px}
+.hall .podium-link:hover,.hall .podium-link:focus-visible{color:var(--ink)}
+.hall .podium-link:focus-visible{outline:0}
+.hall .podium-handle{margin-top:3px;color:var(--muted);font:12px var(--mono);overflow-wrap:anywhere}
+.hall .podium-tier{margin-top:12px;padding:4px 9px;border:1px solid #405447;border-radius:999px;color:var(--ink);font-size:11px;font-weight:700;line-height:1.4}
+.hall .podium-tier::before{margin-right:6px}
+.hall .podium-badges{display:flex;justify-content:center;flex-wrap:wrap;gap:5px;margin-top:10px}
+.hall .podium-badge{padding:3px 7px;border:1px solid #35433b;border-radius:6px;color:var(--muted);font-size:11px;line-height:1.4}
+.hall .podium-profile-cue{margin-top:auto;padding-top:12px;color:var(--muted);font-size:12px;font-weight:700}
+.hall .podium-person:hover .podium-profile-cue,.hall .podium-person:focus-within .podium-profile-cue{color:var(--signal)}
+.hall .podium-bottom{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;margin-top:12px;padding-top:10px;border-top:1px solid #334139}
+.hall .podium-commits{color:var(--muted);font:12px var(--mono);white-space:nowrap}
+.hall .podium-commits strong{color:var(--ink);font-weight:700}
+.hall .podium-bottom .hype-btn{position:relative;z-index:2;display:inline-flex;align-items:center;gap:8px;color:var(--signal);border:1px solid #31523e;border-radius:8px;padding:7px 10px}
+.hall .podium-bottom .hype-count:not(:empty){border-left:1px solid #31523e;padding-left:8px}
+@media(max-width:900px){
   .hall .hall-hero{padding-top:45px}
   .hall .hall-hero .stats{gap:18px 24px}
-  .hall .hall-spotlight{grid-template-columns:1fr;padding:20px}
-  .hall .podium{grid-template-columns:1fr}
-  .hall .podium-person,.hall .podium-gold{min-height:0}
-  .hall .podium-gold{order:-1}
+  .hall .podium{grid-template-columns:1fr;gap:42px;max-width:440px;margin:auto}
+  .hall .podium-entry{order:initial}
+  .hall .podium-person,.hall .podium-gold .podium-person,.hall .podium-silver .podium-person{min-height:0;border-radius:16px;padding:42px 18px 16px}
+  .hall .podium-step{display:none}
+  .hall .podium-profile-cue{margin-top:18px}
 }
 @media(max-width:900px){
  .hall tbody tr:not([hidden]){grid-template-columns:auto auto auto 1fr}
@@ -443,6 +443,11 @@ footer a:hover{color:var(--ink)}
     const rows = rowsRoot ? Array.from(rowsRoot.querySelectorAll<HTMLTableRowElement>('tr[data-index]')) : [];
     const count = document.getElementById('count');
     const empty = document.getElementById('empty-row');
+    const pagination = document.getElementById('contributor-pagination');
+    const pageSize = Number(pagination?.dataset.pageSize) || 10;
+    const pageButtons = Array.from(pagination?.querySelectorAll<HTMLButtonElement>('[data-page]') ?? []);
+    const previous = document.getElementById('page-previous') as HTMLButtonElement | null;
+    const next = document.getElementById('page-next') as HTMLButtonElement | null;
     const filters = Array.from(document.querySelectorAll<HTMLButtonElement>('#tier-filter button'));
     const sorters = Array.from(document.querySelectorAll<HTMLButtonElement>('thead th[data-key] button'));
     const mobileSortKey = document.getElementById('mobile-sort-key') as HTMLSelectElement | null;
@@ -451,6 +456,7 @@ footer a:hover{color:var(--ink)}
     let tier = 'all';
     let sortKey: 'commits' | 'prs' | 'additions' = 'commits';
     let sortDirection = -1;
+    let currentPage = 1;
     function updateTable() {
       const query = search?.value.trim().toLocaleLowerCase() ?? '';
       const shown = rows.filter(row =>
@@ -466,15 +472,31 @@ footer a:hover{color:var(--ink)}
         return ((Number(left) || 0) - (Number(right) || 0)) * sortDirection ||
           Number(a.dataset.index) - Number(b.dataset.index);
       });
+      const totalPages = Math.ceil(shown.length / pageSize);
+      currentPage = Math.min(currentPage, Math.max(totalPages, 1));
+      const start = (currentPage - 1) * pageSize;
+      const visible = shown.slice(start, start + pageSize);
       for (const row of rows) row.hidden = true;
-      for (const row of shown) { row.hidden = false; rowsRoot?.appendChild(row); }
+      for (const row of visible) { row.hidden = false; rowsRoot?.appendChild(row); }
       if (empty) { empty.hidden = shown.length !== 0; rowsRoot?.appendChild(empty); }
-      if (count) count.textContent = `${shown.length} of ${rows.length} contributors`;
+      if (count) count.textContent = shown.length === 0
+        ? 'Showing 0 of 0 contributors'
+        : `Showing ${start + 1}–${start + visible.length} of ${shown.length} contributors`;
+      if (pagination) pagination.hidden = totalPages <= 1;
+      if (previous) previous.disabled = currentPage === 1;
+      if (next) next.disabled = currentPage >= totalPages;
+      for (const button of pageButtons) {
+        const page = Number(button.dataset.page);
+        button.hidden = page > totalPages;
+        if (page === currentPage) button.setAttribute('aria-current', 'page');
+        else button.removeAttribute('aria-current');
+      }
     }
-    search?.addEventListener('input', updateTable);
+    search?.addEventListener('input', () => { currentPage = 1; updateTable(); });
     for (const button of filters) button.addEventListener('click', () => {
       tier = button.dataset.tier ?? 'all';
       for (const filter of filters) filter.setAttribute('aria-pressed', String(filter === button));
+      currentPage = 1;
       updateTable();
     });
     function setSort(key: 'commits' | 'prs' | 'additions', direction: number) {
@@ -491,6 +513,7 @@ footer a:hover{color:var(--ink)}
         mobileSortDirection.setAttribute('aria-label', `Currently ${label.toLowerCase()}; switch to ${direction < 0 ? 'ascending' : 'descending'}`);
       }
       if (mobileSortStatus) mobileSortStatus.textContent = `Sorted by ${key === 'additions' ? 'Lines' : key === 'prs' ? 'PRs' : 'Commits'}, ${direction < 0 ? 'descending' : 'ascending'}.`;
+      currentPage = 1;
       updateTable();
     }
     for (const button of sorters) button.addEventListener('click', () => {
@@ -499,6 +522,12 @@ footer a:hover{color:var(--ink)}
     });
     mobileSortKey?.addEventListener('change', () => setSort(mobileSortKey.value as 'commits' | 'prs' | 'additions', -1));
     mobileSortDirection?.addEventListener('click', () => setSort(sortKey, -sortDirection));
+    previous?.addEventListener('click', () => { if (currentPage > 1) { currentPage--; updateTable(); } });
+    next?.addEventListener('click', () => { currentPage++; updateTable(); });
+    for (const button of pageButtons) button.addEventListener('click', () => {
+      currentPage = Number(button.dataset.page);
+      updateTable();
+    });
     updateTable();
     // Namespace v2: contadores zerados em 18/07/2026 (votos de teste do v1 abandonados).
     // Regra: 1 hype por visitante POR DIA no total; o contador global nunca regride.

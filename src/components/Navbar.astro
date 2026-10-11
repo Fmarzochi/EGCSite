@@ -135,7 +135,7 @@ const navLinks = [
         rel={link.external ? 'noopener noreferrer' : undefined}
         aria-label={link.external ? `${link.label} (opens in new tab)` : undefined}
         class:list={[
-          'mobile-nav-link flex items-center justify-between min-h-[48px] px-4 py-3 rounded-lg text-base font-medium text-[#F4F6F5] hover:text-[#3DF69B] hover:bg-white/[0.04] active:scale-[0.98] transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3DF69B]',
+          'mobile-nav-link flex items-center justify-between min-h-[48px] px-4 py-3 rounded-lg text-base font-medium text-[#F4F6F5] hover:text-[#3DF69B] hover:bg-white/[0.04] active:scale-[0.98] transition-[color,background-color,transform] duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3DF69B]',
           `mobile-nav-link-${i}`,
         ]}
       >
@@ -150,7 +150,7 @@ const navLinks = [
     <div class="mt-6 pt-6 border-t border-[rgba(226,240,233,0.09)] flex flex-col gap-3">
       <a
         href={`${base}get-started`}
-        class="mobile-nav-link flex items-center justify-between min-h-[48px] px-6 py-2.5 rounded-full bg-[#FFFFFF] text-[#06210F] text-sm font-bold active:scale-[0.98] transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3DF69B]"
+        class="mobile-nav-link flex items-center justify-between min-h-[48px] px-6 py-2.5 rounded-full bg-[#FFFFFF] text-[#06210F] text-sm font-bold active:scale-[0.98] transition-[color,background-color,transform] duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3DF69B]"
       >
         <span>Get EGC</span>
         <span class="w-7 h-7 rounded-full bg-[#18B669] inline-flex items-center justify-center shrink-0">
@@ -165,7 +165,7 @@ const navLinks = [
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Star on GitHub (opens in new tab)"
-        class="mobile-nav-link flex items-center justify-center gap-2 min-h-[44px] px-4 py-2.5 rounded-full border border-white/20 bg-white/[0.04] text-[#F4F6F5] text-sm font-semibold hover:bg-white/10 active:scale-[0.98] transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3DF69B]"
+        class="mobile-nav-link flex items-center justify-center gap-2 min-h-[44px] px-4 py-2.5 rounded-full border border-white/20 bg-white/[0.04] text-[#F4F6F5] text-sm font-semibold hover:bg-white/10 active:scale-[0.98] transition-[color,background-color,transform] duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3DF69B]"
       >
         <Icon name="github" size={16} />
         GitHub
@@ -303,41 +303,42 @@ const navLinks = [
     }
   });
 
+  // Hide on scroll down, reveal on scroll up. Small deltas are ignored so trackpad
+  // jitter does not make the header flicker; work is batched into one frame.
+  const SCROLL_DELTA = 8;
   let lastScrollY = window.scrollY;
-  let scrollTimeout: ReturnType<typeof setTimeout> | undefined;
+  let headerHidden = false;
+  let scrollTicking = false;
   const header = document.getElementById('site-header');
+
+  function setHeaderHidden(hidden: boolean) {
+    if (!header || hidden === headerHidden) return;
+    headerHidden = hidden;
+    header.classList.toggle('-translate-y-full', hidden);
+    header.classList.toggle('translate-y-0', !hidden);
+  }
+
+  function updateHeader() {
+    scrollTicking = false;
+    const currentScrollY = window.scrollY;
+    if (isMenuOpen() || currentScrollY <= 64) {
+      setHeaderHidden(false);
+      lastScrollY = currentScrollY;
+      return;
+    }
+    const delta = currentScrollY - lastScrollY;
+    if (Math.abs(delta) < SCROLL_DELTA) return;
+    setHeaderHidden(delta > 0);
+    lastScrollY = currentScrollY;
+  }
 
   if (header) {
     window.addEventListener('scroll', () => {
-      const currentScrollY = window.scrollY;
-
-      if (scrollTimeout) clearTimeout(scrollTimeout);
-
-      if (isMenuOpen()) {
-        lastScrollY = currentScrollY;
-        return;
-      }
-
-      if (currentScrollY > 64) {
-        if (currentScrollY > lastScrollY) {
-          header.classList.add('-translate-y-full');
-          header.classList.remove('translate-y-0');
-        } else {
-          header.classList.add('translate-y-0');
-          header.classList.remove('-translate-y-full');
-        }
-      } else {
-        header.classList.add('translate-y-0');
-        header.classList.remove('-translate-y-full');
-      }
-
-      lastScrollY = currentScrollY;
-
-      scrollTimeout = setTimeout(() => {
-        header.classList.add('translate-y-0');
-        header.classList.remove('-translate-y-full');
-      }, 250);
+      if (scrollTicking) return;
+      scrollTicking = true;
+      requestAnimationFrame(updateHeader);
     }, { passive: true });
+    header.addEventListener('focusin', () => setHeaderHidden(false));
   }
 </script>
 

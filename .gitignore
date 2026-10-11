@@ -307,3 +307,5 @@ public/_image/
 # =========================================================
 lhci-site/
 .lighthouseci/
+.vercel
+.env*

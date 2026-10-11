@@ -1,0 +1,20 @@
+flowchart TB
+  tools["AI coding tools"]
+  protocol["Memory protocol in tool instruction files"]
+  memory["egc-memory MCP server"]
+  guardian["egc-guardian MCP server"]
+  state["Encrypted branch-scoped Markdown state"]
+  sqlite["Local SQLite decision and session store"]
+
+  tools -->|reads instructions| protocol
+  tools -->|MCP over stdio where registered| memory
+  tools -->|MCP over stdio where registered| guardian
+  memory -->|reads and writes| state
+  memory -->|records and queries| sqlite
+
+  classDef main fill:#143423,stroke:#3df69b,color:#f4f6f5,stroke-width:2px;
+  classDef service fill:#13221a,stroke:#5d9572,color:#f4f6f5,stroke-width:1.5px;
+  classDef storage fill:#0e1712,stroke:#668575,color:#f4f6f5,stroke-width:1.5px;
+  class tools main;
+  class protocol,memory,guardian service;
+  class state,sqlite storage;

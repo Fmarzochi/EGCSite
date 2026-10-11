@@ -242,7 +242,7 @@ export async function fetchContributors(githubToken?: string): Promise<{
           return {
             login: c.author.login,
             name: info?.name ?? c.author.login,
-            avatar: `https://github.com/${c.author.login}.png`,
+            avatar: `https://github.com/${c.author.login}.png?size=160`,
             commits,
             additions,
             highlight: info?.highlight ?? 'Contributed to EGC',
@@ -261,7 +261,7 @@ export async function fetchContributors(githubToken?: string): Promise<{
         contributors.push({
           login,
           name: info.name,
-          avatar: `https://github.com/${login}.png`,
+          avatar: `https://github.com/${login}.png?size=160`,
           commits: info.commits,
           additions: info.additions ?? 0,
           highlight: info.highlight,
@@ -301,7 +301,7 @@ export function buildFallback(): Contributor[] {
     .map(([login, info]) => ({
       login,
       name: info.name,
-      avatar: `https://github.com/${login}.png`,
+      avatar: `https://github.com/${login}.png?size=160`,
       commits: info.commits,
       additions: info.additions ?? 0,
       highlight: info.highlight,

@@ -123,7 +123,7 @@ const PAGE_SIZE = 10;
       <div class="sec-head"><div><div class="kicker">A living archive</div><h2 id="past-title">Past champions</h2></div><p>Recognition remains discoverable beyond the current month.</p></div>
       <div class="champs">{pastChampions.map(h => (
         <a class="champ" href={profileHref(h.login)} target={target(h.login)} rel={rel(h.login)} aria-label={`View ${h.name}, ${h.month}${external(h.login) ? ' on GitHub (opens in new tab)' : ''}`} aria-describedby={`recognition-${h.login}-${h.month.replace(/\W/g, '-')}`}>
-          <span class="av champ-avatar" data-i={initials(h.name)}><img src={`https://github.com/${encodeURIComponent(h.login)}.png`} alt="" width="56" height="56" loading="lazy" /></span>
+          <span class="av champ-avatar" data-i={initials(h.name)}><img src={`https://github.com/${encodeURIComponent(h.login)}.png?size=160`} alt="" width="56" height="56" loading="lazy" /></span>
           <span><span class="m">{h.month}</span><b>{h.name}</b><span class="champ-reason" id={`recognition-${h.login}-${h.month.replace(/\W/g, '-')}`}>{h.reason}</span></span>
         </a>
       ))}</div>
@@ -246,7 +246,7 @@ details .story{margin-top:16px;color:var(--muted);font-size:15px;line-height:1.7
 table{width:100%;border-collapse:collapse;font-size:15px}
 thead th{text-align:left;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--subtle);padding:12px 12px;border-bottom:1px solid var(--line-strong);white-space:nowrap}
 thead th.num,td.num{text-align:right;font-variant-numeric:tabular-nums}
-thead th button{all:unset;cursor:pointer}
+thead th button{all:unset;cursor:pointer;display:inline-block;padding:6px 4px;margin:-6px -4px}
 thead th button:hover{color:var(--ink)}
 thead th[aria-sort] button::after{content:" ↓"}
 thead th[aria-sort="ascending"] button::after{content:" ↑"}
@@ -285,7 +285,7 @@ td.rk{font-family:var(--mono);font-size:13px;color:var(--subtle);width:48px}
 .sponsors div{padding:28px 24px 28px 0}
 .sponsors div+div{padding-left:24px;border-left:1px solid var(--line)}
 .sponsors h3{margin:0 0 8px;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--subtle)}
-.sponsors a{color:var(--ink);font-weight:600}.sponsors a:hover{color:var(--signal)}
+.sponsors a{display:inline-block;padding-block:4px;margin-block:-4px;color:var(--ink);font-weight:600}.sponsors a:hover{color:var(--signal)}
 .sponsors p{margin:0;color:var(--muted);font-size:15px}
 footer{padding:40px 0 56px;color:var(--subtle);font-size:14px}
 footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
@@ -396,6 +396,7 @@ footer a:hover{color:var(--ink)}
 .hall .podium-avatar img{width:100%;height:100%;border-radius:50%}
 .hall .podium-name{margin:0;font-size:18px;font-weight:750;line-height:1.3;overflow-wrap:anywhere}
 .hall .podium-link::after{content:"";position:absolute;inset:0;z-index:1;border-radius:18px}
+.hall .podium-link{display:inline-block;padding-block:3px;margin-block:-3px}
 .hall .podium-link:hover,.hall .podium-link:focus-visible{color:var(--ink)}
 .hall .podium-link:focus-visible{outline:0}
 .hall .podium-handle{margin-top:3px;color:var(--muted);font:12px var(--mono);overflow-wrap:anywhere}

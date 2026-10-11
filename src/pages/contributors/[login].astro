@@ -37,7 +37,7 @@ if (!info) {
 
 const formattedHighlight = formatContribution(info.highlight);
 
-const avatar = `https://github.com/${login}.png`;
+const avatar = `https://github.com/${login}.png?size=160`;
 
 let githubBio = '';
 let githubLocation = '';
@@ -99,7 +99,7 @@ const isChampion = championLogin === login;
       <!-- Back link -->
       <a
         href={`${base}contributors`}
-        class="inline-flex items-center gap-1.5 text-sm text-[#8E9E96] hover:text-[#3DF69B] transition-colors duration-200 mb-8 font-medium"
+        class="inline-flex items-center gap-1.5 py-1 -my-1 text-sm text-[#8E9E96] hover:text-[#3DF69B] transition-colors duration-200 mb-8 font-medium"
       >
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M11 17l-5-5m0 0l5-5m-5 5h12"/></svg>
         Hall of Fame

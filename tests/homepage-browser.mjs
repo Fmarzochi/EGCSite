@@ -410,7 +410,7 @@ try {
       await followAndReturn(page, `.tgrid--featured li:nth-child(${index + 1}) a.tile`, featured[index].href, featured[index].name);
     }
     stage = 'integration catalog and browser history';
-    await followAndReturn(page, '.int__more a', url + 'integrations/', 'One brain', 21);
+    await followAndReturn(page, '.int__more a', url + 'integrations/', 'One brain', 22);
     checks.push('Eight integration pages and complete catalog: link click, 200 response, heading, history return, functional homepage');
     stage = 'hero CTAs';
     for (const hash of ['#demo', '#instalar']) {

@@ -34,5 +34,8 @@
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.19"
+  },
+  "overrides": {
+    "postcss-selector-parser": "^7.1.6"
   }
 }

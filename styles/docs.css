@@ -208,8 +208,12 @@ body.docs-sidebar-open {
 }
 
 .pill {
-  color: #8E9E96;
+  border: 1px solid #264d38;
+  background: #10251b;
+  color: #8fe8b4;
   font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 30px;
   font-family: var(--font-jetbrains), monospace;
 }
 

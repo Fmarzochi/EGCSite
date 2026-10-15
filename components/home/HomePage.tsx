@@ -428,7 +428,7 @@ export default function HomePage({ lang }: { lang: Lang }) {
           <div className="wrap ben__grid">
             <div>
               <p className="eyebrow rv">
-                <span data-i18n="ben.eyebrow">{tx('ben.eyebrow')}</span>
+                <b>01</b> <span data-i18n="ben.eyebrow">{tx('ben.eyebrow')}</span>
               </p>
               <h2
                 className="h-section rv"
@@ -579,7 +579,7 @@ export default function HomePage({ lang }: { lang: Lang }) {
             <div className="sec__head sec__head--split">
               <div>
                 <p className="eyebrow rv">
-                  <span data-i18n="demo.eyebrow">{tx('demo.eyebrow')}</span>
+                  <b>02</b> <span data-i18n="demo.eyebrow">{tx('demo.eyebrow')}</span>
                 </p>
                 <h2
                   className="h-section rv"
@@ -887,7 +887,7 @@ export default function HomePage({ lang }: { lang: Lang }) {
             <div className="sec__head sec__head--split">
               <div>
                 <p className="eyebrow rv">
-                  <span data-i18n="fx.eyebrow">{tx('fx.eyebrow')}</span>
+                  <b>03</b> <span data-i18n="fx.eyebrow">{tx('fx.eyebrow')}</span>
                 </p>
                 <h2
                   className="h-section rv"
@@ -1519,7 +1519,7 @@ export default function HomePage({ lang }: { lang: Lang }) {
             <div className="sec__head sec__head--split">
               <div>
                 <p className="eyebrow rv">
-                  <span data-i18n="int.eyebrow">{tx('int.eyebrow')}</span>
+                  <b>04</b> <span data-i18n="int.eyebrow">{tx('int.eyebrow')}</span>
                 </p>
                 <h2
                   className="h-section rv"
@@ -1730,7 +1730,7 @@ export default function HomePage({ lang }: { lang: Lang }) {
           <div className="wrap eff__grid">
             <div className="eff__hero rv">
               <p className="eyebrow">
-                <span data-i18n="eff.eyebrow">{tx('eff.eyebrow')}</span>
+                <b>05</b> <span data-i18n="eff.eyebrow">{tx('eff.eyebrow')}</span>
               </p>
               <div className="eff__bigrow">
                 <p className="eff__big" aria-hidden="true">
@@ -1862,6 +1862,7 @@ export default function HomePage({ lang }: { lang: Lang }) {
           <div className="wrap vault">
             <div>
               <p className="eyebrow rv">
+                <b>06</b>{' '}
                 <span
                   data-i18n="prv.eyebrow"
                   dangerouslySetInnerHTML={{ __html: tx('prv.eyebrow') }}
@@ -1977,11 +1978,11 @@ export default function HomePage({ lang }: { lang: Lang }) {
         </section>
 
         {/* ============================ INSTALL ============================ */}
-        <section className="sec ins" id="instalar" aria-labelledby="ins-title">
+        <section className="sec ins grain" id="instalar" aria-labelledby="ins-title">
           <div className="wrap ins__grid">
             <div>
               <p className="eyebrow rv">
-                <span data-i18n="ins.eyebrow">{tx('ins.eyebrow')}</span>
+                <b>07</b> <span data-i18n="ins.eyebrow">{tx('ins.eyebrow')}</span>
               </p>
               <h2
                 className="h-section rv"
@@ -2221,7 +2222,7 @@ cd EGC; .\scripts\install.ps1"
           <div className="wrap faq__grid">
             <div className="faq__aside">
               <p className="eyebrow rv">
-                <span data-i18n="faq.eyebrow">{tx('faq.eyebrow')}</span>
+                <b>08</b> <span data-i18n="faq.eyebrow">{tx('faq.eyebrow')}</span>
               </p>
               <h2
                 className="h-section rv"

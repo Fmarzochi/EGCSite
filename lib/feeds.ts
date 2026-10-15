@@ -1,3 +1,4 @@
+import { integrations } from '@/data/integrations';
 import { releases } from '@/data/releases';
 import { canonicalUrl, PRODUCTION_BASE } from '@/lib/base';
 
@@ -19,6 +20,8 @@ export const SITEMAP_ROUTES = [
   'docs/mcp/',
   'docs/memory/',
   'docs/security/',
+  'integrations/',
+  ...integrations.map((integration) => `integrations/${integration.slug}/`),
 ];
 
 function escapeXml(value: string): string {

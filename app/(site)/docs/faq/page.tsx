@@ -1,4 +1,5 @@
 import DocsShell from '@/components/docs/DocsShell';
+import { integrations } from '@/data/integrations';
 import { docsMetadata } from '@/lib/seo';
 
 // Ported from src/pages/docs/faq.astro.
@@ -16,7 +17,7 @@ const faqs = [
   },
   {
     q: 'Which tools are supported?',
-    a: '28 tools: Claude Code, Cursor, Codex CLI, Antigravity CLI, OpenCode, Devin Desktop, Amp, VS Code Copilot, Zed, Kiro, Trae, CodeBuddy, JetBrains Junie, Goose, OpenHands, Aider, Warp, Cline, Qwen Code, Kimi Code CLI, Crush, Auggie, Mistral Vibe, Grok Build, Kilo Code CLI, MiMo Code, Pi, and Droid. The installer auto-detects which ones are installed. Gemini CLI, Continue.dev, and Roo Code were retired after their vendors discontinued them, and Amazon Q Developer CLI followed on 2026-09-30 (sign-ups closed, support ending on 2027-04-30, the CLI became the Kiro CLI).',
+    a: `${integrations.length} tools: Claude Code, Cursor, Codex CLI, Antigravity CLI, OpenCode, Devin Desktop, Amp, VS Code Copilot, Zed, Kiro, Trae, CodeBuddy, JetBrains Junie, Goose, OpenHands, Aider, Warp, Cline, Qwen Code, Kimi Code CLI, Crush, Auggie, Mistral Vibe, Grok Build, Kilo Code CLI, MiMo Code, Pi, and Droid. The installer auto-detects which ones are installed. Gemini CLI, Continue.dev, and Roo Code were retired after their vendors discontinued them, and Amazon Q Developer CLI followed on 2026-09-30 (sign-ups closed, support ending on 2027-04-30, the CLI became the Kiro CLI).`,
   },
   {
     q: 'Does the AI need to call get_state manually?',
@@ -56,7 +57,9 @@ export default function FaqPage() {
   return (
     <DocsShell current="faq">
       <div className="pb-2 mb-8 border-b border-gray-200 dark:border-gray-800">
-        <p className="text-xs font-semibold uppercase tracking-widest text-egc-600 dark:text-egc-400 mb-2">Reference</p>
+        <p className="text-xs font-semibold uppercase tracking-widest text-egc-600 dark:text-egc-400 mb-2">
+          Reference
+        </p>
         <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-3">FAQ</h1>
         <p className="text-gray-600 dark:text-gray-400">Frequently asked questions about EGC.</p>
       </div>
@@ -64,11 +67,28 @@ export default function FaqPage() {
       <section className="mb-10">
         <div className="space-y-4" id="faq-list">
           {faqs.map((item, i) => (
-            <details key={item.q} className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 group" open={i === 0}>
+            <details
+              key={item.q}
+              className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 group"
+              open={i === 0}
+            >
               <summary className="px-4 sm:px-5 py-4 cursor-pointer flex items-center gap-3 justify-between list-none min-h-[44px]">
-                <span className="text-sm font-semibold text-gray-900 dark:text-white">{item.q}</span>
-                <svg className="w-4 h-4 text-gray-400 shrink-0 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                <span className="text-sm font-semibold text-gray-900 dark:text-white">
+                  {item.q}
+                </span>
+                <svg
+                  className="w-4 h-4 text-gray-400 shrink-0 transition-transform group-open:rotate-180"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M19 9l-7 7-7-7"
+                  />
                 </svg>
               </summary>
               <div className="px-5 pb-4">
@@ -80,8 +100,12 @@ export default function FaqPage() {
       </section>
 
       <section className="rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 p-6">
-        <p className="text-sm font-semibold text-gray-900 dark:text-white mb-2">Still have questions?</p>
-        <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">Open an issue on GitHub or check the source. Everything is open.</p>
+        <p className="text-sm font-semibold text-gray-900 dark:text-white mb-2">
+          Still have questions?
+        </p>
+        <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+          Open an issue on GitHub or check the source. Everything is open.
+        </p>
         <a
           href="https://github.com/Fmarzochi/EGC/issues"
           target="_blank"
@@ -89,8 +113,19 @@ export default function FaqPage() {
           className="inline-flex items-center gap-2 py-1 -my-1 text-sm font-semibold text-egc-600 dark:text-egc-400 hover:underline"
         >
           Open an issue
-          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          <svg
+            className="w-3.5 h-3.5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+            />
           </svg>
         </a>
       </section>

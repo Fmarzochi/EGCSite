@@ -6,10 +6,10 @@ import { docsMetadata } from '@/lib/seo';
 
 // Ported from src/pages/integrations/index.astro.
 
+// The tool counts follow data/integrations.ts; the description names five tools before "and N other".
 export const metadata = docsMetadata({
-  title: 'Integrations: EGC in 28 AI coding tools',
-  description:
-    'One shared memory across Claude Code, Cursor, Codex, OpenCode, Antigravity and 23 other AI coding tools. Pick your tool to see what EGC installs, where, and what it guarantees.',
+  title: `Integrations: EGC in ${integrations.length} AI coding tools`,
+  description: `One shared memory across Claude Code, Cursor, Codex, OpenCode, Antigravity and ${integrations.length - 5} other AI coding tools. Pick your tool to see what EGC installs, where, and what it guarantees.`,
   route: 'integrations/',
 });
 

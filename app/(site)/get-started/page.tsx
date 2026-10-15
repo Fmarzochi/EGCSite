@@ -113,12 +113,19 @@ export default function GetStartedPage() {
         {/* Method tabs */}
         <div className="rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden">
           {/* Tab bar: scrollable on mobile, no visible scrollbar */}
-          <div className="install-tab-bar flex border-b border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 overflow-x-auto">
+          <div
+            role="tablist"
+            aria-label="Installation method"
+            className="install-tab-bar flexborder-b border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 overflow-x-auto"
+          >
             <button
               id="tab-npm"
               className="install-tab active relative flex items-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-3 text-sm font-semibold transition-all duration-150 min-h-[44px]"
               data-tab="npm"
-              aria-pressed="true"
+              role="tab"
+              aria-selected="true"
+              aria-controls="panel-npm"
+              tabIndex={0}
               type="button"
             >
               {/* npm icon */}
@@ -139,7 +146,10 @@ export default function GetStartedPage() {
               id="tab-linux"
               className="install-tab relative flex items-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-3 text-sm font-semibold transition-colors duration-150 min-h-[44px]"
               data-tab="linux"
-              aria-pressed="false"
+              role="tab"
+              aria-selected="false"
+              aria-controls="panel-linux"
+              tabIndex={-1}
               type="button"
             >
               {/* Linux (Tux) icon */}
@@ -157,7 +167,10 @@ export default function GetStartedPage() {
               id="tab-macos"
               className="install-tab relative flex items-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-3 text-sm font-semibold transition-colors duration-150 min-h-[44px]"
               data-tab="macos"
-              aria-pressed="false"
+              role="tab"
+              aria-selected="false"
+              aria-controls="panel-macos"
+              tabIndex={-1}
               type="button"
             >
               {/* Apple icon */}
@@ -175,7 +188,10 @@ export default function GetStartedPage() {
               id="tab-windows"
               className="install-tab relative flex items-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-3 text-sm font-semibold transition-colors duration-150 min-h-[44px]"
               data-tab="windows"
-              aria-pressed="false"
+              role="tab"
+              aria-selected="false"
+              aria-controls="panel-windows"
+              tabIndex={-1}
               type="button"
             >
               {/* Windows icon */}
@@ -192,7 +208,13 @@ export default function GetStartedPage() {
           </div>
 
           {/* npm panel (recommended) */}
-          <div id="panel-npm" className="install-panel">
+          <div
+            id="panel-npm"
+            role="tabpanel"
+            aria-labelledby="tab-npm"
+            tabIndex={0}
+            className="install-panel"
+          >
             <div className="p-4 sm:p-5 bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800">
               <div className="flex items-center gap-2 mb-2">
                 <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase bg-egc-100 dark:bg-egc-900/30 text-egc-700 dark:text-egc-400">
@@ -259,7 +281,13 @@ export default function GetStartedPage() {
           </div>
 
           {/* Linux panel */}
-          <div id="panel-linux" className="install-panel hidden">
+          <div
+            id="panel-linux"
+            role="tabpanel"
+            aria-labelledby="tab-linux"
+            tabIndex={0}
+            className="install-panel hidden"
+          >
             <div className="p-4 sm:p-5 bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800">
               <p className="text-sm text-gray-600 dark:text-gray-400">
                 You need{' '}
@@ -298,7 +326,13 @@ export default function GetStartedPage() {
           </div>
 
           {/* macOS panel */}
-          <div id="panel-macos" className="install-panel hidden">
+          <div
+            id="panel-macos"
+            role="tabpanel"
+            aria-labelledby="tab-macos"
+            tabIndex={0}
+            className="install-panel hidden"
+          >
             <div className="p-4 sm:p-5 bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800">
               <p className="text-sm text-gray-600 dark:text-gray-400">
                 You need{' '}
@@ -337,7 +371,13 @@ export default function GetStartedPage() {
           </div>
 
           {/* Windows panel */}
-          <div id="panel-windows" className="install-panel hidden">
+          <div
+            id="panel-windows"
+            role="tabpanel"
+            aria-labelledby="tab-windows"
+            tabIndex={0}
+            className="install-panel hidden"
+          >
             <div className="p-4 sm:p-5 bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800">
               <p className="text-sm text-gray-600 dark:text-gray-400">
                 You need{' '}

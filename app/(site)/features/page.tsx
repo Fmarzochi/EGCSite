@@ -1,4 +1,5 @@
 import DocsShell from '@/components/docs/DocsShell';
+import { integrations } from '@/data/integrations';
 import { docsMetadata } from '@/lib/seo';
 
 // Ported from src/pages/features.astro.
@@ -65,7 +66,7 @@ export default function FeaturesPage() {
             },
             {
               title: 'Multi-tool',
-              desc: 'Works with 28 AI coding tools. Install once and EGC sets up every tool you have installed with what it can read.',
+              desc: `Works with ${integrations.length} AI coding tools. Install once and EGC sets up every tool you have installed with what it can read.`,
               icon: '🔌',
             },
             {

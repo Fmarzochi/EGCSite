@@ -7,7 +7,7 @@ import type { Lang } from '@/lib/lang';
 // zone (lib/lang.ts), and every link then stays in that language.
 
 /** Inner routes that already have a Portuguese version under /pt/. Grows as pages are translated. */
-export const PT_ROUTES: readonly string[] = [];
+export const PT_ROUTES: readonly string[] = ['/get-started/'];
 
 /** Address of `path` in `lang`: the Portuguese page when it exists, the English one otherwise. */
 export function localePath(lang: Lang, path: string): string {

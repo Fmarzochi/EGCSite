@@ -11,7 +11,7 @@
 @media (min-width: 768px) { .docs-mobile-bar { display: none; } }
 .docs-content h1, .docs-content h2, .docs-content h3 { font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif !important; }
 /* rem, not ch: ch changes when the web font swaps in, which shifted the whole column (CLS ~0.2) */
-.docs-content { max-width: 48rem; margin-inline: auto; font-size: 1rem; line-height: 1.7; }
+.docs-content { max-width: 56rem; margin-inline: auto; font-size: 1rem; line-height: 1.7; }
 .docs-content > :first-child { margin-top: 0; }
 .docs-content > section { margin-bottom: 2.5rem; }
 .docs-content > section:last-of-type { margin-bottom: 0; }

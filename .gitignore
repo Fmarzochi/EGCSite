@@ -1,0 +1,25 @@
+# dependencies
+node_modules/
+
+# next.js
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+
+# lighthouse / playwright
+lhci-site/
+.lighthouseci/
+test-results/
+playwright-report/
+
+# env
+.env*
+!.env.example
+
+# vercel
+.vercel
+
+# os / editors
+.DS_Store
+*.log

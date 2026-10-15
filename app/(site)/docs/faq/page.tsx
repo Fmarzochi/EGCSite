@@ -1,0 +1,99 @@
+import DocsShell from '@/components/docs/DocsShell';
+import { docsMetadata } from '@/lib/seo';
+
+// Ported from src/pages/docs/faq.astro.
+
+export const metadata = docsMetadata({
+  title: 'FAQ',
+  description: 'Frequently asked questions about EGC - Extended Global Context.',
+  route: 'docs/faq/',
+});
+
+const faqs = [
+  {
+    q: 'Does EGC send my project data anywhere?',
+    a: 'No. All state is stored locally at ~/.egc/. Nothing is sent to external servers. The MCP servers communicate over stdio with your local AI tool only.',
+  },
+  {
+    q: 'Which tools are supported?',
+    a: '28 tools: Claude Code, Cursor, Codex CLI, Antigravity CLI, OpenCode, Devin Desktop, Amp, VS Code Copilot, Zed, Kiro, Trae, CodeBuddy, JetBrains Junie, Goose, OpenHands, Aider, Warp, Cline, Qwen Code, Kimi Code CLI, Crush, Auggie, Mistral Vibe, Grok Build, Kilo Code CLI, MiMo Code, Pi, and Droid. The installer auto-detects which ones are installed. Gemini CLI, Continue.dev, and Roo Code were retired after their vendors discontinued them, and Amazon Q Developer CLI followed on 2026-09-30 (sign-ups closed, support ending on 2027-04-30, the CLI became the Kiro CLI).',
+  },
+  {
+    q: 'Does the AI need to call get_state manually?',
+    a: "No. The cognitive bootstrap injected by the installer (egc install, then egc init in each project) writes the protocol into each tool's global instruction file. The AI is instructed to call get_state at the start of each session automatically. For tools where the AI instruction file isn't read automatically (varies by tool version), you may need to add the project's CLAUDE.md or equivalent to the session context manually.",
+  },
+  {
+    q: 'Can I use EGC with multiple projects?',
+    a: 'Yes. State is stored per project and per git branch: the project slug comes from the absolute path of the directory, and each branch gets its own state document. Open different projects in different sessions and each gets its own memory.',
+  },
+  {
+    q: 'What happens if the state file gets corrupted?',
+    a: 'Run egc repair to restore managed files. State files are Markdown encrypted at rest; the memory server reads and writes them for you, and its GCM authentication detects corruption on read. Use egc export to read what is stored. You can delete a state file manually to reset a project. The SQLite database is separate from the state files.',
+  },
+  {
+    q: 'Is the prompt library required?',
+    a: "No. It's optional and off by default: the installer asks, and from v1.1.22 egc install --prompt-library adds it without the question. The MCP servers (memory and guardian) work independently of the prompt library.",
+  },
+  {
+    q: 'How is state different from a CLAUDE.md or .cursorrules file?',
+    a: "Those files are static and committed to the repo. EGC's state is dynamic and project-local: the AI writes to it every session, accumulating decisions and preferences over time. They complement each other: static rules for repo conventions, EGC state for session continuity.",
+  },
+  {
+    q: 'Is EGC free?',
+    a: 'Yes. The engine is Apache-2.0 and stays free. If EGC ever offers something paid, it will be a team layer on top of the engine, never the memory on your machine. The direction is written down in docs/VISION.md.',
+  },
+  {
+    q: 'What do core-supported and community-supported mean?',
+    a: 'Every tool gets the same install path and memory protocol. Core-supported tools (Claude Code, Antigravity, Cursor, Codex CLI, OpenCode) are run daily by the maintainer or a steward, and a regression caused by a vendor change is fixed before the next release. Community-supported tools are installed and tested in CI like the rest, but a vendor change waits for a report or a pull request. The list and the criteria live in docs/governance/support-levels.md, and each tool has its own page under Integrations.',
+  },
+  {
+    q: 'Can I contribute?',
+    a: 'Yes. Read CONTRIBUTING.md on GitHub. PRs are welcome for bug fixes, new tool integrations, and prompt library additions.',
+  },
+];
+
+export default function FaqPage() {
+  return (
+    <DocsShell current="faq">
+      <div className="pb-2 mb-8 border-b border-gray-200 dark:border-gray-800">
+        <p className="text-xs font-semibold uppercase tracking-widest text-egc-600 dark:text-egc-400 mb-2">Reference</p>
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-3">FAQ</h1>
+        <p className="text-gray-600 dark:text-gray-400">Frequently asked questions about EGC.</p>
+      </div>
+
+      <section className="mb-10">
+        <div className="space-y-4" id="faq-list">
+          {faqs.map((item, i) => (
+            <details key={item.q} className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 group" open={i === 0}>
+              <summary className="px-4 sm:px-5 py-4 cursor-pointer flex items-center gap-3 justify-between list-none min-h-[44px]">
+                <span className="text-sm font-semibold text-gray-900 dark:text-white">{item.q}</span>
+                <svg className="w-4 h-4 text-gray-400 shrink-0 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </summary>
+              <div className="px-5 pb-4">
+                <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">{item.a}</p>
+              </div>
+            </details>
+          ))}
+        </div>
+      </section>
+
+      <section className="rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 p-6">
+        <p className="text-sm font-semibold text-gray-900 dark:text-white mb-2">Still have questions?</p>
+        <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">Open an issue on GitHub or check the source. Everything is open.</p>
+        <a
+          href="https://github.com/Fmarzochi/EGC/issues"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 py-1 -my-1 text-sm font-semibold text-egc-600 dark:text-egc-400 hover:underline"
+        >
+          Open an issue
+          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+        </a>
+      </section>
+    </DocsShell>
+  );
+}

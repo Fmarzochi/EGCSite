@@ -27,6 +27,16 @@ test.describe('section focus on /docs/memory/', () => {
     const bar = page.locator('.docs-section-bar');
     await expect(bar.locator('.eyebrow')).toHaveText('MCP SERVERS / MEMORY · 3 / 5');
     await expect(bar.getByRole('button', { name: 'Show full page' })).toBeVisible();
+    // Measure once the scroll to the section has settled; under load it can still be moving.
+    let lastY = Number.NaN;
+    await expect
+      .poll(async () => {
+        const y = (await bar.boundingBox())!.y;
+        const settled = y === lastY;
+        lastY = y;
+        return settled;
+      })
+      .toBe(true);
     const header = await page.locator('#site-header').boundingBox();
     const barBox = await bar.boundingBox();
     expect(barBox!.y).toBeGreaterThanOrEqual(header!.y + header!.height - 1);
@@ -112,7 +122,9 @@ test.describe('section picker on a phone', () => {
     await picker.locator('nav a[href="#tools"]').click();
     await expect.poll(() => visibleSections(page)).toEqual(['tools']);
     await expect(picker).not.toHaveAttribute('open', '');
-    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+    );
     expect(overflow).toBe(0);
   });
 });

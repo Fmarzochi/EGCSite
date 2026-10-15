@@ -1,5 +1,6 @@
 import type { CSSProperties } from 'react';
 import Link from 'next/link';
+import { Icon } from '@/components/brand/icons';
 import HomeBehavior from '@/components/home/HomeBehavior';
 import { integrations } from '@/data/integrations';
 import { withBase } from '@/lib/base';
@@ -32,8 +33,21 @@ const featuredIntegrations = featuredSlugs.map((slug) => {
 // Texts the behaviour script swaps in after load: copy feedback, menu label, feature name.
 const RUNTIME_KEYS = /^(ui\.|a\.menu|f\d\.name$)/;
 
+// The home menu lists the same pages, in the same order, as the Navbar of the inner pages,
+// so the menu reads the same everywhere; only the labels follow the page language.
+const NAV_PAGES = [
+  { href: '/', key: 'nav.home' },
+  { href: '/features/', key: 'nav.features' },
+  { href: '/integrations/', key: 'nav.integrations' },
+  { href: '/docs/memory/', key: 'nav.docs' },
+  { href: '/contributors/', key: 'ft.hof' },
+];
+const GITHUB = 'https://github.com/Fmarzochi/EGC';
+const DISCORD = 'https://discord.gg/FmXbgUmdmM';
+
 export default function HomePage({ lang }: { lang: Lang }) {
   const tx = homeTranslator(lang);
+  const homeHref = withBase(lang === 'pt' ? '' : 'en/');
   const runtimeTexts = Object.fromEntries(
     Object.entries(homeDictionary(lang)).filter(([key]) => RUNTIME_KEYS.test(key)),
   );
@@ -96,40 +110,37 @@ export default function HomePage({ lang }: { lang: Lang }) {
             <span>EGC</span>
           </a>
           <nav className="nav" data-i18n-attr="aria-label:a.navMain" aria-label={tx('a.navMain')}>
-            <a href="#demo" data-i18n="nav.demo">
-              {tx('nav.demo')}
-            </a>{' '}
-            <a href="#funcoes" data-i18n="nav.features">
-              {tx('nav.features')}
-            </a>{' '}
-            <a href="#integracoes" data-i18n="nav.integrations">
-              {tx('nav.integrations')}
-            </a>{' '}
-            <a href="#instalar" data-i18n="nav.install">
-              {tx('nav.install')}
-            </a>{' '}
-            <Link prefetch={false} href="/docs/memory/" data-i18n="nav.docs">
-              {tx('nav.docs')}
-            </Link>
-          </nav>
-          <div className="hdr__actions">
+            {NAV_PAGES.map((item) =>
+              item.href === '/' ? (
+                <a key={item.key} href={homeHref} aria-current="page" data-i18n={item.key}>
+                  {tx(item.key)}
+                </a>
+              ) : (
+                <Link key={item.key} prefetch={false} href={item.href} data-i18n={item.key}>
+                  {tx(item.key)}
+                </Link>
+              ),
+            )}
             <a
-              className="hdr__gh"
-              href="https://github.com/Fmarzochi/EGC"
+              href={GITHUB}
               target="_blank"
               rel="noopener noreferrer"
               data-i18n-attr="aria-label:a.gh"
               aria-label={tx('a.gh')}
             >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                aria-hidden="true"
-              >
-                <path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.2.5-2.3 1.3-3.1-.2-.4-.6-1.6 0-3.2 0 0 1-.3 3.4 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.8.1 3.2.8.8 1.3 1.9 1.3 3.1 0 4.6-2.8 5.6-5.5 5.9.5.4.9 1.1.9 2.3v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3" />
-              </svg>
+              GitHub
+            </a>
+          </nav>
+          <div className="hdr__actions">
+            <a
+              className="hdr__gh"
+              href={DISCORD}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-i18n-attr="aria-label:a.discord"
+              aria-label={tx('a.discord')}
+            >
+              <Icon name="discord" size={20} />
             </a>{' '}
             <a className="btn btn--sm hdr__cta" href="#instalar">
               <span data-i18n="nav.cta">{tx('nav.cta')}</span>
@@ -166,38 +177,29 @@ export default function HomePage({ lang }: { lang: Lang }) {
       <div className="mnav" id="mnav" data-open="false" hidden>
         <nav data-i18n-attr="aria-label:a.navMobile" aria-label={tx('a.navMobile')}>
           <ul>
+            {NAV_PAGES.map((item, index) => {
+              const label = (
+                <>
+                  <b data-i18n={item.key}>{tx(item.key)}</b>
+                  <span>{String(index + 1).padStart(2, '0')}</span>
+                </>
+              );
+              return (
+                <li key={item.key}>
+                  {item.href === '/' ? (
+                    <a href={homeHref} aria-current="page">
+                      {label}
+                    </a>
+                  ) : (
+                    <Link prefetch={false} href={item.href}>
+                      {label}
+                    </Link>
+                  )}
+                </li>
+              );
+            })}
             <li>
-              <a href="#demo">
-                <b data-i18n="nav.demo">{tx('nav.demo')}</b>
-                <span>01</span>
-              </a>
-            </li>
-            <li>
-              <a href="#funcoes">
-                <b data-i18n="nav.features">{tx('nav.features')}</b>
-                <span>02</span>
-              </a>
-            </li>
-            <li>
-              <a href="#integracoes">
-                <b data-i18n="nav.integrations">{tx('nav.integrations')}</b>
-                <span>03</span>
-              </a>
-            </li>
-            <li>
-              <a href="#instalar">
-                <b data-i18n="nav.install">{tx('nav.install')}</b>
-                <span>04</span>
-              </a>
-            </li>
-            <li>
-              <Link prefetch={false} href="/docs/memory/">
-                <b data-i18n="nav.docs">{tx('nav.docs')}</b>
-                <span>↗</span>
-              </Link>
-            </li>
-            <li>
-              <a href="https://github.com/Fmarzochi/EGC" target="_blank" rel="noopener noreferrer">
+              <a href={GITHUB} target="_blank" rel="noopener noreferrer">
                 <b>GitHub</b>
                 <span>↗</span>
               </a>
@@ -2684,7 +2686,9 @@ cd EGC; .\scripts\install.ps1"
                   </Link>
                 </li>
                 <li>
-                  <Link prefetch={false} href="/docs/guardian/">Guardian</Link>
+                  <Link prefetch={false} href="/docs/guardian/">
+                    Guardian
+                  </Link>
                 </li>
                 <li>
                   <Link prefetch={false} href="/docs/mcp/" data-i18n="ft.mcp">

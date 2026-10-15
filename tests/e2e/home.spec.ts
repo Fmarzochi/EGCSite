@@ -2,9 +2,26 @@ import { expect, test } from './fixtures';
 
 // Sections 11.1 (language by time zone) and 11.3 (home) of the brief.
 
-const PT_ZONES = ['America/Sao_Paulo', 'America/Manaus', 'America/Noronha', 'Europe/Lisbon', 'Atlantic/Azores', 'Africa/Luanda', 'Africa/Maputo', 'Atlantic/Cape_Verde', 'Asia/Dili'];
-const EN_ZONES = ['America/New_York', 'Europe/Berlin', 'America/Argentina/Buenos_Aires', 'Asia/Tokyo', 'Europe/London'];
-const LANGUAGE_SWITCH = '[data-lang], .lang-switch, .lang, [aria-label*="idioma" i], [aria-label*="language" i]';
+const PT_ZONES = [
+  'America/Sao_Paulo',
+  'America/Manaus',
+  'America/Noronha',
+  'Europe/Lisbon',
+  'Atlantic/Azores',
+  'Africa/Luanda',
+  'Africa/Maputo',
+  'Atlantic/Cape_Verde',
+  'Asia/Dili',
+];
+const EN_ZONES = [
+  'America/New_York',
+  'Europe/Berlin',
+  'America/Argentina/Buenos_Aires',
+  'Asia/Tokyo',
+  'Europe/London',
+];
+const LANGUAGE_SWITCH =
+  '[data-lang], .lang-switch, .lang, [aria-label*="idioma" i], [aria-label*="language" i]';
 
 const heroTitle = async (page: import('@playwright/test').Page) =>
   (await page.locator('#hero-title').innerText()).replace(/\s+/g, ' ').trim();
@@ -105,15 +122,28 @@ test.describe('home', () => {
     const button = page.locator('.hero [data-copy]');
     await button.click();
     await expect(button).toHaveAttribute('data-state', 'done');
-    expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(await button.getAttribute('data-copy'));
+    expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(
+      await button.getAttribute('data-copy'),
+    );
   });
 
-  test('the header marks the section in view and gets a background', async ({ page }) => {
+  test('the header gets a background and links the same pages as the inner menu', async ({
+    page,
+  }) => {
     await page.goto('./');
     await expect(page.locator('.hdr')).toHaveAttribute('data-scrolled', 'false');
     await page.locator('#funcoes').evaluate((el) => el.scrollIntoView({ block: 'start' }));
     await expect(page.locator('.hdr')).toHaveAttribute('data-scrolled', 'true');
-    await expect(page.locator('.nav a[href="#funcoes"]')).toHaveAttribute('aria-current', 'true');
+    await expect(page.locator('.nav a[aria-current="page"]')).toHaveText('Início');
+
+    const targets = (selector: string) =>
+      page.$$eval(selector, (links) =>
+        links.map((a) => (a as HTMLAnchorElement).pathname + (a as HTMLAnchorElement).host),
+      );
+    const home = await targets('.nav a');
+    await page.goto('features/');
+    const inner = await targets('header nav[aria-label="Main navigation"] a');
+    expect(home.slice(1)).toEqual(inner.slice(1));
   });
 
   test.describe('with reduced motion', () => {
@@ -121,17 +151,26 @@ test.describe('home', () => {
     test('everything is visible', async ({ page }) => {
       await page.goto('./');
       await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-      const hidden = await page.$$eval('.rv, .metric', (els) => els.filter((el) => getComputedStyle(el).opacity !== '1').length);
+      const hidden = await page.$$eval(
+        '.rv, .metric',
+        (els) => els.filter((el) => getComputedStyle(el).opacity !== '1').length,
+      );
       expect(hidden).toBe(0);
     });
   });
 });
 
 test('without JavaScript the home is fully visible', async ({ browser }) => {
-  const context = await browser.newContext({ javaScriptEnabled: false, timezoneId: 'America/Sao_Paulo' });
+  const context = await browser.newContext({
+    javaScriptEnabled: false,
+    timezoneId: 'America/Sao_Paulo',
+  });
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:4173/EGCSite/');
-  const hidden = await page.$$eval('.rv, .metric', (els) => els.filter((el) => getComputedStyle(el).opacity !== '1').length);
+  const hidden = await page.$$eval(
+    '.rv, .metric',
+    (els) => els.filter((el) => getComputedStyle(el).opacity !== '1').length,
+  );
   expect(hidden).toBe(0);
   await expect(page.locator('.faq details').first()).toHaveAttribute('open', '');
   await context.close();

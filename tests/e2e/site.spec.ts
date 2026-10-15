@@ -20,7 +20,9 @@ test('every internal link, image and stylesheet resolves', async ({ page, reques
   for (const path of pages) {
     await page.goto(`${ORIGIN}${path}`, { waitUntil: 'domcontentloaded' });
     const urls = await page.$$eval('a[href], img[src], link[href], script[src]', (els) =>
-      els.map((el) => (el as HTMLAnchorElement).href || (el as HTMLImageElement).src).filter(Boolean),
+      els
+        .map((el) => (el as HTMLAnchorElement).href || (el as HTMLImageElement).src)
+        .filter(Boolean),
     );
     for (const url of urls) {
       const parsed = new URL(url);
@@ -54,16 +56,34 @@ test('every page has one h1, a title, a skip link and lang', async ({ page, requ
   }
 });
 
-const LAYOUT_ROUTES = ['', 'en/', 'get-started/', 'features/', 'docs/memory/', 'docs/cli/', 'integrations/', 'integrations/claude-code/', 'contributors/', 'privacy/'];
+const LAYOUT_ROUTES = [
+  '',
+  'en/',
+  'get-started/',
+  'features/',
+  'docs/memory/',
+  'docs/cli/',
+  'integrations/',
+  'integrations/claude-code/',
+  'contributors/',
+  'privacy/',
+];
 
 for (const width of [320, 390, 768, 1024, 1440, 1920]) {
   test(`no horizontal scroll at ${width}px`, async ({ browser }) => {
-    const context = await browser.newContext({ viewport: { width, height: 900 }, timezoneId: 'America/Sao_Paulo' });
+    const context = await browser.newContext({
+      viewport: { width, height: 900 },
+      timezoneId: 'America/Sao_Paulo',
+    });
     const page = await context.newPage();
-    await page.route(/gc\.zgo\.at|goatcounter\.com|abacus\.jasoncameron\.dev/, (route) => route.abort());
+    await page.route(/gc\.zgo\.at|goatcounter\.com|abacus\.jasoncameron\.dev/, (route) =>
+      route.abort(),
+    );
     for (const route of LAYOUT_ROUTES) {
       await page.goto(`${ORIGIN}/EGCSite/${route}`, { waitUntil: 'domcontentloaded' });
-      const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+      const overflow = await page.evaluate(
+        () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+      );
       expect.soft(overflow, `/${route} at ${width}px`).toBe(0);
     }
     await context.close();
@@ -73,7 +93,10 @@ for (const width of [320, 390, 768, 1024, 1440, 1920]) {
 test('html and body clip horizontal overflow instead of hiding it', async ({ page }) => {
   for (const route of ['', 'docs/memory/', 'contributors/']) {
     await page.goto(route);
-    const values = await page.evaluate(() => [getComputedStyle(document.documentElement).overflowX, getComputedStyle(document.body).overflowX]);
+    const values = await page.evaluate(() => [
+      getComputedStyle(document.documentElement).overflowX,
+      getComputedStyle(document.body).overflowX,
+    ]);
     expect(values).not.toContain('hidden');
   }
 });

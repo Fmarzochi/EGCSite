@@ -1,26 +1,31 @@
 import type { Metadata, Viewport } from 'next';
 import type { ReactNode } from 'react';
 import Script from 'next/script';
-import en from '@/dictionaries/en.json';
-import pt from '@/dictionaries/pt.json';
+import '@/styles/home.css';
 import { canonicalUrl, withBase } from '@/lib/base';
 import { jakarta, jetbrains } from '@/lib/fonts';
+import { homeTranslator } from '@/lib/home-i18n';
 import { type Lang, langRedirectScript } from '@/lib/lang';
 import { pageMetadata, softwareApplicationJsonLd } from '@/lib/seo';
 
 // Shared shell of the two home root layouts, / (pt-BR) and /en/ (en). The home has its own
 // header, footer and styles (src/pages/index.astro), so it does not use the site layout.
 
-// Texts come from dictionaries/*.json, copied from the Astro home by scripts/extract-i18n.mjs.
+const metaFor = (lang: Lang, route: string) => {
+  const tx = homeTranslator(lang);
+  return { title: tx('meta.title'), description: tx('meta.desc'), route };
+};
 const META: Record<Lang, { title: string; description: string; route: string }> = {
-  pt: { title: pt['meta.title'], description: pt['meta.desc'], route: '' },
-  en: { title: en['meta.title'], description: en['meta.desc'], route: 'en/' },
+  pt: metaFor('pt', ''),
+  en: metaFor('en', 'en/'),
 };
 
 export function homeMetadata(lang: Lang): Metadata {
   const base = pageMetadata(META[lang]);
   return {
     ...base,
+    // The Astro home used the short form of the title on Twitter: the part before " · ".
+    twitter: { ...base.twitter, title: META[lang].title.split(' · ')[0] },
     alternates: {
       canonical: canonicalUrl(META[lang].route),
       languages: { 'pt-BR': canonicalUrl(''), en: canonicalUrl('en/'), 'x-default': canonicalUrl('') },

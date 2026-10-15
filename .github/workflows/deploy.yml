@@ -10,10 +10,9 @@ on:
     - cron: '0 6 * * 1'
     - cron: '0 6 1 * *'
 
-# Phase 4 adds the Hall of Fame champion sync, which commits data/champion-history.json
-# back to the repository and needs contents: write.
+# contents: write lets the Hall of Fame step commit data/champion-history.json back.
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -27,8 +26,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
 
       - name: Setup Node
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
@@ -38,6 +35,21 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Archive last month's Hall of Fame champion
+        run: node scripts/sync-champion-history.mjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Commit champion history if it changed
+        run: |
+          if ! git diff --quiet -- data/champion-history.json; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data/champion-history.json
+            git commit -m "chore(hall-of-fame): archive last month's champion"
+            git push
+          fi
 
       - name: Build
         run: npm run build

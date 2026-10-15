@@ -1,3 +1,4 @@
+import { highlights } from '@/data/contributors';
 import { integrations } from '@/data/integrations';
 import { releases } from '@/data/releases';
 import { canonicalUrl, PRODUCTION_BASE } from '@/lib/base';
@@ -22,6 +23,8 @@ export const SITEMAP_ROUTES = [
   'docs/security/',
   'integrations/',
   ...integrations.map((integration) => `integrations/${integration.slug}/`),
+  'contributors/',
+  ...Object.keys(highlights).map((login) => `contributors/${login}/`),
 ];
 
 function escapeXml(value: string): string {

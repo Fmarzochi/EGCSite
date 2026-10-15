@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { integrations } from '@/data/integrations';
 import { canonicalUrl, PRODUCTION_BASE, withBase } from '@/lib/base';
+import { languageAlternates } from '@/lib/site-i18n';
 
 export const DEFAULT_DESCRIPTION =
   'EGC - Extended Global Context. Your AI remembers your project across sessions and tools.';
@@ -19,7 +20,7 @@ export function pageMetadata({ title, description = DEFAULT_DESCRIPTION, route }
   return {
     title,
     description,
-    alternates: { canonical: url },
+    alternates: { canonical: url, languages: languageAlternates(route) },
     openGraph: {
       type: 'website',
       url,

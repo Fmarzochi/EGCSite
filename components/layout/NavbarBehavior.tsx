@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import { isolateBackground, trapTab } from '@/lib/isolate';
+import { documentLang, siteText } from '@/lib/site-i18n';
 
 // Mobile drawer and hide-on-scroll header for Navbar.tsx, ported from the Navbar.astro script.
 // It enhances the server-rendered markup and renders nothing itself.
@@ -21,7 +22,7 @@ export default function NavbarBehavior() {
 
     function openMenu() {
       button!.setAttribute('aria-expanded', 'true');
-      button!.setAttribute('aria-label', 'Close menu');
+      button!.setAttribute('aria-label', siteText(documentLang()).nav.closeMenu);
       menu!.classList.remove(...hidden);
       menu!.classList.add(...shown);
       menu!.removeAttribute('inert');
@@ -56,7 +57,7 @@ export default function NavbarBehavior() {
       restoreBackground?.();
       restoreBackground = null;
       button!.setAttribute('aria-expanded', 'false');
-      button!.setAttribute('aria-label', 'Open menu');
+      button!.setAttribute('aria-label', siteText(documentLang()).nav.openMenu);
       menu!.classList.add(...hidden);
       menu!.classList.remove(...shown);
       menu!.setAttribute('inert', '');

@@ -5,6 +5,7 @@ import HomeBehavior from '@/components/home/HomeBehavior';
 import { integrations } from '@/data/integrations';
 import { withBase } from '@/lib/base';
 import { homeDictionary, homeTranslator } from '@/lib/home-i18n';
+import { localePath } from '@/lib/site-i18n';
 import type { Lang } from '@/lib/lang';
 
 // Links to the other root layouts (inner pages, here) always reload the page, so none of them
@@ -116,7 +117,12 @@ export default function HomePage({ lang }: { lang: Lang }) {
                   {tx(item.key)}
                 </a>
               ) : (
-                <Link key={item.key} prefetch={false} href={item.href} data-i18n={item.key}>
+                <Link
+                  key={item.key}
+                  prefetch={false}
+                  href={localePath(lang, item.href)}
+                  data-i18n={item.key}
+                >
                   {tx(item.key)}
                 </Link>
               ),
@@ -191,7 +197,7 @@ export default function HomePage({ lang }: { lang: Lang }) {
                       {label}
                     </a>
                   ) : (
-                    <Link prefetch={false} href={item.href}>
+                    <Link prefetch={false} href={localePath(lang, item.href)}>
                       {label}
                     </Link>
                   )}
@@ -1041,7 +1047,11 @@ export default function HomePage({ lang }: { lang: Lang }) {
                           data-i18n="f1.proof"
                           dangerouslySetInnerHTML={{ __html: tx('f1.proof') }}
                         />
-                        <Link prefetch={false} className="link-arrow" href="/docs/memory/">
+                        <Link
+                          prefetch={false}
+                          className="link-arrow"
+                          href={localePath(lang, '/docs/memory/')}
+                        >
                           <span data-i18n="f1.link">{tx('f1.link')}</span>
                           <svg
                             width="16"
@@ -1211,7 +1221,11 @@ export default function HomePage({ lang }: { lang: Lang }) {
                           data-i18n="f2.proof"
                           dangerouslySetInnerHTML={{ __html: tx('f2.proof') }}
                         />
-                        <Link prefetch={false} className="link-arrow" href="/docs/mcp/">
+                        <Link
+                          prefetch={false}
+                          className="link-arrow"
+                          href={localePath(lang, '/docs/mcp/')}
+                        >
                           <span data-i18n="f2.link">{tx('f2.link')}</span>
                           <svg
                             width="16"
@@ -1335,7 +1349,11 @@ export default function HomePage({ lang }: { lang: Lang }) {
                           data-i18n="f3.proof"
                           dangerouslySetInnerHTML={{ __html: tx('f3.proof') }}
                         />
-                        <Link prefetch={false} className="link-arrow" href="/docs/guardian/">
+                        <Link
+                          prefetch={false}
+                          className="link-arrow"
+                          href={localePath(lang, '/docs/guardian/')}
+                        >
                           <span data-i18n="f3.link">{tx('f3.link')}</span>
                           <svg
                             width="16"
@@ -1550,7 +1568,11 @@ export default function HomePage({ lang }: { lang: Lang }) {
               <ul className="tgrid tgrid--featured">
                 {featuredIntegrations.map((entry) => (
                   <li key={entry.slug}>
-                    <Link prefetch={false} className="tile" href={`/integrations/${entry.slug}/`}>
+                    <Link
+                      prefetch={false}
+                      className="tile"
+                      href={localePath(lang, `/integrations/${entry.slug}/`)}
+                    >
                       <img
                         src={withBase(`tools/${entry.icon}`)}
                         alt=""
@@ -1567,7 +1589,11 @@ export default function HomePage({ lang }: { lang: Lang }) {
                 ))}
               </ul>
               <div className="int__more">
-                <Link prefetch={false} className="link-arrow" href="/integrations/">
+                <Link
+                  prefetch={false}
+                  className="link-arrow"
+                  href={localePath(lang, '/integrations/')}
+                >
                   <span data-i18n="int.allSite">{tx('int.allSite')}</span>
                   <svg
                     width="16"
@@ -1970,7 +1996,11 @@ export default function HomePage({ lang }: { lang: Lang }) {
                   </a>
                 </li>
                 <li>
-                  <Link prefetch={false} href="/docs/security/" data-i18n="prv.model">
+                  <Link
+                    prefetch={false}
+                    href={localePath(lang, '/docs/security/')}
+                    data-i18n="prv.model"
+                  >
                     {tx('prv.model')}
                   </Link>
                 </li>
@@ -2160,7 +2190,11 @@ cd EGC; .\scripts\install.ps1"
                 </pre>
               </div>
               <div className="term__bar">
-                <Link prefetch={false} className="link-arrow" href="/get-started/">
+                <Link
+                  prefetch={false}
+                  className="link-arrow"
+                  href={localePath(lang, '/get-started/')}
+                >
                   <span data-i18n="ins.guide">{tx('ins.guide')}</span>
                   <svg
                     width="16"
@@ -2235,7 +2269,7 @@ cd EGC; .\scripts\install.ps1"
               <p className="lede rv" style={{ marginTop: '24px' }}>
                 <span data-i18n="faq.more">{tx('faq.more')}</span>
                 <br />
-                <Link prefetch={false} className="link-arrow" href="/docs/faq/">
+                <Link prefetch={false} className="link-arrow" href={localePath(lang, '/docs/faq/')}>
                   <span data-i18n="faq.link">{tx('faq.link')}</span>
                   <svg
                     width="16"
@@ -2676,32 +2710,48 @@ cd EGC; .\scripts\install.ps1"
               <h2 data-i18n="ft.docs">{tx('ft.docs')}</h2>
               <ul>
                 <li>
-                  <Link prefetch={false} href="/get-started/" data-i18n="ft.guide">
+                  <Link
+                    prefetch={false}
+                    href={localePath(lang, '/get-started/')}
+                    data-i18n="ft.guide"
+                  >
                     {tx('ft.guide')}
                   </Link>
                 </li>
                 <li>
-                  <Link prefetch={false} href="/docs/memory/" data-i18n="ft.memory">
+                  <Link
+                    prefetch={false}
+                    href={localePath(lang, '/docs/memory/')}
+                    data-i18n="ft.memory"
+                  >
                     {tx('ft.memory')}
                   </Link>
                 </li>
                 <li>
-                  <Link prefetch={false} href="/docs/guardian/">
+                  <Link prefetch={false} href={localePath(lang, '/docs/guardian/')}>
                     Guardian
                   </Link>
                 </li>
                 <li>
-                  <Link prefetch={false} href="/docs/mcp/" data-i18n="ft.mcp">
+                  <Link prefetch={false} href={localePath(lang, '/docs/mcp/')} data-i18n="ft.mcp">
                     {tx('ft.mcp')}
                   </Link>
                 </li>
                 <li>
-                  <Link prefetch={false} href="/docs/architecture/" data-i18n="ft.arch">
+                  <Link
+                    prefetch={false}
+                    href={localePath(lang, '/docs/architecture/')}
+                    data-i18n="ft.arch"
+                  >
                     {tx('ft.arch')}
                   </Link>
                 </li>
                 <li>
-                  <Link prefetch={false} href="/integrations/" data-i18n="ft.int">
+                  <Link
+                    prefetch={false}
+                    href={localePath(lang, '/integrations/')}
+                    data-i18n="ft.int"
+                  >
                     {tx('ft.int')}
                   </Link>
                 </li>
@@ -2751,7 +2801,11 @@ cd EGC; .\scripts\install.ps1"
                   </a>
                 </li>
                 <li>
-                  <Link prefetch={false} href="/contributors/" data-i18n="ft.hof">
+                  <Link
+                    prefetch={false}
+                    href={localePath(lang, '/contributors/')}
+                    data-i18n="ft.hof"
+                  >
                     {tx('ft.hof')}
                   </Link>
                 </li>
@@ -2796,7 +2850,11 @@ cd EGC; .\scripts\install.ps1"
                   </a>
                 </li>
                 <li>
-                  <Link prefetch={false} href="/privacy/" data-i18n="ft.privacy">
+                  <Link
+                    prefetch={false}
+                    href={localePath(lang, '/privacy/')}
+                    data-i18n="ft.privacy"
+                  >
                     {tx('ft.privacy')}
                   </Link>
                 </li>

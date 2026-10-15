@@ -2,6 +2,7 @@ import { highlights } from '@/data/contributors';
 import { integrations } from '@/data/integrations';
 import { releases } from '@/data/releases';
 import { canonicalUrl, PRODUCTION_BASE } from '@/lib/base';
+import { languageAlternates, PT_ROUTES } from '@/lib/site-i18n';
 
 // XML for /rss.xml, /sitemap-index.xml and /sitemap-0.xml, generated at build time.
 // Same shape as the files @astrojs/rss and @astrojs/sitemap produced, so feed readers
@@ -25,6 +26,7 @@ export const SITEMAP_ROUTES = [
   ...integrations.map((integration) => `integrations/${integration.slug}/`),
   'contributors/',
   ...Object.keys(highlights).map((login) => `contributors/${login}/`),
+  ...PT_ROUTES.map((path) => `pt${path}`),
 ];
 
 function escapeXml(value: string): string {
@@ -55,11 +57,15 @@ export function sitemapXml(): string {
     `<xhtml:link rel="alternate" hreflang="pt-BR" href="${canonicalUrl('')}"/>` +
     `<xhtml:link rel="alternate" hreflang="en" href="${canonicalUrl('en/')}"/>` +
     `<xhtml:link rel="alternate" hreflang="x-default" href="${canonicalUrl('')}"/>`;
-  const urls = SITEMAP_ROUTES.map((route) => canonicalUrl(route))
-    .sort()
-    .map((loc) => {
-      const isHome = loc === canonicalUrl('') || loc === canonicalUrl('en/');
-      return `<url><loc>${loc}</loc>${isHome ? homeAlternates : ''}</url>`;
+  const pairAlternates = (route: string) =>
+    Object.entries(languageAlternates(route) ?? {})
+      .map(([lang, href]) => `<xhtml:link rel="alternate" hreflang="${lang}" href="${href}"/>`)
+      .join('');
+  const urls = SITEMAP_ROUTES.map((route) => ({ route, loc: canonicalUrl(route) }))
+    .sort((a, b) => (a.loc < b.loc ? -1 : a.loc > b.loc ? 1 : 0))
+    .map(({ route, loc }) => {
+      const isHome = route === '' || route === 'en/';
+      return `<url><loc>${loc}</loc>${isHome ? homeAlternates : pairAlternates(route)}</url>`;
     })
     .join('');
   return `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">${urls}</urlset>`;

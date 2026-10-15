@@ -2,9 +2,13 @@
 
 import { useEffect } from 'react';
 import { isolateBackground, trapTab } from '@/lib/isolate';
+import { documentLang, siteText } from '@/lib/site-i18n';
 
 // Client behaviour of DocsShell, ported from the DocsLayout.astro script: generated TOC,
 // copy buttons, section focus view and the mobile sidebar drawer. Renders nothing itself.
+
+/** Texts this script writes, in the language of the page. */
+const ui = () => siteText(documentLang()).behavior;
 
 function setupDocsContent() {
   const content = document.querySelector<HTMLElement>('.docs-content');
@@ -44,8 +48,8 @@ function setupDocsContent() {
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'docs-copy-code';
-    button.textContent = 'Copy';
-    button.setAttribute('aria-label', 'Copy code');
+    button.textContent = ui().copy;
+    button.setAttribute('aria-label', ui().copyCode);
     button.setAttribute('aria-live', 'polite');
     wrapper.appendChild(button);
   }
@@ -83,7 +87,7 @@ function markActiveSection(id: string | undefined) {
 
 function sectionLink(section: HTMLElement | undefined, rel: 'prev' | 'next') {
   if (!section) return '';
-  const caption = rel === 'prev' ? '← Previous section' : 'Next section →';
+  const caption = rel === 'prev' ? ui().previousSection : ui().nextSection;
   return `<a href="#${section.id}" rel="${rel}"><span>${caption}</span><strong></strong></a>`;
 }
 
@@ -97,13 +101,14 @@ function renderSectionChrome(root: HTMLElement, sections: HTMLElement[], active:
   const index = sections.indexOf(active);
   const bar = document.createElement('div');
   bar.className = 'docs-section-bar';
-  bar.innerHTML = '<span class="eyebrow"></span><button type="button" class="docs-section-full">Show full page</button>';
+  bar.innerHTML = '<span class="eyebrow"></span><button type="button" class="docs-section-full"></button>';
+  bar.querySelector('button')!.textContent = ui().showFullPage;
   const eyebrow = root.querySelector('.hero .eyebrow')?.textContent?.trim();
   bar.querySelector('.eyebrow')!.textContent = `${eyebrow ? `${eyebrow} · ` : ''}${index + 1} / ${sections.length}`;
   active.before(bar);
   const nav = document.createElement('nav');
   nav.className = 'docs-section-nav';
-  nav.setAttribute('aria-label', 'Page sections');
+  nav.setAttribute('aria-label', ui().pageSections);
   const previous = sections[index - 1];
   const next = sections[index + 1];
   nav.innerHTML = sectionLink(previous, 'prev') + sectionLink(next, 'next');
@@ -199,13 +204,13 @@ function setupSidebar(): () => void {
     sidebar!.classList.add('translate-x-0', 'visible', 'pointer-events-auto');
     sidebar!.setAttribute('role', 'dialog');
     sidebar!.setAttribute('aria-modal', 'true');
-    sidebar!.setAttribute('aria-label', 'Documentation navigation');
+    sidebar!.setAttribute('aria-label', siteText(documentLang()).docs.sidebar);
     backdrop!.classList.remove('opacity-0', 'pointer-events-none', 'invisible');
     backdrop!.classList.add('opacity-100', 'pointer-events-auto', 'visible');
     iconOpen?.classList.add('hidden');
     iconClose?.classList.remove('hidden');
     toggleBtn!.setAttribute('aria-expanded', 'true');
-    toggleBtn!.setAttribute('aria-label', 'Close docs menu');
+    toggleBtn!.setAttribute('aria-label', siteText(documentLang()).docs.closeMenu);
     document.body.classList.add('docs-sidebar-open');
     sidebar!.focus();
     restoreBackground = isolateBackground([sidebar!, toggleBtn!, backdrop!]);
@@ -227,7 +232,7 @@ function setupSidebar(): () => void {
     iconOpen?.classList.remove('hidden');
     iconClose?.classList.add('hidden');
     toggleBtn!.setAttribute('aria-expanded', 'false');
-    toggleBtn!.setAttribute('aria-label', 'Open docs menu');
+    toggleBtn!.setAttribute('aria-label', siteText(documentLang()).docs.openMenu);
     document.body.classList.remove('docs-sidebar-open');
     if (restoreFocus) toggleBtn!.focus();
   }
@@ -295,15 +300,15 @@ export default function DocsBehavior() {
       const orig = btn.textContent;
       try {
         await copyText(text);
-        btn.textContent = 'Copied ✓';
-        btn.setAttribute('aria-label', 'Code copied');
+        btn.textContent = ui().copied;
+        btn.setAttribute('aria-label', ui().codeCopied);
       } catch {
-        btn.textContent = 'Copy failed';
-        btn.setAttribute('aria-label', 'Copy failed');
+        btn.textContent = ui().copyFailed;
+        btn.setAttribute('aria-label', ui().copyFailed);
       }
       setTimeout(() => {
         btn.textContent = orig;
-        btn.setAttribute('aria-label', 'Copy code');
+        btn.setAttribute('aria-label', ui().copyCode);
       }, 1500);
     };
 

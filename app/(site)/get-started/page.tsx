@@ -1,0 +1,561 @@
+import Link from 'next/link';
+import '@/styles/get-started.css';
+import DocsShell from '@/components/docs/DocsShell';
+import InstallTabsBehavior from '@/components/docs/InstallTabsBehavior';
+import { docsMetadata } from '@/lib/seo';
+
+// Ported from src/pages/get-started.astro.
+
+export const metadata = docsMetadata({
+  title: 'Get Started',
+  description:
+    'Install EGC in under 2 minutes. Works with Claude Code, Cursor, Codex, Antigravity, and more.',
+  route: 'get-started/',
+});
+
+export default function GetStartedPage() {
+  return (
+    <DocsShell current="get-started">
+      <div className="pb-2 mb-8 border-b border-gray-200 dark:border-gray-800">
+        <p className="text-xs font-semibold uppercase tracking-widest text-egc-600 dark:text-egc-400 mb-2">
+          Getting Started
+        </p>
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-3">
+          Installation
+        </h1>
+        <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
+          Install EGC once and it works across every AI coding tool you already use.
+        </p>
+      </div>
+
+      {/* Requirements */}
+      <section className="mb-10 install-step" data-step="01 / PREPARE">
+        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Requirements</h2>
+        <p className="sm:hidden text-xs text-gray-400 mb-2">
+          Scroll the table horizontally for all columns.
+        </p>
+        <div
+          className="table-scroll rounded-xl border border-gray-200 dark:border-gray-800 w-full"
+          role="region"
+          aria-label="Installation requirements"
+          tabIndex={0}
+        >
+          <table className="w-full text-sm min-w-[480px]">
+            <thead>
+              <tr className="bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+                <th
+                  scope="col"
+                  className="px-4 py-3 text-left font-semibold text-gray-700 dark:text-gray-300"
+                >
+                  Requirement
+                </th>
+                <th
+                  scope="col"
+                  className="px-4 py-3 text-left font-semibold text-gray-700 dark:text-gray-300"
+                >
+                  Version
+                </th>
+                <th
+                  scope="col"
+                  className="px-4 py-3 text-left font-semibold text-gray-700 dark:text-gray-300"
+                >
+                  Check
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
+              <tr className="bg-white dark:bg-gray-950">
+                <td className="px-4 py-3 text-gray-700 dark:text-gray-300">Node.js</td>
+                <td className="px-4 py-3">
+                  <code className="text-xs bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded font-mono">
+                    20+
+                  </code>
+                </td>
+                <td className="px-4 py-3 font-mono text-xs text-gray-500 dark:text-gray-400">
+                  node --version
+                </td>
+              </tr>
+              <tr className="bg-gray-50/50 dark:bg-gray-900/30">
+                <td className="px-4 py-3 text-gray-700 dark:text-gray-300">Git</td>
+                <td className="px-4 py-3">
+                  <code className="text-xs bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded font-mono">
+                    any
+                  </code>
+                </td>
+                <td className="px-4 py-3 font-mono text-xs text-gray-500 dark:text-gray-400">
+                  git --version
+                </td>
+              </tr>
+              <tr className="bg-white dark:bg-gray-950">
+                <td className="px-4 py-3 text-gray-700 dark:text-gray-300">OS</td>
+                <td className="px-4 py-3">
+                  <span className="text-xs text-gray-600 dark:text-gray-400">
+                    Linux, macOS, Windows
+                  </span>
+                </td>
+                <td className="px-4 py-3 text-xs text-gray-500 dark:text-gray-400" />
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      {/* Install methods */}
+      <section className="mb-10 install-step" data-step="02 / CHOOSE">
+        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Choose your method</h2>
+        <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+          Use npm on any supported system, or select your operating system for the source installer.
+        </p>
+        <h3 className="text-base font-semibold text-gray-900 dark:text-white mb-3">
+          <span className="text-egc-400 font-mono text-sm mr-2">03 /</span>Run the installation
+        </h3>
+
+        {/* Method tabs */}
+        <div className="rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden">
+          {/* Tab bar: scrollable on mobile, no visible scrollbar */}
+          <div className="install-tab-bar flex border-b border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 overflow-x-auto">
+            <button
+              id="tab-npm"
+              className="install-tab active relative flex items-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-3 text-sm font-semibold transition-all duration-150 min-h-[44px]"
+              data-tab="npm"
+              aria-pressed="true"
+              type="button"
+            >
+              {/* npm icon */}
+              <svg
+                className="w-5 h-5 shrink-0"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path d="M1.763 0C.786 0 0 .786 0 1.763v20.474C0 23.214.786 24 1.763 24h20.474c.977 0 1.763-.786 1.763-1.763V1.763C24 .786 23.214 0 22.237 0zM5.13 5.323h13.837v13.629h-3.502V8.69h-3.377v10.262H5.13z" />
+              </svg>{' '}
+              <span className="whitespace-nowrap">npm</span>{' '}
+              <span className="hidden xs:inline-flex ml-1 text-[10px] font-bold uppercase px-1.5 py-0.5 rounded-full bg-egc-100 dark:bg-egc-900/50 text-egc-700 dark:text-egc-400">
+                recommended
+              </span>
+            </button>{' '}
+            <button
+              id="tab-linux"
+              className="install-tab relative flex items-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-3 text-sm font-semibold transition-colors duration-150 min-h-[44px]"
+              data-tab="linux"
+              aria-pressed="false"
+              type="button"
+            >
+              {/* Linux (Tux) icon */}
+              <svg
+                className="w-5 h-5 shrink-0"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489a.424.424 0 00-.11.135c-.26.268-.45.6-.663.839-.199.199-.485.267-.797.4-.313.136-.658.269-.864.68-.09.189-.136.394-.132.602 0 .199.027.4.055.536.058.399.116.728.04.97-.249.68-.28 1.145-.106 1.484.174.334.535.47.94.601.81.2 1.91.135 2.774.6.926.466 1.866.67 2.616.47.526-.116.97-.464 1.208-.946.587-.003 1.23-.269 2.26-.334.699-.058 1.574.267 2.577.2.025.134.063.198.114.333l.003.003c.391.778 1.113 1.022 1.903 1.395.81.401 1.726.57 2.34.467.307-.065.56-.26.713-.552.512-.882.064-1.547-.12-1.792l-.053-.07a2.551 2.551 0 01-.172-.573c-.015-.131.017-.322.076-.451.336-.717.09-1.384-.272-1.845-.298-.378-.667-.6-.91-.727l-.108-.044a1.95 1.95 0 01-.368-.353c-.267-.359-.465-.799-.725-1.159-.122-.169-.376-.479-.553-.652-.4-.398-.646-.654-.646-1.072 0-.412.163-.855.283-1.267.127-.42.243-.805.217-1.133-.063-.79-.512-1.47-.855-2.012l-.07-.106c-.39-.6-.66-.994-.917-1.78-.264-.812-.363-1.725-.31-2.596.035-.475.095-.787.176-1.134l.01-.042c.03-.122.06-.238.07-.36.01-.12.004-.233-.01-.337C14.078 1.147 13.318 0 12.504 0z" />
+              </svg>{' '}
+              <span className="whitespace-nowrap">Linux</span>
+            </button>{' '}
+            <button
+              id="tab-macos"
+              className="install-tab relative flex items-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-3 text-sm font-semibold transition-colors duration-150 min-h-[44px]"
+              data-tab="macos"
+              aria-pressed="false"
+              type="button"
+            >
+              {/* Apple icon */}
+              <svg
+                className="w-5 h-5 shrink-0"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701" />
+              </svg>{' '}
+              <span className="whitespace-nowrap">macOS</span>
+            </button>{' '}
+            <button
+              id="tab-windows"
+              className="install-tab relative flex items-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-3 text-sm font-semibold transition-colors duration-150 min-h-[44px]"
+              data-tab="windows"
+              aria-pressed="false"
+              type="button"
+            >
+              {/* Windows icon */}
+              <svg
+                className="w-5 h-5 shrink-0"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801" />
+              </svg>{' '}
+              <span className="whitespace-nowrap">Windows</span>
+            </button>
+          </div>
+
+          {/* npm panel (recommended) */}
+          <div id="panel-npm" className="install-panel">
+            <div className="p-4 sm:p-5 bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase bg-egc-100 dark:bg-egc-900/30 text-egc-700 dark:text-egc-400">
+                  <svg
+                    className="w-3 h-3"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>{' '}
+                  Fastest
+                </span>
+              </div>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Works on{' '}
+                <strong className="text-gray-900 dark:text-white">Linux, macOS, and Windows</strong>
+                . No git clone needed.
+              </p>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                Using{' '}
+                <strong className="text-gray-700 dark:text-gray-300">
+                  mise, nvm, asdf, or fnm
+                </strong>
+                ? Install EGC under your <em>default</em> Node version, the one active outside any
+                project directory, to avoid version conflicts.
+              </p>
+            </div>
+            <div className="flex items-center gap-1.5 px-4 py-2.5 bg-gray-900 border-b border-gray-700">
+              <span className="w-2.5 h-2.5 rounded-full bg-red-500" />{' '}
+              <span className="w-2.5 h-2.5 rounded-full bg-yellow-500" />{' '}
+              <span className="w-2.5 h-2.5 rounded-full bg-green-500" />{' '}
+              <span className="ml-2 text-xs text-gray-400 font-mono">terminal</span>
+            </div>
+            <pre className="bg-gray-900 p-4 sm:p-5 text-gray-100 text-xs sm:text-sm font-mono overflow-x-auto m-0 rounded-none">
+              <code>
+                <span className="text-egc-400">{'$'}</span>
+                {' npm install -g @egchq/egc\n'}
+                <span className="text-egc-400">{'$'}</span>
+                {' egc install'}
+              </code>
+            </pre>
+            <div className="p-4 sm:p-5 bg-white dark:bg-gray-950 border-t border-gray-200 dark:border-gray-800 space-y-2">
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                <strong>Permissions:</strong> if <code>npm install -g</code> fails with{' '}
+                <code>EACCES</code> (Node from your distro&apos;s package manager, or any root-owned
+                global prefix), run only the <code>npm install -g</code> step with <code>sudo</code>{' '}
+                and everything else as your normal user. A Node version manager such as nvm, mise or
+                fnm never needs sudo.
+              </p>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                <strong>Then wake up the brain:</strong> the bare install prepares the runtime only.
+                Inside a real project, run <code>egc init</code> once so your AI tools restore its
+                memory on their very first prompt. <code>egc doctor</code> should end with{' '}
+                <code>errors=0</code>.
+              </p>
+            </div>
+          </div>
+
+          {/* Linux panel */}
+          <div id="panel-linux" className="install-panel hidden">
+            <div className="p-4 sm:p-5 bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800">
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                You need{' '}
+                <a
+                  href="https://nodejs.org/en/download"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Download Node.js 20+ (opens in new tab)"
+                  className="text-egc-600 dark:text-egc-400 underline underline-offset-2"
+                >
+                  Node.js 20+
+                </a>
+                . Not sure? Run{' '}
+                <code className="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">
+                  node --version
+                </code>
+                .
+              </p>
+            </div>
+            <div className="flex items-center gap-1.5 px-4 py-2.5 bg-gray-900 border-b border-gray-700">
+              <span className="w-2.5 h-2.5 rounded-full bg-red-500" />{' '}
+              <span className="w-2.5 h-2.5 rounded-full bg-yellow-500" />{' '}
+              <span className="w-2.5 h-2.5 rounded-full bg-green-500" />{' '}
+              <span className="ml-2 text-xs text-gray-400 font-mono">bash</span>
+            </div>
+            <pre className="bg-gray-900 p-4 sm:p-5 text-gray-100 text-xs sm:text-sm font-mono overflow-x-auto m-0 rounded-none">
+              <code>
+                <span className="text-egc-400">{'$'}</span>
+                {' git clone https://github.com/Fmarzochi/EGC.git\n'}
+                <span className="text-egc-400">{'$'}</span>
+                {' cd EGC\n'}
+                <span className="text-egc-400">{'$'}</span>
+                {' sh scripts/install.sh'}
+              </code>
+            </pre>
+          </div>
+
+          {/* macOS panel */}
+          <div id="panel-macos" className="install-panel hidden">
+            <div className="p-4 sm:p-5 bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800">
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                You need{' '}
+                <a
+                  href="https://nodejs.org/en/download"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Download Node.js 20+ (opens in new tab)"
+                  className="text-egc-600 dark:text-egc-400 underline underline-offset-2"
+                >
+                  Node.js 20+
+                </a>
+                . Not sure? Run{' '}
+                <code className="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">
+                  node --version
+                </code>
+                .
+              </p>
+            </div>
+            <div className="flex items-center gap-1.5 px-4 py-2.5 bg-gray-900 border-b border-gray-700">
+              <span className="w-2.5 h-2.5 rounded-full bg-red-500" />{' '}
+              <span className="w-2.5 h-2.5 rounded-full bg-yellow-500" />{' '}
+              <span className="w-2.5 h-2.5 rounded-full bg-green-500" />{' '}
+              <span className="ml-2 text-xs text-gray-400 font-mono">zsh</span>
+            </div>
+            <pre className="bg-gray-900 p-4 sm:p-5 text-gray-100 text-xs sm:text-sm font-mono overflow-x-auto m-0 rounded-none">
+              <code>
+                <span className="text-egc-400">{'$'}</span>
+                {' git clone https://github.com/Fmarzochi/EGC.git\n'}
+                <span className="text-egc-400">{'$'}</span>
+                {' cd EGC\n'}
+                <span className="text-egc-400">{'$'}</span>
+                {' sh scripts/install.sh'}
+              </code>
+            </pre>
+          </div>
+
+          {/* Windows panel */}
+          <div id="panel-windows" className="install-panel hidden">
+            <div className="p-4 sm:p-5 bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800">
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                You need{' '}
+                <a
+                  href="https://nodejs.org/en/download"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Download Node.js 20+ (opens in new tab)"
+                  className="text-egc-600 dark:text-egc-400 underline underline-offset-2"
+                >
+                  Node.js 20+
+                </a>{' '}
+                and PowerShell. Run as Administrator if prompted.
+              </p>
+            </div>
+            <div className="flex items-center gap-1.5 px-4 py-2.5 bg-gray-900 border-b border-gray-700">
+              <span className="w-2.5 h-2.5 rounded-full bg-red-500" />{' '}
+              <span className="w-2.5 h-2.5 rounded-full bg-yellow-500" />{' '}
+              <span className="w-2.5 h-2.5 rounded-full bg-green-500" />{' '}
+              <span className="ml-2 text-xs text-gray-400 font-mono">powershell</span>
+            </div>
+            <pre className="bg-gray-900 p-4 sm:p-5 text-gray-100 text-xs sm:text-sm font-mono overflow-x-auto m-0 rounded-none">
+              <code>
+                <span className="text-egc-400">{'PS>'}</span>
+                {' git clone https://github.com/Fmarzochi/EGC.git\n'}
+                <span className="text-egc-400">{'PS>'}</span>
+                {' cd EGC\n'}
+                <span className="text-egc-400">{'PS>'}</span>
+                {' .\\scripts\\install.ps1'}
+              </code>
+            </pre>
+            <div className="p-4 sm:p-5 bg-white dark:bg-gray-950 border-t border-gray-200 dark:border-gray-800 space-y-2">
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                <strong>
+                  Upgrading later with <code>npm install -g @egchq/egc@latest</code>:
+                </strong>{' '}
+                close the AI tools and terminals that run EGC first. npm renames the package folder
+                during the update, and Windows refuses while any process holds a file inside it (an
+                AI tool running the EGC MCP servers is enough). The failure reads{' '}
+                <code>EBUSY: resource busy or locked</code>; closing the tools clears it, and so
+                does a reboot.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* What the installer does */}
+      <section className="mb-10 install-step" data-step="04 / UNDERSTAND">
+        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+          What the installer does
+        </h2>
+        <div className="space-y-3">
+          {[
+            {
+              n: '1',
+              title: 'Prepares the MCP servers',
+              desc: 'The npm package ships egc-guardian and egc-memory prebuilt; a clone from source builds them from TypeScript.',
+            },
+            {
+              n: '2',
+              title: 'Initializes the store',
+              desc: 'Creates the local SQLite store under ~/.egc/ for decisions, lessons and the session bus. State documents live under ~/.egc/state/, one per project branch, encrypted at rest.',
+            },
+            {
+              n: '3',
+              title: 'Cognitive bootstrap',
+              desc: 'Writes the memory protocol into the global instruction files for each detected tool (CLAUDE.md, GEMINI.md, cursor.rules, etc.).',
+            },
+            {
+              n: '4',
+              title: 'Registers MCP servers and hooks',
+              desc: 'Writes both servers into the MCP config of the ten tools that take it (Antigravity, Claude Code, Cursor, Kiro, Codex CLI, OpenCode, Zed, Kimi Code CLI, Crush, Auggie) and wires native hooks in every tool that has them. For Claude Code, also installs a SessionStart hook (loads state automatically) and a Stop hook (saves state automatically at session end). Runs once per tool, idempotent.',
+            },
+            {
+              n: '5',
+              title: 'Prompt library (optional)',
+              desc: 'Asks whether to install 232 skills, 77 commands, and 61 agents; the default is no. From v1.1.22, egc install --prompt-library answers yes without asking and --no-prompt-library skips the question. Skipped automatically in CI.',
+            },
+            {
+              n: '6',
+              title: 'Token Crusher binary shim',
+              desc: 'Installs a PATH-level shim (git, npm, gh, and more) under ~/.egc/bin as a best-effort step. Covers a known gap where the automatic hook never fires for commands the AI assistant itself issues on Claude Code.',
+            },
+          ].map((step) => (
+            <div key={step.n} className="flex gap-3 sm:gap-4">
+              <div className="shrink-0 w-7 h-7 rounded-full bg-egc-100 dark:bg-egc-900/30 text-egc-700 dark:text-egc-400 flex items-center justify-center text-sm font-bold">
+                {step.n}
+              </div>
+              <div className="min-w-0">
+                <p className="font-semibold text-gray-900 dark:text-white text-sm">{step.title}</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400 break-words">{step.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Expected output */}
+      <section className="mb-10 install-step" data-step="05 / EXPECT">
+        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Expected output</h2>
+        <div className="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-800">
+          <div className="flex items-center gap-1.5 px-4 py-2.5 bg-gray-900 border-b border-gray-700">
+            <span className="text-xs text-gray-400 font-mono">terminal</span>
+          </div>
+          <pre className="bg-gray-900 p-4 sm:p-5 text-xs sm:text-sm font-mono overflow-x-auto m-0 rounded-none">
+            <code>
+              <span className="text-egc-400">{'EGC install'}</span>
+              {
+                '\n  node v22.0.0\n  building egc-guardian...\n  building egc-memory...\n  initializing database...\n  bootstrapping cognitive protocol...\n  '
+              }
+              <span className="text-green-400">{'✓'}</span>
+              {' ~/.claude/CLAUDE.md updated\n  '}
+              <span className="text-green-400">{'✓'}</span>
+              {' ~/.gemini/GEMINI.md updated\n  registering MCP servers...\n  '}
+              <span className="text-green-400">{'✓'}</span>
+              {' registered in Antigravity CLI\n  '}
+              <span className="text-green-400">{'✓'}</span>
+              {' registered in Claude Code (global)\n  '}
+              <span className="text-green-400">{'✓'}</span>
+              {' registered in Cursor\n  '}
+              <span className="text-green-400">{'✓'}</span>
+              {' registered in Codex CLI\n  '}
+              <span className="text-green-400">{'✓'}</span>
+              {' registered in OpenCode\n  '}
+              <span className="text-green-400">{'✓'}</span>
+              {
+                ' registered in Zed\n\nInstall prompt library? (61 agents, 232 skills, 77 commands) [y/N]:\n\n  Installing Token Crusher binary shim...\n  '
+              }
+              <span className="text-green-400">{'✓'}</span>
+              {' Installed: git, npm, gh, ...\n\n'}
+              <span className="text-green-400">{'Installation complete.'}</span>
+              {"\nRun 'egc doctor' to verify."}
+            </code>
+          </pre>
+        </div>
+      </section>
+
+      {/* Verify */}
+      <section className="mb-10 install-step" data-step="06 / VERIFY">
+        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+          Verify the installation
+        </h2>
+        <div className="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-800 mb-4">
+          <pre className="bg-gray-900 p-4 sm:p-5 text-xs sm:text-sm font-mono text-gray-100 overflow-x-auto m-0 rounded-none">
+            <code>
+              <span className="text-egc-400">{'$'}</span>
+              {' egc doctor\n\n'}
+              <span className="text-green-400">{'egc-guardian  running'}</span>
+              {'\n'}
+              <span className="text-green-400">{'egc-memory    running'}</span>
+              {'\ndatabase      '}
+              <span className="text-green-400">{'ok'}</span>
+              {'\nclaude code   '}
+              <span className="text-green-400">{'registered'}</span>
+              {'\ncursor        '}
+              <span className="text-green-400">{'registered'}</span>
+            </code>
+          </pre>
+        </div>
+        <p className="text-sm text-gray-600 dark:text-gray-400">
+          If a tool shows{' '}
+          <code className="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">
+            not found
+          </code>
+          , it either isn&apos;t installed or wasn&apos;t detected. You can re-run{' '}
+          <code className="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">
+            egc install
+          </code>{' '}
+          (or{' '}
+          <code className="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">
+            egc init
+          </code>{' '}
+          inside a project) after installing the tool.
+        </p>
+      </section>
+
+      {/* Next steps */}
+      <section className="mb-4 install-step" data-step="07 / CONTINUE">
+        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Next steps</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+          <Link
+            href="/docs/memory/"
+            className="block rounded-xl p-4 sm:p-5 hover-lift hover-glow transition-all duration-300 glass min-h-[44px]"
+          >
+            <p className="font-semibold text-gray-900 dark:text-white mb-1">egc-memory</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              Learn how get_state and update_state work.
+            </p>
+          </Link>{' '}
+          <Link
+            href="/docs/guardian/"
+            className="block rounded-xl p-4 sm:p-5 hover-lift hover-glow transition-all duration-300 glass min-h-[44px]"
+          >
+            <p className="font-semibold text-gray-900 dark:text-white mb-1">egc-guardian</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              Understand the validation and safety layer.
+            </p>
+          </Link>{' '}
+          <Link
+            href="/features/"
+            className="block rounded-xl p-4 sm:p-5 hover-lift hover-glow transition-all duration-300 glass min-h-[44px]"
+          >
+            <p className="font-semibold text-gray-900 dark:text-white mb-1">Features</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              Full feature overview and prompt library details.
+            </p>
+          </Link>{' '}
+          <Link
+            href="/docs/cli/"
+            className="block rounded-xl p-4 sm:p-5 hover-lift hover-glow transition-all duration-300 glass min-h-[44px]"
+          >
+            <p className="font-semibold text-gray-900 dark:text-white mb-1">CLI Reference</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400">All egc commands explained.</p>
+          </Link>
+        </div>
+      </section>
+      <InstallTabsBehavior />
+    </DocsShell>
+  );
+}

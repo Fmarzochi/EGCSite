@@ -1,0 +1,63 @@
+/* Ported from the scoped <style> of src/pages/get-started.astro. The .docs-content prefix stands
+   in for Astro's scope attribute (same specificity), and :has() keeps the code block rule off the
+   other docs pages, which share this stylesheet after a client-side navigation. */
+
+/* Tab bar: hide scrollbar across all browsers */
+.docs-content .install-tab-bar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.docs-content .install-tab-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.docs-content .install-tab {
+  color: theme('colors.gray.400');
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  background: none;
+  margin-bottom: -1px;
+  flex-shrink: 0;
+  transition: transform 0.1s ease, color 0.15s ease, border-color 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.docs-content .install-tab:focus-visible {
+  outline: 2px solid theme('colors.green.500');
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.docs-content .install-tab:active {
+  transform: scale(0.95);
+}
+
+.docs-content .install-tab:hover {
+  color: theme('colors.gray.700');
+}
+
+.dark .docs-content .install-tab:hover {
+  color: theme('colors.gray.300');
+}
+
+.docs-content .install-tab.active {
+  color: theme('colors.green.600');
+  border-bottom-color: theme('colors.green.600');
+}
+
+.dark .docs-content .install-tab.active {
+  color: theme('colors.green.400');
+  border-bottom-color: theme('colors.green.400');
+}
+
+/* Ensure pre/code blocks never cause page-wide scroll */
+.docs-content:has(.install-tab-bar) pre {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.docs-content:has(.install-tab-bar) pre code {
+  display: block;
+  overflow-wrap: normal;
+  word-break: normal;
+}

@@ -6,7 +6,20 @@ import { canonicalUrl, PRODUCTION_BASE } from '@/lib/base';
 // and the Search Console keep their URLs.
 
 /** Every route the sitemap lists, relative to the site root. Grows with each phase of the port. */
-export const SITEMAP_ROUTES = ['', 'en/', 'docs/faq/'];
+export const SITEMAP_ROUTES = [
+  '',
+  'en/',
+  'get-started/',
+  'features/',
+  'privacy/',
+  'docs/architecture/',
+  'docs/cli/',
+  'docs/faq/',
+  'docs/guardian/',
+  'docs/mcp/',
+  'docs/memory/',
+  'docs/security/',
+];
 
 function escapeXml(value: string): string {
   return value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');

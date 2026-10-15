@@ -102,8 +102,11 @@ export default async function ContributorPage({ params }: { params: Params }) {
 
   const isChampion = championLogin === login;
 
+  // One block wraps the page: with a fragment the first nodes are the fixed and sticky header
+  // parts, which the Next.js router skips when it restores the scroll on a client-side
+  // navigation, and it scrolled the page down to the footer instead of the top.
   return (
-    <>
+    <div>
       <Navbar current="/contributors/" />
 
       <main id="main-content">
@@ -349,6 +352,6 @@ export default async function ContributorPage({ params }: { params: Params }) {
       </main>
 
       <Footer />
-    </>
+    </div>
   );
 }

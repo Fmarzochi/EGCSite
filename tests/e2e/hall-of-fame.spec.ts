@@ -80,3 +80,19 @@ test('profiles link back to the Hall of Fame', async ({ page }) => {
   await page.getByRole('link', { name: 'Back to Hall of Fame' }).click();
   await expect(page).toHaveURL(/\/contributors\/$/);
 });
+
+// Regression: a client-side navigation used to land at the footer instead of the top.
+test('the Hall of Fame opens at the top after a client-side navigation', async ({ page }) => {
+  await page.goto('features/');
+  await page.locator('header a[href$="/contributors/"]:visible').first().click();
+  await expect(page).toHaveURL(/\/contributors\/$/);
+  await page.waitForTimeout(1000);
+  expect(await page.evaluate(() => scrollY)).toBe(0);
+
+  await page.goto('contributors/');
+  await page.locator('.podium-link').first().click();
+  await page.getByRole('link', { name: 'Back to Hall of Fame' }).click();
+  await expect(page).toHaveURL(/\/contributors\/$/);
+  await page.waitForTimeout(1000);
+  expect(await page.evaluate(() => scrollY)).toBe(0);
+});

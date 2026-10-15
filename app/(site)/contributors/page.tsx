@@ -67,8 +67,11 @@ export default async function ContributorsPage() {
   const totalAdditions = contributors.reduce((sum, c) => sum + c.additions, 0);
   const totalPrs = contributors.reduce((sum, c) => sum + c.prs, 0);
   const allPrsKnown = contributors.every((c) => Object.hasOwn(highlights, c.login));
+  // One block wraps the page: with a fragment the first nodes are the fixed and sticky header
+  // parts, which the Next.js router skips when it restores the scroll on a client-side
+  // navigation, and it scrolled the page down to the footer instead of the top.
   return (
-    <>
+    <div>
       <Navbar current="/contributors/" />
       <main id="main-content" className="hall" data-hof="">
         <p id="hype-status" className="sr-only" role="status" aria-live="polite" data-hof="" />
@@ -649,6 +652,6 @@ export default async function ContributorsPage() {
       </main>
       <HallBehavior />
       <Footer />
-    </>
+    </div>
   );
 }

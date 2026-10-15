@@ -211,7 +211,7 @@ export default async function IntegrationPage({ params }: { params: Params }) {
         </p>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
           {others.map((other) => (
-            <Link
+            <Link prefetch={false}
               key={other.slug}
               href={`/integrations/${other.slug}/`}
               className="flex items-center gap-3 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-3 hover:border-egc-500/60 transition-colors"

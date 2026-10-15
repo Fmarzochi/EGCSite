@@ -43,7 +43,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-12 mb-12">
           {/* Brand column */}
           <div className="sm:col-span-2 lg:col-span-1">
-            <Link href="/" className="inline-flex items-center gap-2.5 mb-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3DF69B] rounded-md">
+            <Link prefetch={false} href="/" className="inline-flex items-center gap-2.5 mb-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3DF69B] rounded-md">
               <CloverMark id="m-ft" size={24} />
               <span className="font-bold text-base tracking-tight text-[#F4F6F5]">EGC</span>
             </Link>
@@ -68,7 +68,7 @@ export default function Footer() {
             <ul className="space-y-1">
               {docsLinks.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className={linkClass}>
+                  <Link prefetch={false} href={link.href} className={linkClass}>
                     {link.label}
                   </Link>
                 </li>
@@ -115,7 +115,7 @@ export default function Footer() {
         <div className="pt-8 border-t border-[rgba(226,240,233,0.09)] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#8E9E96]">
           <div>&copy; {new Date().getFullYear()} EGC Contributors. Apache 2.0 Licensed.</div>
           <div className="flex items-center gap-6">
-            <Link href="/privacy/" className="inline-flex py-1 -my-1 text-[#8E9E96] hover:text-[#3DF69B] transition-colors">
+            <Link prefetch={false} href="/privacy/" className="inline-flex py-1 -my-1 text-[#8E9E96] hover:text-[#3DF69B] transition-colors">
               Privacy Policy
             </Link>
             <span>•</span>

@@ -8,6 +8,8 @@ import Navbar from '@/components/layout/Navbar';
 import { integrations } from '@/data/integrations';
 
 // Ported from src/layouts/DocsLayout.astro: sidebar, content column, "On this page" and pagination.
+// Only the main nav and the pagination prefetch: the sidebar and the mobile strip would fetch
+// every docs page on each visit and compete with the page itself on a slow connection.
 
 export type DocId =
   | 'get-started'
@@ -125,7 +127,7 @@ export default function DocsShell({ current, toc, focusSections = false, childre
           </button>
           <nav className="docs-mobile-links" aria-label="Documentation quick navigation">
             {docOrder.map((page) => (
-              <Link key={page.id} href={page.href} aria-current={current === page.id ? 'page' : undefined}>
+              <Link prefetch={false} key={page.id} href={page.href} aria-current={current === page.id ? 'page' : undefined}>
                 {page.label}
               </Link>
             ))}
@@ -175,7 +177,7 @@ export default function DocsShell({ current, toc, focusSections = false, childre
                               <Icon name="external" size={14} className="w-3.5 h-3.5 opacity-50" />
                             </a>
                           ) : (
-                            <Link href={link.href} aria-current={current === link.id ? 'page' : undefined} className={className}>
+                            <Link prefetch={false} href={link.href} aria-current={current === link.id ? 'page' : undefined} className={className}>
                               <span>{link.label}</span>
                             </Link>
                           )}

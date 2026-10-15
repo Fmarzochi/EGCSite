@@ -6,6 +6,8 @@ import { withBase } from '@/lib/base';
 import { homeDictionary, homeTranslator } from '@/lib/home-i18n';
 import type { Lang } from '@/lib/lang';
 
+// Links to the other root layouts (inner pages, here) always reload the page, so none of them
+// prefetch: the payload could never be used.
 // The home, ported from src/pages/index.astro (header, sections 01 to 08, closing and footer).
 // The markup is the Astro source converted mechanically; every data-i18n text and
 // data-i18n-attr value is filled from the dictionary of the page language.
@@ -106,7 +108,7 @@ export default function HomePage({ lang }: { lang: Lang }) {
             <a href="#instalar" data-i18n="nav.install">
               {tx('nav.install')}
             </a>{' '}
-            <Link href="/docs/memory/" data-i18n="nav.docs">
+            <Link prefetch={false} href="/docs/memory/" data-i18n="nav.docs">
               {tx('nav.docs')}
             </Link>
           </nav>
@@ -189,7 +191,7 @@ export default function HomePage({ lang }: { lang: Lang }) {
               </a>
             </li>
             <li>
-              <Link href="/docs/memory/">
+              <Link prefetch={false} href="/docs/memory/">
                 <b data-i18n="nav.docs">{tx('nav.docs')}</b>
                 <span>↗</span>
               </Link>
@@ -1037,7 +1039,7 @@ export default function HomePage({ lang }: { lang: Lang }) {
                           data-i18n="f1.proof"
                           dangerouslySetInnerHTML={{ __html: tx('f1.proof') }}
                         />
-                        <Link className="link-arrow" href="/docs/memory/">
+                        <Link prefetch={false} className="link-arrow" href="/docs/memory/">
                           <span data-i18n="f1.link">{tx('f1.link')}</span>
                           <svg
                             width="16"
@@ -1207,7 +1209,7 @@ export default function HomePage({ lang }: { lang: Lang }) {
                           data-i18n="f2.proof"
                           dangerouslySetInnerHTML={{ __html: tx('f2.proof') }}
                         />
-                        <Link className="link-arrow" href="/docs/mcp/">
+                        <Link prefetch={false} className="link-arrow" href="/docs/mcp/">
                           <span data-i18n="f2.link">{tx('f2.link')}</span>
                           <svg
                             width="16"
@@ -1331,7 +1333,7 @@ export default function HomePage({ lang }: { lang: Lang }) {
                           data-i18n="f3.proof"
                           dangerouslySetInnerHTML={{ __html: tx('f3.proof') }}
                         />
-                        <Link className="link-arrow" href="/docs/guardian/">
+                        <Link prefetch={false} className="link-arrow" href="/docs/guardian/">
                           <span data-i18n="f3.link">{tx('f3.link')}</span>
                           <svg
                             width="16"
@@ -1546,7 +1548,7 @@ export default function HomePage({ lang }: { lang: Lang }) {
               <ul className="tgrid tgrid--featured">
                 {featuredIntegrations.map((entry) => (
                   <li key={entry.slug}>
-                    <Link className="tile" href={`/integrations/${entry.slug}/`}>
+                    <Link prefetch={false} className="tile" href={`/integrations/${entry.slug}/`}>
                       <img
                         src={withBase(`tools/${entry.icon}`)}
                         alt=""
@@ -1563,7 +1565,7 @@ export default function HomePage({ lang }: { lang: Lang }) {
                 ))}
               </ul>
               <div className="int__more">
-                <Link className="link-arrow" href="/integrations/">
+                <Link prefetch={false} className="link-arrow" href="/integrations/">
                   <span data-i18n="int.allSite">{tx('int.allSite')}</span>
                   <svg
                     width="16"
@@ -1966,7 +1968,7 @@ export default function HomePage({ lang }: { lang: Lang }) {
                   </a>
                 </li>
                 <li>
-                  <Link href="/docs/security/" data-i18n="prv.model">
+                  <Link prefetch={false} href="/docs/security/" data-i18n="prv.model">
                     {tx('prv.model')}
                   </Link>
                 </li>
@@ -2156,7 +2158,7 @@ cd EGC; .\scripts\install.ps1"
                 </pre>
               </div>
               <div className="term__bar">
-                <Link className="link-arrow" href="/get-started/">
+                <Link prefetch={false} className="link-arrow" href="/get-started/">
                   <span data-i18n="ins.guide">{tx('ins.guide')}</span>
                   <svg
                     width="16"
@@ -2231,7 +2233,7 @@ cd EGC; .\scripts\install.ps1"
               <p className="lede rv" style={{ marginTop: '24px' }}>
                 <span data-i18n="faq.more">{tx('faq.more')}</span>
                 <br />
-                <Link className="link-arrow" href="/docs/faq/">
+                <Link prefetch={false} className="link-arrow" href="/docs/faq/">
                   <span data-i18n="faq.link">{tx('faq.link')}</span>
                   <svg
                     width="16"
@@ -2672,30 +2674,30 @@ cd EGC; .\scripts\install.ps1"
               <h2 data-i18n="ft.docs">{tx('ft.docs')}</h2>
               <ul>
                 <li>
-                  <Link href="/get-started/" data-i18n="ft.guide">
+                  <Link prefetch={false} href="/get-started/" data-i18n="ft.guide">
                     {tx('ft.guide')}
                   </Link>
                 </li>
                 <li>
-                  <Link href="/docs/memory/" data-i18n="ft.memory">
+                  <Link prefetch={false} href="/docs/memory/" data-i18n="ft.memory">
                     {tx('ft.memory')}
                   </Link>
                 </li>
                 <li>
-                  <Link href="/docs/guardian/">Guardian</Link>
+                  <Link prefetch={false} href="/docs/guardian/">Guardian</Link>
                 </li>
                 <li>
-                  <Link href="/docs/mcp/" data-i18n="ft.mcp">
+                  <Link prefetch={false} href="/docs/mcp/" data-i18n="ft.mcp">
                     {tx('ft.mcp')}
                   </Link>
                 </li>
                 <li>
-                  <Link href="/docs/architecture/" data-i18n="ft.arch">
+                  <Link prefetch={false} href="/docs/architecture/" data-i18n="ft.arch">
                     {tx('ft.arch')}
                   </Link>
                 </li>
                 <li>
-                  <Link href="/integrations/" data-i18n="ft.int">
+                  <Link prefetch={false} href="/integrations/" data-i18n="ft.int">
                     {tx('ft.int')}
                   </Link>
                 </li>
@@ -2745,7 +2747,7 @@ cd EGC; .\scripts\install.ps1"
                   </a>
                 </li>
                 <li>
-                  <Link href="/contributors/" data-i18n="ft.hof">
+                  <Link prefetch={false} href="/contributors/" data-i18n="ft.hof">
                     {tx('ft.hof')}
                   </Link>
                 </li>
@@ -2790,7 +2792,7 @@ cd EGC; .\scripts\install.ps1"
                   </a>
                 </li>
                 <li>
-                  <Link href="/privacy/" data-i18n="ft.privacy">
+                  <Link prefetch={false} href="/privacy/" data-i18n="ft.privacy">
                     {tx('ft.privacy')}
                   </Link>
                 </li>

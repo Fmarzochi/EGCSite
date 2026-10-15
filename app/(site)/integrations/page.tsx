@@ -52,7 +52,7 @@ export default function IntegrationsPage() {
           <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">{group.note}</p>
           <div className="integrations-list">
             {group.entries.map((entry) => (
-              <Link
+              <Link prefetch={false}
                 key={entry.slug}
                 href={`/integrations/${entry.slug}/`}
                 className="flex items-center gap-3 px-2 py-3 transition-colors"

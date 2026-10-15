@@ -28,7 +28,7 @@ export default function Navbar({ current }: { current?: string }) {
           <div className="flex h-16 items-center justify-between">
             {/* Logo + brand */}
             <div className="flex items-center gap-3 shrink-0">
-              <Link href="/" className="flex items-center gap-2.5 min-h-[44px] group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3DF69B] rounded-md">
+              <Link prefetch={false} href="/" className="flex items-center gap-2.5 min-h-[44px] group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3DF69B] rounded-md">
                 <CloverMark id="m-nav" size={28} />
                 <span className="font-extrabold text-xl tracking-tight text-[#F4F6F5] whitespace-nowrap">EGC</span>
               </Link>
@@ -126,7 +126,7 @@ export default function Navbar({ current }: { current?: string }) {
                 <Icon name="external" size={16} className="opacity-50" />
               </a>
             ) : (
-              <Link key={link.href} href={link.href} aria-current={current === link.href ? 'page' : undefined} className={className}>
+              <Link prefetch={false} key={link.href} href={link.href} aria-current={current === link.href ? 'page' : undefined} className={className}>
                 <span>{link.label}</span>
               </Link>
             );

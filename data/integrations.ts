@@ -26,7 +26,7 @@ export const integrations: Integration[] = [
   {
     slug: 'claude-code',
     name: 'Claude Code',
-    icon: 'anthropic.svg',
+    icon: 'claudecode.svg',
     level: 'core',
     targetId: 'claude',
     installs: 'Skills installed flat under ~/.claude/skills/<name>/SKILL.md; the memory protocol goes into ~/.claude/CLAUDE.md.',
@@ -37,7 +37,7 @@ export const integrations: Integration[] = [
   {
     slug: 'antigravity',
     name: 'Antigravity',
-    icon: 'googlegemini.svg',
+    icon: 'antigravity.svg',
     level: 'core',
     targetId: 'antigravity',
     installs: 'Skills, agents, rules and commands under .agents/ in each project; the home install under ~/.gemini through the egc target.',
@@ -59,7 +59,7 @@ export const integrations: Integration[] = [
   {
     slug: 'codex-cli',
     name: 'Codex CLI',
-    icon: 'openai.svg',
+    icon: 'codex.svg',
     level: 'core',
     targetId: 'codex',
     installs: 'Skills installed flat under ~/.agents/skills/<name>/SKILL.md; persistent instructions appended.',
@@ -246,7 +246,7 @@ export const integrations: Integration[] = [
   {
     slug: 'crush',
     name: 'Crush',
-    icon: 'crush.svg',
+    icon: 'crush.png',
     level: 'community',
     targetId: 'crush',
     installs: 'Skills installed flat under ~/.agents/skills/<name>/SKILL.md, the root Codex, Goose and OpenHands share; agents, commands and rules as library folders under ~/.config/crush/ ($XDG_CONFIG_HOME/crush or $CRUSH_GLOBAL_CONFIG respected); the memory protocol goes into ~/.config/crush/CRUSH.md.',

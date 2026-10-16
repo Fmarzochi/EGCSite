@@ -3,9 +3,9 @@ import Link from 'next/link';
 import '@/styles/docs.css';
 import { Icon } from '@/components/brand/icons';
 import DocsBehavior from '@/components/docs/DocsBehavior';
+import { type DocId, type DocsNavLink, docsNav } from '@/components/docs/docs-nav';
 import Footer from '@/components/layout/Footer';
 import Navbar from '@/components/layout/Navbar';
-import { integrations } from '@/data/integrations';
 import type { Lang } from '@/lib/lang';
 import { localePath, siteText } from '@/lib/site-i18n';
 
@@ -13,88 +13,10 @@ import { localePath, siteText } from '@/lib/site-i18n';
 // Only the main nav and the pagination prefetch: the sidebar and the mobile strip would fetch
 // every docs page on each visit and compete with the page itself on a slow connection.
 // Internal links lead to the page in the same language when it exists, the English one otherwise.
+// The sidebar groups are native <details name="docs-nav">: they open and close without JS,
+// opening one closes the others, and the group of the current page is open in the HTML.
 
-export type DocId =
-  | 'get-started'
-  | 'features'
-  | 'memory'
-  | 'guardian'
-  | 'mcp'
-  | 'integrations'
-  | 'architecture'
-  | 'security'
-  | 'cli'
-  | 'faq'
-  | 'privacy';
-
-interface SidebarLink {
-  href: string;
-  label: string;
-  id: string;
-  external?: boolean;
-}
-
-function navigation(lang: Lang) {
-  const t = siteText(lang).docs;
-  const sections: { label: string; links: SidebarLink[] }[] = [
-    {
-      label: t.gettingStarted,
-      links: [
-        { href: '/get-started/', label: t.installation, id: 'get-started' },
-        { href: '/features/', label: t.features, id: 'features' },
-      ],
-    },
-    {
-      label: t.mcpServers,
-      links: [
-        { href: '/docs/memory/', label: 'egc-memory', id: 'memory' },
-        { href: '/docs/guardian/', label: 'egc-guardian', id: 'guardian' },
-        { href: '/docs/mcp/', label: t.overview, id: 'mcp' },
-      ],
-    },
-    {
-      label: t.integrations,
-      links: [{ href: '/integrations/', label: t.allTools(integrations.length), id: 'integrations' }],
-    },
-    {
-      label: t.reference,
-      links: [
-        { href: '/docs/architecture/', label: t.architecture, id: 'architecture' },
-        { href: '/docs/security/', label: t.security, id: 'security' },
-        { href: '/docs/cli/', label: t.cli, id: 'cli' },
-        { href: '/docs/faq/', label: t.faq, id: 'faq' },
-        { href: 'https://github.com/Fmarzochi/EGC/blob/main/docs/VISION.md', label: t.vision, id: 'vision', external: true },
-      ],
-    },
-    {
-      label: t.community,
-      links: [
-        { href: 'https://discord.gg/FmXbgUmdmM', label: 'Discord', id: 'discord', external: true },
-        { href: 'https://github.com/Fmarzochi/EGC/blob/main/.github/CONTRIBUTING.md', label: t.contributing, id: 'contributing', external: true },
-        { href: 'https://github.com/Fmarzochi/EGC/releases', label: t.releases, id: 'releases', external: true },
-      ],
-    },
-    {
-      label: t.legal,
-      links: [{ href: '/privacy/', label: t.privacy, id: 'privacy' }],
-    },
-  ];
-
-  const docOrder = [
-    { id: 'get-started', label: t.installation, href: '/get-started/' },
-    { id: 'features', label: t.features, href: '/features/' },
-    { id: 'memory', label: 'egc-memory', href: '/docs/memory/' },
-    { id: 'guardian', label: 'egc-guardian', href: '/docs/guardian/' },
-    { id: 'mcp', label: t.mcpServers, href: '/docs/mcp/' },
-    { id: 'integrations', label: t.integrations, href: '/integrations/' },
-    { id: 'architecture', label: t.architecture, href: '/docs/architecture/' },
-    { id: 'security', label: t.security, href: '/docs/security/' },
-    { id: 'cli', label: t.cli, href: '/docs/cli/' },
-    { id: 'faq', label: t.faq, href: '/docs/faq/' },
-  ];
-
-  return { sections, docOrder };
-}
+export type { DocId };
 
 interface DocsShellProps {
   current?: DocId;
@@ -105,16 +27,42 @@ interface DocsShellProps {
   children: ReactNode;
 }
 
+const chevron = (
+  <svg className="docs-nav-chevron" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+  </svg>
+);
+
 export default function DocsShell({ current, lang = 'en', toc, focusSections = false, children }: DocsShellProps) {
   const t = siteText(lang).docs;
   const newTab = siteText(lang).nav.newTab;
-  const { sections, docOrder } = navigation(lang);
+  const { entries, pages, docOrder } = docsNav(lang);
   const sectionPicker = focusSections && toc?.length ? toc : undefined;
   const currentIndex = docOrder.findIndex((page) => page.id === current);
   const previous = currentIndex > 0 ? docOrder[currentIndex - 1] : null;
   const next = currentIndex >= 0 ? docOrder[currentIndex + 1] : null;
-  const currentHref = [...docOrder, { id: 'privacy', href: '/privacy/' }].find((page) => page.id === current)?.href;
+  const currentHref = pages.find((page) => page.id === current)?.href;
   const href = (path: string) => localePath(lang, path);
+
+  const navLink = (link: DocsNavLink, className: string) =>
+    link.external ? (
+      <a href={link.href} target="_blank" rel="noopener noreferrer" aria-label={`${link.label} ${newTab}`} className={className}>
+        <span>{link.label}</span>
+        <Icon name="external" size={14} className="w-3.5 h-3.5 opacity-50" />
+      </a>
+    ) : (
+      <Link prefetch={false} href={href(link.href)} aria-current={current === link.id ? 'page' : undefined} className={className}>
+        <span>{link.label}</span>
+        {link.count && (
+          <>
+            <span className="docs-nav-count" aria-hidden="true">
+              {link.count.value}
+            </span>
+            <span className="sr-only">, {link.count.spoken}</span>
+          </>
+        )}
+      </Link>
+    );
 
   return (
     <div className="bg-[#0A0D0C] text-[#F4F6F5] min-h-screen">
@@ -172,34 +120,30 @@ export default function DocsShell({ current, lang = 'en', toc, focusSections = f
                 </button>
               </div>
 
-              {sections.map((section) => (
-                <div key={section.label} className="mb-6">
-                  <p className="mb-2 px-3 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8E9E96]">{section.label}</p>
-                  <ul className="space-y-1">
-                    {section.links.map((link) => {
-                      const className = `flex items-center justify-between px-3 py-2 min-h-[40px] rounded-lg text-sm transition-colors duration-150 ${
-                        current === link.id
-                          ? 'text-[#3DF69B] bg-[#18B669]/10 border border-transparent font-semibold'
-                          : 'text-[#8E9E96] border border-transparent hover:text-[#F4F6F5] hover:bg-white/[0.04]'
-                      }`;
-                      return (
-                        <li key={link.id}>
-                          {link.external ? (
-                            <a href={link.href} target="_blank" rel="noopener noreferrer" aria-label={`${link.label} ${newTab}`} className={className}>
-                              <span>{link.label}</span>
-                              <Icon name="external" size={14} className="w-3.5 h-3.5 opacity-50" />
-                            </a>
-                          ) : (
-                            <Link prefetch={false} href={href(link.href)} aria-current={current === link.id ? 'page' : undefined} className={className}>
-                              <span>{link.label}</span>
-                            </Link>
-                          )}
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              ))}
+              <nav className="docs-nav" aria-label={t.sidebar}>
+                {entries.map((entry) =>
+                  entry.kind === 'link' ? (
+                    <div key={entry.link.id}>{navLink(entry.link, 'docs-nav-top-link')}</div>
+                  ) : (
+                    <details
+                      key={entry.label}
+                      name="docs-nav"
+                      className="docs-nav-group"
+                      open={entry.links.some((link) => link.id === current) || undefined}
+                    >
+                      <summary className="docs-nav-summary">
+                        <span>{entry.label}</span>
+                        {chevron}
+                      </summary>
+                      <ul className="docs-nav-list">
+                        {entry.links.map((link) => (
+                          <li key={link.id}>{navLink(link, 'docs-nav-link')}</li>
+                        ))}
+                      </ul>
+                    </details>
+                  ),
+                )}
+              </nav>
             </div>
           </aside>
 

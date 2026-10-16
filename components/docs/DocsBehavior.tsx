@@ -198,6 +198,9 @@ function setupSidebar(): () => void {
   if (!toggleBtn || !sidebar || !backdrop) return () => {};
   let restoreBackground: (() => void) | null = null;
   const isOpen = () => toggleBtn.getAttribute('aria-expanded') === 'true';
+  // Links inside a closed group are not rendered, so only what is on screen takes part in Tab.
+  const focusables = () =>
+    Array.from(sidebar.querySelectorAll<HTMLElement>('button, a, summary')).filter((el) => el.getClientRects().length > 0);
 
   function openSidebar() {
     sidebar!.classList.remove('-translate-x-full', 'invisible', 'pointer-events-none');
@@ -215,7 +218,7 @@ function setupSidebar(): () => void {
     sidebar!.focus();
     restoreBackground = isolateBackground([sidebar!, toggleBtn!, backdrop!]);
     setTimeout(() => {
-      if (isOpen() && document.activeElement === sidebar) sidebar!.querySelector<HTMLElement>('a')?.focus();
+      if (isOpen() && document.activeElement === sidebar) focusables().find((el) => el.id !== 'docs-sidebar-close')?.focus();
     }, 0);
   }
 
@@ -245,7 +248,7 @@ function setupSidebar(): () => void {
   const onKeydown = (e: KeyboardEvent) => {
     if (!isOpen()) return;
     if (e.key === 'Escape') closeSidebar(true);
-    if (e.key === 'Tab') trapTab(e, sidebar, Array.from(sidebar.querySelectorAll<HTMLElement>('button, a')));
+    if (e.key === 'Tab') trapTab(e, sidebar, focusables());
   };
   const onResize = () => {
     if (window.innerWidth >= 768 && isOpen()) closeSidebar();

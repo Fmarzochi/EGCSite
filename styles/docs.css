@@ -2,7 +2,25 @@
 .docs-grid { display: grid; grid-template-columns: 208px minmax(0, 1fr); gap: clamp(24px, 3vw, 48px); }
 @media (min-width: 1280px) { .docs-grid { grid-template-columns: 208px minmax(0, 1fr) 176px; } }
 @media (max-width: 767px) { .docs-grid { display: block; } }
-.docs-shell a[aria-current="page"] { background: #103322; color: #3df69b; border-color: transparent; box-shadow: inset 2px 0 #3df69b; border-radius: 8px; }
+/* Current page in the sidebar and the mobile strip: a quiet fill and lighter text, no green bar. */
+.docs-shell a[aria-current="page"] { background: rgba(255, 255, 255, 0.06); color: #f4f6f5; border-color: transparent; box-shadow: none; border-radius: 8px; }
+
+/* Sidebar in the style of the Next.js docs: groups open and close (native <details name>),
+   the group of the current page starts open, inactive items stay grey. */
+.docs-nav { display: grid; gap: 2px; }
+.docs-nav-summary,
+.docs-nav-top-link { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 40px; padding: 8px 12px; border-radius: 8px; font-size: 14px; font-weight: 500; color: #e2e8e4; transition: color 0.15s, background-color 0.15s; }
+.docs-nav-summary { list-style: none; cursor: pointer; }
+.docs-nav-summary::-webkit-details-marker { display: none; }
+.docs-nav-summary:hover,
+.docs-nav-top-link:hover { background: rgba(255, 255, 255, 0.04); color: #f4f6f5; }
+.docs-nav-chevron { flex: none; width: 14px; height: 14px; color: #8e9e96; transition: transform 0.2s ease; }
+.docs-nav-group[open] > .docs-nav-summary .docs-nav-chevron { transform: rotate(90deg); }
+.docs-nav-list { display: grid; gap: 2px; margin: 2px 0 10px 12px; padding-left: 10px; border-left: 1px solid rgba(226, 240, 233, 0.08); }
+.docs-nav-link { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 36px; padding: 6px 10px; border-radius: 6px; font-size: 14px; color: #8e9e96; transition: color 0.15s, background-color 0.15s; }
+.docs-nav-link:hover { color: #f4f6f5; background: rgba(255, 255, 255, 0.03); }
+.docs-nav-count { font-size: 12px; color: #8e9e96; font-variant-numeric: tabular-nums; }
+@media (prefers-reduced-motion: reduce) { .docs-nav-chevron, .docs-nav-summary, .docs-nav-top-link, .docs-nav-link { transition: none; } }
 .docs-mobile-bar { display: flex; align-items: center; gap: 8px; padding-top: 18px; min-width: 0; }
 .docs-mobile-toggle { display: inline-flex; align-items: center; justify-content: center; gap: 6px; flex: none; min-height: 40px; padding: 0 12px; border: 1px solid #31523e; border-radius: 8px; background: #123527; color: #3df69b; font: 600 12px var(--font-inter), sans-serif; cursor: pointer; }
 .docs-mobile-links { display: flex; gap: 5px; min-width: 0; overflow-x: auto; scrollbar-width: thin; }
@@ -140,7 +158,7 @@
 
 .docs-content :is(a, button, summary):focus-visible,
 .docs-toc a:focus-visible,
-#docs-sidebar a:focus-visible,
+#docs-sidebar :is(a, summary):focus-visible,
 .docs-content .table-scroll:focus-visible { outline: 2px solid #3df69b; outline-offset: 3px; }
 .docs-content .table-scroll { overflow-x: auto; max-width: 100%; }
 .docs-content .table-scroll table { margin: 0; }

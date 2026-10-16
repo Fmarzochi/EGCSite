@@ -45,7 +45,7 @@ jobs:
       - name: Stage the build under its base path
         run: |
           mkdir -p lhci-site
-          cp -r dist lhci-site/EGCSite
+          cp -r out lhci-site/EGCSite
 
       - name: Lighthouse
         uses: treosh/lighthouse-ci-action@3e7e23fb74242897f95c0ba9cabad3d0227b9b18 # v12.6.2

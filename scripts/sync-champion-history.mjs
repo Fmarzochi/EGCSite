@@ -1,11 +1,11 @@
 #!/usr/bin/env node
-// Appends last month's Hall of Fame champion to src/data/champion-history.json once that
+// Appends last month's Hall of Fame champion to data/champion-history.json once that
 // month has fully rolled past (i.e. once computeMonthlyChampion in contributors.ts has moved
 // on to a newer month). Safe to run on every build: it no-ops once the current month is
 // already recorded. Existing entries are never modified or removed.
 //
 // Mirrors the tie-break rule (commits, then lines added) used by computeMonthlyChampion in
-// src/data/contributors.ts. Kept as a standalone script (not a TS import) so it can run under
+// data/contributors.ts. Kept as a standalone script (not a TS import) so it can run under
 // plain Node in CI without a TypeScript loader.
 
 import { readFileSync, writeFileSync } from 'node:fs';
@@ -13,7 +13,7 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const HISTORY_PATH = path.join(__dirname, '..', 'src', 'data', 'champion-history.json');
+const HISTORY_PATH = path.join(__dirname, '..', 'data', 'champion-history.json');
 
 const OWNER = 'Fmarzochi';
 const REPO = 'EGC';

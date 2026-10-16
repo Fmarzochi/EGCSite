@@ -2,14 +2,14 @@ import { highlights } from '@/data/contributors';
 import { integrations } from '@/data/integrations';
 import { releases } from '@/data/releases';
 import { canonicalUrl, PRODUCTION_BASE } from '@/lib/base';
-import { languageAlternates, PT_ROUTES } from '@/lib/site-i18n';
+import { hasPortuguese, languageAlternates } from '@/lib/site-i18n';
 
 // XML for /rss.xml, /sitemap-index.xml and /sitemap-0.xml, generated at build time.
 // Same shape as the files @astrojs/rss and @astrojs/sitemap produced, so feed readers
 // and the Search Console keep their URLs.
 
-/** Every route the sitemap lists, relative to the site root. Grows with each phase of the port. */
-export const SITEMAP_ROUTES = [
+/** English routes the sitemap lists, relative to the site root. */
+const EN_ROUTES = [
   '',
   'en/',
   'get-started/',
@@ -26,7 +26,14 @@ export const SITEMAP_ROUTES = [
   ...integrations.map((integration) => `integrations/${integration.slug}/`),
   'contributors/',
   ...Object.keys(highlights).map((login) => `contributors/${login}/`),
-  ...PT_ROUTES.map((path) => `pt${path}`),
+];
+
+/** Every route the sitemap lists: the English ones, then the Portuguese version of each translated page. */
+export const SITEMAP_ROUTES = [
+  ...EN_ROUTES,
+  ...EN_ROUTES.filter((route) => route !== '' && route !== 'en/' && hasPortuguese(`/${route}`)).map(
+    (route) => `pt/${route}`,
+  ),
 ];
 
 function escapeXml(value: string): string {

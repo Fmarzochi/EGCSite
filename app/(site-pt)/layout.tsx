@@ -3,8 +3,8 @@ import type { ReactNode } from 'react';
 import SiteRoot from '@/components/layout/SiteRoot';
 import { DEFAULT_DESCRIPTION, pageMetadata, siteViewport } from '@/lib/seo';
 
-// Root layout of the Portuguese inner pages, under /pt/. Only the pages listed in
-// lib/site-i18n.ts (PT_ROUTES) exist here; the others still lead to the English version.
+// Root layout of the Portuguese inner pages, under /pt/. The pages that exist here are the ones
+// hasPortuguese in lib/site-i18n.ts accepts; links to any other page lead to the English version.
 
 export const metadata: Metadata = pageMetadata({
   title: 'EGC',

@@ -6,18 +6,41 @@ import type { Lang } from '@/lib/lang';
 // redirect on inner pages: the address decides. Only the home picks the language from the time
 // zone (lib/lang.ts), and every link then stays in that language.
 
-/** Inner routes that already have a Portuguese version under /pt/. Grows as pages are translated. */
-export const PT_ROUTES: readonly string[] = ['/get-started/'];
+/** Inner pages that have a Portuguese version under /pt/. */
+const PT_PAGES: readonly string[] = [
+  '/get-started/',
+  '/features/',
+  '/docs/architecture/',
+  '/docs/cli/',
+  '/docs/faq/',
+  '/docs/guardian/',
+  '/docs/mcp/',
+  '/docs/memory/',
+  '/docs/security/',
+  '/privacy/',
+];
+
+/**
+ * Sections translated as a whole: the index and every page under it (one per tool, one per
+ * contributor). A prefix rather than a list, so this module, which the browser scripts import
+ * too, never pulls the integration or contributor data into the client bundle.
+ */
+const PT_SECTIONS: readonly string[] = ['/integrations/', '/contributors/'];
+
+/** Whether the inner page at `path` ('/docs/faq/') has a Portuguese version under /pt/. */
+export function hasPortuguese(path: string): boolean {
+  return PT_PAGES.includes(path) || PT_SECTIONS.some((section) => path.startsWith(section));
+}
 
 /** Address of `path` in `lang`: the Portuguese page when it exists, the English one otherwise. */
 export function localePath(lang: Lang, path: string): string {
-  return lang === 'pt' && PT_ROUTES.includes(path) ? `/pt${path}` : path;
+  return lang === 'pt' && hasPortuguese(path) ? `/pt${path}` : path;
 }
 
 /** hreflang alternates for a route ('get-started/' or 'pt/get-started/'), when both languages exist. */
 export function languageAlternates(route: string): Record<string, string> | undefined {
   const path = `/${route.replace(/^\/+/, '').replace(/^pt\//, '')}`;
-  if (!PT_ROUTES.includes(path)) return undefined;
+  if (!hasPortuguese(path)) return undefined;
   return {
     en: canonicalUrl(path),
     'pt-BR': canonicalUrl(`pt${path}`),

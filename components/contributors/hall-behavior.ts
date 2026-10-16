@@ -1,6 +1,12 @@
 // Behaviour of the Hall of Fame, ported verbatim from the <script> of src/pages/contributors.astro:
 // avatar fallback, search, tier filter, sorting, pagination and the daily hype (Abacus counter).
+// The texts it writes follow the page language, read from <html lang>.
+import { hallText } from '@/lib/hall-i18n';
+import { documentLang } from '@/lib/site-i18n';
+
 export function initHall() {
+  const t = hallText(documentLang());
+  const EN_DASH = String.fromCharCode(0x2013);
   document.querySelectorAll<HTMLImageElement>('.hall .av img').forEach((img) => {
     img.addEventListener('error', () => img.remove(), { once: true });
     if (img.complete && img.naturalWidth === 0) img.remove();
@@ -69,8 +75,8 @@ export function initHall() {
     if (count)
       count.textContent =
         shown.length === 0
-          ? 'Showing 0 of 0 contributors'
-          : `Showing ${start + 1}–${start + visible.length} of ${shown.length} contributors`;
+          ? t.showingNone
+          : t.showing(start + 1, start + visible.length, shown.length, EN_DASH);
     if (pagination) pagination.hidden = totalPages <= 1;
     if (previous) previous.disabled = currentPage === 1;
     if (next) next.disabled = currentPage >= totalPages;
@@ -102,15 +108,18 @@ export function initHall() {
     });
     if (mobileSortKey) mobileSortKey.value = key;
     if (mobileSortDirection) {
-      const label = direction < 0 ? 'Descending' : 'Ascending';
+      const label = direction < 0 ? t.descending : t.ascending;
       mobileSortDirection.textContent = `${label} ${direction < 0 ? '↓' : '↑'}`;
       mobileSortDirection.setAttribute(
         'aria-label',
-        `Currently ${label.toLowerCase()}; switch to ${direction < 0 ? 'ascending' : 'descending'}`,
+        t.sortSwitch(label, direction < 0 ? t.ascending : t.descending),
       );
     }
     if (mobileSortStatus)
-      mobileSortStatus.textContent = `Sorted by ${key === 'additions' ? 'Lines' : key === 'prs' ? 'PRs' : 'Commits'}, ${direction < 0 ? 'descending' : 'ascending'}.`;
+      mobileSortStatus.textContent = t.sortedBy(
+        t.sortKeys[key],
+        direction < 0 ? t.descending : t.ascending,
+      );
     currentPage = 1;
     updateTable();
   }
@@ -172,7 +181,7 @@ export function initHall() {
     for (const b of byLogin(login)) {
       const el = b.querySelector('.hype-count');
       if (el) el.textContent = String(value);
-      b.setAttribute('aria-label', `Hype ${b.dataset.name || login}, ${value} hypes`);
+      b.setAttribute('aria-label', t.hypeCount(b.dataset.name || login, value));
     }
   }
   function paintStates() {
@@ -182,9 +191,9 @@ export function initHall() {
       b.classList.toggle('hype-voted', mine);
       b.classList.toggle('hype-spent', voted !== null && !mine);
       b.setAttribute('aria-pressed', String(mine));
-      if (mine) b.title = 'Your hype of the day! Comes back tomorrow';
-      else if (voted !== null) b.title = "You've used today's hype. Come back tomorrow!";
-      else b.title = 'Hype this contributor (1 hype a day)';
+      if (mine) b.title = t.hypeMine;
+      else if (voted !== null) b.title = t.hypeSpent;
+      else b.title = t.hypeTitle;
       (b as HTMLButtonElement).disabled = voted !== null && !mine;
     }
   }
@@ -198,8 +207,7 @@ export function initHall() {
       try {
         localStorage.setItem(DAILY_KEY, JSON.stringify({ date: today, vote: login }));
       } catch {
-        if (hypeStatus)
-          hypeStatus.textContent = 'Hype could not be saved on this device. Please try again.';
+        if (hypeStatus) hypeStatus.textContent = t.hypeNotSaved;
         return;
       }
       votedDuringLoad.add(login);
@@ -207,8 +215,7 @@ export function initHall() {
       const el = b.querySelector('.hype-count');
       const cur = parseInt(el?.textContent || '0', 10) || 0;
       setCount(login, cur + 1);
-      if (hypeStatus)
-        hypeStatus.textContent = `Your hype for ${login} is saved on this device for today.`;
+      if (hypeStatus) hypeStatus.textContent = t.hypeSaved(login);
       // Fire-and-forget: o Abacus grava o voto global; keepalive garante o envio
       // mesmo se a aba fechar. Sem rollback: o contador global nunca regride.
       try {
@@ -234,14 +241,10 @@ export function initHall() {
             }
           })
           .catch(() => {
-            if (hypeStatus)
-              hypeStatus.textContent =
-                'Hype was saved on this device, but the server could not confirm it.';
+            if (hypeStatus) hypeStatus.textContent = t.hypeUnconfirmed;
           });
       } catch {
-        if (hypeStatus)
-          hypeStatus.textContent =
-            'Hype was saved on this device, but the server could not confirm it.';
+        if (hypeStatus) hypeStatus.textContent = t.hypeUnconfirmed;
       }
     });
   }

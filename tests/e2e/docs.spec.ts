@@ -85,7 +85,8 @@ test.describe('section focus on /docs/memory/', () => {
 
   test('an inner anchor opens the section that holds it', async ({ page }) => {
     await page.goto('docs/memory/#methods-history');
-    expect(await visibleSections(page)).toEqual(['tools']);
+    // Polled like the TOC test above: the section focus starts once the page script hydrates.
+    await expect.poll(() => visibleSections(page)).toEqual(['tools']);
     await expect(page.locator('#methods-history')).toBeFocused();
   });
 

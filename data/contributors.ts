@@ -40,6 +40,9 @@ export interface MonthlyChampion {
   name: string;
   month: string;
   reason: string;
+  /** The month's numbers behind `reason`, so a translated page can word them itself. */
+  commits?: number;
+  additions?: number;
 }
 
 export interface ChampionHistoryRecord {
@@ -147,7 +150,14 @@ export function getChampionHistory(): MonthlyChampion[] {
   return (championHistoryData as ChampionHistoryRecord[])
     .map(record => {
       const { name, reason } = buildChampionReason(record.login, record.month, record.commits, record.additions);
-      return { login: record.login, name, month: record.month, reason };
+      return {
+        login: record.login,
+        name,
+        month: record.month,
+        reason,
+        commits: record.commits,
+        additions: record.additions,
+      };
     })
     .reverse();
 }

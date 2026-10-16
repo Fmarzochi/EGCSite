@@ -140,9 +140,10 @@ test.describe('home', () => {
       page.$$eval(selector, (links) =>
         links.map((a) => (a as HTMLAnchorElement).pathname + (a as HTMLAnchorElement).host),
       );
+    // The Portuguese home leads to the Portuguese inner pages, so it matches their menu.
     const home = await targets('.nav a');
-    await page.goto('features/');
-    const inner = await targets('header nav[aria-label="Main navigation"] a');
+    await page.goto('pt/features/');
+    const inner = await targets('header nav[aria-label="Navegação principal"] a');
     expect(home.slice(1)).toEqual(inner.slice(1));
   });
 

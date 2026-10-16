@@ -67,6 +67,15 @@ const LAYOUT_ROUTES = [
   'integrations/claude-code/',
   'contributors/',
   'privacy/',
+  // Portuguese texts run longer: every inner page above, again under /pt/.
+  'pt/get-started/',
+  'pt/features/',
+  'pt/docs/memory/',
+  'pt/docs/cli/',
+  'pt/integrations/',
+  'pt/integrations/claude-code/',
+  'pt/contributors/',
+  'pt/privacy/',
 ];
 
 for (const width of [320, 390, 768, 1024, 1440, 1920]) {

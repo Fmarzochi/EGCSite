@@ -1,7 +1,8 @@
 import type { Page } from '@playwright/test';
 import { expect, test } from './fixtures';
 
-// Section 11.2 of the brief (section focus on /docs/memory/), plus the docs widgets.
+// The docs pages show whole: the sections are accordion rows (docs-accordion.spec.ts), the
+// section focus is off. Plus the docs widgets.
 
 const visibleSections = (page: Page) =>
   page.$$eval('.docs-content > section[id]', (sections) =>
@@ -10,84 +11,13 @@ const visibleSections = (page: Page) =>
 
 const ALL = ['overview', 'workflow', 'tools', 'state-format', 'protocol'];
 
-test.describe('section focus on /docs/memory/', () => {
+test.describe('/docs/memory/ without section focus', () => {
   test.use({ viewport: { width: 1440, height: 900 } });
 
   test('without a hash the whole page shows', async ({ page }) => {
     await page.goto('docs/memory/');
     expect(await visibleSections(page)).toEqual(ALL);
     await expect(page.locator('.docs-section-bar')).toHaveCount(0);
-  });
-
-  test('a TOC click shows only that section, with the bar under the header', async ({ page }) => {
-    await page.goto('docs/memory/');
-    await page.locator('.docs-toc nav a', { hasText: 'Tool reference' }).click();
-    await expect(page).toHaveURL(/#tools$/);
-    expect(await visibleSections(page)).toEqual(['tools']);
-    const bar = page.locator('.docs-section-bar');
-    await expect(bar.locator('.eyebrow')).toHaveText('MCP SERVERS / MEMORY · 3 / 5');
-    await expect(bar.getByRole('button', { name: 'Show full page' })).toBeVisible();
-    // Measure once the scroll to the section has settled; under load it can still be moving.
-    let lastY = Number.NaN;
-    await expect
-      .poll(async () => {
-        const y = (await bar.boundingBox())!.y;
-        const settled = y === lastY;
-        lastY = y;
-        return settled;
-      })
-      .toBe(true);
-    const header = await page.locator('#site-header').boundingBox();
-    const barBox = await bar.boundingBox();
-    expect(barBox!.y).toBeGreaterThanOrEqual(header!.y + header!.height - 1);
-    expect(barBox!.y).toBeLessThan(900);
-    await expect(page.locator('.docs-toc a[aria-current="location"]')).toHaveText('Tool reference');
-  });
-
-  test('previous and next lead to the neighbour sections', async ({ page }) => {
-    await page.goto('docs/memory/#tools');
-    const nav = page.locator('.docs-section-nav');
-    await expect(nav.locator('[rel="prev"] strong')).toHaveText('How it works');
-    await expect(nav.locator('[rel="next"] strong')).toHaveText('State format');
-    await nav.locator('[rel="next"]').click();
-    expect(await visibleSections(page)).toEqual(['state-format']);
-    await expect(page.locator('.docs-section-bar .eyebrow')).toHaveText(/· 4 \/ 5$/);
-  });
-
-  test('back and forward move between the views', async ({ page }) => {
-    await page.goto('docs/memory/');
-    await page.locator('.docs-toc nav a', { hasText: 'Tool reference' }).click();
-    expect(await visibleSections(page)).toEqual(['tools']);
-    await page.goBack();
-    await expect.poll(() => visibleSections(page)).toEqual(ALL);
-    await page.goForward();
-    await expect.poll(() => visibleSections(page)).toEqual(['tools']);
-  });
-
-  test('"Show full page" keeps the place and the focus', async ({ page }) => {
-    await page.goto('docs/memory/#tools');
-    await page.getByRole('button', { name: 'Show full page' }).click();
-    expect(await visibleSections(page)).toEqual(ALL);
-    await expect(page).not.toHaveURL(/#/);
-    const focused = page.locator(':focus');
-    await expect(focused).toHaveText('Tool reference');
-    const top = await focused.evaluate((el) => el.getBoundingClientRect().top);
-    expect(top).toBeGreaterThanOrEqual(0);
-    expect(top).toBeLessThan(300);
-  });
-
-  test('the keyboard opens a section with Enter', async ({ page }) => {
-    await page.goto('docs/memory/');
-    await page.locator('.docs-toc nav a', { hasText: 'Session protocol' }).focus();
-    await page.keyboard.press('Enter');
-    await expect.poll(() => visibleSections(page)).toEqual(['protocol']);
-  });
-
-  test('an inner anchor opens the section that holds it', async ({ page }) => {
-    await page.goto('docs/memory/#methods-history');
-    // Polled like the TOC test above: the section focus starts once the page script hydrates.
-    await expect.poll(() => visibleSections(page)).toEqual(['tools']);
-    await expect(page.locator('#methods-history')).toBeFocused();
   });
 
   test('the active TOC item follows the scroll', async ({ page }) => {
@@ -111,23 +41,6 @@ test('without JavaScript the memory page shows whole', async ({ browser }) => {
   await page.goto('http://127.0.0.1:4173/EGCSite/docs/memory/#tools');
   expect(await visibleSections(page)).toEqual(ALL);
   await context.close();
-});
-
-test.describe('section picker on a phone', () => {
-  test.use({ viewport: { width: 390, height: 844 } });
-
-  test('the picker opens the section, closes and causes no horizontal scroll', async ({ page }) => {
-    await page.goto('docs/memory/');
-    const picker = page.locator('.docs-section-picker');
-    await picker.locator('summary').click();
-    await picker.locator('nav a[href="#tools"]').click();
-    await expect.poll(() => visibleSections(page)).toEqual(['tools']);
-    await expect(picker).not.toHaveAttribute('open', '');
-    const overflow = await page.evaluate(
-      () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
-    );
-    expect(overflow).toBe(0);
-  });
 });
 
 test.describe('docs widgets', () => {

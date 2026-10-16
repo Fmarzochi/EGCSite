@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import DocsSection from '@/components/docs/DocsSection';
 import DocsShell from '@/components/docs/DocsShell';
 import { integrations } from '@/data/integrations';
 import type { Lang } from '@/lib/lang';
@@ -320,8 +321,7 @@ export default function Features({ lang }: { lang: Lang }) {
       </div>
 
       {/* Core features */}
-      <section className="mb-10">
-        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{t.coreTitle}</h2>
+      <DocsSection title={t.coreTitle} open>
         <p className="text-sm text-gray-600 dark:text-gray-400 mb-5">{t.coreLead}</p>
         <div className="editorial-list grid grid-cols-1 md:grid-cols-2 gap-x-8">
           {t.core.map((card) => (
@@ -335,11 +335,10 @@ export default function Features({ lang }: { lang: Lang }) {
             </article>
           ))}
         </div>
-      </section>
+      </DocsSection>
 
       {/* Prompt library */}
-      <section className="mb-10">
-        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">{t.libraryTitle}</h2>
+      <DocsSection title={t.libraryTitle}>
         <p className="text-sm text-gray-600 dark:text-gray-400 mb-5">{t.libraryLead}</p>
         <p className="sm:hidden text-xs text-gray-400 mb-2">{t.scrollHint}</p>
         <div
@@ -386,11 +385,10 @@ export default function Features({ lang }: { lang: Lang }) {
             </>,
           )}
         </p>
-      </section>
+      </DocsSection>
 
       {/* Supported tools */}
-      <section className="mb-10">
-        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">{t.toolsTitle}</h2>
+      <DocsSection title={t.toolsTitle}>
         <p className="sm:hidden text-xs text-gray-400 mb-2">{t.scrollHint}</p>
         <div
           className="table-scroll rounded-xl border border-gray-200 dark:border-gray-800 w-full"
@@ -449,11 +447,10 @@ export default function Features({ lang }: { lang: Lang }) {
             </tbody>
           </table>
         </div>
-      </section>
+      </DocsSection>
 
       {/* Supported LLM providers */}
-      <section className="mb-10">
-        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">{t.providersTitle}</h2>
+      <DocsSection title={t.providersTitle}>
         <p className="text-sm text-gray-600 dark:text-gray-400 mb-5">
           {t.providersLead(<code className={codeClass}>ModelResolver</code>)}
         </p>
@@ -489,7 +486,7 @@ export default function Features({ lang }: { lang: Lang }) {
             </tbody>
           </table>
         </div>
-      </section>
+      </DocsSection>
     </DocsShell>
   );
 }

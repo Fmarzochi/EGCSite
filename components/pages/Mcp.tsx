@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import Link from 'next/link';
+import DocsSection from '@/components/docs/DocsSection';
 import DocsShell from '@/components/docs/DocsShell';
 import type { Lang } from '@/lib/lang';
 import { localePath } from '@/lib/site-i18n';
@@ -241,8 +242,7 @@ export default function Mcp({ lang }: { lang: Lang }) {
         </div>
       </section>
 
-      <section className="mb-10">
-        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">{t.transportTitle}</h2>
+      <DocsSection title={t.transportTitle} open>
         <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
           {t.transportLead(<strong className="text-gray-900 dark:text-white">stdio</strong>)}
         </p>
@@ -254,10 +254,9 @@ export default function Mcp({ lang }: { lang: Lang }) {
             </code>
           </pre>
         </div>
-      </section>
+      </DocsSection>
 
-      <section className="mb-10">
-        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">{t.localTitle}</h2>
+      <DocsSection title={t.localTitle}>
         <div className="grid sm:grid-cols-3 gap-4">
           {t.local.map((card) => (
             <div
@@ -272,7 +271,7 @@ export default function Mcp({ lang }: { lang: Lang }) {
             </div>
           ))}
         </div>
-      </section>
+      </DocsSection>
     </DocsShell>
   );
 }

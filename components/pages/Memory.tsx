@@ -1,4 +1,5 @@
 import { Fragment, type ReactNode } from 'react';
+import DocsSection from '@/components/docs/DocsSection';
 import DocsShell from '@/components/docs/DocsShell';
 import type { Lang } from '@/lib/lang';
 
@@ -585,7 +586,7 @@ export default function Memory({ lang }: { lang: Lang }) {
   const code = (text: string) => <code className={codeClass}>{text}</code>;
   const copyText = t.flow.map(([step, what], i) => `0${i + 1} ${step} → ${what}`).join('\n');
   return (
-    <DocsShell current="memory" lang={lang} toc={t.toc} focusSections>
+    <DocsShell current="memory" lang={lang} toc={t.toc}>
       <div className="hero pb-8 mb-8 border-b border-[rgba(226,240,233,0.09)]">
         <div className="eyebrow mb-2">{t.eyebrow}</div>
         <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-[#F4F6F5] mb-3 font-sans">
@@ -601,10 +602,7 @@ export default function Memory({ lang }: { lang: Lang }) {
       </div>
 
       {/* Overview */}
-      <section className="section mb-12" id="overview">
-        <h2 className="text-xl sm:text-2xl font-bold text-[#F4F6F5] mb-3 tracking-tight">
-          {t.overviewTitle}
-        </h2>
+      <DocsSection title={t.overviewTitle} id="overview" open>
         <p className="text-sm sm:text-base text-[#8E9E96] leading-relaxed mb-6">
           {t.overviewLead(darkCode)}
         </p>
@@ -618,13 +616,10 @@ export default function Memory({ lang }: { lang: Lang }) {
             </article>
           ))}
         </div>
-      </section>
+      </DocsSection>
 
       {/* Workflow */}
-      <section className="section mb-12" id="workflow">
-        <h2 className="text-xl sm:text-2xl font-bold text-[#F4F6F5] mb-3 tracking-tight">
-          {t.workflowTitle}
-        </h2>
+      <DocsSection title={t.workflowTitle} id="workflow">
         <p className="text-sm sm:text-base text-[#8E9E96] leading-relaxed mb-4">{t.workflowLead}</p>
 
         <div className="snippet">
@@ -645,13 +640,10 @@ export default function Memory({ lang }: { lang: Lang }) {
             </code>
           </pre>
         </div>
-      </section>
+      </DocsSection>
 
       {/* Tool reference */}
-      <section className="section mb-12" id="tools">
-        <h2 className="text-xl sm:text-2xl font-bold text-[#F4F6F5] mb-3 tracking-tight">
-          {t.toolsTitle}
-        </h2>
+      <DocsSection title={t.toolsTitle} id="tools">
         <p className="text-sm sm:text-base text-[#8E9E96] leading-relaxed mb-6">{t.toolsLead}</p>
         <nav className="method-jump" aria-label={t.groupsLabel}>
           {Object.values(GROUP_STARTS).map((id) => (
@@ -693,11 +685,10 @@ export default function Memory({ lang }: { lang: Lang }) {
             );
           })}
         </div>
-      </section>
+      </DocsSection>
 
       {/* State file format */}
-      <section className="section mb-12" id="state-format">
-        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">{t.stateTitle}</h2>
+      <DocsSection title={t.stateTitle} id="state-format">
         <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">{t.stateLead(code)}</p>
         <div className="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-800">
           <div className="px-4 py-2.5 bg-gray-900 border-b border-gray-700">
@@ -734,11 +725,10 @@ export default function Memory({ lang }: { lang: Lang }) {
             </code>
           </pre>
         </div>
-      </section>
+      </DocsSection>
 
       {/* Session protocol */}
-      <section className="section mb-12" id="protocol">
-        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">{t.protocolTitle}</h2>
+      <DocsSection title={t.protocolTitle} id="protocol">
         <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">{t.protocolLead(code)}</p>
         <div className="grid sm:grid-cols-2 gap-4">
           <div className="rounded-xl border border-[#10B866]/30 bg-[#141816] p-5">
@@ -802,7 +792,7 @@ export default function Memory({ lang }: { lang: Lang }) {
             <p className="text-xs text-[#A3ADA7] mt-2">{t.sessionEndDesc}</p>
           </div>
         </div>
-      </section>
+      </DocsSection>
     </DocsShell>
   );
 }

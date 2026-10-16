@@ -37,7 +37,8 @@ export default function DocsShell({ current, lang = 'en', toc, focusSections = f
   const t = siteText(lang).docs;
   const newTab = siteText(lang).nav.newTab;
   const { entries, pages, docOrder } = docsNav(lang);
-  const sectionPicker = focusSections && toc?.length ? toc : undefined;
+  // The phone's "On this page" list leads to the sections whether or not they open one at a time.
+  const sectionPicker = toc?.length ? toc : undefined;
   const currentIndex = docOrder.findIndex((page) => page.id === current);
   const previous = currentIndex > 0 ? docOrder[currentIndex - 1] : null;
   const next = currentIndex >= 0 ? docOrder[currentIndex + 1] : null;

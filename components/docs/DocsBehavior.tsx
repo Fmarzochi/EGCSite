@@ -152,9 +152,30 @@ function showFullPage(root: HTMLElement) {
   if (active) focusAndReveal(active.querySelector<HTMLElement>('h2') ?? active);
 }
 
-// Outside focus mode the TOC still marks the section being read.
+// Section accordions (DocsSection). A link or URL hash that points into a closed section
+// opens it, and every <details> around the target, so the browser has something to scroll to.
+function accordionsToOpen(target: Element) {
+  const content = document.querySelector('.docs-content');
+  const closed: HTMLDetailsElement[] = [];
+  const own = target.matches('.docs-acc') ? target.querySelector<HTMLDetailsElement>(':scope > details') : null;
+  if (own && !own.open) closed.push(own);
+  for (let el = target.closest('details'); el && content?.contains(el); el = el.parentElement?.closest('details') ?? null) {
+    if (!el.open) closed.push(el);
+  }
+  return closed;
+}
+
+/** Opens what hides the target; returns whether anything had to open. */
+function revealInSection(target: Element | null) {
+  if (!target) return false;
+  const closed = accordionsToOpen(target);
+  for (const details of closed) details.open = true;
+  return closed.length > 0;
+}
+
+// The TOC marks the section being read, except while one section is shown on its own.
 function trackScrolledSection() {
-  const root = focusRoot();
+  const root = focusRoot() ?? document.querySelector<HTMLElement>('.docs-content');
   if (!root || root.classList.contains('is-section-focus')) return;
   const offset = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 80;
   let currentId: string | undefined;
@@ -276,6 +297,8 @@ export default function DocsBehavior() {
   useEffect(() => {
     setupDocsContent();
     setupSectionFocus();
+    // The browser scrolled to the hash while its section was still closed.
+    if (revealInSection(hashTarget())) hashTarget()?.scrollIntoView({ block: 'start', behavior: 'instant' });
     const teardownSidebar = setupSidebar();
 
     let scrollFrame = 0;
@@ -286,13 +309,22 @@ export default function DocsBehavior() {
         trackScrolledSection();
       });
     };
-    const onHashChange = () => applySectionFocus(true);
+    const onHashChange = () => {
+      // Back and forward: open the section first, then let the focus view or the scroll follow.
+      if (revealInSection(hashTarget()) && !focusRoot()) hashTarget()?.scrollIntoView({ block: 'start', behavior: 'instant' });
+      applySectionFocus(true);
+    };
     const onClick = async (event: MouseEvent) => {
       const target = event.target as Element | null;
       if (!target) return;
+      // Open a closed section before the browser follows a link into it, so it scrolls to a box that shows.
+      const anchor = target.closest<HTMLAnchorElement>('a[href*="#"]');
+      if (anchor && anchor.pathname === location.pathname && anchor.hash) {
+        revealInSection(document.getElementById(decodeURIComponent(anchor.hash.slice(1))));
+      }
       const root = focusRoot();
       if (root && target.closest('.docs-section-full')) showFullPage(root);
-      if (root && target.closest('.docs-section-picker nav a')) target.closest('details')?.removeAttribute('open');
+      if (target.closest('.docs-section-picker nav a')) target.closest('details')?.removeAttribute('open');
 
       // Clipboard copy helper
       const btn = target.closest('.copy-btn, .docs-copy-code');
@@ -315,14 +347,29 @@ export default function DocsBehavior() {
       }, 1500);
     };
 
+    // Print the whole page: open every closed section, and close them again afterwards.
+    let openedForPrint: HTMLDetailsElement[] = [];
+    const onBeforePrint = () => {
+      openedForPrint = Array.from(document.querySelectorAll<HTMLDetailsElement>('.docs-content details:not([open])'));
+      for (const details of openedForPrint) details.open = true;
+    };
+    const onAfterPrint = () => {
+      for (const details of openedForPrint) details.open = false;
+      openedForPrint = [];
+    };
+
     window.addEventListener('hashchange', onHashChange);
     window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('beforeprint', onBeforePrint);
+    window.addEventListener('afterprint', onAfterPrint);
     document.addEventListener('click', onClick);
     return () => {
       teardownSidebar();
       if (scrollFrame) cancelAnimationFrame(scrollFrame);
       window.removeEventListener('hashchange', onHashChange);
       window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('beforeprint', onBeforePrint);
+      window.removeEventListener('afterprint', onAfterPrint);
       document.removeEventListener('click', onClick);
     };
   }, []);

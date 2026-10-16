@@ -1,4 +1,5 @@
 import { Fragment } from 'react';
+import DocsSection from '@/components/docs/DocsSection';
 import DocsShell from '@/components/docs/DocsShell';
 import type { Lang } from '@/lib/lang';
 
@@ -245,8 +246,7 @@ export default function Security({ lang }: { lang: Lang }) {
       </div>
 
       {/* Badges */}
-      <section className="mb-10">
-        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">{t.postureTitle}</h2>
+      <DocsSection title={t.postureTitle} open>
         <div className="flex flex-wrap justify-center gap-3 mb-6">
           {BADGES.map((badge, i) => (
             <Fragment key={badge.href}>
@@ -287,11 +287,10 @@ export default function Security({ lang }: { lang: Lang }) {
             </a>
           ))}
         </div>
-      </section>
+      </DocsSection>
 
       {/* Reporting */}
-      <section className="mb-10">
-        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">{t.reportTitle}</h2>
+      <DocsSection title={t.reportTitle}>
         <div className="rounded-xl border border-red-200 dark:border-red-900/50 bg-red-50 dark:bg-red-950/20 p-5 mb-5">
           <p className="text-sm text-red-800 dark:text-red-300 font-semibold mb-1">{t.noPublic}</p>
           <p className="text-sm text-red-700 dark:text-red-400">{t.noPublicWhy}</p>
@@ -352,11 +351,10 @@ export default function Security({ lang }: { lang: Lang }) {
             </div>
           </div>
         </div>
-      </section>
+      </DocsSection>
 
       {/* Timeline */}
-      <section className="mb-10">
-        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">{t.timelineTitle}</h2>
+      <DocsSection title={t.timelineTitle}>
         <div className="space-y-2">
           {t.timeline.map((row) => (
             <div
@@ -370,11 +368,10 @@ export default function Security({ lang }: { lang: Lang }) {
             </div>
           ))}
         </div>
-      </section>
+      </DocsSection>
 
       {/* Scope */}
-      <section className="mb-10">
-        <h2 className="text-xl font-bold text-[#F3F6F4] mb-4">{t.scopeTitle}</h2>
+      <DocsSection title={t.scopeTitle}>
         <div className="grid sm:grid-cols-2 gap-4">
           <div className="rounded-xl border border-[#10B866]/30 bg-[#141816] p-5">
             <h3 className="text-sm font-semibold text-[#3DF59A] mb-3 flex items-center gap-2">
@@ -431,7 +428,7 @@ export default function Security({ lang }: { lang: Lang }) {
             </ul>
           </div>
         </div>
-      </section>
+      </DocsSection>
     </DocsShell>
   );
 }

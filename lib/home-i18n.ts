@@ -18,10 +18,27 @@ function withToolCount(dict: HomeDictionary): HomeDictionary {
 }
 
 // Texts added after the port, kept apart so dictionaries/*.json stay verbatim copies of the
-// Astro source: the home menu now lists the same pages as the inner Navbar.
+// Astro source: the home menu now lists the same pages as the inner Navbar, and the demo section
+// links to the recorded demo on YouTube.
 const ADDED: Record<Lang, HomeDictionary> = {
-  pt: { 'nav.home': 'Início', 'a.discord': 'Discord do EGC (abre em nova aba)' },
-  en: { 'nav.home': 'Home', 'a.discord': 'EGC Discord (opens in a new tab)' },
+  pt: {
+    'nav.home': 'Início',
+    'a.discord': 'Discord do EGC (abre em nova aba)',
+    'demo.videoTitle': 'Veja a gravação real',
+    'demo.videoLede': 'A simulação acima explica o fluxo. Para ver o EGC de verdade, assista à demonstração gravada.',
+    'demo.videoNote': 'Ao reproduzir, o vídeo é carregado do YouTube.',
+    'demo.videoPlay': 'Reproduzir a demonstração gravada',
+    'demo.videoFrame': 'Demonstração gravada do EGC',
+  },
+  en: {
+    'nav.home': 'Home',
+    'a.discord': 'EGC Discord (opens in a new tab)',
+    'demo.videoTitle': 'Watch the real recording',
+    'demo.videoLede': 'The simulation above explains the flow. To see EGC for real, watch the recorded demo.',
+    'demo.videoNote': 'When you press play, the video loads from YouTube.',
+    'demo.videoPlay': 'Play the recorded demo',
+    'demo.videoFrame': 'Recorded demo of EGC',
+  },
 };
 
 const DICTIONARIES: Record<Lang, HomeDictionary> = {

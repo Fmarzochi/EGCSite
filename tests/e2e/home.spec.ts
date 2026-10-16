@@ -178,3 +178,67 @@ test('without JavaScript the home is fully visible', async ({ browser }) => {
   await expect(page.locator('.faq details').first()).toHaveAttribute('open', '');
   await context.close();
 });
+
+test('the recorded demo plays on the home and loads nothing from YouTube until play', async ({ page }) => {
+  const youtube: string[] = [];
+  // The player itself is not needed here: stop the requests, but record that they were made.
+  await page.route(/youtube(-nocookie)?\.com|ytimg\.com|googlevideo\.com/, (route) => {
+    youtube.push(route.request().url());
+    return route.fulfill({ body: '' });
+  });
+  for (const [path, label, captions] of [
+    ['./', 'Play the recorded demo', 'en'],
+    ['pt/', 'Reproduzir a demonstração gravada', 'pt'],
+  ] as const) {
+    youtube.length = 0;
+    await page.goto(path);
+    const media = page.locator('#demo .demo-video__media');
+    await media.scrollIntoViewIfNeeded();
+    await expect(media.locator('img')).toHaveAttribute('src', '/EGCSite/demo/egc-demo-v2.jpg');
+    await expect.poll(() => media.locator('img').evaluate((img: HTMLImageElement) => img.naturalWidth)).toBe(1280);
+    // Without JS the still is a link to the video, so it has the same name either way.
+    await expect(media).toHaveAttribute('href', 'https://www.youtube.com/watch?v=A8M_98WdI0Q');
+    expect(youtube).toEqual([]);
+
+    await page.getByRole('link', { name: label }).click();
+    const player = page.locator('#demo .demo-video__media iframe');
+    await expect(player).toHaveAttribute('src', new RegExp(`^https://www\\.youtube-nocookie\\.com/embed/A8M_98WdI0Q\\?autoplay=1&cc_load_policy=1&cc_lang_pref=${captions}`));
+    await expect(player).toBeFocused();
+    await expect(page).toHaveURL(new RegExp(`/EGCSite/${path === './' ? '' : 'pt/'}$`));
+    await expect.poll(() => youtube.some((url) => url.startsWith('https://www.youtube-nocookie.com/embed/'))).toBe(true);
+  }
+});
+
+for (const viewport of [
+  { width: 1440, height: 900 },
+  { width: 390, height: 844 },
+]) {
+  test(`the play sign sits on the centre of its circle at ${viewport.width}px`, async ({ page }) => {
+    await page.setViewportSize(viewport);
+    // Distance between the centre of the triangle's box and the centre of the circle, in px.
+    const offset = () =>
+      page.locator('#demo .demo-video__play').evaluate((circle) => {
+        const c = circle.getBoundingClientRect();
+        const t = circle.querySelector('path')!.getBoundingClientRect();
+        return {
+          x: Math.abs(t.x + t.width / 2 - (c.x + c.width / 2)),
+          y: Math.abs(t.y + t.height / 2 - (c.y + c.height / 2)),
+        };
+      });
+    for (const path of ['./', 'pt/']) {
+      await page.goto(path);
+      const media = page.locator('#demo .demo-video__media');
+      await media.scrollIntoViewIfNeeded();
+      for (const state of ['rest', 'hover']) {
+        if (state === 'hover') await media.hover();
+        // The hover scale animates; measure once it has settled.
+        await expect
+          .poll(async () => {
+            const { x, y } = await offset();
+            return x <= 0.5 && y <= 0.5;
+          }, { message: `${path} ${state}: ${JSON.stringify(await offset())}` })
+          .toBe(true);
+      }
+    }
+  });
+}

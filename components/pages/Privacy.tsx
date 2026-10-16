@@ -37,6 +37,8 @@ interface Copy {
   thirdTitle: string;
   thirdLead: string;
   githubPages: ReactNode;
+  /** The demo video player on the home. */
+  youtube: ReactNode;
   cliTitle: string;
   cli: (path: ReactNode, policy: ReactNode) => ReactNode;
   securityPolicy: string;
@@ -105,6 +107,13 @@ const COPY: Record<Lang, Copy> = {
       <>
         {strong('GitHub Pages')} - the hosting provider. GitHub&apos;s privacy policy applies to
         page delivery.
+      </>
+    ),
+    youtube: (
+      <>
+        {strong('YouTube')} - the recorded demo on the home page. The player loads from
+        youtube-nocookie.com only when you press play; until then the page makes no request to
+        YouTube. Once the video plays, Google&apos;s privacy policy applies to it.
       </>
     ),
     cliTitle: 'EGC itself (the CLI tool)',
@@ -190,6 +199,14 @@ const COPY: Record<Lang, Copy> = {
       <>
         {strong('GitHub Pages')} - o provedor de hospedagem. A política de privacidade do GitHub se
         aplica à entrega das páginas.
+      </>
+    ),
+    youtube: (
+      <>
+        {strong('YouTube')} - a demonstração gravada na página inicial. O player é carregado de
+        youtube-nocookie.com só quando você aperta o play; até lá, a página não faz nenhuma
+        requisição ao YouTube. Quando o vídeo toca, a política de privacidade do Google se aplica a
+        ele.
       </>
     ),
     cliTitle: 'O próprio EGC (a ferramenta de linha de comando)',
@@ -288,6 +305,9 @@ export default function Privacy({ lang }: { lang: Lang }) {
         <ul className="space-y-1.5 text-sm text-gray-600 dark:text-gray-400 mb-6 ml-4">
           <li className="flex items-start gap-2">
             <span className="shrink-0">-</span> {t.githubPages}
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="shrink-0">-</span> {t.youtube}
           </li>
         </ul>
 

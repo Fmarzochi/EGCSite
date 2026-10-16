@@ -1,6 +1,7 @@
 import type { CSSProperties } from 'react';
 import Link from 'next/link';
 import { Icon } from '@/components/brand/icons';
+import DemoVideo from '@/components/home/DemoVideo';
 import HomeBehavior from '@/components/home/HomeBehavior';
 import { integrations } from '@/data/integrations';
 import { withBase } from '@/lib/base';
@@ -885,6 +886,20 @@ export default function HomePage({ lang }: { lang: Lang }) {
                   </div>
                 </section>
               </div>
+            </div>
+
+            {/* The recorded demo plays here; nothing loads from YouTube until play is pressed. */}
+            <div className="rv">
+              <DemoVideo
+                lang={lang}
+                texts={{
+                  title: tx('demo.videoTitle'),
+                  lede: tx('demo.videoLede'),
+                  note: tx('demo.videoNote'),
+                  play: tx('demo.videoPlay'),
+                  frameTitle: tx('demo.videoFrame'),
+                }}
+              />
             </div>
           </div>
         </section>

@@ -23,10 +23,8 @@ const PAGES = [
   'contributors/phaiffer/',
 ];
 
-/** Same-site addresses a Portuguese page may still link to in English: the homes and files. */
+/** Same-site addresses a Portuguese page may link to outside /pt/: files, not pages. */
 const NOT_PAGES = new Set([
-  '/EGCSite/',
-  '/EGCSite/en/',
   '/EGCSite/rss.xml',
   '/EGCSite/architecture.svg',
 ]);
@@ -128,7 +126,7 @@ test('Portuguese pages link to Portuguese pages, and English pages to English on
 });
 
 test('the Portuguese home leads to the Portuguese pages', async ({ page }) => {
-  await page.goto('./');
+  await page.goto('pt/');
   await expect(page.locator('footer a', { hasText: 'Guia de instalação' })).toHaveAttribute(
     'href',
     '/EGCSite/pt/get-started/',
@@ -182,7 +180,7 @@ test('the sitemap lists every Portuguese page with its pair', async ({ request }
   const xml = await (await request.get('sitemap-0.xml')).text();
   const locs = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1] ?? '');
   const inner = locs.filter(
-    (loc) => loc !== PROD && loc !== `${PROD}en/` && !loc.startsWith(`${PROD}pt/`),
+    (loc) => !loc.startsWith(`${PROD}pt/`),
   );
   const portuguese = locs.filter((loc) => loc.startsWith(`${PROD}pt/`));
   expect(portuguese.length).toBe(inner.length);

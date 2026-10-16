@@ -11,7 +11,6 @@ import { hasPortuguese, languageAlternates } from '@/lib/site-i18n';
 /** English routes the sitemap lists, relative to the site root. */
 const EN_ROUTES = [
   '',
-  'en/',
   'get-started/',
   'features/',
   'privacy/',
@@ -31,7 +30,7 @@ const EN_ROUTES = [
 /** Every route the sitemap lists: the English ones, then the Portuguese version of each translated page. */
 export const SITEMAP_ROUTES = [
   ...EN_ROUTES,
-  ...EN_ROUTES.filter((route) => route !== '' && route !== 'en/' && hasPortuguese(`/${route}`)).map(
+  ...EN_ROUTES.filter((route) => hasPortuguese(`/${route}`)).map(
     (route) => `pt/${route}`,
   ),
 ];
@@ -60,20 +59,13 @@ export function sitemapIndexXml(): string {
 }
 
 export function sitemapXml(): string {
-  const homeAlternates =
-    `<xhtml:link rel="alternate" hreflang="pt-BR" href="${canonicalUrl('')}"/>` +
-    `<xhtml:link rel="alternate" hreflang="en" href="${canonicalUrl('en/')}"/>` +
-    `<xhtml:link rel="alternate" hreflang="x-default" href="${canonicalUrl('')}"/>`;
   const pairAlternates = (route: string) =>
     Object.entries(languageAlternates(route) ?? {})
       .map(([lang, href]) => `<xhtml:link rel="alternate" hreflang="${lang}" href="${href}"/>`)
       .join('');
   const urls = SITEMAP_ROUTES.map((route) => ({ route, loc: canonicalUrl(route) }))
     .sort((a, b) => (a.loc < b.loc ? -1 : a.loc > b.loc ? 1 : 0))
-    .map(({ route, loc }) => {
-      const isHome = route === '' || route === 'en/';
-      return `<url><loc>${loc}</loc>${isHome ? homeAlternates : pairAlternates(route)}</url>`;
-    })
+    .map(({ route, loc }) => `<url><loc>${loc}</loc>${pairAlternates(route)}</url>`)
     .join('');
   return `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">${urls}</urlset>`;
 }

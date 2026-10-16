@@ -55,7 +55,7 @@ export default function Footer({ lang = 'en' }: { lang?: Lang }) {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-12 mb-12">
           {/* Brand column */}
           <div className="sm:col-span-2 lg:col-span-1">
-            <Link prefetch={false} href="/" className="inline-flex items-center gap-2.5 mb-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3DF69B] rounded-md">
+            <Link prefetch={false} href={localePath(lang, '/')} className="inline-flex items-center gap-2.5 mb-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3DF69B] rounded-md">
               <CloverMark id="m-ft" size={24} />
               <span className="font-bold text-base tracking-tight text-[#F4F6F5]">EGC</span>
             </Link>

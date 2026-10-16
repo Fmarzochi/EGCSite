@@ -5,10 +5,10 @@ import '@/styles/home.css';
 import { canonicalUrl, withBase } from '@/lib/base';
 import { jakarta, jetbrains } from '@/lib/fonts';
 import { homeTranslator } from '@/lib/home-i18n';
-import { type Lang, langRedirectScript } from '@/lib/lang';
+import { homeBootScript, type Lang } from '@/lib/lang';
 import { pageMetadata, softwareApplicationJsonLd } from '@/lib/seo';
 
-// Shared shell of the two home root layouts, / (pt-BR) and /en/ (en). The home has its own
+// Shared shell of the two home root layouts, / (en) and /pt/ (pt-BR). The home has its own
 // header, footer and styles (src/pages/index.astro), so it does not use the site layout.
 
 const metaFor = (lang: Lang, route: string) => {
@@ -28,7 +28,7 @@ export function homeMetadata(lang: Lang): Metadata {
     twitter: { ...base.twitter, title: META[lang].title.split(' · ')[0] },
     alternates: {
       canonical: canonicalUrl(META[lang].route),
-      languages: { 'pt-BR': canonicalUrl(''), en: canonicalUrl('en/'), 'x-default': canonicalUrl('') },
+      languages: { en: canonicalUrl(''), 'pt-BR': canonicalUrl('pt/'), 'x-default': canonicalUrl('') },
     },
   };
 }
@@ -42,7 +42,7 @@ export default function HomeRoot({ lang, children }: { lang: Lang; children: Rea
       {/* The rule targets the pages router; in an App Router root layout <head> is the documented way. */}
       {/* eslint-disable-next-line @next/next/no-head-element */}
       <head>
-        <script dangerouslySetInnerHTML={{ __html: langRedirectScript(lang) }} />
+        <script dangerouslySetInnerHTML={{ __html: homeBootScript() }} />
         <link rel="alternate" type="application/rss+xml" title="EGC Releases" href={withBase('rss.xml')} />
       </head>
       <body>

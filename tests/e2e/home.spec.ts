@@ -26,48 +26,50 @@ const LANGUAGE_SWITCH =
 const heroTitle = async (page: import('@playwright/test').Page) =>
   (await page.locator('#hero-title').innerText()).replace(/\s+/g, ' ').trim();
 
-test.describe('language follows the device time zone', () => {
-  for (const timezoneId of PT_ZONES) {
+// The address decides, as on the inner pages: English at /, Portuguese at /pt/, whatever the
+// device time zone, and the old English address /en/ leads to /.
+test.describe('the address decides the home language', () => {
+  for (const timezoneId of [...PT_ZONES, ...EN_ZONES]) {
     test.describe(timezoneId, () => {
       test.use({ timezoneId });
-      test('opens in Portuguese', async ({ page }) => {
-        await page.goto('en/');
+      test('/ is English and /pt/ is Portuguese', async ({ page }) => {
+        await page.goto('./');
+        await page.waitForTimeout(300);
         await expect(page).toHaveURL(/\/EGCSite\/$/);
+        await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+        expect(await heroTitle(page)).toBe('Context that never resets.');
+        await page.goto('pt/');
+        await page.waitForTimeout(300);
+        await expect(page).toHaveURL(/\/EGCSite\/pt\/$/);
         await expect(page.locator('html')).toHaveAttribute('lang', 'pt-BR');
         expect(await heroTitle(page)).toBe('Contexto que nunca zera.');
       });
     });
   }
 
-  for (const timezoneId of EN_ZONES) {
-    test.describe(timezoneId, () => {
-      test.use({ timezoneId });
-      test('opens in English', async ({ page }) => {
-        await page.goto('./');
-        await expect(page).toHaveURL(/\/EGCSite\/en\/$/);
-        await expect(page.locator('html')).toHaveAttribute('lang', 'en');
-        expect(await heroTitle(page)).toBe('Context that never resets.');
-      });
-    });
-  }
+  test('the old /en/ address leads to /, keeping the hash', async ({ page }) => {
+    await page.goto('en/#instalar');
+    await expect(page).toHaveURL(/\/EGCSite\/#instalar$/);
+    await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+  });
 
   test('an old saved "en" is ignored and deleted', async ({ page }) => {
     await page.addInitScript(() => localStorage.setItem('egc-lang', 'en'));
-    await page.goto('./');
-    await expect(page).toHaveURL(/\/EGCSite\/$/);
+    await page.goto('pt/');
+    await expect(page).toHaveURL(/\/EGCSite\/pt\/$/);
     expect(await heroTitle(page)).toBe('Contexto que nunca zera.');
     expect(await page.evaluate(() => localStorage.getItem('egc-lang'))).toBeNull();
   });
 
   test('there is no language switch', async ({ page }) => {
-    await page.goto('./');
+    await page.goto('pt/');
     await expect(page.locator(LANGUAGE_SWITCH)).toHaveCount(0);
   });
 
   test.describe('phone menu', () => {
     test.use({ viewport: { width: 390, height: 844 } });
     test('opens without a language row', async ({ page }) => {
-      await page.goto('./');
+      await page.goto('pt/');
       await page.locator('.burger').click();
       await expect(page.locator('#mnav')).toBeVisible();
       await expect(page.locator('#mnav').locator(LANGUAGE_SWITCH)).toHaveCount(0);
@@ -83,7 +85,7 @@ test.describe('home', () => {
   test.use({ viewport: { width: 1440, height: 900 } });
 
   test('install tabs work with the keyboard', async ({ page }) => {
-    await page.goto('./');
+    await page.goto('pt/');
     const tabs = page.locator('.term__tab');
     await tabs.first().focus();
     await page.keyboard.press('ArrowRight');
@@ -97,7 +99,7 @@ test.describe('home', () => {
   });
 
   test('demo steps work with the keyboard', async ({ page }) => {
-    await page.goto('./');
+    await page.goto('pt/');
     const steps = page.locator('[data-demo] .step');
     await expect(steps).toHaveCount(5);
     await steps.nth(2).click();
@@ -109,7 +111,7 @@ test.describe('home', () => {
   });
 
   test('FAQ accordions open and close, the first starts open', async ({ page }) => {
-    await page.goto('./');
+    await page.goto('pt/');
     const items = page.locator('.faq details');
     await expect(items.first()).toHaveAttribute('open', '');
     await items.nth(1).locator('summary').click();
@@ -118,7 +120,7 @@ test.describe('home', () => {
 
   test('the install command copies', async ({ page, context }) => {
     await context.grantPermissions(['clipboard-read', 'clipboard-write']);
-    await page.goto('./');
+    await page.goto('pt/');
     const button = page.locator('.hero [data-copy]');
     await button.click();
     await expect(button).toHaveAttribute('data-state', 'done');
@@ -130,7 +132,7 @@ test.describe('home', () => {
   test('the header gets a background and links the same pages as the inner menu', async ({
     page,
   }) => {
-    await page.goto('./');
+    await page.goto('pt/');
     await expect(page.locator('.hdr')).toHaveAttribute('data-scrolled', 'false');
     await page.locator('#funcoes').evaluate((el) => el.scrollIntoView({ block: 'start' }));
     await expect(page.locator('.hdr')).toHaveAttribute('data-scrolled', 'true');
@@ -150,7 +152,7 @@ test.describe('home', () => {
   test.describe('with reduced motion', () => {
     test.use({ reducedMotion: 'reduce' });
     test('everything is visible', async ({ page }) => {
-      await page.goto('./');
+      await page.goto('pt/');
       await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
       const hidden = await page.$$eval(
         '.rv, .metric',
@@ -167,7 +169,7 @@ test('without JavaScript the home is fully visible', async ({ browser }) => {
     timezoneId: 'America/Sao_Paulo',
   });
   const page = await context.newPage();
-  await page.goto('http://127.0.0.1:4173/EGCSite/');
+  await page.goto('http://127.0.0.1:4173/EGCSite/pt/');
   const hidden = await page.$$eval(
     '.rv, .metric',
     (els) => els.filter((el) => getComputedStyle(el).opacity !== '1').length,

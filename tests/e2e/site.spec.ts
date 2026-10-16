@@ -58,7 +58,7 @@ test('every page has one h1, a title, a skip link and lang', async ({ page, requ
 
 const LAYOUT_ROUTES = [
   '',
-  'en/',
+  'pt/',
   'get-started/',
   'features/',
   'docs/memory/',

@@ -8,6 +8,7 @@ import type { Lang } from '@/lib/lang';
 
 /** Inner pages that have a Portuguese version under /pt/. */
 const PT_PAGES: readonly string[] = [
+  '/',
   '/get-started/',
   '/features/',
   '/docs/architecture/',

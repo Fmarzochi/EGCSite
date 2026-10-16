@@ -48,7 +48,7 @@ const DISCORD = 'https://discord.gg/FmXbgUmdmM';
 
 export default function HomePage({ lang }: { lang: Lang }) {
   const tx = homeTranslator(lang);
-  const homeHref = withBase(lang === 'pt' ? '' : 'en/');
+  const homeHref = withBase(lang === 'pt' ? 'pt/' : '');
   const runtimeTexts = Object.fromEntries(
     Object.entries(homeDictionary(lang)).filter(([key]) => RUNTIME_KEYS.test(key)),
   );

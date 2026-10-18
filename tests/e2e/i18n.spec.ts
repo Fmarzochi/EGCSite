@@ -55,13 +55,15 @@ for (const path of PAGES) {
 test('both versions point at each other with hreflang and keep their own canonical', async ({
   page,
 }) => {
-  for (const path of ['get-started/', 'docs/faq/', 'integrations/cursor/', 'contributors/']) {
+  // '' is the home: / in English, /pt/ in Portuguese.
+  for (const path of ['', 'get-started/', 'docs/faq/', 'integrations/cursor/', 'contributors/']) {
     for (const [route, canonical] of [
       [path, `${PROD}${path}`],
       [`pt/${path}`, `${PROD}pt/${path}`],
     ] as const) {
       await page.goto(route);
       await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', canonical);
+      await expect(page.locator('meta[property="og:url"]')).toHaveAttribute('content', canonical);
       await expect(page.locator('link[rel="alternate"][hreflang="en"]')).toHaveAttribute(
         'href',
         `${PROD}${path}`,

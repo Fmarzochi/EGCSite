@@ -16,8 +16,8 @@ const metaFor = (lang: Lang, route: string) => {
   return { title: tx('meta.title'), description: tx('meta.desc'), route };
 };
 const META: Record<Lang, { title: string; description: string; route: string }> = {
-  pt: metaFor('pt', ''),
-  en: metaFor('en', 'en/'),
+  pt: metaFor('pt', 'pt/'),
+  en: metaFor('en', ''),
 };
 
 export function homeMetadata(lang: Lang): Metadata {

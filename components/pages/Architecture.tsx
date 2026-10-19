@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import DocsSection from '@/components/docs/DocsSection';
 import DocsShell from '@/components/docs/DocsShell';
 import { withBase } from '@/lib/base';
 import type { Lang } from '@/lib/lang';
@@ -167,8 +168,7 @@ export default function Architecture({ lang }: { lang: Lang }) {
       </div>
 
       {/* Diagram */}
-      <section className="mb-10">
-        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">{t.overview}</h2>
+      <DocsSection title={t.overview} open>
         <figure className="architecture-figure">
           <p className="architecture-scroll-hint" id="architecture-scroll-hint">
             {t.scrollHint}
@@ -190,11 +190,10 @@ export default function Architecture({ lang }: { lang: Lang }) {
             )}
           </figcaption>
         </figure>
-      </section>
+      </DocsSection>
 
       {/* Layers */}
-      <section className="mb-10">
-        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">{t.layersTitle}</h2>
+      <DocsSection title={t.layersTitle}>
         <div className="editorial-list">
           {t.layers.map((step, i) => (
             <div key={step.title} className="flex gap-4">
@@ -210,11 +209,10 @@ export default function Architecture({ lang }: { lang: Lang }) {
             </div>
           ))}
         </div>
-      </section>
+      </DocsSection>
 
       {/* Design notes */}
-      <section className="mb-10">
-        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">{t.notesTitle}</h2>
+      <DocsSection title={t.notesTitle}>
         <div className="rounded-xl border border-amber-200 dark:border-amber-900/50 bg-amber-50 dark:bg-amber-950/20 p-6">
           <h3 className="font-semibold text-amber-900 dark:text-amber-400 mb-2">
             {t.consolidation}
@@ -230,7 +228,7 @@ export default function Architecture({ lang }: { lang: Lang }) {
             )}
           </p>
         </div>
-      </section>
+      </DocsSection>
     </DocsShell>
   );
 }

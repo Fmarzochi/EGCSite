@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import DocsSection from '@/components/docs/DocsSection';
 import DocsShell from '@/components/docs/DocsShell';
 import type { Lang } from '@/lib/lang';
 
@@ -243,19 +244,17 @@ export default function Guardian({ lang }: { lang: Lang }) {
       </div>
 
       {/* Overview */}
-      <section className="mb-10">
-        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">{t.overview}</h2>
+      <DocsSection title={t.overview} open>
         <p className="text-gray-600 dark:text-gray-400 mb-4">{t.overviewP1}</p>
         <p className="text-gray-600 dark:text-gray-400">
           {t.overviewP2((name) => (
             <code className={codeClass}>{name}</code>
           ))}
         </p>
-      </section>
+      </DocsSection>
 
       {/* Tools */}
-      <section className="mb-10">
-        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">{t.toolsTitle}</h2>
+      <DocsSection title={t.toolsTitle}>
         <div className="space-y-4">
           {TOOLS.map((tool) => (
             <div
@@ -289,11 +288,10 @@ export default function Guardian({ lang }: { lang: Lang }) {
             </div>
           ))}
         </div>
-      </section>
+      </DocsSection>
 
       {/* Blocked patterns */}
-      <section className="mb-10">
-        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">{t.blockedTitle}</h2>
+      <DocsSection title={t.blockedTitle}>
         <div className="grid sm:grid-cols-2 gap-4">
           <div className="rounded-xl border border-gray-200 dark:border-gray-800 p-5">
             <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
@@ -326,7 +324,7 @@ export default function Guardian({ lang }: { lang: Lang }) {
             </ul>
           </div>
         </div>
-      </section>
+      </DocsSection>
     </DocsShell>
   );
 }

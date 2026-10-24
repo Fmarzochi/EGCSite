@@ -33,7 +33,7 @@ const COPY: Record<Lang, Copy> = {
     },
     eyebrow: 'Integrations',
     title: `One brain, ${n} AI coding tools`,
-    lead: 'Every tool gets the memory protocol and the session bus; the two local MCP servers are registered in the ten tools EGC writes MCP config for today. Pick yours to see what EGC installs, where it goes, and how native hooks decide what Guardian and the Token Crusher can do inside it.',
+    lead: 'Every tool gets the memory protocol and the session bus; the two local MCP servers are registered in the 24 tools EGC writes MCP config for today (23 at the user level, Devin Desktop through the project file). Pick yours to see what EGC installs, where it goes, and how native hooks decide what Guardian and the Token Crusher can do inside it.',
     levels: SUPPORT_LEVEL_LABEL,
     notes: {
       core: 'The maintainer or an area steward runs these daily; a regression caused by a vendor change is fixed before the next release.',
@@ -56,7 +56,7 @@ const COPY: Record<Lang, Copy> = {
     },
     eyebrow: 'Integrações',
     title: `Um cérebro, ${n} ferramentas de programação com IA`,
-    lead: 'Toda ferramenta recebe o protocolo de memória e o barramento de sessões; os dois servidores MCP locais são registrados nas dez ferramentas para as quais o EGC grava configuração de MCP hoje. Escolha a sua para ver o que o EGC instala, onde fica e como os hooks nativos decidem o que o Guardian e o Token Crusher podem fazer dentro dela.',
+    lead: 'Toda ferramenta recebe o protocolo de memória e o barramento de sessões; os dois servidores MCP locais são registrados nas 24 ferramentas para as quais o EGC grava configuração de MCP hoje (23 no nível do usuário, o Devin Desktop pelo arquivo do projeto). Escolha a sua para ver o que o EGC instala, onde fica e como os hooks nativos decidem o que o Guardian e o Token Crusher podem fazer dentro dela.',
     levels: SUPPORT_LEVEL_LABEL_PT,
     notes: {
       core: 'O mantenedor ou um responsável pela área usa estas todo dia; uma regressão causada por mudança do fabricante é corrigida antes da próxima release.',

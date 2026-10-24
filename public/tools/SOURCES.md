@@ -1,6 +1,6 @@
 # Tool logos: where each file comes from
 
-The logos of the 28 integrated tools, as `data/integrations.ts` references them. Every logo is the
+The logos of the 29 integrated tools, as `data/integrations.ts` references them. Every logo is the
 real mark of its tool (or of the company that makes it, where the tool has none of its own),
 taken from the source below and only normalised for an `<img>` on a white tile: fixed
 `width`/`height`/`style` removed, a `viewBox` added when the file had none, the brand colour set
@@ -40,6 +40,7 @@ tool. The icon packs' licences (CC0, MIT) cover the SVG files, not the trademark
 | `mimo.svg` | MiMo Code | Lobe Icons (@lobehub/icons-static-svg 1.95.1) `xiaomimimo.svg` | MIT (trademark of its owner) |  | 2026-10-16 |
 | `pi.svg` | Pi | Lobe Icons (@lobehub/icons-static-svg 1.95.1) `pi.svg` (same mark as https://pi.dev/favicon.svg) | MIT (trademark of its owner) |  | 2026-10-16 |
 | `droid.svg` | Droid | Official: https://factory.ai/favicon.svg (Factory, maker of Droid) | Trademark of its owner |  | 2026-10-16 |
+| `letta.png` | Letta Code | Official: https://github.com/letta-ai.png (avatar of the Letta organization on GitHub; letta.com serves no SVG mark) | Trademark of its owner |  | 2026-10-24 |
 
 Files in this folder that no tool references any more (`anthropic.svg`, `googlegemini.svg`,
 `openai.svg`, `crush.svg` and the provider logos) were left in place.

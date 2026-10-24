@@ -17,7 +17,7 @@ export const SUPPORT_LEVEL_SUMMARY_PT: Record<SupportLevel, string> = {
 };
 
 const notRegistered = (name: string) =>
-  `Não registrados: o egc init e os instaladores gravam os servidores em dez ferramentas, e ${name} não é uma delas. Se ela tiver uma configuração de MCP própria, você pode adicioná-los à mão.`;
+  `Não registrados: o egc init e os instaladores gravam os servidores em 24 das 29 ferramentas, e ${name} não é uma delas. Se ela tiver uma configuração de MCP própria, você pode adicioná-los à mão.`;
 
 const SHIM = 'Token Crusher pelo shim no nível do PATH';
 
@@ -68,14 +68,14 @@ export const INTEGRATIONS_PT: Record<string, IntegrationText> = {
   windsurf: {
     installs:
       'Skills instaladas direto em ~/.codeium/windsurf/skills/<name>/SKILL.md. Era Windsurf até 2026-06-02: o fabricante manteve os caminhos ~/.codeium/windsurf, então o id do destino continua windsurf.',
-    mcp: notRegistered('o Devin Desktop'),
+    mcp: 'Registrados pelo alvo de projeto em .devin/mcp_config.local.json, o arquivo que o Devin Local lê; o mcp_config.json de usuário da documentação pertence ao agente Cascade, aposentado, e fica intocado.',
     hooks: `Guardian e GateGuard como hooks PreToolUse na configuração do próprio Devin Local (~/.config/devin/config.json, %APPDATA%\\devin no Windows), com os matchers que a migração do próprio Devin usa; ${SHIM}.`,
     meshSignal: null,
   },
   amp: {
     installs:
       'Skills instaladas direto em ~/.amp/skills/<name>/SKILL.md; o plugin em .amp/plugins/ (projeto) ou ~/.config/amp/plugins/ (home).',
-    mcp: notRegistered('o Amp'),
+    mcp: 'Registrados pelo egc init na chave amp.mcpServers do ~/.config/amp/settings.json, o arquivo de configurações do usuário que a CLI do Amp lê, quando ~/.config/amp, ~/.amp ou o amp no PATH existe; um settings.jsonc sozinho nunca é reescrito.',
     hooks:
       'Guardian e Token Crusher pela API de plugins do Amp (tool.call), rodando dentro do processo pelo próprio runtime do Amp.',
     meshSignal: 'Um plugin agent.start devolve o aviso da malha como mensagem de contexto oculta.',
@@ -83,7 +83,7 @@ export const INTEGRATIONS_PT: Record<string, IntegrationText> = {
   'vs-code-copilot': {
     installs:
       'Skills instaladas direto em ~/.copilot/skills/<name>/SKILL.md, uma das pastas de onde o VS Code lê skills pessoais.',
-    mcp: notRegistered('o VS Code Copilot'),
+    mcp: 'Registrados pelo egc init em mcpServers no ~/.copilot/mcp-config.json, o arquivo que a CLI do GitHub Copilot lê, como servidores locais com todas as ferramentas liberadas, quando ~/.copilot ou o copilot no PATH existe; o mcp.json do próprio VS Code, no perfil do editor, não é gravado.',
     hooks: `Guardian pelos hooks que o adaptador liga nas configurações do Copilot; ${SHIM}.`,
     meshSignal: null,
   },
@@ -113,14 +113,14 @@ export const INTEGRATIONS_PT: Record<string, IntegrationText> = {
   'jetbrains-junie': {
     installs:
       'Diretrizes do projeto em .junie/guidelines.md, o caminho de descoberta nativo do Junie.',
-    mcp: notRegistered('o JetBrains Junie'),
+    mcp: 'Registrados pelo egc init em mcpServers no ~/.junie/mcp/mcp.json, o arquivo de usuário que o plugin da IDE e a CLI do Junie compartilham, quando ~/.junie ou o junie no PATH existe.',
     hooks: `Guardian pelos hooks que o adaptador liga na configuração do Junie; ${SHIM}.`,
     meshSignal: null,
   },
   goose: {
     installs:
       'Skills instaladas direto em ~/.agents/skills/<name>/SKILL.md, a raiz que o Codex já usa.',
-    mcp: notRegistered('o Goose'),
+    mcp: 'Registrados pelo egc init na lista extensions do ~/.config/goose/config.yaml (%APPDATA%\\Block\\goose\\config\\config.yaml no Windows) por um gravador YAML próprio, porque o Goose não tem objeto mcpServers.',
     hooks:
       'Guardian por um hook PreToolUse de verdade em ~/.agents/plugins/egc-guardian/; sem Token Crusher (só permitir e negar).',
     meshSignal: null,
@@ -128,7 +128,7 @@ export const INTEGRATIONS_PT: Record<string, IntegrationText> = {
   openhands: {
     installs:
       'Skills instaladas direto em ~/.agents/skills/<name>/SKILL.md; hooks em .openhands/hooks.json em cada projeto.',
-    mcp: notRegistered('o OpenHands'),
+    mcp: 'Registrados pelo egc init em mcpServers no ~/.openhands/mcp.json, quando ~/.openhands ou o openhands no PATH existe.',
     hooks: 'Guardian por um hook pre_tool_use de verdade, no escopo do projeto; sem Token Crusher.',
     meshSignal: null,
   },
@@ -149,14 +149,14 @@ export const INTEGRATIONS_PT: Record<string, IntegrationText> = {
   warp: {
     installs:
       'Skills copiadas direto para .warp/skills/<name>.md, com um índice curto incluído no AGENTS.md do projeto, que o Warp lê como regras do projeto.',
-    mcp: notRegistered('o Warp'),
+    mcp: 'Registrados pelo egc init em mcpServers no ~/.warp/.mcp.json, o arquivo global do Warp cujos servidores ele mesmo inicia, quando ~/.warp, ~/.config/warp-terminal ou o warp-terminal no PATH existe.',
     hooks: `Nenhuma superfície de hooks documentada; ${SHIM}.`,
     meshSignal: null,
   },
   'qwen-code': {
     installs:
       'Skills instaladas direto em .qwen/skills/<name>/SKILL.md em cada projeto, descobertas nativamente pelo Qwen Code.',
-    mcp: notRegistered('o Qwen Code'),
+    mcp: 'Registrados pelo egc init em mcpServers no ~/.qwen/settings.json do usuário, mesclados para que as suas chaves e servidores fiquem, quando ~/.qwen ou o qwen no PATH existe.',
     hooks: `Guardian pelos hooks que o adaptador liga nas configurações do Qwen; ${SHIM}.`,
     meshSignal: null,
   },
@@ -228,6 +228,14 @@ export const INTEGRATIONS_PT: Record<string, IntegrationText> = {
     mcp: 'Registrados pelo egc init em mcpServers no ~/.factory/mcp.json, só quando o Droid está presente.',
     hooks:
       'Guardian e Token Crusher como hooks PreToolUse no Execute, a ferramenta de terminal do Droid, e o validador de gravação no Edit, no Create e no ApplyPatch, no formato do Claude Code que o Droid lê, mesclados na chave hooks do ~/.factory/settings.json junto com as suas próprias configurações e hooks.',
+    meshSignal: null,
+  },
+  'letta-code': {
+    installs:
+      'Skills instaladas direto em ~/.letta/skills/<name>/SKILL.md, a raiz da máquina que o Letta Code compartilha entre todos os agentes; agents, commands, rules e o AGENTS.md da raiz ficam como cópias de referência em ~/.letta/egc/library/, porque o Letta Code não documenta nenhum arquivo que os leia. As skills por agente, dentro da memória git do próprio Letta, e as do projeto em .agents/skills/ nunca são gravadas.',
+    mcp: 'Não registrados: o Letta Code não documenta arquivo de configuração de MCP para a CLI, e a própria documentação manda usar skills em vez de MCP, então o egc init não grava nada aqui.',
+    hooks:
+      'Nenhum: o Letta Code não documenta hook nem superfície de ciclo de vida, então nem o Guardian nem o Token Crusher são ligados.',
     meshSignal: null,
   },
 };

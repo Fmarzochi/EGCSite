@@ -151,7 +151,7 @@ const COPY: Record<Lang, Copy> = {
       },
       {
         title: 'Registers MCP servers and hooks',
-        desc: 'Writes both servers into the MCP config of the ten tools that take it (Antigravity, Claude Code, Cursor, Kiro, Codex CLI, OpenCode, Zed, Kimi Code CLI, Crush, Auggie) and wires native hooks in every tool that has them. For Claude Code, also installs a SessionStart hook (loads state automatically) and a Stop hook (saves state automatically at session end). Runs once per tool, idempotent.',
+        desc: 'Writes both servers into the MCP config of the 24 tools that take it (Antigravity, Claude Code, Cursor, Kiro, Codex CLI, OpenCode, Zed, Amp, VS Code Copilot through the Copilot CLI file, Goose, OpenHands, JetBrains Junie, Warp, Qwen Code, Kimi Code CLI, Crush, Auggie, Mistral Vibe, Grok Build, Kilo Code CLI, MiMo Code, Pi, Droid, and Devin Desktop through the project file) and wires native hooks in every tool that has them. For Claude Code, also installs a SessionStart hook (loads state automatically) and a Stop hook (saves state automatically at session end). Runs once per tool, idempotent.',
       },
       {
         title: 'Prompt library (optional)',
@@ -290,7 +290,7 @@ const COPY: Record<Lang, Copy> = {
       },
       {
         title: 'Registra os servidores MCP e os hooks',
-        desc: 'Grava os dois servidores na configuração MCP das dez ferramentas que aceitam (Antigravity, Claude Code, Cursor, Kiro, Codex CLI, OpenCode, Zed, Kimi Code CLI, Crush, Auggie) e liga os hooks nativos em toda ferramenta que os tem. No Claude Code, instala também um hook SessionStart (carrega o estado automaticamente) e um hook Stop (salva o estado automaticamente no fim da sessão). Roda uma vez por ferramenta e é idempotente.',
+        desc: 'Grava os dois servidores na configuração MCP das 24 ferramentas que aceitam (Antigravity, Claude Code, Cursor, Kiro, Codex CLI, OpenCode, Zed, Amp, VS Code Copilot pelo arquivo da CLI do Copilot, Goose, OpenHands, JetBrains Junie, Warp, Qwen Code, Kimi Code CLI, Crush, Auggie, Mistral Vibe, Grok Build, Kilo Code CLI, MiMo Code, Pi, Droid, e o Devin Desktop pelo arquivo do projeto) e liga os hooks nativos em toda ferramenta que os tem. No Claude Code, instala também um hook SessionStart (carrega o estado automaticamente) e um hook Stop (salva o estado automaticamente no fim da sessão). Roda uma vez por ferramenta e é idempotente.',
       },
       {
         title: 'Biblioteca de prompts (opcional)',

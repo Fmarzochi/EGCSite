@@ -198,6 +198,14 @@ $ egc gain --history
 $ egc saved`,
   },
   {
+    cmd: 'egc context',
+    desc: 'Rank the files of the project for the task you describe and print a briefing the AI can start from: the files most likely to matter, with the signal table behind each pick when you add --explain. Scope with --project, feed a session history with --history, cap the list with --top.',
+    example: `$ egc context "fix the Windows path of the Zed target"
+
+# With the signal table behind each pick:
+$ egc context --explain "fix the Windows path of the Zed target"`,
+  },
+  {
     cmd: 'egc discover',
     desc: 'Scan your recent session transcripts for crushable output that never went through the Token Crusher, and see what those runs could have saved.',
     example: `$ egc discover
@@ -343,6 +351,8 @@ const PT_DESC: Record<string, string> = {
     'Roda qualquer comando pelo Token Crusher. Saídas barulhentas (git logs longos, ruído de testes, poluição das instalações, JSON gigante) são comprimidas em até 90% antes de chegar ao modelo; erros e avisos sempre ficam. Nas ferramentas com hooks, isso acontece em silêncio, sem você digitar nada.',
   'egc gain':
     'O painel completo de economia do Token Crusher: totais, média por execução, maior compressão, medidor de eficiência e divisão por tipo de comando. Lido do livro-caixa local, sem gastar token. Ou simplesmente pergunte à sua IA "quanto eu economizei?" e ela roda isso para você.',
+  'egc context':
+    'Classifica os arquivos do projeto para a tarefa que você descreve e imprime um resumo de partida para a IA: os arquivos com mais chance de importar, com a tabela de sinais por trás de cada escolha quando você acrescenta --explain. Delimite com --project, passe um histórico de sessão com --history, limite a lista com --top.',
   'egc discover':
     'Varre as transcrições das suas sessões recentes em busca de saídas compressíveis que nunca passaram pelo Token Crusher, e mostra quanto essas execuções poderiam ter economizado.',
   'egc crusher-shim':

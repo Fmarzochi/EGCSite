@@ -12,7 +12,7 @@ const COMMANDS: { cmd: string; desc: string; example: string }[] = [
     desc: 'Run once in each project you want EGC to manage. Bootstraps the cognitive protocol in every detected tool, registers the MCP servers, prepares the state store, configures the commit-privacy filter for the repository and ends with a compact install check. Each step prints one check line; the full report is one egc doctor away.',
     example: `$ egc init
 
-✓  cognitive protocol  6 tools up to date (v6)
+✓  cognitive protocol  6 tools up to date (v9)
 ✓  MCP registration  7 tools already registered
 ✓  memory  state store ready (6 migrations); loads on your first session
 ✓  commit-privacy filter  already configured; populated memory is stripped from staged blobs (local repo only)

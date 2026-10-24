@@ -8,6 +8,13 @@ export interface Release {
 
 export const releases: Release[] = [
   {
+    title: 'EGC v1.1.23',
+    pubDate: new Date('2026-10-24'),
+    description:
+      'The long round: five weeks and about four hundred commits since v1.1.22, most of them fixes found on real machines and on the hosted Windows VM. Twenty-nine supported tools (Letta Code, Auggie, Mistral Vibe and Crush join; Warp and Amp get the MCP servers registered; Kiro CLI 3.0 gets the Guardian), the memory protocol in the file each tool really reads (Trae, CodeBuddy, Codex, Junie, Cursor), a state store that survives a busy Windows, the Guardian validator in nineteen modules with the hook surfaces of every tool, one shared stdin reader for the 44 hooks, egc doctor probing the MCP servers of every tool, the October advisories cleared in all four lockfiles, the area-steward role wired in the repository, and a release pipeline that ships the OpenCode plugin dist its manifest points at. The neural mesh and Team Brain move to v1.1.24.',
+    link: 'https://github.com/Fmarzochi/EGC/releases/tag/v1.1.23',
+  },
+  {
     title: 'EGC v1.1.22',
     pubDate: new Date('2026-09-16'),
     description:

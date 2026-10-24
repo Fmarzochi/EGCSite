@@ -27,7 +27,7 @@ type ToolName =
 
 const TOOLS: { name: ToolName; signature: string; tag: Tag }[] = [
   { name: 'validate_command', signature: 'validate_command({ command: string })', tag: 'security' },
-  { name: 'validate_write', signature: 'validate_write({ filepath: string })', tag: 'security' },
+  { name: 'validate_write', signature: 'validate_write({ filepath: string, cwd: string })', tag: 'security' },
   {
     name: 'validate_content',
     signature: 'validate_content({ content: string, source?: string })',

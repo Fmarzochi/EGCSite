@@ -337,7 +337,7 @@ const COPY: Record<Lang, Copy> = {
         {code('SessionStart')} hook that calls {code('get_state')} automatically when a session
         opens, and a {code('Stop')} hook that calls {code('update_state')} automatically when a
         session ends. For other tools, the AI is instructed to run the protocol via the global
-        instruction file. The protocol is versioned (v6 today) and upgrades in place on the next{' '}
+        instruction file. The protocol is versioned (v9 today) and upgrades in place on the next{' '}
         {code('egc init')} or {code('egc auto-update')}; it also tells the AI to announce itself on
         the session bus after restoring state, to drain events at the start of every turn, and, when{' '}
         {code('get_state')} is missing, to say the server is not registered instead of improvising
@@ -557,7 +557,7 @@ const COPY: Record<Lang, Copy> = {
         {code('SessionStart')} que chama {code('get_state')} automaticamente quando a sessão abre, e
         um hook {code('Stop')} que chama {code('update_state')} automaticamente quando a sessão
         termina. Nas outras ferramentas, a IA é instruída a seguir o protocolo pelo arquivo de
-        instruções global. O protocolo tem versão (hoje a v6) e se atualiza no lugar no próximo{' '}
+        instruções global. O protocolo tem versão (hoje a v9) e se atualiza no lugar no próximo{' '}
         {code('egc init')} ou {code('egc auto-update')}; ele também diz à IA para se anunciar no
         barramento de sessões depois de restaurar o estado, para ler os eventos no início de cada
         turno e, quando o {code('get_state')} não estiver disponível, para avisar que o servidor não

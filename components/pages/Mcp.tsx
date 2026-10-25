@@ -42,6 +42,8 @@ const GUARDIAN_TOOLS = [
   'validate_content',
   'reduce_context',
   'orchestrate_task',
+  'rank_files',
+  'prepare_handoff',
   'auto_learn',
 ];
 

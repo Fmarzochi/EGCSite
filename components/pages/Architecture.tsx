@@ -64,7 +64,7 @@ const COPY: Record<Lang, Copy> = {
       },
       {
         title: 'egc-guardian',
-        desc: 'Validates commands and file writes before execution, scans untrusted content for prompt-injection patterns (validate_content, advisory only) and provides context utilities (reduce_context, orchestrate_task, auto_learn). Enforcement is wired at the harness level too: prompt routing and pre-tool hooks run on every session, and the Token Crusher compresses shell output before it reaches the model, with savings tracked in a local ledger (egc gain).',
+        desc: 'Validates commands and file writes before execution, scans untrusted content for prompt-injection patterns (validate_content, advisory only) and provides context utilities (reduce_context, orchestrate_task, rank_files, prepare_handoff, auto_learn). Enforcement is wired at the harness level too: prompt routing and pre-tool hooks run on every session, and the Token Crusher compresses shell output before it reaches the model, with savings tracked in a local ledger (egc gain).',
       },
       {
         title: 'Local Storage (~/.egc/)',
@@ -124,7 +124,7 @@ const COPY: Record<Lang, Copy> = {
       },
       {
         title: 'egc-guardian',
-        desc: 'Valida comandos e gravações de arquivo antes de executar, procura padrões de prompt injection em conteúdo não confiável (validate_content, só como aviso) e oferece utilitários de contexto (reduce_context, orchestrate_task, auto_learn). A aplicação também acontece no nível do harness: o roteamento de prompts e os hooks antes das ferramentas rodam em toda sessão, e o Token Crusher comprime a saída do terminal antes de ela chegar ao modelo, com a economia registrada num livro-caixa local (egc gain).',
+        desc: 'Valida comandos e gravações de arquivo antes de executar, procura padrões de prompt injection em conteúdo não confiável (validate_content, só como aviso) e oferece utilitários de contexto (reduce_context, orchestrate_task, rank_files, prepare_handoff, auto_learn). A aplicação também acontece no nível do harness: o roteamento de prompts e os hooks antes das ferramentas rodam em toda sessão, e o Token Crusher comprime a saída do terminal antes de ela chegar ao modelo, com a economia registrada num livro-caixa local (egc gain).',
       },
       {
         title: 'Armazenamento local (~/.egc/)',

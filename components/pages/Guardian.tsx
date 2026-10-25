@@ -23,6 +23,8 @@ type ToolName =
   | 'validate_content'
   | 'reduce_context'
   | 'orchestrate_task'
+  | 'rank_files'
+  | 'prepare_handoff'
   | 'auto_learn';
 
 const TOOLS: { name: ToolName; signature: string; tag: Tag }[] = [
@@ -41,6 +43,18 @@ const TOOLS: { name: ToolName; signature: string; tag: Tag }[] = [
   {
     name: 'orchestrate_task',
     signature: 'orchestrate_task({ prompt: string, filepaths?: string[] })',
+    tag: 'utility',
+  },
+  {
+    name: 'rank_files',
+    signature:
+      'rank_files({ query: string, project_path?: string, history?: string, top_n?: number, use_git?: boolean, graph_hops?: number, explain?: boolean })',
+    tag: 'utility',
+  },
+  {
+    name: 'prepare_handoff',
+    signature:
+      'prepare_handoff({ objective: string, chunks?: { text: string, source?: string, critical?: boolean }[], scope_paths?: string[], constraints?: string[], completion_criteria?: string[], parent_summary?: string, context_budget_tokens?: number, output_budget_tokens?: number })',
     tag: 'utility',
   },
   {
@@ -124,6 +138,17 @@ const COPY: Record<Lang, Copy> = {
         returns:
           'Object with installed agents and skills, a not_installed list with an install_hint, and whether the installation is known.',
       },
+      rank_files: {
+        description:
+          'Ranks the project files for the task you describe, with four signals: BM25 over path, symbols and first line; path hits; local git state (uncommitted, branch, recency, co-change); and import-graph propagation two hops from the top files. Returns the ranking and a three-block briefing, plus a per-signal explain table on request. Pass the history from get_state so the briefing carries the session decisions. egc context is the CLI face of the same ranking.',
+        returns: 'Object with the ranked files, the briefing text and, with explain, the signal table.',
+      },
+      prepare_handoff: {
+        description:
+          'Builds a bounded context packet for handing a task to a subagent: ranks the candidate excerpts by relevance to the objective, drops exact and near-duplicate chunks, keeps the ones marked critical in full and fits the rest inside the token budget, truncating instead of silently dropping. Opt-in: orchestrate_task and reduce_context are unaffected.',
+        returns:
+          'Object with the packet text, estimated metrics and the sources left out, so they can be read on demand.',
+      },
       auto_learn: {
         description:
           'Mines recent tool failures from session history and writes actionable recommendations to all AI tool config files found in the project (CLAUDE.md, GEMINI.md, AGENTS.md, Cursor rules, Copilot instructions, Devin Desktop rules, and others). Only writes to files that already exist. Safe to call at any time; skips gracefully if no failures are found.',
@@ -191,6 +216,17 @@ const COPY: Record<Lang, Copy> = {
           'Analisa um prompt e devolve uma sugestão de encaminhamento: quais agents e skills são mais relevantes, pontuados localmente contra o catálogo, sem chave de API. Só oferece componentes que a ferramenta tem instalados; os componentes compatíveis que não estão instalados aparecem à parte, com o comando que os adiciona, para a IA nunca chamar algo que falta. Não executa nada. A decisão continua com a IA, pela intenção.',
         returns:
           'Objeto com os agents e skills instalados, uma lista not_installed com um install_hint e se a instalação é conhecida.',
+      },
+      rank_files: {
+        description:
+          'Classifica os arquivos do projeto para a tarefa que você descreve, com quatro sinais: BM25 sobre caminho, símbolos e primeira linha; acertos no caminho; estado local do git (não commitado, branch, recência, co-mudança); e propagação pelo grafo de imports, dois saltos a partir dos arquivos do topo. Devolve a classificação e um resumo em três blocos, mais a tabela de sinais quando pedida. Passe o histórico do get_state para o resumo trazer as decisões da sessão. O egc context é a face de linha de comando da mesma classificação.',
+        returns: 'Objeto com os arquivos classificados, o texto do resumo e, com explain, a tabela de sinais.',
+      },
+      prepare_handoff: {
+        description:
+          'Monta um pacote de contexto limitado para passar uma tarefa a um subagente: classifica os trechos candidatos por relevância ao objetivo, descarta duplicatas exatas e quase exatas, mantém inteiros os trechos marcados como críticos e encaixa o resto no orçamento de tokens, cortando em vez de descartar em silêncio. Opcional: orchestrate_task e reduce_context não mudam.',
+        returns:
+          'Objeto com o texto do pacote, métricas estimadas e as fontes que ficaram de fora, para leitura sob demanda.',
       },
       auto_learn: {
         description:

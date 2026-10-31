@@ -130,7 +130,7 @@ const COPY: Record<Lang, Copy> = {
       SonarCloud:
         'Continuous code quality and security analysis. Tracks reliability, maintainability, and security hotspots on every push.',
       Dependabot:
-        'Automated dependency update PRs. Grouped by ecosystem (npm). Security alerts and auto-dismissal of dev-only patches enabled.',
+        'Automated dependency update PRs on every lockfile, grouped by ecosystem (npm, pip, GitHub Actions), with security alerts enabled. A scheduled audit backs it up: npm audit on every lockfile and pip-audit on the Python requirements run on main every six hours and keep one issue open while anything is red.',
       'Dependency Review':
         'Every PR is scanned for newly introduced vulnerable or license-incompatible dependencies before merge.',
       ClusterFuzzLite:
@@ -188,7 +188,7 @@ const COPY: Record<Lang, Copy> = {
       SonarCloud:
         'Análise contínua de qualidade e segurança do código. Acompanha confiabilidade, manutenibilidade e pontos sensíveis de segurança a cada push.',
       Dependabot:
-        'PRs automáticos de atualização de dependências, agrupados por ecossistema (npm). Alertas de segurança e descarte automático de correções só de desenvolvimento ativados.',
+        'PRs automáticos de atualização de dependências em todo lockfile, agrupados por ecossistema (npm, pip, GitHub Actions), com alertas de segurança ativados. Um audit agendado cobre a retaguarda: npm audit em todo lockfile e pip-audit nos requisitos Python rodam na main a cada seis horas e mantêm uma issue aberta enquanto algo estiver vermelho.',
       'Dependency Review':
         'Todo PR é verificado, antes do merge, em busca de novas dependências vulneráveis ou com licença incompatível.',
       ClusterFuzzLite:

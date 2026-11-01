@@ -127,8 +127,8 @@ export const INTEGRATIONS_PT: Record<string, IntegrationText> = {
   },
   openhands: {
     installs:
-      'Skills instaladas direto em ~/.agents/skills/<name>/SKILL.md; hooks em .openhands/hooks.json em cada projeto.',
-    mcp: 'Registrados pelo egc init em mcpServers no ~/.openhands/mcp.json, quando ~/.openhands ou o openhands no PATH existe.',
+      'Skills instaladas direto em ~/.agents/skills/<name>/SKILL.md, a raiz que o OpenHands compartilha com Codex, Goose, Zed, Crush e Amp; hooks em .openhands/hooks.json em cada projeto; o protocolo de memória vai para ~/.openhands/skills/egc-memory.md, o único arquivo que o OpenHands põe inteiro no prompt de sistema de toda conversa (uma skill sua que já esteja lá fica intocada).',
+    mcp: 'Registrados pelo egc init em mcpServers no ~/.openhands/mcp.json, quando ~/.openhands ou o openhands no PATH existe; o arquivo do protocolo de memória é escrito atrás do mesmo gate.',
     hooks: 'Guardian por um hook pre_tool_use de verdade, no escopo do projeto; sem Token Crusher.',
     meshSignal: null,
   },

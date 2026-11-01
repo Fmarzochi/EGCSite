@@ -1777,14 +1777,14 @@ export default function HomePage({ lang }: { lang: Lang }) {
               </p>
               <div className="eff__bigrow">
                 <p className="eff__big" aria-hidden="true">
-                  87<span>%</span>
+                  86<span>%</span>
                 </p>
                 <p className="eff__est" data-i18n="eff.estimate">
                   {tx('eff.estimate')}
                 </p>
               </div>
               <h2 className="eff__cap" id="eff-title">
-                <span className="sr-only">87%</span>
+                <span className="sr-only">86%</span>
                 <span data-i18n="eff.cap">{tx('eff.cap')}</span>
               </h2>
             </div>
@@ -1807,7 +1807,7 @@ export default function HomePage({ lang }: { lang: Lang }) {
                     <div className="bar bar--with">
                       <span data-i18n="eff.with">{tx('eff.with')}</span>
                       <span className="bar__track">
-                        <span className="bar__fill" style={{ '--w': '13.3%' } as CSSProperties} />
+                        <span className="bar__fill" style={{ '--w': '13.6%' } as CSSProperties} />
                       </span>
                       <span className="bar__val" data-i18n="eff.m1b">
                         {tx('eff.m1b')}
@@ -1857,7 +1857,7 @@ export default function HomePage({ lang }: { lang: Lang }) {
                     <div className="bar bar--with">
                       <span data-i18n="eff.with">{tx('eff.with')}</span>
                       <span className="bar__track">
-                        <span className="bar__fill" style={{ '--w': '13.5%' } as CSSProperties} />
+                        <span className="bar__zero" />
                       </span>
                       <span className="bar__val" data-i18n="eff.m3b">
                         {tx('eff.m3b')}
@@ -1882,7 +1882,7 @@ export default function HomePage({ lang }: { lang: Lang }) {
                     <div className="bar bar--with">
                       <span data-i18n="eff.with">{tx('eff.with')}</span>
                       <span className="bar__track">
-                        <span className="bar__fill" style={{ '--w': '10%' } as CSSProperties} />
+                        <span className="bar__fill" style={{ '--w': '14%' } as CSSProperties} />
                       </span>
                       <span className="bar__val" data-i18n="eff.m4b">
                         {tx('eff.m4b')}

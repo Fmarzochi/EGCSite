@@ -22,29 +22,46 @@ Installation complete.`,
   },
   {
     cmd: 'egc doctor',
-    desc: 'Verify both servers are built, the database is accessible, and all detected tools have EGC registered. The first command to run after installation.',
+    desc: 'Verify every installed target (its managed files and hooks), the database and the MCP registrations of each detected tool, one block per target and a summary at the end. The first command to run after installation.',
     example: `$ egc doctor
 
-egc-guardian  running
-egc-memory    running
-database      ok
-claude code   registered
-cursor        registered
+Doctor report:
+
+- egc-home
+  Status: OK
+  Install-state: ~/.gemini/egc/install-state.json
+  Issues: none
+- claude-home
+  Status: OK
+...
+Summary: checked=12, ok=12, warnings=0, errors=0
+MCP servers:
+  - [OK] egc-guardian at .../egc-guardian/build/index.js: answers tools/list (8 tools)
+  - [OK] egc-memory at .../egc-memory/build/index.js: answers tools/list (24 tools)
+MCP summary: registrations=12, registered=12, servers=4, answering=4, warnings=0, errors=0
 
 # Check against a local development checkout instead of the installed package:
 $ egc doctor --repo-root /path/to/EGC`,
   },
   {
     cmd: 'egc status',
-    desc: 'Show the last 5 decisions saved to memory for the current project, along with the active branch state file.',
+    desc: 'Show the state store in use, the sessions active on the session bus and the outcome of the last 20 skill runs. To read the decisions of a project, use egc export.',
     example: `$ egc status
 
-Branch: feat/auth  (state: ~/.egc/state/my-app/feat-auth.md)
-[2026-06-05] Moved from Prisma to Drizzle ORM
-[2026-06-04] Dropped JWT in favor of iron-session
-[2026-06-03] Settled on functional-only components
-[2026-06-02] PostgreSQL with row-level security
-[2026-06-01] Next.js 15 App Router`,
+EGC status
+
+Database: ~/.egc/egc/state.db
+
+Active sessions: 0
+  - none
+
+Skill runs (last 20):
+  Success: 0
+  Failure: 0
+  Unknown: 0
+  Success rate: n/a
+  Failure rate: n/a
+  Recent runs: none`,
   },
   {
     cmd: 'egc consolidate',
@@ -87,28 +104,17 @@ $ egc export --scope global`,
   },
   {
     cmd: 'egc catalog',
-    desc: 'List available profiles and components in the prompt library, and search the whole catalog by keyword with ranked results.',
-    example: `$ egc catalog
-
-agents    61
-skills   232
-commands  77
-rules    109
-
-$ egc catalog search memory session
-
-Catalog matches for "memory session":
-
-- ck [skill]
-  Persistent per-project memory for Gemini Code...`,
+    desc: 'List the profiles and the components of the prompt library, show one component, or search the whole catalog by keyword with ranked results. Without a subcommand it prints the usage.',
+    example: `$ egc catalog profiles
+$ egc catalog components --family language
+$ egc catalog components --target cursor --json
+$ egc catalog show framework:nextjs
+$ egc catalog search memory session`,
   },
   {
     cmd: 'egc repair',
-    desc: 'Restore drifted or missing managed files. Re-injects the cognitive bootstrap if it was overwritten.',
+    desc: 'Restore drifted or missing managed files from the installed package, target by target, and report how many were repaired. To re-inject the memory protocol into an instruction file, run egc init in the project.',
     example: `$ egc repair
-
-✓ ~/.claude/CLAUDE.md restored
-✓ ~/.gemini/GEMINI.md restored
 
 # Repair against a local development checkout instead of the installed package:
 $ egc repair --repo-root /path/to/EGC`,
@@ -136,7 +142,11 @@ $ egc plugin list`,
     desc: 'Short token-savings report from the local Token Crusher ledger. Use egc gain for the full panel and egc discover for missed opportunities.',
     example: `$ egc saved
 
-Tokens saved: ~139.2K (87.6% efficiency)`,
+Token Crusher savings (local ledger, zero token cost)
+
+  Crushed runs:   10022
+  Output size:    326.2 MB -> 44.4 MB (86% smaller)
+  Tokens saved:   ~73877387`,
   },
   {
     cmd: 'egc uninstall',
@@ -293,8 +303,9 @@ $ egc auto-update --repo-root /path/to/EGC`,
   },
   {
     cmd: 'egc team',
-    desc: 'Team memory sync over a git remote: init once per workstation, sync to pull and push lessons, status for health.',
-    example: `$ egc team init <remote>
+    desc: 'The Team Brain over a git remote you own: init once per machine (the first machine prints the team key, the others join with --key), sync to pull the teammates\' sealed state and push yours, status for the last sync and its health.',
+    example: `$ egc team init --backend git --remote git@github.com:you/egc-memory
+$ egc team init --backend git --remote git@github.com:you/egc-memory --key <hex>
 $ egc team sync
 $ egc team status`,
   },

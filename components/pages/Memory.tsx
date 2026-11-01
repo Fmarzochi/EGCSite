@@ -19,7 +19,7 @@ const SIGNATURES = [
   {
     name: 'update_state',
     signature:
-      'update_state({ project_path?: string, context?: string, decisions?: { what: string, why?: string }[], avoid?: { what: string, why?: string }[], preferences?: string[], next?: string[] })',
+      'update_state({ project_path?: string, context?: string, decisions?: { what: string, why?: string }[], avoid?: { what: string, why?: string }[], preferences?: string[], next?: string[], force?: boolean, scope?: string })',
   },
   { name: 'store_decision', signature: 'store_decision({ context: string, decision: string })' },
   { name: 'query_history', signature: 'query_history({ limit?: number, offset?: number })' },
@@ -60,7 +60,7 @@ const SIGNATURES = [
     signature: 'session_announce({ project_path?: string, territory?: string })',
   },
   { name: 'session_peers', signature: 'session_peers({ project_path?: string })' },
-  { name: 'claim_path', signature: 'claim_path({ path: string })' },
+  { name: 'claim_path', signature: 'claim_path({ path: string, ttl_seconds?: number })' },
   { name: 'release_path', signature: 'release_path({ path: string })' },
   {
     name: 'session_send',
@@ -77,7 +77,7 @@ const SIGNATURES = [
   },
   {
     name: 'team_init',
-    signature: 'team_init({ remote: string, backend?: string, branch?: string })',
+    signature: 'team_init({ remote: string, backend?: string, branch?: string, team_key?: string })',
   },
   { name: 'team_sync', signature: 'team_sync({})' },
   { name: 'team_status', signature: 'team_status({})' },
@@ -161,8 +161,9 @@ const COPY: Record<Lang, Copy> = {
     overviewLead: (code) => (
       <>
         The memory server keeps one Markdown state document per project branch under{' '}
-        {code('~/.egc/state/')} alongside a SQLite store ({code('state.db')}) for decisions,
-        lessons, working memory and the session bus. State is encrypted at rest using AES-256-GCM.
+        {code('~/.egc/state/')}, alongside its SQLite store under {code('~/.egc/memory/')} for
+        decisions, lessons, working memory and the session bus. State is encrypted at rest using
+        AES-256-GCM.
       </>
     ),
     features: [
@@ -379,9 +380,9 @@ const COPY: Record<Lang, Copy> = {
     overviewLead: (code) => (
       <>
         O servidor de memória mantém um documento de estado em Markdown por branch do projeto em{' '}
-        {code('~/.egc/state/')}, junto com um banco SQLite ({code('state.db')}) para decisões,
-        lições, memória de trabalho e o barramento de sessões. O estado é criptografado em repouso
-        com AES-256-GCM.
+        {code('~/.egc/state/')}, junto com o banco SQLite dele em {code('~/.egc/memory/')} para
+        decisões, lições, memória de trabalho e o barramento de sessões. O estado é criptografado em
+        repouso com AES-256-GCM.
       </>
     ),
     features: [

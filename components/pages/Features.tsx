@@ -89,7 +89,7 @@ const COPY: Record<Lang, Copy> = {
       },
       {
         title: 'Local-first',
-        desc: 'All state stays on your machine at ~/.egc/, encrypted at rest with AES-256-GCM. Nothing is sent externally.',
+        desc: 'All state stays on your machine at ~/.egc/, encrypted at rest with AES-256-GCM. Nothing is sent externally unless you turn it on yourself: the optional usage ping, a team remote you own, or LLM routing to a provider you choose.',
         icon: '🔒',
       },
       {
@@ -109,7 +109,7 @@ const COPY: Record<Lang, Copy> = {
       },
       {
         title: 'Decision history',
-        desc: 'Every architectural decision is stored in SQLite with a timestamp. Query by date or tag.',
+        desc: 'Every architectural decision is stored in SQLite with a timestamp. Search the history by keyword with ranked results, or page through it newest first.',
         icon: '📋',
       },
     ],
@@ -198,7 +198,7 @@ const COPY: Record<Lang, Copy> = {
       },
       {
         title: 'Local primeiro',
-        desc: 'Todo o estado fica na sua máquina, em ~/.egc/, criptografado em repouso com AES-256-GCM. Nada é enviado para fora.',
+        desc: 'Todo o estado fica na sua máquina, em ~/.egc/, criptografado em repouso com AES-256-GCM. Nada é enviado para fora, a não ser o que você mesmo ligar: o ping de uso opcional, um remoto de equipe seu ou o roteamento de LLM para um provedor que você escolher.',
         icon: '🔒',
       },
       {
@@ -218,7 +218,7 @@ const COPY: Record<Lang, Copy> = {
       },
       {
         title: 'Histórico de decisões',
-        desc: 'Cada decisão de arquitetura é guardada no SQLite com data e hora. Consulte por data ou por tag.',
+        desc: 'Cada decisão de arquitetura é guardada no SQLite com data e hora. Busque no histórico por palavra-chave, com resultados ranqueados, ou percorra-o da mais recente para a mais antiga.',
         icon: '📋',
       },
     ],

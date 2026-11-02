@@ -119,7 +119,7 @@ const COPY: Record<Lang, Copy> = {
       },
       validate_write: {
         description:
-          'Validates a file write operation. Blocks writes to sensitive system paths (~/.ssh/, /etc/, /usr/, /bin/) and paths outside the project directory.',
+          'Validates a file write operation. Blocks writes to credential stores and system configuration: ~/.ssh/, ~/.aws/, ~/.gnupg/, ~/.egc/, ~/.local/bin/, user systemd units, shell startup files (~/.bashrc, ~/.zshrc, ~/.bash_profile), /etc/ and their Windows equivalents. A relative path is judged against cwd, the directory the agent works in.',
         returns: '{ allowed: boolean, reason?: string }',
       },
       validate_content: {
@@ -162,10 +162,10 @@ const COPY: Record<Lang, Copy> = {
     writePaths: 'Write paths',
     blockedPaths: [
       '~/.ssh/authorized_keys',
+      '~/.aws/credentials',
       '/etc/passwd',
-      '/usr/bin/*',
-      '/boot/*',
-      '~/.bashrc (outside project)',
+      '~/.local/bin/node',
+      '~/.bashrc',
     ],
   },
   pt: {
@@ -198,7 +198,7 @@ const COPY: Record<Lang, Copy> = {
       },
       validate_write: {
         description:
-          'Valida uma gravação de arquivo. Bloqueia gravações em caminhos sensíveis do sistema (~/.ssh/, /etc/, /usr/, /bin/) e em caminhos fora da pasta do projeto.',
+          'Valida uma gravação de arquivo. Bloqueia gravações em cofres de credenciais e na configuração do sistema: ~/.ssh/, ~/.aws/, ~/.gnupg/, ~/.egc/, ~/.local/bin/, unidades systemd do usuário, arquivos de inicialização do shell (~/.bashrc, ~/.zshrc, ~/.bash_profile), /etc/ e os equivalentes no Windows. Um caminho relativo é julgado contra o cwd, a pasta em que o agente trabalha.',
         returns: '{ allowed: boolean, reason?: string }',
       },
       validate_content: {
@@ -241,10 +241,10 @@ const COPY: Record<Lang, Copy> = {
     writePaths: 'Caminhos de gravação',
     blockedPaths: [
       '~/.ssh/authorized_keys',
+      '~/.aws/credentials',
       '/etc/passwd',
-      '/usr/bin/*',
-      '/boot/*',
-      '~/.bashrc (fora do projeto)',
+      '~/.local/bin/node',
+      '~/.bashrc',
     ],
   },
 };

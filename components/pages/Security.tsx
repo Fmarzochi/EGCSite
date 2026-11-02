@@ -55,7 +55,7 @@ const CARDS = [
     icon: '☁️',
     href: 'https://sonarcloud.io/project/overview?id=Fmarzochi_EGC',
   },
-  { title: 'Dependabot', icon: '🤖', href: 'https://github.com/Fmarzochi/EGC/network/updates' },
+  { title: 'Dependabot', icon: '🤖', href: 'https://github.com/Fmarzochi/EGC/blob/main/.github/dependabot.yml' },
   {
     title: 'Dependency Review',
     icon: '🔗',

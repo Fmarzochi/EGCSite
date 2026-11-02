@@ -39,6 +39,8 @@ interface Copy {
   githubPages: ReactNode;
   /** The demo video player on the home. */
   youtube: ReactNode;
+  badges: ReactNode;
+  avatars: ReactNode;
   cliTitle: string;
   cli: (path: ReactNode, policy: ReactNode) => ReactNode;
   securityPolicy: string;
@@ -55,7 +57,7 @@ const COPY: Record<Lang, Copy> = {
     },
     eyebrow: 'Legal',
     title: 'Privacy Policy',
-    dates: 'Effective date: June 16, 2026. Last updated: September 20, 2026.',
+    dates: 'Effective date: June 16, 2026. Last updated: November 1, 2026.',
     intro: (site, egc) => (
       <>
         This site ({site}) is the official documentation and marketing website for {egc}, an
@@ -116,6 +118,20 @@ const COPY: Record<Lang, Copy> = {
         YouTube. Once the video plays, Google&apos;s privacy policy applies to it.
       </>
     ),
+    badges: (
+      <>
+        {strong('Status badges')} - the security page shows badge images served by img.shields.io,
+        bestpractices.dev, sonarcloud.io, securityscorecards.dev and socket.dev. Each loads from
+        its own origin when you open that page, and the privacy policy of each service applies to
+        that request.
+      </>
+    ),
+    avatars: (
+      <>
+        {strong('GitHub avatars')} - the contributors page loads profile pictures from github.com.
+        GitHub&apos;s privacy policy applies to those requests.
+      </>
+    ),
     cliTitle: 'EGC itself (the CLI tool)',
     cli: (path, policy) => (
       <>
@@ -141,7 +157,7 @@ const COPY: Record<Lang, Copy> = {
     },
     eyebrow: 'Legal',
     title: 'Política de privacidade',
-    dates: 'Em vigor desde 16 de junho de 2026. Última atualização: 20 de setembro de 2026.',
+    dates: 'Em vigor desde 16 de junho de 2026. Última atualização: 1 de novembro de 2026.',
     intro: (site, egc) => (
       <>
         Este site ({site}) é o site oficial de documentação e divulgação do {egc}, um projeto de
@@ -207,6 +223,20 @@ const COPY: Record<Lang, Copy> = {
         youtube-nocookie.com só quando você aperta o play; até lá, a página não faz nenhuma
         requisição ao YouTube. Quando o vídeo toca, a política de privacidade do Google se aplica a
         ele.
+      </>
+    ),
+    badges: (
+      <>
+        {strong('Selos de status')} - a página de segurança mostra imagens de selos servidas por
+        img.shields.io, bestpractices.dev, sonarcloud.io, securityscorecards.dev e socket.dev. Cada
+        uma é carregada da própria origem quando você abre aquela página, e a política de
+        privacidade de cada serviço se aplica a essa requisição.
+      </>
+    ),
+    avatars: (
+      <>
+        {strong('Avatares do GitHub')} - a página de contribuidores carrega as fotos de perfil do
+        github.com. A política de privacidade do GitHub se aplica a essas requisições.
       </>
     ),
     cliTitle: 'O próprio EGC (a ferramenta de linha de comando)',
@@ -308,6 +338,12 @@ export default function Privacy({ lang }: { lang: Lang }) {
           </li>
           <li className="flex items-start gap-2">
             <span className="shrink-0">-</span> {t.youtube}
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="shrink-0">-</span> {t.badges}
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="shrink-0">-</span> {t.avatars}
           </li>
         </ul>
 

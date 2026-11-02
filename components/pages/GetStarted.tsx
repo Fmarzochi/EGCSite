@@ -147,7 +147,7 @@ const COPY: Record<Lang, Copy> = {
       },
       {
         title: 'Cognitive bootstrap',
-        desc: 'Writes the memory protocol into the global instruction files for each detected tool (CLAUDE.md, GEMINI.md, cursor.rules, etc.).',
+        desc: 'Writes the memory protocol into the instruction file each detected tool reads (CLAUDE.md, GEMINI.md, AGENTS.md and the others); Cursor gets it as a project rule from egc init.',
       },
       {
         title: 'Registers MCP servers and hooks',
@@ -286,7 +286,7 @@ const COPY: Record<Lang, Copy> = {
       },
       {
         title: 'Bootstrap cognitivo',
-        desc: 'Escreve o protocolo de memória nos arquivos globais de instruções de cada ferramenta detectada (CLAUDE.md, GEMINI.md, cursor.rules etc.).',
+        desc: 'Escreve o protocolo de memória no arquivo de instruções que cada ferramenta detectada lê (CLAUDE.md, GEMINI.md, AGENTS.md e os demais); o Cursor o recebe como regra de projeto no egc init.',
       },
       {
         title: 'Registra os servidores MCP e os hooks',

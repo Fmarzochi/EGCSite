@@ -31,7 +31,7 @@ const COPY: Record<Lang, Copy> = {
     faqs: [
       {
         q: 'Does EGC send my project data anywhere?',
-        a: 'No. All state is stored locally at ~/.egc/. Nothing is sent to external servers. The MCP servers communicate over stdio with your local AI tool only.',
+        a: 'No. All state is stored locally at ~/.egc/, and the MCP servers communicate over stdio with your local AI tool only. Nothing is sent to external servers unless you turn it on yourself: the anonymous usage ping (off by default; one hit per install, init or doctor run, carrying the version and the operating system), the Team Brain, which pushes your state sealed with your team key to a git remote you own, or the Guardian LLM routing (EGC_LLM_ROUTING), which sends the text you route to the provider you configured.',
       },
       {
         q: 'Which tools are supported?',
@@ -47,7 +47,7 @@ const COPY: Record<Lang, Copy> = {
       },
       {
         q: 'What happens if the state file gets corrupted?',
-        a: 'Run egc repair to restore managed files. State files are Markdown encrypted at rest; the memory server reads and writes them for you, and its GCM authentication detects corruption on read. Use egc export to read what is stored. You can delete a state file manually to reset a project. The SQLite database is separate from the state files.',
+        a: 'State files are Markdown encrypted at rest, and the memory server authenticates each one (AES-256-GCM) when it reads it, so a corrupted file is refused instead of loaded. To recover, save a fresh state with update_state and force: true, or delete the state file to reset the project; egc export shows what is stored. egc repair restores the files the installer manages (hooks, instruction files, servers), not the state. The SQLite database is separate from the state files.',
       },
       {
         q: 'Is the prompt library required?',
@@ -59,11 +59,11 @@ const COPY: Record<Lang, Copy> = {
       },
       {
         q: 'Is EGC free?',
-        a: 'Yes. The engine is Apache-2.0 and stays free. If EGC ever offers something paid, it will be a team layer on top of the engine, never the memory on your machine. The direction is written down in docs/VISION.md.',
+        a: 'Yes. The engine is Apache-2.0 and stays free, the Team Brain for one person included: your machines, a git remote you own, no server of ours. What EGC will charge for later is a hosted team service for companies on top of the same engine (a real-time relay, key distribution, SSO, an audit trail), never the memory on your machine and never a check inside the open-source code. The direction is written down in docs/VISION.md.',
       },
       {
         q: 'What do core-supported and community-supported mean?',
-        a: 'Every tool gets the same install path and memory protocol. Core-supported tools (Claude Code, Antigravity, Cursor, Codex CLI, OpenCode) are run daily by the maintainer or a steward, and a regression caused by a vendor change is fixed before the next release. Community-supported tools are installed and tested in CI like the rest, but a vendor change waits for a report or a pull request. The list and the criteria live in docs/governance/support-levels.md, and each tool has its own page under Integrations.',
+        a: 'Every tool gets the same install path, and the memory protocol goes into the instruction file each tool reads. Core-supported tools (Claude Code, Antigravity, Cursor, Codex CLI, OpenCode) are run daily by the maintainer or a steward, and a regression caused by a vendor change is fixed before the next release. Community-supported tools are installed and tested in CI like the rest, but a vendor change waits for a report or a pull request. The list and the criteria live in docs/governance/support-levels.md, and each tool has its own page under Integrations.',
       },
       {
         q: 'Can I contribute?',
@@ -85,7 +85,7 @@ const COPY: Record<Lang, Copy> = {
     faqs: [
       {
         q: 'O EGC envia os dados do meu projeto para algum lugar?',
-        a: 'Não. Todo o estado fica guardado localmente em ~/.egc/. Nada é enviado a servidores externos. Os servidores MCP se comunicam por stdio só com a sua ferramenta de IA local.',
+        a: 'Não. Todo o estado fica guardado localmente em ~/.egc/, e os servidores MCP se comunicam por stdio só com a sua ferramenta de IA local. Nada é enviado a servidores externos, a não ser o que você mesmo ligar: o ping anônimo de uso (desligado por padrão; um registro por instalação, init ou doctor, só com a versão e o sistema operacional), o Team Brain, que envia o seu estado selado com a chave da sua equipe para um remoto git seu, ou o roteamento de LLM do Guardian (EGC_LLM_ROUTING), que manda o texto que você rotear ao provedor que você configurou.',
       },
       {
         q: 'Quais ferramentas são suportadas?',
@@ -101,7 +101,7 @@ const COPY: Record<Lang, Copy> = {
       },
       {
         q: 'O que acontece se o arquivo de estado corromper?',
-        a: 'Rode egc repair para restaurar os arquivos gerenciados. Os arquivos de estado são Markdown criptografado em repouso; o servidor de memória lê e grava esses arquivos por você, e a autenticação GCM dele detecta corrupção na leitura. Use egc export para ler o que está guardado. Você pode apagar um arquivo de estado manualmente para zerar um projeto. O banco SQLite é separado dos arquivos de estado.',
+        a: 'Os arquivos de estado são Markdown criptografado em repouso, e o servidor de memória autentica cada um (AES-256-GCM) ao ler, então um arquivo corrompido é recusado em vez de carregado. Para recuperar, salve um estado novo com update_state e force: true, ou apague o arquivo de estado para zerar o projeto; egc export mostra o que está guardado. O egc repair restaura os arquivos que o instalador gerencia (hooks, arquivos de instruções, servidores), não o estado. O banco SQLite é separado dos arquivos de estado.',
       },
       {
         q: 'A biblioteca de prompts é obrigatória?',
@@ -113,7 +113,7 @@ const COPY: Record<Lang, Copy> = {
       },
       {
         q: 'O EGC é gratuito?',
-        a: 'Sim. O motor é Apache-2.0 e continua gratuito. Se um dia o EGC oferecer algo pago, será uma camada para equipes por cima do motor, nunca a memória na sua máquina. A direção está escrita em docs/VISION.md.',
+        a: 'Sim. O motor é Apache-2.0 e continua gratuito, com o Team Brain para uma pessoa incluído: as suas máquinas, um remoto git seu, nenhum servidor nosso. O que o EGC vai cobrar mais adiante é um serviço de equipe hospedado para empresas, por cima do mesmo motor (relay em tempo real, distribuição de chaves, SSO, trilha de auditoria), nunca a memória na sua máquina e nunca uma trava dentro do código aberto. A direção está escrita em docs/VISION.md.',
       },
       {
         q: 'O que significam suporte principal e suporte da comunidade?',

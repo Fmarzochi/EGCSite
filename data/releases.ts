@@ -8,6 +8,13 @@ export interface Release {
 
 export const releases: Release[] = [
   {
+    title: 'EGC v1.1.24',
+    pubDate: new Date('2026-11-16'),
+    description:
+      'Team Brain for one person: twenty-three days and eighty-three pull requests since v1.1.23. The memory of a project now follows the person across machines through a git remote of their own: the state is keyed by the origin remote, so the same repository is the same project everywhere; two copies of a document merge section by section with retire marks instead of the newer file winning whole; the team key is proven before anything is pushed and marked in the shared repository, so a wrong key fails at init; secrets are refused on the way out and the sync has size and rate limits; egc team leave joins init, sync and status; the sync is on from init, around the session in Claude Code and OpenCode and at the turn boundary in Antigravity, Codex, Trae, Amp and Kiro; and egc doctor ends with a Team block. Proved in the field on Linux, macOS and Windows 10, with a third machine joining mid-stream with nothing but the remote and the key. Around it: the OpenCode 2 plugin loading again with the Guardian, the Token Crusher, the memory restore and the Session Mesh notice; the memory server built and tested on all thirteen CI lanes; every install command in the library naming a package that exists on npm, after a private security report; and the Windows bugs the field test surfaced fixed the day they were reported.',
+    link: 'https://github.com/Fmarzochi/EGC/releases/tag/v1.1.24',
+  },
+  {
     title: 'EGC v1.1.23',
     pubDate: new Date('2026-10-24'),
     description:

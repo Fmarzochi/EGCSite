@@ -420,7 +420,7 @@ export default function HomePage({ lang }: { lang: Lang }) {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      v1.1.24
+                      v1.1.25
                     </a>
                   </li>
                   <li>Apache-2.0</li>

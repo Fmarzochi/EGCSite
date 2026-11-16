@@ -8,6 +8,13 @@ export interface Release {
 
 export const releases: Release[] = [
   {
+    title: 'EGC v1.1.25',
+    pubDate: new Date('2026-11-16'),
+    description:
+      'The fourteen debts of the backlog, closed the day after v1.1.24 in four pull requests. The Guardian refuses the git commands that discard work (reset --hard, branch -D, tag -d, restore of the worktree, checkout of a path, stash drop and clear), each with the form that keeps the work; the content a Read brings in passes through the prompt injection scan and a flagged result reaches the model; the Token Crusher ledger records whether the shim or the egc run prefix saved the tokens and egc gain shows the split; the shim is pinned to the version that wrote it, with egc doctor and egc auto-update on watch. Both MCP servers rate limit every tool per project; state files are published read-only where the platform has POSIX modes; the encryption key can live where EGC_ENCRYPTION_KEY_FILE says. egc import brings an exported memory document back with the merge rules of the interchange spec, egc gain --share prints the savings with nothing that names the machine, the OpenCode prompt of every agent is generated from the agent definitions, and the dashboard opens one tab per launch. The Windows test lanes run the suite four files at a time, from 35 minutes to under 25.',
+    link: 'https://github.com/Fmarzochi/EGC/releases/tag/v1.1.25',
+  },
+  {
     title: 'EGC v1.1.24',
     pubDate: new Date('2026-11-16'),
     description:

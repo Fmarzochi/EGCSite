@@ -98,6 +98,17 @@ $ egc export --project /path/to/other-app --json
 $ egc export --scope global`,
   },
   {
+    cmd: 'egc import',
+    desc: 'Bring a memory document printed by egc export back into the memory of a project (default: the current directory) or of the user-wide global scope. By default it merges: the entries of the document go first, each text is kept once, every section keeps its cap, and Next Session comes from the document when it has one; --replace writes the document in place of the memory. A document that does not parse, or that carries the shape of a credential, is refused and nothing is written. --dry-run prints the change per section and writes nothing; --json prints the summary as an object.',
+    example: `$ egc import memory.md --dry-run
+
+# Merge into another project:
+$ egc import memory.md --project /path/to/other-app
+
+# Replace the global scope:
+$ egc import global.md --scope global --replace`,
+  },
+  {
     cmd: 'egc install',
     desc: 'Bare: set up the engine and ask about the optional prompt library (default no; from v1.1.22, --prompt-library and --no-prompt-library decide without the question). With --target and --profile: install the library to one tool, for example after adding a new tool.',
     example: `$ egc install --target cursor`,
@@ -193,7 +204,7 @@ $ egc run --raw git log`,
   },
   {
     cmd: 'egc gain',
-    desc: 'The full Token Crusher savings panel: totals, average per run, biggest crush, efficiency meter, and a breakdown by command kind. Read from the local ledger at zero token cost. Or just ask your AI "how much did I save?" and it runs this for you.',
+    desc: 'The full Token Crusher savings panel: totals, average per run, biggest crush, efficiency meter, and a breakdown by command kind and by layer (the automatic shim or the egc run prefix). Read from the local ledger at zero token cost. --share prints the same savings as a short block you can paste anywhere, with nothing that names your machine, your projects or your commands (--json for an object). Or just ask your AI "how much did I save?" and it runs this for you.',
     example: `$ egc gain
 
 EGC Token Gain (local ledger, zero token cost)
@@ -203,6 +214,9 @@ EGC Token Gain (local ledger, zero token cost)
 
 # Run-by-run log:
 $ egc gain --history
+
+# A block to paste anywhere, no identifiers:
+$ egc gain --share
 
 # Short summary:
 $ egc saved`,
@@ -338,6 +352,8 @@ const PT_DESC: Record<string, string> = {
     'Compacta o arquivo de estado do projeto atual quando ele fica grande demais. Reescreve os itens em três camadas: Working (últimos 7 dias, mantidos na íntegra), Episodic (últimos 30 dias, resumidos por semana) e Semantic (itens mais antigos, condensados nos fatos essenciais). O arquivo original vai para um backup em ~/.egc/state/archive/ antes de qualquer reescrita.',
   'egc export':
     'Imprime o documento de memória descriptografado de um projeto (por padrão, a pasta atual) ou do escopo global do usuário. Em texto puro, sai o documento Markdown do Agent Memory Interchange do jeito que está guardado; com --json, ele é separado nos campos do cabeçalho e nas cinco seções. Só leitura: o arquivo de estado e a chave nunca são alterados. Códigos de saída: 0 impresso, 1 erro de uso ou arquivo de estado ou chave que não pode ser lido ou não é confiável, 2 nenhuma memória no escopo, 3 memória criptografada sem a chave.',
+  'egc import':
+    'Traz de volta um documento de memória impresso pelo egc export para a memória de um projeto (por padrão, a pasta atual) ou do escopo global do usuário. Por padrão, mescla: as entradas do documento vêm primeiro, cada texto fica uma vez só, cada seção mantém o seu limite, e o Next Session vem do documento quando ele tem um; --replace grava o documento no lugar da memória. Um documento que não pode ser lido, ou que tem a forma de uma credencial, é recusado e nada é gravado. --dry-run mostra a mudança por seção sem gravar; --json imprime o resumo como objeto.',
   'egc install':
     'Sem opções: prepara o motor e pergunta sobre a biblioteca de prompts opcional (o padrão é não; a partir da v1.1.22, --prompt-library e --no-prompt-library decidem sem a pergunta). Com --target e --profile: instala a biblioteca em uma ferramenta, por exemplo depois de adicionar uma ferramenta nova.',
   'egc catalog':
@@ -361,7 +377,7 @@ const PT_DESC: Record<string, string> = {
   'egc run':
     'Roda qualquer comando pelo Token Crusher. Saídas barulhentas (git logs longos, ruído de testes, poluição das instalações, JSON gigante) são comprimidas em até 90% antes de chegar ao modelo; erros e avisos sempre ficam. Nas ferramentas com hooks, isso acontece em silêncio, sem você digitar nada.',
   'egc gain':
-    'O painel completo de economia do Token Crusher: totais, média por execução, maior compressão, medidor de eficiência e divisão por tipo de comando. Lido do livro-caixa local, sem gastar token. Ou simplesmente pergunte à sua IA "quanto eu economizei?" e ela roda isso para você.',
+    'O painel completo de economia do Token Crusher: totais, média por execução, maior compressão, medidor de eficiência e divisão por tipo de comando e por camada (o shim automático ou o prefixo egc run). Lido do livro-caixa local, sem gastar token. O --share imprime a mesma economia num bloco curto para colar em qualquer lugar, sem nada que identifique a sua máquina, os seus projetos ou os seus comandos (--json para objeto). Ou simplesmente pergunte à sua IA "quanto eu economizei?" e ela roda isso para você.',
   'egc context':
     'Classifica os arquivos do projeto para a tarefa que você descreve e imprime um resumo de partida para a IA: os arquivos com mais chance de importar, com a tabela de sinais por trás de cada escolha quando você acrescenta --explain. Delimite com --project, passe um histórico de sessão com --history, limite a lista com --top.',
   'egc discover':
